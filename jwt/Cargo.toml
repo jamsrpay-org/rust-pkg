@@ -1,6 +1,13 @@
 [package]
-name = "jwt"
+name = "jamsrpay-jwt"
 version = "0.1.0"
 edition = "2024"
 
+[lib]
+name = "jamsrpay_jwt"
+path = "./src/lib.rs"
+
 [dependencies]
+jsonwebtoken = { version = "10.2.0", features = ["rust_crypto"] }
+serde = { version = "1.0.228", features = ["derive"] }
+chrono = "0.4.42"
