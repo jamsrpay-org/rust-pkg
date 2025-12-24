@@ -6,3 +6,4 @@ edition = "2024"
 [dependencies]
 tonic = "0.14.2"
 validator = "0.20.0"
+tonic-types = "0.14.2"
