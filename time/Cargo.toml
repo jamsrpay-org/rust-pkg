@@ -1,6 +1,13 @@
 [package]
-name = "time"
+name = "jamsrpay-time"
 version = "0.1.0"
 edition = "2024"
 
+[lib]
+name = "jamsrpay_time"
+path = "./src/lib.rs"
+
+
 [dependencies]
+prost-types = { version = "0.7.0", package = "prost-wkt-types" }
+chrono = "0.4.42"
