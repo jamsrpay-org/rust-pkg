@@ -1,6 +1,11 @@
 [package]
-name = "password"
+name = "jamsrpay-password"
 version = "0.1.0"
 edition = "2024"
 
+[lib]
+name = "jamsrpay_password"
+path = "./src/lib.rs"
+
 [dependencies]
+argon2 = { version = "0.5.3", features = ["std"] }
