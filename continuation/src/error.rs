@@ -1,5 +1,5 @@
 use base64::DecodeError;
-use redis_rs::RedisClientError;
+use redis::RedisClientError;
 use std::string::FromUtf8Error;
 
 #[derive(Debug, thiserror::Error)]

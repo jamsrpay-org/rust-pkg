@@ -1,5 +1,5 @@
 use crate::{error::SessionError, operation_context::OperationContext};
-use redis_rs::RedisClient;
+use redis::RedisClient;
 
 pub struct OperationStore {
     redis: RedisClient,

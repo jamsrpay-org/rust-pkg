@@ -388,6 +388,34 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4a5f13b858c8d314ee3e8f639011f7ccefe71f97f96e50151fb991f267928e2c"
 
 [[package]]
+name = "jamsrpay-continuation"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "base64",
+ "chrono",
+ "hmac",
+ "jamsrpay-redis",
+ "serde",
+ "serde_json",
+ "sha2",
+ "thiserror",
+ "tokio",
+ "uuid",
+]
+
+[[package]]
+name = "jamsrpay-redis"
+version = "0.1.0"
+dependencies = [
+ "redis",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tokio",
+]
+
+[[package]]
 name = "js-sys"
 version = "0.3.82"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -575,17 +603,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "redis-rs"
-version = "0.1.0"
-dependencies = [
- "redis",
- "serde",
- "serde_json",
- "thiserror",
- "tokio",
-]
-
-[[package]]
 name = "redox_syscall"
 version = "0.5.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -653,23 +670,6 @@ dependencies = [
  "ryu",
  "serde",
  "serde_core",
-]
-
-[[package]]
-name = "session-svc"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "base64",
- "chrono",
- "hmac",
- "redis-rs",
- "serde",
- "serde_json",
- "sha2",
- "thiserror",
- "tokio",
- "uuid",
 ]
 
 [[package]]

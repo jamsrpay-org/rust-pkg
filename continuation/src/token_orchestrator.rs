@@ -2,7 +2,7 @@ use crate::{
     continuation_token::ContinuationToken, error::SessionError,
     operation_context::OperationContext, operation_store::OperationStore,
 };
-use redis_rs::RedisClient;
+use redis::RedisClient;
 use serde::{Serialize, de::DeserializeOwned};
 
 pub struct TokenOrchestrator {

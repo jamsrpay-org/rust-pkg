@@ -1,4 +1,4 @@
-use redis_rs::RedisClient;
+use redis::RedisClient;
 use serde_json::json;
 use token_orchestrator::TokenOrchestrator;
 
