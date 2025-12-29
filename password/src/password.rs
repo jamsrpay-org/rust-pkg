@@ -16,16 +16,15 @@ impl ArgonService {
         Ok(hashed_password)
     }
 
-    pub fn verify_password(
-        hash: impl Into<String>,
-        compare_password: impl Into<String>,
-    ) -> Result<bool, Argon2HashError> {
+    pub fn verify_password(password: impl Into<String>, hash: impl Into<String>) -> bool {
         let hash: String = hash.into();
-        let compare_password: String = compare_password.into();
-        let parsed_hash = PasswordHash::new(&hash)?;
+        let compare_password: String = password.into();
+        let Ok(parsed_hash) = PasswordHash::new(&hash) else {
+            return false;
+        };
 
-        Ok(Argon2::default()
+        Argon2::default()
             .verify_password(compare_password.as_bytes(), &parsed_hash)
-            .is_ok())
+            .is_ok()
     }
 }
