@@ -1,3 +1,5 @@
+use std::sync::Arc;
+
 use crate::{
     continuation_token::ContinuationToken, error::SessionError,
     operation_context::OperationContext, operation_store::OperationStore,
@@ -11,7 +13,7 @@ pub struct TokenOrchestrator {
 }
 
 impl TokenOrchestrator {
-    pub fn new(redis: RedisClient, secret_key: String) -> Self {
+    pub fn new(redis: Arc<RedisClient>, secret_key: String) -> Self {
         Self {
             operation_store: OperationStore::new(redis),
             secret_key,

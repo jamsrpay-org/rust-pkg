@@ -1,12 +1,13 @@
 use crate::{error::SessionError, operation_context::OperationContext};
 use redis::RedisClient;
+use std::sync::Arc;
 
 pub struct OperationStore {
-    redis: RedisClient,
+    redis: Arc<RedisClient>,
 }
 
 impl OperationStore {
-    pub fn new(redis: RedisClient) -> Self {
+    pub fn new(redis: Arc<RedisClient>) -> Self {
         Self { redis }
     }
 

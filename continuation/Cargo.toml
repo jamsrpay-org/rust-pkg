@@ -3,10 +3,6 @@ name = "jamsrpay-continuation"
 version = "0.1.0"
 edition = "2024"
 
-[lib]
-name = "jamsrpay_continuation"
-path = "src/lib.rs"
-
 [dependencies]
 base64 = "0.22.1"
 chrono = { version = "0.4.42", features = ["serde"] }

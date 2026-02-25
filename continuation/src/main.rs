@@ -1,5 +1,6 @@
 use redis::RedisClient;
 use serde_json::json;
+use std::sync::Arc;
 use token_orchestrator::TokenOrchestrator;
 
 mod continuation_token;
@@ -17,7 +18,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         "password":"jamsrworld"
     });
 
-    let redis = RedisClient::new("redis://localhost:6379").await?;
+    let redis = Arc::new(RedisClient::new("redis://localhost:6379").await?);
     let token_orchestrator = TokenOrchestrator::new(redis, SECRET_KEY.to_ascii_lowercase());
 
     let data = token_orchestrator
