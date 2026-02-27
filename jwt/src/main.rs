@@ -1,22 +1,38 @@
-use jamsrpay_jwt::{JwtDecoder, JwtEncoder};
+use jamsrpay_jwt::{JwtDecoder, JwtEncoder, TokenParams, scope};
 
 fn main() {
-    let private_key = std::fs::read_to_string("jwt_private.pem")
-        .expect("missing private key file: jwt_private.pem");
-    let public_key =
-        std::fs::read_to_string("jwt_public.pem").expect("missing public key file: jwt_public.pem");
+    let private_key = std::fs::read_to_string("jwt_private.pem").expect("missing jwt_private.pem");
+    let public_key = std::fs::read_to_string("jwt_public.pem").expect("missing jwt_public.pem");
 
-    let encoder = JwtEncoder::new(private_key);
+    // ── Encoder (auth-service) ───────────────────────────────────────
+    let encoder = JwtEncoder::new(
+        &private_key,
+        "auth-service".into(),
+        "api".into(),
+        chrono::Duration::minutes(15),
+    )
+    .expect("failed to create encoder");
 
     let token = encoder
-        .create_token("user-id".to_string(), "Authorization".to_string(), None)
-        .unwrap();
+        .encode(TokenParams {
+            sub: "user-uuid-001".into(),
+            scope: scope::ACCESS_TOKEN.into(),
+            role: "merchant_admin".into(),
+            tenant_id: Some("merchant-uuid-001".into()),
+            session_id: "session-uuid-001".into(),
+            expires_in: None,
+        })
+        .expect("failed to encode token");
 
-    let decoder = JwtDecoder::new(public_key);
+    println!("Token:\n{token}\n");
+
+    // ── Decoder (any microservice) ───────────────────────────────────
+    let decoder =
+        JwtDecoder::new(&public_key, "auth-service", "api").expect("failed to create decoder");
+
     let claims = decoder
-        .decode_token(&token, "Authorization", None, None)
-        .unwrap();
+        .decode_with_scope(&token, scope::ACCESS_TOKEN)
+        .expect("failed to decode token");
 
-    println!("{token}");
-    println!("{claims:?}");
+    println!("Claims:\n{claims:#?}");
 }
