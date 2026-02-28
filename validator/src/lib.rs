@@ -1,6 +1,6 @@
-use std::{fmt::format, panic::Location, vec};
+use std::panic::Location;
 use tonic::{Code, Status, metadata::MetadataMap};
-use tonic_types::{BadRequest, ErrorDetails, FieldViolation, LocalizedMessage, StatusExt};
+use tonic_types::{ErrorDetails, StatusExt};
 use validator::Validate;
 
 pub trait ValidateExt: Validate {

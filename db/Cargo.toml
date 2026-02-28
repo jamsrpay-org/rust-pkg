@@ -3,11 +3,7 @@ name = "jamsrpay-db"
 version = "0.1.0"
 edition = "2024"
 
-[lib]
-name = "jamsrpay_db"
-path = "./src/lib.rs"
-
 [dependencies]
 sea-orm-migration = { version = "1.1.19" }
 sea-orm = { version = "1.1.19", features = ["sqlx-postgres"] }
-cuid2 = "0.1.4"
+uuid = { version = "1.21.0", features = ["v7"] }

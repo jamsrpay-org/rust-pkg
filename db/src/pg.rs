@@ -26,6 +26,6 @@ pub fn pg_error_from_db_err(err: &DbErr) -> Option<PgErrorCode> {
     }
 }
 
-pub fn create_db_id() -> String {
-    cuid2::create_id()
+pub fn create_db_id() -> uuid::Uuid {
+    uuid::Uuid::now_v7()
 }
