@@ -1298,7 +1298,6 @@ dependencies = [
 name = "telemetry"
 version = "0.1.0"
 dependencies = [
- "metrics",
  "metrics-exporter-prometheus",
  "opentelemetry",
  "opentelemetry-appender-tracing",

@@ -1,0 +1,10 @@
+[package]
+name = "middleware"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+http = "1.4.0"
+metrics = "0.24.3"
+tonic = "0.14.5"
+tower = "0.5.3"
