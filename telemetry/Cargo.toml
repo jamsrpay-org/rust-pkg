@@ -1,0 +1,14 @@
+[package]
+name = "telemetry"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+metrics = "0.24.3"
+metrics-exporter-prometheus = { version = "0.18.1", features = ["http-listener"] }
+opentelemetry = { version = "0.31.0", features = ["logs"] }
+opentelemetry-appender-tracing = "0.31.1"
+opentelemetry-otlp = { version = "0.31.0", features = ["grpc-tonic", "logs"] }
+opentelemetry_sdk = { version = "0.31.0", features = ["rt-tokio", "logs"] }
+tracing-opentelemetry = "0.32.1"
+tracing-subscriber = { version = "0.3.22", features = ["env-filter", "json", "fmt"] }
