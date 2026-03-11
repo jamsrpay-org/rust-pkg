@@ -38,6 +38,8 @@ impl Telemetry {
             .with_resource(resource.clone())
             .build();
 
+        opentelemetry::global::set_tracer_provider(tracer_provider.clone());
+
         // ── Start Prometheus metrics server (background) ────────────────────────
         metrics_exporter_prometheus::PrometheusBuilder::new()
             .with_http_listener(([0, 0, 0, 0], metric_port))
