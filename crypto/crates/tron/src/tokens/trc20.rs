@@ -19,7 +19,7 @@ impl Asset for Trc20Token {
         self.decimals
     }
 
-    async fn balance(&self, address: &str) -> Result<u128, ChainError> {
+    async fn balance(&self, _address: &str) -> Result<u128, ChainError> {
         Ok(5_000_000)
     }
 

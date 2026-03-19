@@ -12,16 +12,16 @@ impl AuthInterceptor {
     }
 
     pub fn get_authed_user(&self, metadata: &MetadataMap) -> Result<AuthedUserContext, Status> {
-        let authorization = metadata
-            .get("authorization")
-            .ok_or_else(|| Status::unauthenticated("Missing authorization header"))?
-            .to_str()
-            .ok()
-            .ok_or_else(|| Status::unauthenticated("Missing authorization header"))?;
-        let token = authorization
-            .split_whitespace()
-            .nth(1)
-            .ok_or_else(|| Status::unauthenticated("Invalid authorization header"))?;
+        // let authorization = metadata
+        //     .get("authorization")
+        //     .ok_or_else(|| Status::unauthenticated("Missing authorization header"))?
+        //     .to_str()
+        //     .ok()
+        //     .ok_or_else(|| Status::unauthenticated("Missing authorization header"))?;
+        // let token = authorization
+        //     .split_whitespace()
+        //     .nth(1)
+        //     .ok_or_else(|| Status::unauthenticated("Invalid authorization header"))?;
         // let decoded = JWTService::new(&self.secret_key, "access_token")
         //     .decode_token(token)
         //     .map_err(|err| Status::unauthenticated(err.to_string()))?;

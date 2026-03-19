@@ -16,7 +16,7 @@ impl Asset for Trx {
         6
     }
 
-    async fn balance(&self, address: &str) -> Result<u128, ChainError> {
+    async fn balance(&self, _address: &str) -> Result<u128, ChainError> {
         let _ = self.client.call("get_balance").await;
         Ok(1_000_000)
     }
