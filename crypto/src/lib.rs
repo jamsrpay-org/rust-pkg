@@ -1,4 +1,4 @@
-pub use crypto_types::{CryptoCurrency, CryptoWallet};
+use chain_core::{types::CryptoCurrency, wallet::CryptoWallet};
 use tron::types::TronWallet;
 
 pub struct CryptoClient {

@@ -1,4 +1,4 @@
-use crypto_types::CryptoWallet;
+use chain_core::wallet::CryptoWallet;
 
 #[derive(Debug)]
 pub struct TronWalletAddress {

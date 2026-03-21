@@ -5,7 +5,7 @@ use sha3::{Digest, Keccak256};
 impl TronWallet {
     pub fn new() -> Self {
         let secp = Secp256k1::new();
-        let (secret_key, public_key) = secp.generate_keypair(&mut rand::rng());
+        let (secret_key, public_key) = secp.generate_keypair(&mut secp256k1::rand::rng());
         let public_key_bytes = &public_key.serialize_uncompressed()[1..];
 
         let mut hasher = Keccak256::new();

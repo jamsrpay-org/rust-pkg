@@ -1,5 +1,5 @@
 #[derive(thiserror::Error, Debug)]
-pub enum ChainError {
+pub enum CryptoAssetClientError {
     #[error("rpc error: {0}")]
     Rpc(String),
 
@@ -12,3 +12,6 @@ pub enum ChainError {
     #[error("unknown error")]
     Unknown,
 }
+
+#[derive(Debug, thiserror::Error)]
+pub enum ChainClientError {}
