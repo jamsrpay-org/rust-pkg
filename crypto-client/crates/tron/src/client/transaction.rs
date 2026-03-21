@@ -13,7 +13,8 @@ struct CreateTransactionRequest {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Transaction {
     pub raw_data_hex: String,
-    pub txID: String,
+    #[serde(rename = "txID")]
+    pub tx_id: String,
 }
 
 impl TronClient {
@@ -23,7 +24,7 @@ impl TronClient {
         to: &str,
         amount: u128,
     ) -> Result<Transaction, TronClientError> {
-        let url = format!("{}/createtransaction", self.base_url);
+        let url = format!("{}/createtransaction", self.http_base_url);
 
         let body = CreateTransactionRequest {
             owner_address: from.to_string(),

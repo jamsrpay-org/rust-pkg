@@ -1,6 +1,10 @@
 use chain_core::{types::CryptoCurrency, wallet::CryptoWallet};
 use tron::types::TronWallet;
 
+pub use chain_core::types::CryptoAssetClientTrait;
+pub use tron::client::TronClient;
+pub use tron::native::Trx;
+
 pub struct CryptoClient {
     currency: CryptoCurrency,
 }

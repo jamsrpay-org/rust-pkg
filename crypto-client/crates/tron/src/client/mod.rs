@@ -7,7 +7,7 @@ mod bandwidth;
 mod transaction;
 
 pub struct TronClient {
-    base_url: String,
+    http_base_url: String,
     client: reqwest::Client,
 }
 
@@ -18,13 +18,13 @@ impl TronClient {
             .build()
             .unwrap();
         Self {
-            base_url: base_url.into(),
+            http_base_url: base_url.into(),
             client,
         }
     }
 
     pub fn base_url(&self) -> &str {
-        &self.base_url
+        &self.http_base_url
     }
 
     pub fn client(&self) -> &reqwest::Client {

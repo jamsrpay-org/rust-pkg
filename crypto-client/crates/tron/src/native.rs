@@ -6,6 +6,12 @@ pub struct Trx {
     pub client: TronClient,
 }
 
+impl Trx {
+    pub fn new(client: TronClient) -> Self {
+        Self { client }
+    }
+}
+
 #[async_trait]
 impl CryptoAssetClientTrait for Trx {
     fn symbol(&self) -> &'static str {
