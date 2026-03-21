@@ -2,23 +2,25 @@ use crate::client::TronClient;
 use async_trait::async_trait;
 use chain_core::{error::CryptoAssetClientError, types::CryptoAssetClientTrait};
 
-pub struct Trx {
+pub struct Trc20Token {
+    pub symbol: &'static str,
+    pub contract_address: &'static str,
+    pub decimals: u8,
     pub client: TronClient,
 }
 
 #[async_trait]
-impl CryptoAssetClientTrait for Trx {
+impl CryptoAssetClientTrait for Trc20Token {
     fn symbol(&self) -> &'static str {
-        "TRX"
+        self.symbol
     }
 
     fn decimals(&self) -> u8 {
-        6
+        self.decimals
     }
 
     async fn balance(&self, _address: &str) -> Result<u128, CryptoAssetClientError> {
-        let _ = self.client.call("get_balance").await;
-        Ok(1_000_000)
+        Ok(5_000_000)
     }
 
     async fn transfer(
@@ -27,10 +29,15 @@ impl CryptoAssetClientTrait for Trx {
         _to: &str,
         _amount: u128,
     ) -> Result<String, CryptoAssetClientError> {
-        Ok("trx_tx_hash".to_string())
+        Ok("trc20_tx_hash".to_string())
     }
 
-    async fn estimate_gas(&self) -> Result<u64, CryptoAssetClientError> {
-        Ok(1)
+    async fn estimate_withdrawable(
+        &self,
+        _from_address: &str,
+        _to_address: &str,
+        _amount: u128,
+    ) -> Result<u128, CryptoAssetClientError> {
+        Ok(5_000_000)
     }
 }

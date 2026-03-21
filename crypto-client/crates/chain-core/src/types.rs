@@ -15,11 +15,16 @@ pub trait CryptoAssetClientTrait {
     async fn balance(&self, address: &str) -> Result<u128, CryptoAssetClientError>;
     async fn transfer(
         &self,
-        from: &str,
-        to: &str,
+        from_address: &str,
+        to_address: &str,
         amount: u128,
     ) -> Result<String, CryptoAssetClientError>; // tx hash
-    async fn estimate_gas(&self) -> Result<u64, CryptoAssetClientError>;
+    async fn estimate_withdrawable(
+        &self,
+        from_address: &str,
+        to_address: &str,
+        amount: u128,
+    ) -> Result<u128, CryptoAssetClientError>;
 }
 
 pub trait ChainClientTrait {
