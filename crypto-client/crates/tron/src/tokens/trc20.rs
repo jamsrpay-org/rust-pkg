@@ -1,6 +1,9 @@
 use crate::client::TronClient;
 use async_trait::async_trait;
-use chain_core::{error::CryptoAssetClientError, types::CryptoAssetClientTrait};
+use chain_core::{
+    error::CryptoAssetClientError,
+    types::{CryptoAssetClientTrait, UnsignedTx},
+};
 
 pub struct Trc20Token {
     pub symbol: &'static str,
@@ -23,13 +26,28 @@ impl CryptoAssetClientTrait for Trc20Token {
         Ok(5_000_000)
     }
 
-    async fn transfer(
+    async fn create_transfer_tx(
         &self,
         _from: &str,
         _to: &str,
         _amount: u128,
+    ) -> Result<UnsignedTx, CryptoAssetClientError> {
+        Ok(UnsignedTx {
+            raw_tx: vec![],
+            tx_id: "trc20_tx_hash".to_string(),
+        })
+    }
+
+    fn sign(&self, _raw_tx: &[u8], _key: &[u8]) -> Result<Vec<u8>, CryptoAssetClientError> {
+        todo!()
+    }
+
+    async fn broadcast(
+        &self,
+        _raw_tx: &[u8],
+        _signatures: &[Vec<u8>],
     ) -> Result<String, CryptoAssetClientError> {
-        Ok("trc20_tx_hash".to_string())
+        todo!()
     }
 
     async fn estimate_withdrawable(

@@ -9,8 +9,11 @@ pub enum CryptoAssetClientError {
     #[error("insufficient balance")]
     InsufficientBalance,
 
-    #[error("unknown error")]
-    Unknown,
+    #[error("Error: {0}")]
+    Unknown(String),
+
+    #[error("invalid transaction: {0}")]
+    InvalidTransaction(String),
 }
 
 #[derive(Debug, thiserror::Error)]

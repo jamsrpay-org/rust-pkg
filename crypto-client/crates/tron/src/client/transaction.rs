@@ -15,6 +15,9 @@ pub struct Transaction {
     pub raw_data_hex: String,
     #[serde(rename = "txID")]
     pub tx_id: String,
+    #[serde(default)]
+    pub signature: Vec<String>,
+    pub raw_data: Value,
 }
 
 impl TronClient {
@@ -42,7 +45,30 @@ impl TronClient {
         Ok(tx)
     }
 
-    pub async fn broadcast_transaction(&self, tx: &str) -> Result<String, String> {
-        Ok("tx_hash".to_string())
+    pub async fn broadcast_transaction(
+        &self,
+        raw_tx: &[u8],
+        signatures: &[Vec<u8>],
+    ) -> Result<Value, TronClientError> {
+        let url = format!("{}/broadcasttransaction", self.http_base_url);
+
+        let raw_data_hex = hex::encode(raw_tx);
+
+        let sigs_hex: Vec<String> = signatures.iter().map(|s| hex::encode(s)).collect();
+
+        let body = serde_json::json!({
+            "raw_data_hex": raw_data_hex,
+            "signature": sigs_hex,
+        });
+        dbg!(&body);
+
+        let resp = self.client.post(&url).json(&body).send().await?;
+        let json: Value = resp.json().await?;
+        dbg!(&json);
+
+        if let Some(err) = json.get("Error") {
+            return Err(TronClientError::ApiError(err.to_string()));
+        }
+        Ok(json)
     }
 }

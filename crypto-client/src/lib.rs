@@ -1,4 +1,5 @@
-use chain_core::{types::CryptoCurrency, wallet::CryptoWallet};
+pub use chain_core::types::CryptoCurrency;
+use chain_core::wallet::CryptoWallet;
 use tron::types::TronWallet;
 
 pub use chain_core::types::CryptoAssetClientTrait;

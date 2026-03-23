@@ -4,6 +4,7 @@ use std::time::Duration;
 
 mod account;
 mod bandwidth;
+pub mod sign;
 mod transaction;
 
 pub struct TronClient {

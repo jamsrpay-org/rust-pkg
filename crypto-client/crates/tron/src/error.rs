@@ -9,10 +9,15 @@ pub enum TronClientError {
     Http(#[from] reqwest::Error),
     #[error("json error: {0}")]
     Json(#[from] serde_json::Error),
+    #[error("Invalid private key")]
+    InvalidPrivateKey,
+    #[error("Sign Error: {0}")]
+    SignError(String),
 }
 
 impl From<TronClientError> for CryptoAssetClientError {
     fn from(value: TronClientError) -> Self {
-        CryptoAssetClientError::Unknown
+        eprintln!("{}", value);
+        CryptoAssetClientError::Unknown(value.to_string())
     }
 }

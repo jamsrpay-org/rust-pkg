@@ -1,6 +1,9 @@
-use crate::client::TronClient;
+use crate::client::{TronClient, sign::ec_key_sign};
 use async_trait::async_trait;
-use chain_core::{error::CryptoAssetClientError, types::CryptoAssetClientTrait};
+use chain_core::{
+    error::CryptoAssetClientError,
+    types::{CryptoAssetClientTrait, UnsignedTx},
+};
 
 pub struct Trx {
     pub client: TronClient,
@@ -27,13 +30,42 @@ impl CryptoAssetClientTrait for Trx {
         Ok(balance)
     }
 
-    async fn transfer(
+    async fn create_transfer_tx(
         &self,
-        _from: &str,
-        _to: &str,
-        _amount: u128,
+        from_address: &str,
+        to_address: &str,
+        amount: u128,
+    ) -> Result<UnsignedTx, CryptoAssetClientError> {
+        let tx = self
+            .client
+            .create_transaction(from_address, to_address, amount)
+            .await?;
+        let raw_data_bytes = hex::decode(tx.raw_data_hex)
+            .map_err(|e| CryptoAssetClientError::InvalidTransaction(e.to_string()))?;
+        let tx_id = tx.tx_id;
+
+        Ok(UnsignedTx {
+            raw_tx: raw_data_bytes,
+            tx_id,
+        })
+    }
+
+    fn sign(&self, raw_tx: &[u8], key: &[u8]) -> Result<Vec<u8>, CryptoAssetClientError> {
+        let signature = ec_key_sign(raw_tx, key)?;
+        Ok(signature)
+    }
+
+    async fn broadcast(
+        &self,
+        raw_tx: &[u8],
+        signatures: &[Vec<u8>],
     ) -> Result<String, CryptoAssetClientError> {
-        Ok("trx_tx_hash".to_string())
+        let tx_id = self
+            .client
+            .broadcast_transaction(raw_tx, signatures)
+            .await?;
+        dbg!(tx_id);
+        Ok("todo".to_string())
     }
 
     async fn estimate_withdrawable(

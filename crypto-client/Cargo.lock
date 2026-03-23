@@ -1696,6 +1696,7 @@ dependencies = [
  "secp256k1",
  "serde",
  "serde_json",
+ "sha2",
  "sha3",
  "thiserror 2.0.18",
  "tokio",
