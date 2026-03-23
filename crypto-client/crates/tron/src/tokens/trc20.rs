@@ -35,6 +35,7 @@ impl CryptoAssetClientTrait for Trc20Token {
         Ok(UnsignedTx {
             raw_tx: vec![],
             tx_id: "trc20_tx_hash".to_string(),
+            raw_data_json: None,
         })
     }
 
@@ -46,6 +47,7 @@ impl CryptoAssetClientTrait for Trc20Token {
         &self,
         _raw_tx: &[u8],
         _signatures: &[Vec<u8>],
+        _raw_data_json: Option<&[u8]>,
     ) -> Result<String, CryptoAssetClientError> {
         todo!()
     }
@@ -54,8 +56,7 @@ impl CryptoAssetClientTrait for Trc20Token {
         &self,
         _from_address: &str,
         _to_address: &str,
-        _amount: u128,
     ) -> Result<u128, CryptoAssetClientError> {
-        Ok(5_000_000)
+        Ok(0)
     }
 }

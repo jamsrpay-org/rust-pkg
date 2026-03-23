@@ -38,7 +38,7 @@ impl TronClient {
         let resp = self.client.post(&url).json(&body).send().await?;
         let json: Value = resp.json().await?;
 
-        if let Some(err) = json.get("error") {
+        if let Some(err) = json.get("Error") {
             return Err(TronClientError::ApiError(err.as_str().unwrap().to_string()));
         }
         let tx: Transaction = serde_json::from_value(json)?;
@@ -49,6 +49,7 @@ impl TronClient {
         &self,
         raw_tx: &[u8],
         signatures: &[Vec<u8>],
+        raw_data: &Value,
     ) -> Result<Value, TronClientError> {
         let url = format!("{}/broadcasttransaction", self.http_base_url);
 
@@ -57,14 +58,14 @@ impl TronClient {
         let sigs_hex: Vec<String> = signatures.iter().map(|s| hex::encode(s)).collect();
 
         let body = serde_json::json!({
+            "raw_data": raw_data,
             "raw_data_hex": raw_data_hex,
             "signature": sigs_hex,
+            "visible": true,
         });
-        dbg!(&body);
 
         let resp = self.client.post(&url).json(&body).send().await?;
         let json: Value = resp.json().await?;
-        dbg!(&json);
 
         if let Some(err) = json.get("Error") {
             return Err(TronClientError::ApiError(err.to_string()));

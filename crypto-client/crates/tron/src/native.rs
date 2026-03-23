@@ -43,10 +43,13 @@ impl CryptoAssetClientTrait for Trx {
         let raw_data_bytes = hex::decode(tx.raw_data_hex)
             .map_err(|e| CryptoAssetClientError::InvalidTransaction(e.to_string()))?;
         let tx_id = tx.tx_id;
+        let raw_data_json = serde_json::to_vec(&tx.raw_data)
+            .map_err(|e| CryptoAssetClientError::InvalidTransaction(e.to_string()))?;
 
         Ok(UnsignedTx {
             raw_tx: raw_data_bytes,
             tx_id,
+            raw_data_json: Some(raw_data_json),
         })
     }
 
@@ -59,33 +62,40 @@ impl CryptoAssetClientTrait for Trx {
         &self,
         raw_tx: &[u8],
         signatures: &[Vec<u8>],
+        raw_data_json: Option<&[u8]>,
     ) -> Result<String, CryptoAssetClientError> {
-        let tx_id = self
+        let raw_data: serde_json::Value =
+            serde_json::from_slice(raw_data_json.ok_or_else(|| {
+                CryptoAssetClientError::InvalidTransaction(
+                    "missing raw_data for broadcast".to_string(),
+                )
+            })?)
+            .map_err(|e| CryptoAssetClientError::InvalidTransaction(e.to_string()))?;
+
+        let result = self
             .client
-            .broadcast_transaction(raw_tx, signatures)
+            .broadcast_transaction(raw_tx, signatures, &raw_data)
             .await?;
-        dbg!(tx_id);
-        Ok("todo".to_string())
+        Ok(result.to_string())
     }
 
     async fn estimate_withdrawable(
         &self,
         from_address: &str,
         to_address: &str,
-        amount: u128,
     ) -> Result<u128, CryptoAssetClientError> {
-        // create transaction
-        let unsigned_tx = self
-            .client
-            .create_transaction(from_address, to_address, amount)
-            .await?;
-        let required_bandwidth = TronClient::estimate_bandwidth(&unsigned_tx.raw_data_hex);
-
         let account = self.client.get_account(from_address).await?;
         let balance = account.balance;
         if balance <= 0 {
             return Ok(0);
         }
+
+        // create transaction
+        let unsigned_tx = self
+            .client
+            .create_transaction(from_address, to_address, 1)
+            .await?;
+        let required_bandwidth = TronClient::estimate_bandwidth(&unsigned_tx.raw_data_hex);
 
         let resource = self.client.get_account_resource(from_address).await?;
         let available_bandwidth = TronClient::get_available_bandwidth(&resource);

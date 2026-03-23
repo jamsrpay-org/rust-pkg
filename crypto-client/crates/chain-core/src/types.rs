@@ -13,6 +13,8 @@ pub enum CryptoCurrency {
 pub struct UnsignedTx {
     pub raw_tx: Vec<u8>,
     pub tx_id: String,
+    /// Optional serialized JSON bytes for chain-specific metadata (e.g. Tron's `raw_data`).
+    pub raw_data_json: Option<Vec<u8>>,
 }
 
 #[async_trait]
@@ -32,12 +34,12 @@ pub trait CryptoAssetClientTrait {
         &self,
         raw_tx: &[u8],
         signatures: &[Vec<u8>],
+        raw_data_json: Option<&[u8]>,
     ) -> Result<String, CryptoAssetClientError>;
     async fn estimate_withdrawable(
         &self,
         from_address: &str,
         to_address: &str,
-        amount: u128,
     ) -> Result<u128, CryptoAssetClientError>;
 }
 
