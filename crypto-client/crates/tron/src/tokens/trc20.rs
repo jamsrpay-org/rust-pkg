@@ -2,7 +2,7 @@ use crate::client::TronClient;
 use async_trait::async_trait;
 use chain_core::{
     error::CryptoAssetClientError,
-    types::{CryptoAssetClientTrait, UnsignedTx},
+    types::{BroadcastTxResponse, CryptoAssetClientTrait, UnsignedTx},
 };
 
 pub struct Trc20Token {
@@ -48,7 +48,7 @@ impl CryptoAssetClientTrait for Trc20Token {
         _raw_tx: &[u8],
         _signatures: &[Vec<u8>],
         _raw_data_json: Option<&[u8]>,
-    ) -> Result<String, CryptoAssetClientError> {
+    ) -> Result<BroadcastTxResponse, CryptoAssetClientError> {
         todo!()
     }
 

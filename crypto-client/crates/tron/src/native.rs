@@ -2,7 +2,7 @@ use crate::client::{TronClient, sign::ec_key_sign};
 use async_trait::async_trait;
 use chain_core::{
     error::CryptoAssetClientError,
-    types::{CryptoAssetClientTrait, UnsignedTx},
+    types::{BroadcastTxResponse, CryptoAssetClientTrait, UnsignedTx},
 };
 
 pub struct Trx {
@@ -63,7 +63,7 @@ impl CryptoAssetClientTrait for Trx {
         raw_tx: &[u8],
         signatures: &[Vec<u8>],
         raw_data_json: Option<&[u8]>,
-    ) -> Result<String, CryptoAssetClientError> {
+    ) -> Result<BroadcastTxResponse, CryptoAssetClientError> {
         let raw_data: serde_json::Value =
             serde_json::from_slice(raw_data_json.ok_or_else(|| {
                 CryptoAssetClientError::InvalidTransaction(
@@ -76,7 +76,9 @@ impl CryptoAssetClientTrait for Trx {
             .client
             .broadcast_transaction(raw_tx, signatures, &raw_data)
             .await?;
-        Ok(result.to_string())
+        Ok(BroadcastTxResponse {
+            tx_id: result.tx_id,
+        })
     }
 
     async fn estimate_withdrawable(

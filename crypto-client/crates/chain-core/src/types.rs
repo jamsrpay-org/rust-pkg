@@ -17,6 +17,11 @@ pub struct UnsignedTx {
     pub raw_data_json: Option<Vec<u8>>,
 }
 
+#[derive(Debug)]
+pub struct BroadcastTxResponse {
+    pub tx_id: String,
+}
+
 #[async_trait]
 pub trait CryptoAssetClientTrait {
     fn symbol(&self) -> &'static str;
@@ -35,7 +40,7 @@ pub trait CryptoAssetClientTrait {
         raw_tx: &[u8],
         signatures: &[Vec<u8>],
         raw_data_json: Option<&[u8]>,
-    ) -> Result<String, CryptoAssetClientError>;
+    ) -> Result<BroadcastTxResponse, CryptoAssetClientError>;
     async fn estimate_withdrawable(
         &self,
         from_address: &str,
