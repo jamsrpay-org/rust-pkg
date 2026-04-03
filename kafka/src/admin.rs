@@ -1,23 +1,17 @@
 use rdkafka::{
     ClientConfig,
-    admin::{AdminClient, AdminOptions, NewTopic, TopicReplication},
+    admin::{AdminClient, AdminOptions, NewTopic},
     client::DefaultClientContext,
     error::KafkaError,
 };
 
-pub async fn create_admin() -> Result<AdminClient<DefaultClientContext>, KafkaError> {
+pub async fn create_topics(
+    brokers: &str,
+    topics: Vec<NewTopic<'_>>,
+) -> Result<AdminClient<DefaultClientContext>, KafkaError> {
     let admin_client: AdminClient<DefaultClientContext> = ClientConfig::new()
-        .set(
-            "bootstrap.servers",
-            "localhost:9194,localhost:9195,localhost:9196",
-        )
+        .set("bootstrap.servers", brokers)
         .create()?;
-
-    let topics = vec![
-        NewTopic::new("auth.events.v1", 10, TopicReplication::Fixed(3)),
-        NewTopic::new("user.events.v1", 10, TopicReplication::Fixed(3)),
-        NewTopic::new("mail.commands.v1", 10, TopicReplication::Fixed(3)),
-    ];
 
     let results = admin_client
         .create_topics(&topics, &AdminOptions::new())

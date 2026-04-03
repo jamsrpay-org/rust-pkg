@@ -1,10 +1,10 @@
 use rdkafka::{ClientConfig, error::KafkaError, producer::FutureProducer};
 
-pub fn create_producer() -> Result<FutureProducer, KafkaError> {
+pub fn create_producer(brokers: &str) -> Result<FutureProducer, KafkaError> {
     let producer = ClientConfig::new()
         .set(
             "bootstrap.servers",
-            "localhost:9194,localhost:9195,localhost:9196",
+            brokers,
         )
         .set("acks", "all")
         .set("message.timeout.ms", "5000")

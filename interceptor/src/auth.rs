@@ -11,7 +11,8 @@ impl AuthInterceptor {
         AuthInterceptor { secret_key }
     }
 
-    pub fn get_authed_user(&self, metadata: &MetadataMap) -> Result<AuthedUserContext, Status> {
+    pub fn get_authed_user(&self, _metadata: &MetadataMap) -> Result<AuthedUserContext, Status> {
+        let _ = self.secret_key;
         // let authorization = metadata
         //     .get("authorization")
         //     .ok_or_else(|| Status::unauthenticated("Missing authorization header"))?

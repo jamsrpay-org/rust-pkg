@@ -1,12 +1,12 @@
 use rdkafka::{ClientConfig, consumer::StreamConsumer, error::KafkaError};
 
-pub fn create_consumer() -> Result<StreamConsumer, KafkaError> {
+pub fn create_consumer(brokers: &str, group_id: &str) -> Result<StreamConsumer, KafkaError> {
     let consumer = ClientConfig::new()
         .set(
             "bootstrap.servers",
-            "localhost:9194,localhost:9195,localhost:9196",
+            brokers,
         )
-        .set("group.id", "auth-consumer")
+        .set("group.id", group_id)
         .set("auto.offset.reset", "earliest")
         .set("enable.auto.commit", "false")
         .set("max.poll.interval.ms", "600000")

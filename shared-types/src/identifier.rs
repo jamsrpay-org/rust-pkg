@@ -1,7 +1,9 @@
 use std::{fmt::Display, marker::PhantomData};
+use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord,Serialize, Deserialize,Copy
+)]
 pub struct TypedId<T> {
     value: Uuid,
     _phantom: PhantomData<T>,
