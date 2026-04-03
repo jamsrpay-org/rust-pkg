@@ -25,11 +25,12 @@ pub struct BroadcastTransactionRequest {
     pub raw_data: Value,
     pub raw_data_hex: String,
     pub signature: Vec<String>,
+    pub visible: bool,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct BroadcastTransactionResponse {
-    // pub result: bool,
+    #[serde(rename = "txid")]
     pub tx_id: String,
 }
 
@@ -45,7 +46,7 @@ impl TronClient {
         let body = CreateTransactionRequest {
             owner_address: from.to_string(),
             to_address: to.to_string(),
-            amount: amount,
+            amount,
             visible: true,
         };
         let resp = self.client.post(&url).json(&body).send().await?;
@@ -72,12 +73,33 @@ impl TronClient {
 
         let body = BroadcastTransactionRequest {
             raw_data: raw_data.clone(),
-            raw_data_hex: raw_data_hex,
+            raw_data_hex,
             signature: sigs_hex,
+            visible: true,
         };
 
         let resp = self.client.post(&url).json(&body).send().await?;
         let json: Value = resp.json().await?;
+
+        // Check for Tron error responses: {"code": "CONTRACT_VALIDATE_ERROR", "message": "..."}
+        if let Some(code) = json.get("code") {
+            let code_str = code.as_str().unwrap_or("UNKNOWN");
+            let message = json
+                .get("message")
+                .and_then(|m| m.as_str())
+                .map(|hex_msg| {
+                    // Tron returns hex-encoded error messages
+                    hex::decode(hex_msg)
+                        .ok()
+                        .and_then(|bytes| String::from_utf8(bytes).ok())
+                        .unwrap_or_else(|| hex_msg.to_string())
+                })
+                .unwrap_or_default();
+            return Err(TronClientError::ApiError(format!(
+                "{}: {}",
+                code_str, message
+            )));
+        }
 
         if let Some(err) = json.get("Error") {
             return Err(TronClientError::ApiError(err.to_string()));

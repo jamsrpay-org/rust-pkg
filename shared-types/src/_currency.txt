@@ -1,0 +1,560 @@
+use strum::AsRefStr;
+
+#[allow(non_camel_case_types)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, AsRefStr)]
+pub enum FiatCurrency {
+    USD,
+    EUR,
+    GBP,
+    CAD,
+    CHF,
+    HKD,
+    ILS,
+    INR,
+    JPY,
+    PHP,
+}
+
+
+#[allow(non_camel_case_types)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, AsRefStr)]
+pub enum CryptoAsset {
+    ADA,
+    ARB,
+    AVAX,
+    BNB,
+    BTC,
+    BUSD,
+    DAI,
+    DOGE,
+    DOT,
+    ETH,
+    EURC,
+    LINK,
+    LTC,
+    OP,
+    POL,
+    SHIB,
+    SOL,
+    SUI,
+    TON,
+    TRX,
+    USDC,
+    USDT,
+    XLM,
+    XRP,
+}
+
+#[allow(non_camel_case_types)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, AsRefStr)]
+pub enum PricingCurrency {
+    // Crypto Assets
+    ADA,
+    ARB,
+    AVAX,
+    BNB,
+    BTC,
+    BUSD,
+    DAI,
+    DOGE,
+    DOT,
+    ETH,
+    EURC,
+    LINK,
+    LTC,
+    OP,
+    POL,
+    SHIB,
+    SOL,
+    SUI,
+    TON,
+    TRX,
+    USDC,
+    USDT,
+    XLM,
+    XRP,
+    // Fiat Currencies
+    USD,
+    EUR,
+    GBP,
+    CAD,
+    CHF,
+    HKD,
+    ILS,
+    INR,
+    JPY,
+    PHP,
+}
+
+#[allow(non_camel_case_types)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum PaymentCurrency {
+    ADA,
+    ARB,
+    AVAX,
+    BNB,
+    BTC,
+    BUSD_BEP20,
+    DAI_BEP20,
+    DAI_ERC20,
+    DOGE,
+    DOT,
+    ETH,
+    EURC_ERC20,
+    LINK_ERC20,
+    LTC,
+    OP,
+    POL,
+    SHIB_ERC20,
+    SOL,
+    SUI,
+    TON,
+    TRX,
+    USDC_BEP20,
+    USDC_ERC20,
+    USDT_BEP20,
+    USDT_ERC20,
+    USDT_TRC20,
+    XLM,
+    XRP,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Chain {
+    Bitcoin,
+    Ethereum,
+    Tron,
+    BnbSmartChain,
+    Polygon,
+    Arbitrum,
+    Optimism,
+    Avalanche,
+    Solana,
+    Cardano,
+    Polkadot,
+    Stellar,
+    XrpLedger,
+    Ton,
+    Sui,
+    Dogecoin,
+    Litecoin,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum TokenStandard {
+    Native,
+    Erc20,
+    Trc20,
+    Bep20,
+}
+
+#[derive(Debug, Clone, Copy)]
+pub struct CryptoMeta {
+    pub asset: &'static str,
+    pub symbol: &'static str,
+    pub name: &'static str,
+    pub decimals: u8,
+}
+
+impl PaymentCurrency {
+    pub const fn meta(&self) -> CryptoMeta {
+        match self {
+            PaymentCurrency::ADA => CryptoMeta {
+                asset: "ADA",
+                symbol: "ADA",
+                name: "Cardano",
+                decimals: 6,
+            },
+            PaymentCurrency::ARB => CryptoMeta {
+                asset: "ARB",
+                symbol: "ARB",
+                name: "Arbitrum",
+                decimals: 18,
+            },
+            PaymentCurrency::AVAX => CryptoMeta {
+                asset: "AVAX",
+                symbol: "AVAX",
+                name: "Avalanche",
+                decimals: 18,
+            },
+            PaymentCurrency::BNB => CryptoMeta {
+                asset: "BNB",
+                symbol: "BNB",
+                name: "Binance Coin",
+                decimals: 18,
+            },
+            PaymentCurrency::BTC => CryptoMeta {
+                asset: "BTC",
+                symbol: "BTC",
+                name: "Bitcoin",
+                decimals: 8,
+            },
+            PaymentCurrency::BUSD_BEP20 => CryptoMeta {
+                asset: "BUSD",
+                symbol: "BUSD",
+                name: "Binance USD",
+                decimals: 18,
+            },
+            PaymentCurrency::DAI_BEP20 | PaymentCurrency::DAI_ERC20 => CryptoMeta {
+                asset: "DAI",
+                symbol: "DAI",
+                name: "Dai",
+                decimals: 18,
+            },
+            PaymentCurrency::DOGE => CryptoMeta {
+                asset: "DOGE",
+                symbol: "DOGE",
+                name: "Dogecoin",
+                decimals: 8,
+            },
+            PaymentCurrency::DOT => CryptoMeta {
+                asset: "DOT",
+                symbol: "DOT",
+                name: "Polkadot",
+                decimals: 18,
+            },
+            PaymentCurrency::ETH => CryptoMeta {
+                asset: "ETH",
+                symbol: "ETH",
+                name: "Ethereum",
+                decimals: 18,
+            },
+            PaymentCurrency::EURC_ERC20 => CryptoMeta {
+                asset: "EURC",
+                symbol: "EURC",
+                name: "Euro Coin",
+                decimals: 18,
+            },
+            PaymentCurrency::LINK_ERC20 => CryptoMeta {
+                asset: "LINK",
+                symbol: "LINK",
+                name: "Chainlink",
+                decimals: 18,
+            },
+            PaymentCurrency::LTC => CryptoMeta {
+                asset: "LTC",
+                symbol: "LTC",
+                name: "Litecoin",
+                decimals: 8,
+            },
+            PaymentCurrency::OP => CryptoMeta {
+                asset: "OP",
+                symbol: "OP",
+                name: "Optimism",
+                decimals: 18,
+            },
+            PaymentCurrency::POL => CryptoMeta {
+                asset: "POL",
+                symbol: "POL",
+                name: "Polygon",
+                decimals: 18,
+            },
+            PaymentCurrency::SHIB_ERC20 => CryptoMeta {
+                asset: "SHIBA",
+                symbol: "SHIB",
+                name: "Shiba Inu",
+                decimals: 18,
+            },
+            PaymentCurrency::SOL => CryptoMeta {
+                asset: "SOL",
+                symbol: "SOL",
+                name: "Solana",
+                decimals: 9,
+            },
+            PaymentCurrency::SUI => CryptoMeta {
+                asset: "SUI",
+                symbol: "SUI",
+                name: "Sui",
+                decimals: 9,
+            },
+            PaymentCurrency::TON => CryptoMeta {
+                asset: "TON",
+                symbol: "TON",
+                name: "TON",
+                decimals: 18,
+            },
+            PaymentCurrency::TRX => CryptoMeta {
+                asset: "TRX",
+                symbol: "TRX",
+                name: "Tron",
+                decimals: 6,
+            },
+            PaymentCurrency::USDC_BEP20 | PaymentCurrency::USDC_ERC20 => CryptoMeta {
+                asset: "USDC",
+                symbol: "USDC",
+                name: "USD Coin",
+                decimals: 6,
+            },
+            PaymentCurrency::USDT_BEP20
+            | PaymentCurrency::USDT_ERC20
+            | PaymentCurrency::USDT_TRC20 => CryptoMeta {
+                asset: "USDT",
+                symbol: "USDT",
+                name: "Tether",
+                decimals: 6,
+            },
+            PaymentCurrency::XLM => CryptoMeta {
+                asset: "XLM",
+                symbol: "XLM",
+                name: "Stellar",
+                decimals: 7,
+            },
+            PaymentCurrency::XRP => CryptoMeta {
+                asset: "XRP",
+                symbol: "XRP",
+                name: "Ripple",
+                decimals: 6,
+            },
+        }
+    }
+}
+
+impl PaymentCurrency {
+    pub fn asset(&self) -> &'static str {
+        self.meta().asset
+    }
+
+    pub fn symbol(&self) -> &'static str {
+        self.meta().symbol
+    }
+
+    pub fn name(&self) -> &'static str {
+        self.meta().name
+    }
+
+    pub fn decimals(&self) -> u8 {
+        self.meta().decimals
+    }
+}
+
+//  PricingCurrency
+impl PricingCurrency {
+    pub const fn meta(&self) -> CryptoMeta {
+        match *self {
+            // Crypto Assets
+            PricingCurrency::ADA => CryptoMeta {
+                asset: "ADA",
+                symbol: "ADA",
+                name: "Cardano",
+                decimals: 6,
+            },
+            PricingCurrency::ARB => CryptoMeta {
+                asset: "ARB",
+                symbol: "ARB",
+                name: "Arbitrum",
+                decimals: 18,
+            },
+            PricingCurrency::AVAX => CryptoMeta {
+                asset: "AVAX",
+                symbol: "AVAX",
+                name: "Avalanche",
+                decimals: 18,
+            },
+            PricingCurrency::BNB => CryptoMeta {
+                asset: "BNB",
+                symbol: "BNB",
+                name: "Binance Coin",
+                decimals: 18,
+            },
+            PricingCurrency::BTC => CryptoMeta {
+                asset: "BTC",
+                symbol: "BTC",
+                name: "Bitcoin",
+                decimals: 8,
+            },
+            PricingCurrency::BUSD => CryptoMeta {
+                asset: "BUSD",
+                symbol: "BUSD",
+                name: "Binance USD",
+                decimals: 18,
+            },
+            PricingCurrency::DAI => CryptoMeta {
+                asset: "DAI",
+                symbol: "DAI",
+                name: "Dai",
+                decimals: 18,
+            },
+            PricingCurrency::DOGE => CryptoMeta {
+                asset: "DOGE",
+                symbol: "DOGE",
+                name: "Dogecoin",
+                decimals: 8,
+            },
+            PricingCurrency::DOT => CryptoMeta {
+                asset: "DOT",
+                symbol: "DOT",
+                name: "Polkadot",
+                decimals: 18,
+            },
+            PricingCurrency::ETH => CryptoMeta {
+                asset: "ETH",
+                symbol: "ETH",
+                name: "Ethereum",
+                decimals: 18,
+            },
+            PricingCurrency::EURC => CryptoMeta {
+                asset: "EURC",
+                symbol: "EURC",
+                name: "Euro Coin",
+                decimals: 18,
+            },
+            PricingCurrency::LINK => CryptoMeta {
+                asset: "LINK",
+                symbol: "LINK",
+                name: "Chainlink",
+                decimals: 18,
+            },
+            PricingCurrency::LTC => CryptoMeta {
+                asset: "LTC",
+                symbol: "LTC",
+                name: "Litecoin",
+                decimals: 8,
+            },
+            PricingCurrency::OP => CryptoMeta {
+                asset: "OP",
+                symbol: "OP",
+                name: "Optimism",
+                decimals: 18,
+            },
+            PricingCurrency::POL => CryptoMeta {
+                asset: "POL",
+                symbol: "POL",
+                name: "Polygon",
+                decimals: 18,
+            },
+            PricingCurrency::SHIB => CryptoMeta {
+                asset: "SHIB",
+                symbol: "SHIB",
+                name: "Shiba Inu",
+                decimals: 18,
+            },
+            PricingCurrency::SOL => CryptoMeta {
+                asset: "SOL",
+                symbol: "SOL",
+                name: "Solana",
+                decimals: 9,
+            },
+            PricingCurrency::SUI => CryptoMeta {
+                asset: "SUI",
+                symbol: "SUI",
+                name: "Sui",
+                decimals: 9,
+            },
+            PricingCurrency::TON => CryptoMeta {
+                asset: "TON",
+                symbol: "TON",
+                name: "TON",
+                decimals: 18,
+            },
+            PricingCurrency::TRX => CryptoMeta {
+                asset: "TRX",
+                symbol: "TRX",
+                name: "Tron",
+                decimals: 6,
+            },
+            PricingCurrency::USDC => CryptoMeta {
+                asset: "USDC",
+                symbol: "USDC",
+                name: "USD Coin",
+                decimals: 6,
+            },
+            PricingCurrency::USDT => CryptoMeta {
+                asset: "USDT",
+                symbol: "USDT",
+                name: "Tether",
+                decimals: 6,
+            },
+            PricingCurrency::XLM => CryptoMeta {
+                asset: "XLM",
+                symbol: "XLM",
+                name: "Stellar",
+                decimals: 7,
+            },
+            PricingCurrency::XRP => CryptoMeta {
+                asset: "XRP",
+                symbol: "XRP",
+                name: "Ripple",
+                decimals: 6,
+            },
+            // Fiat Currencies
+            PricingCurrency::USD => CryptoMeta {
+                asset: "USD",
+                symbol: "$",
+                name: "US Dollar",
+                decimals: 2,
+            },
+            PricingCurrency::EUR => CryptoMeta {
+                asset: "EUR",
+                symbol: "€",
+                name: "Euro",
+                decimals: 2,
+            },
+            PricingCurrency::GBP => CryptoMeta {
+                asset: "GBP",
+                symbol: "£",
+                name: "British Pound",
+                decimals: 2,
+            },
+            PricingCurrency::CAD => CryptoMeta {
+                asset: "CAD",
+                symbol: "CA$",
+                name: "Canadian Dollar",
+                decimals: 2,
+            },
+            PricingCurrency::CHF => CryptoMeta {
+                asset: "CHF",
+                symbol: "CHF",
+                name: "Swiss Franc",
+                decimals: 2,
+            },
+            PricingCurrency::HKD => CryptoMeta {
+                asset: "HKD",
+                symbol: "HK$",
+                name: "Hong Kong Dollar",
+                decimals: 2,
+            },
+            PricingCurrency::ILS => CryptoMeta {
+                asset: "ILS",
+                symbol: "₪",
+                name: "Israeli Shekel",
+                decimals: 2,
+            },
+            PricingCurrency::INR => CryptoMeta {
+                asset: "INR",
+                symbol: "₹",
+                name: "Indian Rupee",
+                decimals: 2,
+            },
+            PricingCurrency::JPY => CryptoMeta {
+                asset: "JPY",
+                symbol: "¥",
+                name: "Japanese Yen",
+                decimals: 0,
+            },
+            PricingCurrency::PHP => CryptoMeta {
+                asset: "PHP",
+                symbol: "₱",
+                name: "Philippine Peso",
+                decimals: 2,
+            },
+        }
+    }
+}
+
+impl PricingCurrency {
+    pub fn asset(&self) -> &'static str {
+        self.meta().asset
+    }
+
+    pub fn symbol(&self) -> &'static str {
+        self.meta().symbol
+    }
+
+    pub fn name(&self) -> &'static str {
+        self.meta().name
+    }
+
+    pub fn decimals(&self) -> u8 {
+        self.meta().decimals
+    }
+}
