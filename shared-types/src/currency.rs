@@ -104,6 +104,22 @@ impl PaymentCurrency {
     }
 }
 
+impl PaymentCurrency{
+    pub fn address_view_url(&self, address: &str) -> String {
+        match self {
+            PaymentCurrency::TRX => format!("https://tronscan.org/#/address/{}", address),
+            PaymentCurrency::USDT_TRC20 => format!("https://tronscan.org/#/address/{}", address),
+        }
+    }
+
+    pub fn transaction_view_url(&self, tx_id: &str) -> String {
+        match self {
+            PaymentCurrency::TRX => format!("https://tronscan.org/#/transaction/{}", tx_id),
+            PaymentCurrency::USDT_TRC20 => format!("https://tronscan.org/#/transaction/{}", tx_id),
+        }
+    }
+}
+
 //  PricingCurrency
 impl PricingCurrency {
     pub const fn meta(&self) -> CryptoMeta {
