@@ -5,5 +5,5 @@ edition = "2024"
 
 [dependencies]
 tonic = "0.14.5"
-jwt = { path = "../jwt", package = "jamsrpay-jwt" }
-uuid = { version = "1.22.0", features = ["v7"] }
+jwt = { path = "../jwt" }
+uuid = { version = "1.23.0", features = ["v7"] }

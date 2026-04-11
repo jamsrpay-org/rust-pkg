@@ -1,6 +1,7 @@
+use crate::builder::ErrorBuilder;
 use std::collections::HashMap;
-use tonic::{Code, Status};
-use tonic_types::{ErrorDetails, StatusExt};
+use tonic::Code;
+use tonic_types::ErrorDetails;
 
 #[derive(Clone)]
 pub struct GrpcErrorContext {
@@ -12,7 +13,11 @@ impl GrpcErrorContext {
         Self { domain }
     }
 
-    fn base_error(&self, code: Code, reason: &str, app_code: &str) -> Status {
+    // ─────────────────────────────────────────
+    // Core builder
+    // ─────────────────────────────────────────
+
+    fn base_error(&self, code: Code, reason: &str, app_code: &str) -> ErrorBuilder {
         let mut details = ErrorDetails::new();
 
         let mut metadata = HashMap::new();
@@ -20,46 +25,70 @@ impl GrpcErrorContext {
 
         details.set_error_info(reason, self.domain, metadata);
 
-        Status::with_error_details(code, app_code, details)
+        ErrorBuilder {
+            code,
+            message: app_code.to_string(),
+            details,
+        }
     }
 
-    // ── Semantic helpers ─────────────────────
+    // ─────────────────────────────────────────
+    // Semantic helpers (ALL gRPC codes)
+    // ─────────────────────────────────────────
 
-    pub fn unauthenticated(&self, app_code: &str) -> Status {
-        self.base_error(Code::Unauthenticated, "UNAUTHENTICATED", app_code)
+    pub fn unauthenticated(&self, code: &str) -> ErrorBuilder {
+        self.base_error(Code::Unauthenticated, "UNAUTHENTICATED", code)
     }
 
-    pub fn permission_denied(&self, app_code: &str) -> Status {
-        self.base_error(Code::PermissionDenied, "PERMISSION_DENIED", app_code)
+    pub fn permission_denied(&self, code: &str) -> ErrorBuilder {
+        self.base_error(Code::PermissionDenied, "PERMISSION_DENIED", code)
     }
 
-    pub fn not_found(&self, app_code: &str) -> Status {
-        self.base_error(Code::NotFound, "NOT_FOUND", app_code)
+    pub fn not_found(&self, code: &str) -> ErrorBuilder {
+        self.base_error(Code::NotFound, "NOT_FOUND", code)
     }
 
-    pub fn already_exists(&self, app_code: &str) -> Status {
-        self.base_error(Code::AlreadyExists, "ALREADY_EXISTS", app_code)
+    pub fn already_exists(&self, code: &str) -> ErrorBuilder {
+        self.base_error(Code::AlreadyExists, "ALREADY_EXISTS", code)
     }
 
-    pub fn invalid_argument(&self, app_code: &str) -> Status {
-        self.base_error(Code::InvalidArgument, "INVALID_ARGUMENT", app_code)
+    pub fn invalid_argument(&self, code: &str) -> ErrorBuilder {
+        self.base_error(Code::InvalidArgument, "INVALID_ARGUMENT", code)
     }
 
-    pub fn failed_precondition(
-        &self,
-        violation_type: &str,
-        subject: &str,
-        app_code: &str,
-    ) -> Status {
-        let mut details = ErrorDetails::new();
+    pub fn failed_precondition(&self, code: &str) -> ErrorBuilder {
+        self.base_error(Code::FailedPrecondition, "FAILED_PRECONDITION", code)
+    }
 
-        details.add_precondition_failure_violation(violation_type, subject, app_code);
+    pub fn aborted(&self, code: &str) -> ErrorBuilder {
+        self.base_error(Code::Aborted, "ABORTED", code)
+    }
 
-        let mut metadata = HashMap::new();
-        metadata.insert("code".to_string(), app_code.to_string());
+    pub fn cancelled(&self, code: &str) -> ErrorBuilder {
+        self.base_error(Code::Cancelled, "CANCELLED", code)
+    }
 
-        details.set_error_info("FAILED_PRECONDITION", self.domain, metadata);
+    pub fn deadline_exceeded(&self, code: &str) -> ErrorBuilder {
+        self.base_error(Code::DeadlineExceeded, "DEADLINE_EXCEEDED", code)
+    }
 
-        Status::with_error_details(Code::FailedPrecondition, app_code, details)
+    pub fn resource_exhausted(&self, code: &str) -> ErrorBuilder {
+        self.base_error(Code::ResourceExhausted, "RESOURCE_EXHAUSTED", code)
+    }
+
+    pub fn unavailable(&self, code: &str) -> ErrorBuilder {
+        self.base_error(Code::Unavailable, "UNAVAILABLE", code)
+    }
+
+    pub fn internal(&self, code: &str) -> ErrorBuilder {
+        self.base_error(Code::Internal, "INTERNAL", code)
+    }
+
+    pub fn data_loss(&self, code: &str) -> ErrorBuilder {
+        self.base_error(Code::DataLoss, "DATA_LOSS", code)
+    }
+
+    pub fn unimplemented(&self, code: &str) -> ErrorBuilder {
+        self.base_error(Code::Unimplemented, "UNIMPLEMENTED", code)
     }
 }

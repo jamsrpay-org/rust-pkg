@@ -1,5 +1,5 @@
 [package]
-name = "jamsrpay-jwt"
+name = "jwt"
 version = "0.1.0"
 edition = "2024"
 
@@ -8,4 +8,4 @@ jsonwebtoken = { version = "10.3.0", features = ["rust_crypto"] }
 serde = { version = "1.0.228", features = ["derive"] }
 chrono = "0.4.44"
 thiserror = "2.0.18"
-uuid = { version = "1", features = ["v4"] }
+uuid = { version = "1.23.0", features = ["v4"] }

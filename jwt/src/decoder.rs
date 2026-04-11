@@ -7,6 +7,7 @@ use std::collections::HashSet;
 /// The decoding key and validation rules are parsed once at
 /// construction time so that repeated calls to [`decode`](Self::decode)
 /// are fast and allocation-free.
+#[derive(Debug, Clone)]
 pub struct JwtDecoder {
     decoding_key: DecodingKey,
     validation: Validation,
