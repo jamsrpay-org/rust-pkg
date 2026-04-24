@@ -655,8 +655,19 @@ checksum = "4a5f13b858c8d314ee3e8f639011f7ccefe71f97f96e50151fb991f267928e2c"
 name = "jamsrpay-interceptor"
 version = "0.1.0"
 dependencies = [
- "jwt",
+ "jamsrpay-jwt",
  "tonic",
+ "uuid",
+]
+
+[[package]]
+name = "jamsrpay-jwt"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "jsonwebtoken",
+ "serde",
+ "thiserror",
  "uuid",
 ]
 
@@ -691,17 +702,6 @@ dependencies = [
  "sha2",
  "signature",
  "simple_asn1",
-]
-
-[[package]]
-name = "jwt"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "jsonwebtoken",
- "serde",
- "thiserror",
- "uuid",
 ]
 
 [[package]]
