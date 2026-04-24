@@ -1,5 +1,5 @@
 [package]
-name = "jamsrpay-shared-types"
+name = "jamsrpay-types"
 version = "0.1.0"
 edition = "2024"
 
@@ -7,5 +7,5 @@ edition = "2024"
 strum = { version = "0.28.0", features = ["derive"] }
 rust_decimal_macros = "1.40.0"
 rust_decimal = "1.40.0"
-uuid = { version = "1.20.0", features = ["serde", "v7"] }
+uuid = { version = "1.23.1", features = ["serde", "v7"] }
 serde = { version = "1.0.227", features = ["derive"] }
