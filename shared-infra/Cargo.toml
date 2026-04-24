@@ -1,5 +1,5 @@
 [package]
-name = "shared-infra"
+name = "jamsrpay-shared-infra"
 version = "0.1.0"
 edition = "2024"
 
