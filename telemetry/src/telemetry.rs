@@ -11,17 +11,15 @@ pub struct Telemetry {
 
 impl Telemetry {
     /// Initializes production-grade telemetry:
-    /// - **Traces**: OTLP/gRPC → Alloy → Tempo (via `tracing-opentelemetry`)
-    /// - **Logs**: OTLP/gRPC → Alloy → Loki (via `opentelemetry-appender-tracing`)
-    /// - **Console**: pretty or JSON logs to stdout
+    /// - **Traces**: OTLP/gRPC → Alloy → Tempo
+    /// - **Logs**: OTLP/gRPC → Alloy → Loki
+    /// - **Metrics**: Prometheus HTTP exporter on `metric_port`
+    /// - **Console**: JSON stdout in production, pretty stdout in dev
     ///
-    /// Env vars:
-    /// - `OTEL_EXPORTER_OTLP_ENDPOINT` (default: `http://localhost:4317`)
-    /// - `OTEL_SERVICE_NAME` (default: `identity-service`)
-    /// - `RUST_LOG` (default: `info`)
-    /// - `DEPLOY_ENV` — if `production`, uses JSON stdout; otherwise pretty stdout.
-
+    /// Required env var:
+    /// - `OTEL_EXPORTER_OTLP_ENDPOINT` — OTLP collector address (default `http://localhost:4317`)
     pub fn new(service_name: String, is_production: bool, metric_port: u16) -> Self {
+
         // ── Resource ────────────────────────────────────────────────────────────
         let resource = Resource::builder()
             .with_service_name(service_name.to_owned())
@@ -47,7 +45,7 @@ impl Telemetry {
             .install()
             .expect("failed to install Prometheus metrics exporter");
 
-        let tracer = tracer_provider.tracer("identity-service");
+        let tracer = tracer_provider.tracer(service_name.as_str());
 
         // ── Log exporter (OTLP/gRPC → Alloy → Loki) ───────────────────────────
         let log_exporter = LogExporter::builder()
