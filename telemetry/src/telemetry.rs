@@ -45,7 +45,7 @@ impl Telemetry {
             .install()
             .expect("failed to install Prometheus metrics exporter");
 
-        let tracer = tracer_provider.tracer(service_name.as_str());
+        let tracer = tracer_provider.tracer(service_name);
 
         // ── Log exporter (OTLP/gRPC → Alloy → Loki) ───────────────────────────
         let log_exporter = LogExporter::builder()

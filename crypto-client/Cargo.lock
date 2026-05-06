@@ -249,14 +249,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "crypto-client"
-version = "0.1.0"
-dependencies = [
- "chain-core",
- "tron",
-]
-
-[[package]]
 name = "crypto-common"
 version = "0.1.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -751,6 +743,14 @@ name = "itoa"
 version = "1.0.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8f42a60cbdf9a97f5d2305f08a87dc4e09308d1276d28c869c684d7777685682"
+
+[[package]]
+name = "jamsrpay-crypto-client"
+version = "0.1.0"
+dependencies = [
+ "chain-core",
+ "tron",
+]
 
 [[package]]
 name = "jni"

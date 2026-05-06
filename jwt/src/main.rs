@@ -1,4 +1,4 @@
-use jwt::{scope, JwtDecoder, JwtEncoder, TokenParams};
+use jamsrpay_jwt::{JwtDecoder, JwtEncoder, TokenParams, scope};
 
 fn main() {
     let private_key = std::fs::read_to_string("jwt_private.pem").expect("missing jwt_private.pem");
