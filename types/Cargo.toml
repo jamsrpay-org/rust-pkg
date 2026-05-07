@@ -10,3 +10,4 @@ rust_decimal = "1.42.0"
 uuid = { version = "1.23.1", features = ["serde", "v7"] }
 serde = { version = "1.0.227", features = ["derive"] }
 thiserror = "2.0.18"
+url = "2.5.8"
