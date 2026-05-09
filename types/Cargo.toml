@@ -6,7 +6,7 @@ edition = "2024"
 [dependencies]
 strum = { version = "0.28.0", features = ["derive"] }
 rust_decimal_macros = "1.40.0"
-rust_decimal = "1.42.0"
+rust_decimal = "1.40.0"
 uuid = { version = "1.23.1", features = ["serde", "v7"] }
 serde = { version = "1.0.227", features = ["derive"] }
 thiserror = "2.0.18"
