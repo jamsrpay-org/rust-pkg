@@ -6,16 +6,22 @@ pub struct DisplayName(String);
 
 #[derive(Debug, Error)]
 pub enum DisplayNameError {
-    #[error("Display name is too long. Maximum length is 100 characters")]
-    TooLong,
+    #[error("Display name is too long. Maximum length is {0} characters")]
+    TooLong(usize),
 }
 
 impl DisplayName {
+    const MAX_LENGTH: usize = 100;
+
+    pub fn max_length() -> usize {
+        Self::MAX_LENGTH
+    }
+
     pub fn new(value: impl Into<String>) -> Result<Self, DisplayNameError> {
         let value = value.into().trim().to_string();
 
-        if value.len() > 100 {
-            return Err(DisplayNameError::TooLong);
+        if value.len() > Self::MAX_LENGTH {
+            return Err(DisplayNameError::TooLong(Self::MAX_LENGTH));
         }
 
         Ok(Self(value))
