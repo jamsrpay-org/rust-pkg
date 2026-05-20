@@ -5,6 +5,11 @@ use std::{
     ops::{Add, AddAssign, Sub, SubAssign},
 };
 
+#[derive(Debug)]
+pub enum MoneyError {
+    InvalidDecimal(String),
+}
+
 /// Type-safe wrapper for monetary amounts stored in **atomic units** (smallest indivisible unit).
 ///
 /// Each `Money` value is self-describing — it carries the number of decimal places
@@ -53,26 +58,47 @@ impl Money {
     ///
     /// This is intended for use at the persistence boundary where the DB stores
     /// atomic amounts as `Decimal(78, 0)`.
-    ///
-    /// # Panics
-    /// Panics if the Decimal value cannot be represented as `i128` (e.g. has fractional part).
-    pub fn from_atomic_decimal(value: Decimal, decimals: u8) -> Self {
-        let atomic = value
-            .to_i128()
-            .expect("Decimal atomic value must be an integer representable as i128");
-        Self { atomic, decimals }
+    pub fn from_atomic_decimal(value: Decimal, decimals: u8) -> Result<Self, MoneyError> {
+        let atomic = value.to_i128().ok_or_else(|| {
+            MoneyError::InvalidDecimal(
+                "Decimal atomic value must be an integer representable as i128".into(),
+            )
+        })?;
+        Ok(Self { atomic, decimals })
+    }
+
+    pub fn parse_atomic_string(s: &str, decimals: u8) -> Result<Self, MoneyError> {
+        let decimal = s.parse::<Decimal>().map_err(|e| {
+            MoneyError::InvalidDecimal(format!(
+                "Failed to parse string as Decimal: {}",
+                e.to_string()
+            ))
+        })?;
+        Self::from_atomic_decimal(decimal, decimals)
     }
 
     /// Create Money from a human-readable amount by converting to atomic units.
     ///
     /// Example: `Money::from_human_readable(dec!(1.5), 8)` → 150_000_000 satoshis
-    pub fn from_human_readable(amount: Decimal, decimals: u8) -> Self {
+    pub fn from_human_readable(amount: Decimal, decimals: u8) -> Result<Self, MoneyError> {
         let multiplier = Decimal::from_i128_with_scale(10i128.pow(decimals as u32), 0);
         let atomic_decimal = amount * multiplier;
-        let atomic = atomic_decimal
-            .to_i128()
-            .expect("Human-readable amount overflows i128 when converted to atomic units");
-        Self { atomic, decimals }
+        let atomic = atomic_decimal.to_i128().ok_or_else(|| {
+            MoneyError::InvalidDecimal(
+                "Human-readable amount overflows i128 when converted to atomic units".into(),
+            )
+        })?;
+        Ok(Self { atomic, decimals })
+    }
+
+    pub fn parse_human_readable(s: &str, decimals: u8) -> Result<Self, MoneyError> {
+        let decimal = s.parse::<Decimal>().map_err(|e| {
+            MoneyError::InvalidDecimal(format!(
+                "Failed to parse string as Decimal: {}",
+                e.to_string()
+            ))
+        })?;
+        Self::from_human_readable(decimal, decimals)
     }
 
     /// Get the atomic value (smallest unit) as an integer.
@@ -216,7 +242,7 @@ mod tests {
 
     #[test]
     fn test_from_atomic_decimal() {
-        let money = Money::from_atomic_decimal(dec!(150000000), 8);
+        let money = Money::from_atomic_decimal(dec!(150000000), 8).unwrap();
         assert_eq!(money.atomic(), 150_000_000);
         assert_eq!(money.decimals(), 8);
     }
@@ -224,7 +250,7 @@ mod tests {
     #[test]
     fn test_from_human_readable_btc() {
         // 1.5 BTC = 150_000_000 satoshis
-        let money = Money::from_human_readable(dec!(1.5), 8);
+        let money = Money::from_human_readable(dec!(1.5), 8).unwrap();
         assert_eq!(money.atomic(), 150_000_000);
         assert_eq!(money.decimals(), 8);
     }
@@ -232,14 +258,14 @@ mod tests {
     #[test]
     fn test_from_human_readable_usdt() {
         // 100 USDT = 100_000_000 (6 decimals)
-        let money = Money::from_human_readable(dec!(100), 6);
+        let money = Money::from_human_readable(dec!(100), 6).unwrap();
         assert_eq!(money.atomic(), 100_000_000);
     }
 
     #[test]
     fn test_from_human_readable_eth() {
         // 0.001 ETH = 1_000_000_000_000_000 wei (18 decimals)
-        let money = Money::from_human_readable(dec!(0.001), 18);
+        let money = Money::from_human_readable(dec!(0.001), 18).unwrap();
         assert_eq!(money.atomic(), 1_000_000_000_000_000);
     }
 
@@ -278,7 +304,7 @@ mod tests {
 
     #[test]
     fn test_roundtrip_human_to_atomic_to_formatted() {
-        let money = Money::from_human_readable(dec!(42.12345678), 8);
+        let money = Money::from_human_readable(dec!(42.12345678), 8).unwrap();
         assert_eq!(money.to_formatted(), "42.12345678");
     }
 
