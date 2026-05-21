@@ -1,7 +1,7 @@
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct HttpUrl(String);
 
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum HttpUrlError {
     InvalidUrl,
     TooLong(usize),
