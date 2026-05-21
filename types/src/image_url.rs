@@ -19,10 +19,6 @@ impl ImageUrl {
     }
 
     pub fn new(logo: String) -> Result<Self, ImageUrlError> {
-        if logo.is_empty() {
-            return Err(ImageUrlError::InvalidUrl);
-        }
-
         if logo.len() > Self::MAX_LENGTH {
             return Err(ImageUrlError::TooLong(Self::MAX_LENGTH));
         }

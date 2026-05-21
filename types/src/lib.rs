@@ -5,6 +5,7 @@ pub mod display_money;
 pub mod display_name;
 pub mod email_address;
 pub mod exchange_rate;
+pub mod http_url;
 pub mod identifier;
 pub mod image_url;
 pub mod money;
