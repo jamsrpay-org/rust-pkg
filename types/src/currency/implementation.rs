@@ -1,85 +1,7 @@
-use strum::AsRefStr;
-
-#[allow(non_camel_case_types)]
-#[derive(Debug, Clone, Copy, PartialEq, Eq, AsRefStr)]
-pub enum FiatCurrency {
-    USD,
-    EUR,
-    GBP,
-    CAD,
-    CHF,
-    HKD,
-    ILS,
-    INR,
-    JPY,
-    PHP,
-}
-
-#[allow(non_camel_case_types)]
-#[derive(Debug, Clone, Copy, PartialEq, Eq, AsRefStr)]
-pub enum CryptoAsset {
-    TRX,
-    USDT,
-}
-
-#[allow(non_camel_case_types)]
-#[derive(Debug, Clone, Copy, PartialEq, Eq, AsRefStr)]
-pub enum PricingCurrency {
-    // Crypto Assets
-    TRX,
-    USDT,
-    // Fiat Currencies
-    USD,
-    EUR,
-    GBP,
-    CAD,
-    CHF,
-    HKD,
-    ILS,
-    INR,
-    JPY,
-    PHP,
-}
-
-#[allow(non_camel_case_types)]
-#[derive(Debug, Clone, Copy, PartialEq, Eq, AsRefStr)]
-pub enum PaymentCurrency {
-    TRX,
-    USDT_TRC20,
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum Chain {
-    Tron,
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum TokenStandard {
-    Trc20,
-}
-
-#[derive(Debug, Clone, Copy)]
-pub enum AssetKind {
-    Native,
-    Token { standard: TokenStandard },
-}
-
-#[derive(Debug, Clone, Copy)]
-pub struct PaymentCurrencyMeta {
-    pub asset_id: &'static str,
-    pub symbol: &'static str,
-    pub name: &'static str,
-    pub chain: Chain,
-    pub kind: AssetKind,
-    pub decimals: u8,
-}
-
-pub struct PricingCurrencyMeta {
-    pub asset_id: &'static str,
-    pub symbol: &'static str,
-    pub name: &'static str,
-    pub decimals: u8,
-}
+use crate::currency::{
+    AssetKind, Blockchain, BlockchainNetwork, FiatCurrency, PaymentCurrency, PaymentCurrencyMeta,
+    PricingCurrency, PricingCurrencyMeta, TokenStandard,
+};
 
 impl PaymentCurrency {
     pub const fn meta(&self) -> PaymentCurrencyMeta {
@@ -88,7 +10,7 @@ impl PaymentCurrency {
                 asset_id: "TRX",
                 symbol: "TRX",
                 name: "TRX",
-                chain: Chain::Tron,
+                chain: Blockchain::Tron,
                 kind: AssetKind::Native,
                 decimals: 6,
             },
@@ -96,7 +18,7 @@ impl PaymentCurrency {
                 asset_id: "USDT_TRC20",
                 symbol: "USDT",
                 name: "Tether USD",
-                chain: Chain::Tron,
+                chain: Blockchain::Tron,
                 kind: AssetKind::Token {
                     standard: TokenStandard::Trc20,
                 },
@@ -123,7 +45,7 @@ impl PaymentCurrency {
         self.meta().decimals
     }
 
-    pub fn chain(&self) -> Chain {
+    pub fn chain(&self) -> Blockchain {
         self.meta().chain
     }
 
@@ -133,17 +55,46 @@ impl PaymentCurrency {
 }
 
 impl PaymentCurrency {
-    pub fn address_view_url(&self, address: &str) -> String {
-        match self {
-            PaymentCurrency::TRX => format!("https://tronscan.org/#/address/{}", address),
-            PaymentCurrency::USDT_TRC20 => format!("https://tronscan.org/#/address/{}", address),
+    pub fn get_base_url(&self, network: BlockchainNetwork) -> &'static str {
+        match network {
+            BlockchainNetwork::TronMainnet => "https://tronscan.org",
+            BlockchainNetwork::TronNile => "https://nile.tronscan.org",
         }
     }
 
-    pub fn transaction_view_url(&self, tx_id: &str) -> String {
-        match self {
-            PaymentCurrency::TRX => format!("https://tronscan.org/#/transaction/{}", tx_id),
-            PaymentCurrency::USDT_TRC20 => format!("https://tronscan.org/#/transaction/{}", tx_id),
+    pub fn address_view_url(&self, network: BlockchainNetwork, address: &str) -> String {
+        let base_url = self.get_base_url(network);
+        match network {
+            BlockchainNetwork::TronMainnet => match self {
+                PaymentCurrency::TRX => format!("{}/#/address/{}", base_url, address),
+                PaymentCurrency::USDT_TRC20 => {
+                    format!("{}/#/address/{}", base_url, address)
+                }
+            },
+            BlockchainNetwork::TronNile => match self {
+                PaymentCurrency::TRX => format!("{}/#/address/{}", base_url, address),
+                PaymentCurrency::USDT_TRC20 => {
+                    format!("{}/#/address/{}", base_url, address)
+                }
+            },
+        }
+    }
+
+    pub fn transaction_view_url(&self, network: BlockchainNetwork, tx_id: &str) -> String {
+        let base_url = self.get_base_url(network);
+        match network {
+            BlockchainNetwork::TronMainnet => match self {
+                PaymentCurrency::TRX => format!("{}/#/transaction/{}", base_url, tx_id),
+                PaymentCurrency::USDT_TRC20 => {
+                    format!("{}/#/transaction/{}", base_url, tx_id)
+                }
+            },
+            BlockchainNetwork::TronNile => match self {
+                PaymentCurrency::TRX => format!("{}/#/transaction/{}", base_url, tx_id),
+                PaymentCurrency::USDT_TRC20 => {
+                    format!("{}/#/transaction/{}", base_url, tx_id)
+                }
+            },
         }
     }
 }
