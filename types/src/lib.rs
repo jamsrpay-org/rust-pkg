@@ -1,6 +1,7 @@
 pub mod crypto_address;
 pub mod crypto_transaction_hash;
 pub mod currency;
+pub mod display_money;
 pub mod display_name;
 pub mod email_address;
 pub mod exchange_rate;
