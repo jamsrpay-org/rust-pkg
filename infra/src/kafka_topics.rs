@@ -1,5 +1,6 @@
 pub const INVOICE_EVENTS: &str = "billing.invoice.events.v1";
 pub const PAYMENT_EVENTS: &str = "billing.payment.events.v1";
+pub const TOKEN_DEPOSIT_ADDRESS_EVENTS: &str = "billing.token_deposit_address.events.v1";
 
 pub const USER_EVENTS: &str = "user.events.v1";
 
