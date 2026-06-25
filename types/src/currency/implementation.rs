@@ -1,7 +1,80 @@
-use crate::currency::{
-    AssetKind, Blockchain, BlockchainNetwork, FiatCurrency, PaymentCurrency, PaymentCurrencyMeta,
-    PricingCurrency, PricingCurrencyMeta, TokenStandard,
+use crate::{
+    currency::{
+        AssetKind, Blockchain, BlockchainMeta, BlockchainNetwork, FiatCurrency, GasCurrency,
+        GasCurrencyMeta, PaymentCurrency, PaymentCurrencyMeta, PricingCurrency,
+        PricingCurrencyMeta, TokenStandard,
+    },
+    money::Money,
 };
+
+impl Blockchain {
+    pub const fn meta(&self) -> BlockchainMeta {
+        match self {
+            Blockchain::Tron => BlockchainMeta {
+                symbol: "TRON",
+                name: "TRON",
+                gas_currency: GasCurrency::TRX,
+            },
+        }
+    }
+
+    pub fn gas_currency(&self) -> GasCurrency {
+        self.meta().gas_currency
+    }
+
+    pub fn symbol(&self) -> &'static str {
+        self.meta().symbol
+    }
+
+    pub fn name(&self) -> &'static str {
+        self.meta().name
+    }
+}
+
+impl GasCurrency {
+    pub const fn meta(&self) -> GasCurrencyMeta {
+        match self {
+            GasCurrency::TRX => GasCurrencyMeta {
+                asset_id: "TRX",
+                symbol: "TRX",
+                name: "TRX",
+                chain: Blockchain::Tron,
+                kind: AssetKind::Native,
+                decimals: 6,
+            },
+        }
+    }
+
+    pub fn asset(&self) -> &'static str {
+        self.meta().asset_id
+    }
+
+    pub fn symbol(&self) -> &'static str {
+        self.meta().symbol
+    }
+
+    pub fn name(&self) -> &'static str {
+        self.meta().name
+    }
+
+    pub fn decimals(&self) -> u8 {
+        self.meta().decimals
+    }
+
+    pub fn chain(&self) -> Blockchain {
+        self.meta().chain
+    }
+
+    pub fn kind(&self) -> AssetKind {
+        self.meta().kind
+    }
+
+    //
+    pub fn format_money(self, money: Money) -> String {
+        let formatted = money.to_formatted();
+        format!("{formatted} {}", self.symbol())
+    }
+}
 
 impl PaymentCurrency {
     pub const fn meta(&self) -> PaymentCurrencyMeta {
@@ -26,9 +99,7 @@ impl PaymentCurrency {
             },
         }
     }
-}
 
-impl PaymentCurrency {
     pub fn asset(&self) -> &'static str {
         self.meta().asset_id
     }
@@ -51,6 +122,12 @@ impl PaymentCurrency {
 
     pub fn kind(&self) -> AssetKind {
         self.meta().kind
+    }
+
+    //
+    pub fn format_money(self, money: Money) -> String {
+        let formatted = money.to_formatted();
+        format!("{formatted} {}", self.symbol())
     }
 }
 
@@ -165,9 +242,7 @@ impl FiatCurrency {
             },
         }
     }
-}
 
-impl FiatCurrency {
     pub fn asset(&self) -> &'static str {
         self.meta().asset_id
     }
@@ -182,6 +257,12 @@ impl FiatCurrency {
 
     pub fn decimals(&self) -> u8 {
         self.meta().decimals
+    }
+
+    //
+    pub fn format_money(self, money: Money) -> String {
+        let formatted = money.to_formatted();
+        format!("{formatted} {}", self.symbol())
     }
 }
 
@@ -300,9 +381,7 @@ impl PricingCurrency {
             }
         }
     }
-}
 
-impl PricingCurrency {
     pub fn asset(&self) -> &'static str {
         self.meta().asset_id
     }
@@ -317,5 +396,11 @@ impl PricingCurrency {
 
     pub fn decimals(&self) -> u8 {
         self.meta().decimals
+    }
+
+    //
+    pub fn format_money(self, money: Money) -> String {
+        let formatted = money.to_formatted();
+        format!("{formatted} {}", self.symbol())
     }
 }
