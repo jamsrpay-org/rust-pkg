@@ -1,8 +1,7 @@
 use crate::{
     currency::{
         AssetKind, Blockchain, BlockchainMeta, BlockchainNetwork, FiatCurrency, GasCurrency,
-        GasCurrencyMeta, PaymentCurrency, PaymentCurrencyMeta, PricingCurrency,
-        PricingCurrencyMeta, TokenStandard,
+        PaymentCurrency, PaymentCurrencyMeta, PricingCurrency, PricingCurrencyMeta, TokenStandard,
     },
     money::Money,
 };
@@ -31,48 +30,11 @@ impl Blockchain {
     }
 }
 
-impl GasCurrency {
-    pub const fn meta(&self) -> GasCurrencyMeta {
-        match self {
-            GasCurrency::TRX => GasCurrencyMeta {
-                asset_id: "TRX",
-                symbol: "TRX",
-                name: "TRX",
-                chain: Blockchain::Tron,
-                kind: AssetKind::Native,
-                decimals: 6,
-            },
+impl From<GasCurrency> for PaymentCurrency {
+    fn from(value: GasCurrency) -> Self {
+        match value {
+            GasCurrency::TRX => PaymentCurrency::TRX,
         }
-    }
-
-    pub fn asset(&self) -> &'static str {
-        self.meta().asset_id
-    }
-
-    pub fn symbol(&self) -> &'static str {
-        self.meta().symbol
-    }
-
-    pub fn name(&self) -> &'static str {
-        self.meta().name
-    }
-
-    pub fn decimals(&self) -> u8 {
-        self.meta().decimals
-    }
-
-    pub fn chain(&self) -> Blockchain {
-        self.meta().chain
-    }
-
-    pub fn kind(&self) -> AssetKind {
-        self.meta().kind
-    }
-
-    //
-    pub fn format_money(self, money: Money) -> String {
-        let formatted = money.to_formatted();
-        format!("{formatted} {}", self.symbol())
     }
 }
 

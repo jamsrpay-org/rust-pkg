@@ -96,16 +96,6 @@ pub struct PaymentCurrencyMeta {
 }
 
 #[derive(Debug, Clone, Copy)]
-pub struct GasCurrencyMeta {
-    pub asset_id: &'static str,
-    pub symbol: &'static str,
-    pub name: &'static str,
-    pub chain: Blockchain,
-    pub kind: AssetKind,
-    pub decimals: u8,
-}
-
-#[derive(Debug, Clone, Copy)]
 pub struct PricingCurrencyMeta {
     pub asset_id: &'static str,
     pub symbol: &'static str,
