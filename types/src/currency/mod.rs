@@ -47,7 +47,7 @@ pub enum PricingCurrency {
 }
 
 #[allow(non_camel_case_types)]
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Display, EnumString, AsRefStr)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Display, EnumString, AsRefStr)]
 #[strum(serialize_all = "SCREAMING_SNAKE_CASE")]
 pub enum PaymentCurrency {
     TRX,

@@ -1,5 +1,19 @@
 use serde::{Deserialize, Serialize};
 
+/// Helper to deserialize JSON numbers that may arrive as floats (e.g. `10.0`)
+/// into `i64`. The ITRX API inconsistently returns integer fields as floats.
+mod de_number {
+    use serde::{self, Deserialize, Deserializer};
+
+    pub fn deserialize<'de, D>(deserializer: D) -> Result<i64, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let v = f64::deserialize(deserializer)?;
+        Ok(v as i64)
+    }
+}
+
 // ─── Create Order ───────────────────────────────────────────────────
 
 /// Parameters for placing an energy rental order.
@@ -27,8 +41,10 @@ pub struct CreateOrderResponse {
     /// Internal order serial number.
     pub serial: String,
     /// Order cost in sun (÷ 1,000,000 = TRX).
+    #[serde(deserialize_with = "de_number::deserialize")]
     pub amount: i64,
     /// Remaining account balance in sun.
+    #[serde(deserialize_with = "de_number::deserialize")]
     pub balance: i64,
 }
 
@@ -52,15 +68,18 @@ pub struct EstimateEnergyParams<'a> {
 #[derive(Debug, Clone, Deserialize)]
 pub struct EstimateEnergyResponse {
     /// The energy amount for the order.
+    #[serde(deserialize_with = "de_number::deserialize")]
     pub energy_amount: i64,
     /// Rental period string.
     pub period: String,
     /// Unit price in sun.
+    #[serde(deserialize_with = "de_number::deserialize")]
     pub price: i64,
     /// Total TRX to be paid in sun.
+    #[serde(deserialize_with = "de_number::deserialize")]
     pub total_price: i64,
     /// Small-order handling fee in sun (applies when energy < 50,000).
-    #[serde(default)]
+    #[serde(default, deserialize_with = "de_number::deserialize")]
     pub addition: i64,
 }
 
@@ -72,6 +91,7 @@ pub struct PriceTier {
     /// Period code: 0 = 1 hour, 1 = 1 day, 3 = 3 days, 30 = 30 days.
     pub period: i32,
     /// Unit price in sun.
+    #[serde(deserialize_with = "de_number::deserialize")]
     pub price: i64,
 }
 
@@ -81,24 +101,32 @@ pub struct PriceTier {
 #[derive(Debug, Clone, Deserialize)]
 pub struct BalanceResponse {
     /// Total energy available on the platform.
+    #[serde(deserialize_with = "de_number::deserialize")]
     pub platform_avail_energy: i64,
     /// Maximum energy for a single unsplit order.
+    #[serde(deserialize_with = "de_number::deserialize")]
     pub platform_max_energy: i64,
     /// Minimum order energy.
+    #[serde(deserialize_with = "de_number::deserialize")]
     pub minimum_order_energy: i64,
     /// Maximum order energy.
+    #[serde(deserialize_with = "de_number::deserialize")]
     pub maximum_order_energy: i64,
     /// Orders below this threshold incur a small-order fee.
+    #[serde(deserialize_with = "de_number::deserialize")]
     pub small_amount: i64,
     /// Small-order handling fee in TRX.
     pub small_addition: f64,
     /// Energy required for a USDT transfer to an existing address.
+    #[serde(deserialize_with = "de_number::deserialize")]
     pub usdt_energy_need_old: i64,
     /// Energy required for a USDT transfer to a new address.
+    #[serde(deserialize_with = "de_number::deserialize")]
     pub usdt_energy_need_new: i64,
     /// Pricing tiers per rental period.
     pub tiered_pricing: Vec<PriceTier>,
     /// Account balance in sun (÷ 1,000,000 = TRX).
+    #[serde(deserialize_with = "de_number::deserialize")]
     pub balance: i64,
 }
 
@@ -107,10 +135,10 @@ pub struct BalanceResponse {
 /// Wrapper for responses that include `errno` / `message` alongside data.
 #[derive(Debug, Deserialize)]
 pub struct ApiEnvelope<T> {
+    #[serde(deserialize_with = "de_number::deserialize")]
     pub errno: i64,
     #[serde(default)]
     pub message: Option<String>,
     #[serde(flatten)]
     pub data: Option<T>,
 }
-
