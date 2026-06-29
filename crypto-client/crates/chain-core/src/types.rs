@@ -1,53 +1,61 @@
-use crate::{
-    error::{ChainClientError, CryptoAssetClientError},
-    wallet::CryptoWallet,
+use crate::error::BlockchainClientError;
+use jamsrpay_types::{
+    crypto_address::CryptoAddress,
+    crypto_transaction_hash::CryptoTransactionHash,
+    currency::PaymentCurrency,
+    money::Money,
 };
-use async_trait::async_trait;
 
-#[derive(Debug)]
-pub enum CryptoCurrency {
-    Tron,
+/// Re-export as `Address` for a cleaner blockchain-oriented API.
+pub type Address = CryptoAddress;
+
+/// Re-export as `TransactionId` — blockchain tx hashes are strings, not UUIDs.
+pub type TransactionId = CryptoTransactionHash;
+
+// ── Request / Result types ──────────────────────────────────────────────────
+
+pub struct TransferRequest {
+    pub currency: PaymentCurrency,
+    pub from: Address,
+    pub to: Address,
+    pub amount: Money,
+}
+
+pub struct EstimateWithdrawableRequest {
+    pub currency: PaymentCurrency,
+    pub from: Address,
+    pub to: Address,
 }
 
 #[derive(Debug)]
-pub struct UnsignedTx {
-    pub raw_tx: Vec<u8>,
-    pub tx_id: String,
-    /// Optional serialized JSON bytes for chain-specific metadata (e.g. Tron's `raw_data`).
-    pub raw_data_json: Option<Vec<u8>>,
+pub struct BroadcastResult {
+    pub txid: TransactionId,
 }
 
-#[derive(Debug)]
-pub struct BroadcastTxResponse {
-    pub tx_id: String,
-}
+// ── Trait ────────────────────────────────────────────────────────────────────
 
-#[async_trait]
-pub trait CryptoAssetClientTrait {
-    fn symbol(&self) -> &'static str;
-    fn decimals(&self) -> u8;
+pub trait BlockchainClient {
+    type PreparedTransfer;
+    type SignedTransfer;
 
-    async fn balance(&self, address: &str) -> Result<u128, CryptoAssetClientError>;
-    async fn create_transfer_tx(
+    fn prepare_transfer(
         &self,
-        from_address: &str,
-        to_address: &str,
-        amount: u128,
-    ) -> Result<UnsignedTx, CryptoAssetClientError>; // tx hash
-    fn sign(&self, raw_tx: &[u8], key: &[u8]) -> Result<Vec<u8>, CryptoAssetClientError>;
-    async fn broadcast(
-        &self,
-        raw_tx: &[u8],
-        signatures: &[Vec<u8>],
-        raw_data_json: Option<&[u8]>,
-    ) -> Result<BroadcastTxResponse, CryptoAssetClientError>;
-    async fn estimate_withdrawable(
-        &self,
-        from_address: &str,
-        to_address: &str,
-    ) -> Result<u128, CryptoAssetClientError>;
-}
+        request: TransferRequest,
+    ) -> impl Future<Output = Result<Self::PreparedTransfer, BlockchainClientError>>;
 
-pub trait ChainClientTrait {
-    fn generate_wallet(&self) -> Result<CryptoWallet, ChainClientError>;
+    fn broadcast(
+        &self,
+        signed: Self::SignedTransfer,
+    ) -> impl Future<Output = Result<BroadcastResult, BlockchainClientError>>;
+
+    fn balance(
+        &self,
+        address: Address,
+        currency: PaymentCurrency,
+    ) -> impl Future<Output = Result<Money, BlockchainClientError>>;
+
+    fn estimate_withdrawable(
+        &self,
+        request: EstimateWithdrawableRequest,
+    ) -> impl Future<Output = Result<Money, BlockchainClientError>>;
 }

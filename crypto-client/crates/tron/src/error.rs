@@ -1,4 +1,4 @@
-use chain_core::error::CryptoAssetClientError;
+use chain_core::error::BlockchainClientError;
 use thiserror::Error;
 
 #[derive(Error, Debug)]
@@ -15,9 +15,9 @@ pub enum TronClientError {
     SignError(String),
 }
 
-impl From<TronClientError> for CryptoAssetClientError {
+impl From<TronClientError> for BlockchainClientError {
     fn from(value: TronClientError) -> Self {
         eprintln!("{}", value);
-        CryptoAssetClientError::Unknown(value.to_string())
+        BlockchainClientError::Unknown(value.to_string())
     }
 }

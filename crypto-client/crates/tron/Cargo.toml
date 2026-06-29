@@ -4,16 +4,16 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-async-trait = { workspace = true }
 bs58 = { workspace = true }
 chain-core = { workspace = true }
 hex = { workspace = true }
+jamsrpay-types = { workspace = true }
 rand = { workspace = true }
+reqwest = { workspace = true }
 secp256k1 = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+sha2 = { workspace = true }
 sha3 = { workspace = true }
 thiserror = { workspace = true }
-reqwest = { workspace = true }
-serde_json = { workspace = true }
-serde = { workspace = true }
 tokio = { workspace = true }
-sha2 = { workspace = true }

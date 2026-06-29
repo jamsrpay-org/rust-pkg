@@ -7,7 +7,6 @@ edition = "2024"
 members = [".", "crates/*"]
 
 [workspace.dependencies]
-async-trait = "0.1.89"
 bs58 = { version = "0.5.1", features = ["check"] }
 chain-core = { path = "crates/chain-core" }
 hex = "0.4.3"
@@ -20,7 +19,12 @@ serde_json = "1.0.149"
 serde = { version = "1.0.228", features = ["derive"] }
 tokio = { version = "1.52.2", features = ["full"] }
 sha2 = "0.10.9"
+jamsrpay-types = { git = "https://github.com/jamsrpay-org/rust-pkg", package = "jamsrpay-types", tag = "v0.1.18" }
+
 
 [dependencies]
 tron = { path = "crates/tron" }
 chain-core = { workspace = true }
+
+[patch."https://github.com/jamsrpay-org/rust-pkg"]
+jamsrpay-types = { path = "../types" }

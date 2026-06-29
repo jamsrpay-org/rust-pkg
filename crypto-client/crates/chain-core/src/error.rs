@@ -1,5 +1,5 @@
 #[derive(thiserror::Error, Debug)]
-pub enum CryptoAssetClientError {
+pub enum BlockchainClientError {
     #[error("rpc error: {0}")]
     Rpc(String),
 
