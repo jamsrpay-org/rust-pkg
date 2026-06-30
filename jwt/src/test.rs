@@ -28,7 +28,6 @@ fn access_token_params(sub: &str) -> TokenParams {
         sub: sub.to_string(),
         scope: scope::ACCESS_TOKEN.to_string(),
         role: "merchant_admin".to_string(),
-        tenant_id: Some("tenant-uuid-001".to_string()),
         session_id: "session-uuid-001".to_string(),
         expires_in: None,
     }
@@ -49,7 +48,6 @@ fn test_encode_and_decode_success() {
     assert_eq!(claims.aud, AUDIENCE);
     assert_eq!(claims.scope, scope::ACCESS_TOKEN);
     assert_eq!(claims.role, "merchant_admin");
-    assert_eq!(claims.tenant_id, Some("tenant-uuid-001".to_string()));
     assert_eq!(claims.session_id, "session-uuid-001");
     assert!(claims.exp > claims.iat);
     assert!(!claims.jti.is_empty());
@@ -90,7 +88,6 @@ fn test_refresh_token_scope() {
         sub: "user-1".to_string(),
         scope: scope::REFRESH_TOKEN.to_string(),
         role: "merchant_admin".to_string(),
-        tenant_id: Some("tenant-uuid-001".to_string()),
         session_id: "session-uuid-001".to_string(),
         expires_in: Some(Duration::days(30)),
     };
@@ -189,7 +186,6 @@ fn test_token_without_tenant_id() {
         sub: "admin-uuid".to_string(),
         scope: scope::ACCESS_TOKEN.to_string(),
         role: "platform_admin".to_string(),
-        tenant_id: None,
         session_id: "session-uuid-002".to_string(),
         expires_in: None,
     };
@@ -198,18 +194,6 @@ fn test_token_without_tenant_id() {
     let claims = decoder.decode(&token).unwrap();
 
     assert_eq!(claims.role, "platform_admin");
-    assert_eq!(claims.tenant_id, None);
-}
-
-#[test]
-fn test_token_with_tenant_id() {
-    let encoder = get_encoder();
-    let decoder = get_decoder();
-
-    let token = encoder.encode(access_token_params("user-1")).unwrap();
-    let claims = decoder.decode(&token).unwrap();
-
-    assert_eq!(claims.tenant_id, Some("tenant-uuid-001".to_string()));
 }
 
 // ─── JTI uniqueness ─────────────────────────────────────────────────

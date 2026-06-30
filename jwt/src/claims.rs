@@ -11,11 +11,8 @@ pub struct Claims {
     pub aud: String,
     /// Token scope — "access_token", "refresh_token", etc.
     pub scope: String,
-    /// Role — "merchant_admin", "admin", etc.
+    /// Role — "merchant", "admin", etc.
     pub role: String,
-    /// Tenant ID — merchant UUID for multi-tenancy (absent for platform admins).
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub tenant_id: Option<String>,
     /// Session ID — tracks the login session.
     pub session_id: String,
     /// Issued-at timestamp (seconds since epoch).

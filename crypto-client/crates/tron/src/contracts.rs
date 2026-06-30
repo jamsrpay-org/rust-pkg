@@ -6,5 +6,5 @@ pub mod mainnet {
 
 pub mod nile {
     /// USDT (Tether USD) on Tron Nile Testnet.
-    pub const USDT_TRC20: &str = "TXLAQ63Xg1NAzckPwKHvzw7CSEmLMEqcdj";
+    pub const USDT_TRC20: &str = "TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf";
 }

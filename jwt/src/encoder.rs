@@ -14,8 +14,6 @@ pub struct TokenParams {
     pub scope: String,
     /// Role — "merchant_admin", "admin", etc.
     pub role: String,
-    /// Tenant ID — merchant UUID (`None` for platform admins).
-    pub tenant_id: Option<String>,
     /// Session ID — login session UUID.
     pub session_id: String,
     /// Custom expiration override. Falls back to the encoder's default if `None`.
@@ -74,7 +72,6 @@ impl JwtEncoder {
             aud: self.audience.clone(),
             scope: params.scope,
             role: params.role,
-            tenant_id: params.tenant_id,
             session_id: params.session_id,
             iat,
             exp,

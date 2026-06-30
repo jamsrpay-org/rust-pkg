@@ -18,7 +18,6 @@ fn main() {
             sub: "user-uuid-001".into(),
             scope: scope::ACCESS_TOKEN.into(),
             role: "merchant_admin".into(),
-            tenant_id: Some("merchant-uuid-001".into()),
             session_id: "session-uuid-001".into(),
             expires_in: None,
         })

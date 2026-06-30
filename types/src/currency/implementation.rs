@@ -138,6 +138,22 @@ impl PaymentCurrency {
     }
 }
 
+impl PaymentCurrency {
+    pub fn min_payment_amount(&self) -> Money {
+        match self {
+            PaymentCurrency::TRX => Money::from_atomic(3_000_000, self.decimals()),
+            PaymentCurrency::USDT_TRC20 => Money::from_atomic(5_000_000, self.decimals()),
+        }
+    }
+
+    pub fn fixed_network_fee(&self) -> Money {
+        match self {
+            PaymentCurrency::TRX => Money::from_atomic(2_000_000, self.decimals()),
+            PaymentCurrency::USDT_TRC20 => Money::from_atomic(0, self.decimals()),
+        }
+    }
+}
+
 // FiatCurrency
 impl FiatCurrency {
     pub const fn meta(&self) -> PricingCurrencyMeta {
