@@ -1,5 +1,6 @@
 use crate::client::sign::ec_key_sign;
-use crate::types::{TronPreparedTransfer, TronSignedTransfer};
+use crate::types::{TronPreparedTransfer, TronSignedTransfer, TronWallet};
+use chain_core::types::CryptoWallet;
 use chain_core::{
     error::BlockchainClientError,
     types::{
@@ -128,6 +129,7 @@ impl BlockchainClient for TronClient {
                 )
                 .await?
             }
+            _ => unreachable!(),
         };
 
         let raw_data_bytes = hex::decode(&tx.raw_data_hex)
@@ -173,6 +175,7 @@ impl BlockchainClient for TronClient {
                 let raw = self.get_trc20_balance(address.as_str(), contract).await?;
                 Ok(Money::from_atomic(raw as i128, decimals))
             }
+            _ => unreachable!(),
         }
     }
 
@@ -192,7 +195,25 @@ impl BlockchainClient for TronClient {
                     .await?;
                 Ok(Money::from_atomic(raw as i128, decimals))
             }
+            _ => unreachable!(),
         }
+    }
+
+    fn generate_wallet(&self) -> Result<CryptoWallet, BlockchainClientError> {
+        let wallet = TronWallet::new();
+        Ok(CryptoWallet {
+            private_key: wallet.private_key,
+            address: wallet.address.base58,
+        })
+    }
+
+    fn sign_transaction(
+        &self,
+        private_key: &[u8],
+        raw_tx: &[u8],
+    ) -> Result<Vec<u8>, BlockchainClientError> {
+        let signature = ec_key_sign(raw_tx, private_key)?;
+        Ok(signature)
     }
 }
 

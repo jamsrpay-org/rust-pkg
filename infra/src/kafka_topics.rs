@@ -13,6 +13,6 @@ pub const STORE_CURRENCY_EVENTS: &str = "store.store_currency.events.v1";
 pub const PAYOUT_EVENTS: &str = "payout.events.v1";
 pub const PAYOUT_WALLET_EVENTS: &str = "payout.payout_wallet.events.v1";
 
-pub const TRON_NATIVE_TRANSFERS: &str = "tron.native_transfers.v1";
-pub const TRON_TOKEN_TRANSFERS: &str = "tron.token_transfers.v1";
+pub const TRON_NATIVE_TRANSFERS: &str = "tron.transfers.native.v1";
+pub const TRON_TOKEN_TRANSFERS: &str = "tron.transfers.token.v1";
 pub const TRON_BLOCKS: &str = "tron.blocks.v1";

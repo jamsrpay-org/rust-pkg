@@ -1,18 +1,23 @@
 use crate::{
     currency::{
-        AssetKind, Blockchain, BlockchainMeta, BlockchainNetwork, FiatCurrency, GasCurrency,
-        PaymentCurrency, PaymentCurrencyMeta, PricingCurrency, PricingCurrencyMeta, TokenStandard,
+        AssetKind, BlockchainMeta, Chain, ChainNetwork, FiatCurrency, GasCurrency, PaymentCurrency,
+        PaymentCurrencyMeta, PricingCurrency, PricingCurrencyMeta, TokenStandard,
     },
     money::Money,
 };
 
-impl Blockchain {
+impl Chain {
     pub const fn meta(&self) -> BlockchainMeta {
         match self {
-            Blockchain::Tron => BlockchainMeta {
+            Chain::Tron => BlockchainMeta {
                 symbol: "TRON",
                 name: "TRON",
                 gas_currency: GasCurrency::TRX,
+            },
+            Chain::BinanceSmartChain => BlockchainMeta {
+                symbol: "BSC",
+                name: "Binance Smart Chain",
+                gas_currency: GasCurrency::BNB,
             },
         }
     }
@@ -34,6 +39,7 @@ impl From<GasCurrency> for PaymentCurrency {
     fn from(value: GasCurrency) -> Self {
         match value {
             GasCurrency::TRX => PaymentCurrency::TRX,
+            GasCurrency::BNB => PaymentCurrency::BNB,
         }
     }
 }
@@ -45,19 +51,68 @@ impl PaymentCurrency {
                 asset_id: "TRX",
                 symbol: "TRX",
                 name: "TRX",
-                chain: Blockchain::Tron,
+                chain: Chain::Tron,
                 kind: AssetKind::Native,
                 decimals: 6,
+            },
+            PaymentCurrency::BNB => PaymentCurrencyMeta {
+                asset_id: "BNB",
+                symbol: "BNB",
+                name: "Binance Coin",
+                chain: Chain::BinanceSmartChain,
+                kind: AssetKind::Native,
+                decimals: 8,
             },
             PaymentCurrency::USDT_TRC20 => PaymentCurrencyMeta {
                 asset_id: "USDT_TRC20",
                 symbol: "USDT",
                 name: "Tether USD",
-                chain: Blockchain::Tron,
+                chain: Chain::Tron,
                 kind: AssetKind::Token {
                     standard: TokenStandard::Trc20,
                 },
                 decimals: 6,
+            },
+            PaymentCurrency::USDT_BEP20 => PaymentCurrencyMeta {
+                asset_id: "USDT_BEP20",
+                symbol: "USDT",
+                name: "Tether USD",
+                chain: Chain::BinanceSmartChain,
+                kind: AssetKind::Token {
+                    standard: TokenStandard::Bep20,
+                },
+                decimals: 18,
+            },
+            PaymentCurrency::USDC_BEP20 => PaymentCurrencyMeta {
+                asset_id: "USDC_BEP20",
+                symbol: "USDC",
+                name: "USD Coin",
+                chain: Chain::BinanceSmartChain,
+                kind: AssetKind::Token {
+                    standard: TokenStandard::Bep20,
+                },
+                decimals: 18,
+            },
+
+            PaymentCurrency::BUSD_BEP20 => PaymentCurrencyMeta {
+                asset_id: "BUSD_BEP20",
+                symbol: "BUSD",
+                name: "Binance USD",
+                chain: Chain::BinanceSmartChain,
+                kind: AssetKind::Token {
+                    standard: TokenStandard::Bep20,
+                },
+                decimals: 18,
+            },
+            PaymentCurrency::DAI_BEP20 => PaymentCurrencyMeta {
+                asset_id: "DAI_BEP20",
+                symbol: "DAI",
+                name: "Dai",
+                chain: Chain::BinanceSmartChain,
+                kind: AssetKind::Token {
+                    standard: TokenStandard::Bep20,
+                },
+                decimals: 18,
             },
         }
     }
@@ -78,7 +133,7 @@ impl PaymentCurrency {
         self.meta().decimals
     }
 
-    pub fn chain(&self) -> Blockchain {
+    pub fn chain(&self) -> Chain {
         self.meta().chain
     }
 
@@ -94,45 +149,88 @@ impl PaymentCurrency {
 }
 
 impl PaymentCurrency {
-    pub fn get_base_url(&self, network: BlockchainNetwork) -> &'static str {
+    pub fn get_base_url(&self, network: ChainNetwork) -> &'static str {
         match network {
-            BlockchainNetwork::TronMainnet => "https://tronscan.org",
-            BlockchainNetwork::TronNile => "https://nile.tronscan.org",
+            ChainNetwork::TronMainnet => "https://tronscan.org",
+            ChainNetwork::TronNile => "https://nile.tronscan.org",
+            ChainNetwork::BSCMainnet => "https://bscscan.com",
+            ChainNetwork::BSCTestnet => "https://testnet.bscscan.com",
         }
     }
 
-    pub fn address_view_url(&self, network: BlockchainNetwork, address: &str) -> String {
+    pub fn address_view_url(&self, network: ChainNetwork, address: &str) -> String {
         let base_url = self.get_base_url(network);
         match network {
-            BlockchainNetwork::TronMainnet => match self {
-                PaymentCurrency::TRX => format!("{}/#/address/{}", base_url, address),
-                PaymentCurrency::USDT_TRC20 => {
+            ChainNetwork::TronMainnet => match self {
+                PaymentCurrency::TRX | PaymentCurrency::USDT_TRC20 => {
                     format!("{}/#/address/{}", base_url, address)
                 }
+                _ => unreachable!(),
             },
-            BlockchainNetwork::TronNile => match self {
-                PaymentCurrency::TRX => format!("{}/#/address/{}", base_url, address),
-                PaymentCurrency::USDT_TRC20 => {
+            ChainNetwork::TronNile => match self {
+                PaymentCurrency::TRX | PaymentCurrency::USDT_TRC20 => {
                     format!("{}/#/address/{}", base_url, address)
                 }
+                _ => unreachable!(),
+            },
+            ChainNetwork::BSCMainnet => match self {
+                PaymentCurrency::DAI_BEP20
+                | PaymentCurrency::BNB
+                | PaymentCurrency::BUSD_BEP20
+                | PaymentCurrency::USDC_BEP20
+                | PaymentCurrency::USDT_BEP20 => {
+                    format!("{}/#/address/{}", base_url, address)
+                }
+                _ => unreachable!(),
+            },
+            ChainNetwork::BSCTestnet => match self {
+                PaymentCurrency::DAI_BEP20
+                | PaymentCurrency::BNB
+                | PaymentCurrency::BUSD_BEP20
+                | PaymentCurrency::USDC_BEP20
+                | PaymentCurrency::USDT_BEP20 => {
+                    format!("{}/#/address/{}", base_url, address)
+                }
+                _ => unreachable!(),
             },
         }
     }
 
-    pub fn transaction_view_url(&self, network: BlockchainNetwork, tx_id: &str) -> String {
+    pub fn transaction_view_url(&self, network: ChainNetwork, tx_id: &str) -> String {
         let base_url = self.get_base_url(network);
         match network {
-            BlockchainNetwork::TronMainnet => match self {
+            ChainNetwork::TronMainnet => match self {
                 PaymentCurrency::TRX => format!("{}/#/transaction/{}", base_url, tx_id),
                 PaymentCurrency::USDT_TRC20 => {
                     format!("{}/#/transaction/{}", base_url, tx_id)
                 }
+                _ => unreachable!(),
             },
-            BlockchainNetwork::TronNile => match self {
+            ChainNetwork::TronNile => match self {
                 PaymentCurrency::TRX => format!("{}/#/transaction/{}", base_url, tx_id),
                 PaymentCurrency::USDT_TRC20 => {
                     format!("{}/#/transaction/{}", base_url, tx_id)
                 }
+                _ => unreachable!(),
+            },
+            ChainNetwork::BSCMainnet => match self {
+                PaymentCurrency::DAI_BEP20
+                | PaymentCurrency::BNB
+                | PaymentCurrency::BUSD_BEP20
+                | PaymentCurrency::USDT_BEP20 => {
+                    format!("{}/#/tx/{}", base_url, tx_id)
+                }
+                _ => unreachable!(),
+            },
+            ChainNetwork::BSCTestnet => match self {
+                PaymentCurrency::DAI_BEP20
+                | PaymentCurrency::BNB
+                | PaymentCurrency::BUSD_BEP20
+                | PaymentCurrency::USDC_BEP20
+                | PaymentCurrency::USDT_BEP20 => {
+                    format!("{}/#/tx/{}", base_url, tx_id)
+                }
+                _ => unreachable!(),
             },
         }
     }
@@ -143,6 +241,11 @@ impl PaymentCurrency {
         match self {
             PaymentCurrency::TRX => Money::from_atomic(3_000_000, self.decimals()),
             PaymentCurrency::USDT_TRC20 => Money::from_atomic(5_000_000, self.decimals()),
+            PaymentCurrency::BNB => Money::from_atomic(1, 1),
+            PaymentCurrency::USDT_BEP20
+            | PaymentCurrency::USDC_BEP20
+            | PaymentCurrency::DAI_BEP20
+            | PaymentCurrency::BUSD_BEP20 => Money::from_atomic(1, 0),
         }
     }
 
@@ -150,6 +253,24 @@ impl PaymentCurrency {
         match self {
             PaymentCurrency::TRX => Money::from_atomic(2_000_000, self.decimals()),
             PaymentCurrency::USDT_TRC20 => Money::from_atomic(0, self.decimals()),
+            PaymentCurrency::BNB
+            | PaymentCurrency::USDT_BEP20
+            | PaymentCurrency::USDC_BEP20
+            | PaymentCurrency::DAI_BEP20
+            | PaymentCurrency::BUSD_BEP20 => Money::from_atomic(0, self.decimals()),
+        }
+    }
+}
+
+impl From<PaymentCurrency> for Chain {
+    fn from(value: PaymentCurrency) -> Self {
+        match value {
+            PaymentCurrency::BNB
+            | PaymentCurrency::USDT_BEP20
+            | PaymentCurrency::USDC_BEP20
+            | PaymentCurrency::DAI_BEP20
+            | PaymentCurrency::BUSD_BEP20 => Chain::BinanceSmartChain,
+            PaymentCurrency::TRX | PaymentCurrency::USDT_TRC20 => Chain::Tron,
         }
     }
 }
@@ -257,8 +378,14 @@ impl PricingCurrency {
                     decimals: meta.decimals,
                 }
             }
-            PricingCurrency::USDT => {
-                let meta = PaymentCurrency::USDT_TRC20.meta();
+            PricingCurrency::USDT => PricingCurrencyMeta {
+                asset_id: "USDT",
+                symbol: "USDT",
+                name: "Tether USD",
+                decimals: 6,
+            },
+            PricingCurrency::BNB => {
+                let meta = PaymentCurrency::BNB.meta();
                 PricingCurrencyMeta {
                     asset_id: meta.asset_id,
                     symbol: meta.symbol,
@@ -266,6 +393,24 @@ impl PricingCurrency {
                     decimals: meta.decimals,
                 }
             }
+            PricingCurrency::USDC => PricingCurrencyMeta {
+                asset_id: "USDC",
+                symbol: "USDC",
+                name: "USD Coin",
+                decimals: 18,
+            },
+            PricingCurrency::DAI => PricingCurrencyMeta {
+                asset_id: "DAI",
+                symbol: "DAI",
+                name: "Dai",
+                decimals: 18,
+            },
+            PricingCurrency::BUSD => PricingCurrencyMeta {
+                asset_id: "BUSD",
+                symbol: "BUSD",
+                name: "Binance USD",
+                decimals: 18,
+            },
             // Fiat Currencies
             PricingCurrency::USD => {
                 let fiat_meta = FiatCurrency::USD.meta();

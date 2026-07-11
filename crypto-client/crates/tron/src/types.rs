@@ -1,4 +1,4 @@
-use chain_core::wallet::CryptoWallet;
+use chain_core::types::CryptoWallet;
 use serde_json::Value;
 
 // ── Wallet types ────────────────────────────────────────────────────────────
