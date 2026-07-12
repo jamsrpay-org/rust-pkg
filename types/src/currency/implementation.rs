@@ -179,7 +179,7 @@ impl PaymentCurrency {
                 | PaymentCurrency::BUSD_BEP20
                 | PaymentCurrency::USDC_BEP20
                 | PaymentCurrency::USDT_BEP20 => {
-                    format!("{}/#/address/{}", base_url, address)
+                    format!("{}/address/{}", base_url, address)
                 }
                 _ => unreachable!(),
             },
@@ -189,7 +189,7 @@ impl PaymentCurrency {
                 | PaymentCurrency::BUSD_BEP20
                 | PaymentCurrency::USDC_BEP20
                 | PaymentCurrency::USDT_BEP20 => {
-                    format!("{}/#/address/{}", base_url, address)
+                    format!("{}/address/{}", base_url, address)
                 }
                 _ => unreachable!(),
             },
@@ -218,7 +218,7 @@ impl PaymentCurrency {
                 | PaymentCurrency::BNB
                 | PaymentCurrency::BUSD_BEP20
                 | PaymentCurrency::USDT_BEP20 => {
-                    format!("{}/#/tx/{}", base_url, tx_id)
+                    format!("{}/tx/{}", base_url, tx_id)
                 }
                 _ => unreachable!(),
             },
@@ -228,7 +228,7 @@ impl PaymentCurrency {
                 | PaymentCurrency::BUSD_BEP20
                 | PaymentCurrency::USDC_BEP20
                 | PaymentCurrency::USDT_BEP20 => {
-                    format!("{}/#/tx/{}", base_url, tx_id)
+                    format!("{}/tx/{}", base_url, tx_id)
                 }
                 _ => unreachable!(),
             },

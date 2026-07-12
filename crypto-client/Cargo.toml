@@ -39,7 +39,9 @@ tokio = { version = "1.52.2", features = ["full"] }
 
 [dependencies]
 binance-smart-chain = { path = "crates/binance-smart-chain" }
+ethereum = { path = "crates/ethereum" }
 evm-core = { workspace = true }
+polygon = { path = "crates/polygon" }
 tron = { path = "crates/tron" }
 chain-core = { workspace = true }
 jamsrpay-types = { workspace = true }

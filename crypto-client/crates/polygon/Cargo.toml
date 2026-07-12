@@ -4,3 +4,6 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+chain-core = { workspace = true }
+evm-core = { workspace = true }
+jamsrpay-types = { workspace = true }

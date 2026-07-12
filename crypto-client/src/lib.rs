@@ -17,3 +17,11 @@ pub use tron::types::{TronPreparedTransfer, TronSignedTransfer};
 // ── bsc re-exports ──────────────────────────────────────────────────────────
 pub use binance_smart_chain::client::BscClient;
 pub use binance_smart_chain::contracts as bsc_contracts;
+
+// ── ethereum re-exports ─────────────────────────────────────────────────────
+pub use ethereum::client::EthClient;
+pub use ethereum::contracts as eth_contracts;
+
+// ── polygon re-exports ──────────────────────────────────────────────────────
+pub use polygon::client::PolygonClient;
+pub use polygon::contracts as polygon_contracts;

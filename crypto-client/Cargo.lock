@@ -1663,6 +1663,11 @@ dependencies = [
 [[package]]
 name = "ethereum"
 version = "0.1.0"
+dependencies = [
+ "chain-core",
+ "evm-core",
+ "jamsrpay-types",
+]
 
 [[package]]
 name = "evm-core"
@@ -2381,8 +2386,10 @@ version = "0.1.0"
 dependencies = [
  "binance-smart-chain",
  "chain-core",
+ "ethereum",
  "evm-core",
  "jamsrpay-types",
+ "polygon",
  "tron",
 ]
 
@@ -2833,6 +2840,11 @@ version = "0.1.0"
 [[package]]
 name = "polygon"
 version = "0.1.0"
+dependencies = [
+ "chain-core",
+ "evm-core",
+ "jamsrpay-types",
+]
 
 [[package]]
 name = "potential_utf"

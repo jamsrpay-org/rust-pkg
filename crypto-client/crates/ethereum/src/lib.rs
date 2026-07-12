@@ -1,1 +1,2 @@
-//! Chain implementation crate
+pub mod client;
+pub mod contracts;
