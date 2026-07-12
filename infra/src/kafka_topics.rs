@@ -16,3 +16,7 @@ pub const PAYOUT_WALLET_EVENTS: &str = "payout.payout_wallet.events.v1";
 pub const TRON_NATIVE_TRANSFERS: &str = "tron.transfers.native.v1";
 pub const TRON_TOKEN_TRANSFERS: &str = "tron.transfers.token.v1";
 pub const TRON_BLOCKS: &str = "tron.blocks.v1";
+
+pub const BSC_NATIVE_TRANSFERS: &str = "bsc.transfers.native.v1";
+pub const BSC_TOKEN_TRANSFERS: &str = "bsc.transfers.token.v1";
+pub const BSC_BLOCKS: &str = "bsc.blocks.v1";

@@ -5,6 +5,10 @@ pub use chain_core::types::{
     TransactionId, TransferRequest,
 };
 
+// ── evm-core re-exports ─────────────────────────────────────────────────────
+pub use evm_core::client::EvmClient;
+pub use evm_core::types::{EvmPreparedTransfer, EvmSignedTransfer, EvmWallet};
+
 // ── tron re-exports ─────────────────────────────────────────────────────────
 pub use tron::client::TronClient;
 pub use tron::contracts as tron_contracts;
@@ -13,4 +17,3 @@ pub use tron::types::{TronPreparedTransfer, TronSignedTransfer};
 // ── bsc re-exports ──────────────────────────────────────────────────────────
 pub use binance_smart_chain::client::BscClient;
 pub use binance_smart_chain::contracts as bsc_contracts;
-pub use binance_smart_chain::types::{BscPreparedTransfer, BscSignedTransfer};

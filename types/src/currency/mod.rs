@@ -74,7 +74,7 @@ pub enum GasCurrency {
     BNB,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Display, EnumString, AsRefStr)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Display, EnumString, AsRefStr)]
 #[strum(serialize_all = "snake_case")]
 pub enum Chain {
     Tron,

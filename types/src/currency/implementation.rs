@@ -61,7 +61,7 @@ impl PaymentCurrency {
                 name: "Binance Coin",
                 chain: Chain::BinanceSmartChain,
                 kind: AssetKind::Native,
-                decimals: 8,
+                decimals: 18,
             },
             PaymentCurrency::USDT_TRC20 => PaymentCurrencyMeta {
                 asset_id: "USDT_TRC20",

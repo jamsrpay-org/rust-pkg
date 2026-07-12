@@ -7,24 +7,39 @@ edition = "2024"
 members = [".", "crates/*"]
 
 [workspace.dependencies]
-bs58 = { version = "0.5.1", features = ["check"] }
+# ── Shared ───────────────────────────────────────────────────────────────────
 chain-core = { path = "crates/chain-core" }
+evm-core = { path = "crates/evm-core" }
+jamsrpay-types = { git = "https://github.com/jamsrpay-org/rust-pkg", package = "jamsrpay-types", tag = "v0.1.18" }
+thiserror = "2.0.18"
 hex = "0.4.3"
+
+# ── Alloy (EVM toolkit) ─────────────────────────────────────────────────────
+alloy = { version = "2", default-features = false, features = [
+    "consensus",
+    "provider-http",
+    "reqwest",
+    "rlp",
+    "rpc-types",
+    "signer-local",
+    "sol-types",
+    "transport-http",
+] }
+
+# ── Tron-specific ────────────────────────────────────────────────────────────
+bs58 = { version = "0.5.1", features = ["check"] }
 rand = "0.10.0"
 secp256k1 = { version = "0.31.1", features = ["rand", "recovery"] }
+sha2 = "0.10.9"
 sha3 = "0.10.8"
-thiserror = "2.0.18"
 reqwest = { version = "0.13.2", features = ["json"] }
 serde_json = "1.0.149"
 serde = { version = "1.0.228", features = ["derive"] }
 tokio = { version = "1.52.2", features = ["full"] }
-rlp = "0.6.1"
-sha2 = "0.10.9"
-jamsrpay-types = { git = "https://github.com/jamsrpay-org/rust-pkg", package = "jamsrpay-types", tag = "v0.1.18" }
-
 
 [dependencies]
 binance-smart-chain = { path = "crates/binance-smart-chain" }
+evm-core = { workspace = true }
 tron = { path = "crates/tron" }
 chain-core = { workspace = true }
 jamsrpay-types = { workspace = true }
