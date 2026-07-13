@@ -28,6 +28,11 @@ pub enum CryptoAsset {
     USDC,
     BUSD,
     DAI,
+    EURC,
+    ETH,
+    POL,
+    BTC,
+    LTC,
 }
 
 #[allow(non_camel_case_types)]
@@ -41,6 +46,11 @@ pub enum PricingCurrency {
     USDC,
     BUSD,
     DAI,
+    EURC,
+    ETH,
+    POL,
+    BTC,
+    LTC,
     // Fiat Currencies
     USD,
     EUR,
@@ -65,6 +75,14 @@ pub enum PaymentCurrency {
     USDC_BEP20,
     BUSD_BEP20,
     DAI_BEP20,
+    USDT_ERC20,
+    USDC_ERC20,
+    EURC_ERC20,
+    DAI_ERC20,
+    ETH,
+    POL,
+    BTC,
+    LTC,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Display, EnumString, AsRefStr)]
@@ -72,6 +90,10 @@ pub enum PaymentCurrency {
 pub enum GasCurrency {
     TRX,
     BNB,
+    ETH,
+    POL,
+    BTC,
+    LTC,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Display, EnumString, AsRefStr)]
@@ -79,6 +101,10 @@ pub enum GasCurrency {
 pub enum Chain {
     Tron,
     BinanceSmartChain,
+    Ethereum,
+    Polygon,
+    Bitcoin,
+    Litecoin,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Display, EnumString, AsRefStr)]
@@ -88,6 +114,14 @@ pub enum ChainNetwork {
     TronNile,
     BSCMainnet,
     BSCTestnet,
+    EthMainnet,
+    EthSepolia,
+    PolMainnet,
+    PolAmoy,
+    BtcMainnet,
+    BtcTestnet,
+    LtcMainnet,
+    LtcTestnet,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Display, EnumString, AsRefStr)]
@@ -95,6 +129,7 @@ pub enum ChainNetwork {
 pub enum TokenStandard {
     Trc20,
     Bep20,
+    Erc20,
 }
 
 #[derive(Debug, Clone, Copy)]

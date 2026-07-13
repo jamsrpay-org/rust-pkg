@@ -20,3 +20,11 @@ pub const TRON_BLOCKS: &str = "tron.blocks.v1";
 pub const BSC_NATIVE_TRANSFERS: &str = "bsc.transfers.native.v1";
 pub const BSC_TOKEN_TRANSFERS: &str = "bsc.transfers.token.v1";
 pub const BSC_BLOCKS: &str = "bsc.blocks.v1";
+
+pub const ETH_NATIVE_TRANSFERS: &str = "eth.transfers.native.v1";
+pub const ETH_TOKEN_TRANSFERS: &str = "eth.transfers.token.v1";
+pub const ETH_BLOCKS: &str = "eth.blocks.v1";
+
+pub const POL_NATIVE_TRANSFERS: &str = "pol.transfers.native.v1";
+pub const POL_TOKEN_TRANSFERS: &str = "pol.transfers.token.v1";
+pub const POL_BLOCKS: &str = "pol.blocks.v1";

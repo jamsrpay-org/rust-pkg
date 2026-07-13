@@ -19,6 +19,26 @@ impl Chain {
                 name: "Binance Smart Chain",
                 gas_currency: GasCurrency::BNB,
             },
+            Chain::Ethereum => BlockchainMeta {
+                symbol: "ETH",
+                name: "Ethereum",
+                gas_currency: GasCurrency::ETH,
+            },
+            Chain::Polygon => BlockchainMeta {
+                symbol: "POL",
+                name: "Polygon",
+                gas_currency: GasCurrency::POL,
+            },
+            Chain::Bitcoin => BlockchainMeta {
+                symbol: "BTC",
+                name: "Bitcoin",
+                gas_currency: GasCurrency::BTC,
+            },
+            Chain::Litecoin => BlockchainMeta {
+                symbol: "LTC",
+                name: "Litecoin",
+                gas_currency: GasCurrency::LTC,
+            },
         }
     }
 
@@ -40,6 +60,9 @@ impl From<GasCurrency> for PaymentCurrency {
         match value {
             GasCurrency::TRX => PaymentCurrency::TRX,
             GasCurrency::BNB => PaymentCurrency::BNB,
+            GasCurrency::ETH | GasCurrency::POL | GasCurrency::BTC | GasCurrency::LTC => {
+                unimplemented!("PaymentCurrency not yet supported for {:?}", value)
+            }
         }
     }
 }
@@ -93,7 +116,6 @@ impl PaymentCurrency {
                 },
                 decimals: 18,
             },
-
             PaymentCurrency::BUSD_BEP20 => PaymentCurrencyMeta {
                 asset_id: "BUSD_BEP20",
                 symbol: "BUSD",
@@ -112,6 +134,78 @@ impl PaymentCurrency {
                 kind: AssetKind::Token {
                     standard: TokenStandard::Bep20,
                 },
+                decimals: 18,
+            },
+            PaymentCurrency::USDT_ERC20 => PaymentCurrencyMeta {
+                asset_id: "USDT_ERC20",
+                symbol: "USDT",
+                name: "Tether USD",
+                chain: Chain::Ethereum,
+                kind: AssetKind::Token {
+                    standard: TokenStandard::Erc20,
+                },
+                decimals: 6,
+            },
+            PaymentCurrency::USDC_ERC20 => PaymentCurrencyMeta {
+                asset_id: "USDC_ERC20",
+                symbol: "USDC",
+                name: "USD Coin",
+                chain: Chain::Ethereum,
+                kind: AssetKind::Token {
+                    standard: TokenStandard::Erc20,
+                },
+                decimals: 6,
+            },
+            PaymentCurrency::EURC_ERC20 => PaymentCurrencyMeta {
+                asset_id: "EURC_ERC20",
+                symbol: "EURC",
+                name: "EURC",
+                chain: Chain::Ethereum,
+                kind: AssetKind::Token {
+                    standard: TokenStandard::Erc20,
+                },
+                decimals: 6,
+            },
+            PaymentCurrency::DAI_ERC20 => PaymentCurrencyMeta {
+                asset_id: "DAI_ERC20",
+                symbol: "DAI",
+                name: "Dai",
+                chain: Chain::Ethereum,
+                kind: AssetKind::Token {
+                    standard: TokenStandard::Erc20,
+                },
+                decimals: 18,
+            },
+            PaymentCurrency::BTC => PaymentCurrencyMeta {
+                asset_id: "BTC",
+                symbol: "BTC",
+                name: "Bitcoin",
+                chain: Chain::Bitcoin,
+                kind: AssetKind::Native,
+                decimals: 8,
+            },
+            PaymentCurrency::LTC => PaymentCurrencyMeta {
+                asset_id: "LTC",
+                symbol: "LTC",
+                name: "Litecoin",
+                chain: Chain::Litecoin,
+                kind: AssetKind::Native,
+                decimals: 8,
+            },
+            PaymentCurrency::ETH => PaymentCurrencyMeta {
+                asset_id: "ETH",
+                symbol: "ETH",
+                name: "Ethereum",
+                chain: Chain::Ethereum,
+                kind: AssetKind::Native,
+                decimals: 18,
+            },
+            PaymentCurrency::POL => PaymentCurrencyMeta {
+                asset_id: "POL",
+                symbol: "POL",
+                name: "Polygon",
+                chain: Chain::Polygon,
+                kind: AssetKind::Native,
                 decimals: 18,
             },
         }
@@ -155,83 +249,50 @@ impl PaymentCurrency {
             ChainNetwork::TronNile => "https://nile.tronscan.org",
             ChainNetwork::BSCMainnet => "https://bscscan.com",
             ChainNetwork::BSCTestnet => "https://testnet.bscscan.com",
+            ChainNetwork::BtcMainnet => "https://btc.com",
+            ChainNetwork::BtcTestnet => "https://testnet.btc.com",
+            ChainNetwork::EthMainnet => "https://eth.com",
+            ChainNetwork::EthSepolia => "https://testnet.eth.com",
+            ChainNetwork::LtcMainnet => "https://ltc.com",
+            ChainNetwork::LtcTestnet => "https://testnet.ltc.com",
+            ChainNetwork::PolMainnet => "https://pol.com",
+            ChainNetwork::PolAmoy => "https://testnet.pol.com",
         }
     }
 
     pub fn address_view_url(&self, network: ChainNetwork, address: &str) -> String {
         let base_url = self.get_base_url(network);
         match network {
-            ChainNetwork::TronMainnet => match self {
-                PaymentCurrency::TRX | PaymentCurrency::USDT_TRC20 => {
-                    format!("{}/#/address/{}", base_url, address)
-                }
-                _ => unreachable!(),
-            },
-            ChainNetwork::TronNile => match self {
-                PaymentCurrency::TRX | PaymentCurrency::USDT_TRC20 => {
-                    format!("{}/#/address/{}", base_url, address)
-                }
-                _ => unreachable!(),
-            },
-            ChainNetwork::BSCMainnet => match self {
-                PaymentCurrency::DAI_BEP20
-                | PaymentCurrency::BNB
-                | PaymentCurrency::BUSD_BEP20
-                | PaymentCurrency::USDC_BEP20
-                | PaymentCurrency::USDT_BEP20 => {
-                    format!("{}/address/{}", base_url, address)
-                }
-                _ => unreachable!(),
-            },
-            ChainNetwork::BSCTestnet => match self {
-                PaymentCurrency::DAI_BEP20
-                | PaymentCurrency::BNB
-                | PaymentCurrency::BUSD_BEP20
-                | PaymentCurrency::USDC_BEP20
-                | PaymentCurrency::USDT_BEP20 => {
-                    format!("{}/address/{}", base_url, address)
-                }
-                _ => unreachable!(),
-            },
+            ChainNetwork::TronMainnet => format!("{}/#/address/{}", base_url, address),
+            ChainNetwork::TronNile => format!("{}/#/address/{}", base_url, address),
+            ChainNetwork::BSCMainnet => format!("{}/address/{}", base_url, address),
+            ChainNetwork::BSCTestnet => format!("{}/address/{}", base_url, address),
+            ChainNetwork::EthMainnet => format!("{}/address/{}", base_url, address),
+            ChainNetwork::EthSepolia => format!("{}/address/{}", base_url, address),
+            ChainNetwork::PolMainnet => format!("{}/address/{}", base_url, address),
+            ChainNetwork::PolAmoy => format!("{}/address/{}", base_url, address),
+            ChainNetwork::BtcMainnet => format!("{}/address/{}", base_url, address),
+            ChainNetwork::BtcTestnet => format!("{}/address/{}", base_url, address),
+            ChainNetwork::LtcMainnet => format!("{}/address/{}", base_url, address),
+            ChainNetwork::LtcTestnet => format!("{}/address/{}", base_url, address),
         }
     }
 
     pub fn transaction_view_url(&self, network: ChainNetwork, tx_id: &str) -> String {
         let base_url = self.get_base_url(network);
         match network {
-            ChainNetwork::TronMainnet => match self {
-                PaymentCurrency::TRX => format!("{}/#/transaction/{}", base_url, tx_id),
-                PaymentCurrency::USDT_TRC20 => {
-                    format!("{}/#/transaction/{}", base_url, tx_id)
-                }
-                _ => unreachable!(),
-            },
-            ChainNetwork::TronNile => match self {
-                PaymentCurrency::TRX => format!("{}/#/transaction/{}", base_url, tx_id),
-                PaymentCurrency::USDT_TRC20 => {
-                    format!("{}/#/transaction/{}", base_url, tx_id)
-                }
-                _ => unreachable!(),
-            },
-            ChainNetwork::BSCMainnet => match self {
-                PaymentCurrency::DAI_BEP20
-                | PaymentCurrency::BNB
-                | PaymentCurrency::BUSD_BEP20
-                | PaymentCurrency::USDT_BEP20 => {
-                    format!("{}/tx/{}", base_url, tx_id)
-                }
-                _ => unreachable!(),
-            },
-            ChainNetwork::BSCTestnet => match self {
-                PaymentCurrency::DAI_BEP20
-                | PaymentCurrency::BNB
-                | PaymentCurrency::BUSD_BEP20
-                | PaymentCurrency::USDC_BEP20
-                | PaymentCurrency::USDT_BEP20 => {
-                    format!("{}/tx/{}", base_url, tx_id)
-                }
-                _ => unreachable!(),
-            },
+            ChainNetwork::TronMainnet => format!("{}/#/transaction/{}", base_url, tx_id),
+            ChainNetwork::TronNile => format!("{}/#/transaction/{}", base_url, tx_id),
+            ChainNetwork::BSCMainnet => format!("{}/tx/{}", base_url, tx_id),
+            ChainNetwork::BSCTestnet => format!("{}/tx/{}", base_url, tx_id),
+            ChainNetwork::EthMainnet => format!("{}/tx/{}", base_url, tx_id),
+            ChainNetwork::EthSepolia => format!("{}/tx/{}", base_url, tx_id),
+            ChainNetwork::PolMainnet => format!("{}/tx/{}", base_url, tx_id),
+            ChainNetwork::PolAmoy => format!("{}/tx/{}", base_url, tx_id),
+            ChainNetwork::BtcMainnet => format!("{}/tx/{}", base_url, tx_id),
+            ChainNetwork::BtcTestnet => format!("{}/tx/{}", base_url, tx_id),
+            ChainNetwork::LtcMainnet => format!("{}/tx/{}", base_url, tx_id),
+            ChainNetwork::LtcTestnet => format!("{}/tx/{}", base_url, tx_id),
         }
     }
 }
@@ -245,7 +306,15 @@ impl PaymentCurrency {
             PaymentCurrency::USDT_BEP20
             | PaymentCurrency::USDC_BEP20
             | PaymentCurrency::DAI_BEP20
-            | PaymentCurrency::BUSD_BEP20 => Money::from_atomic(1, 0),
+            | PaymentCurrency::BUSD_BEP20
+            | PaymentCurrency::USDT_ERC20
+            | PaymentCurrency::USDC_ERC20
+            | PaymentCurrency::DAI_ERC20
+            | PaymentCurrency::EURC_ERC20 => Money::from_atomic(1, 0),
+            PaymentCurrency::BTC => Money::from_atomic(1, 0),
+            PaymentCurrency::LTC => Money::from_atomic(1, 0),
+            PaymentCurrency::ETH => Money::from_atomic(1, 0),
+            PaymentCurrency::POL => Money::from_atomic(1, 0),
         }
     }
 
@@ -257,7 +326,15 @@ impl PaymentCurrency {
             | PaymentCurrency::USDT_BEP20
             | PaymentCurrency::USDC_BEP20
             | PaymentCurrency::DAI_BEP20
-            | PaymentCurrency::BUSD_BEP20 => Money::from_atomic(0, self.decimals()),
+            | PaymentCurrency::BUSD_BEP20
+            | PaymentCurrency::USDT_ERC20
+            | PaymentCurrency::USDC_ERC20
+            | PaymentCurrency::DAI_ERC20
+            | PaymentCurrency::EURC_ERC20 => Money::from_atomic(0, self.decimals()),
+            PaymentCurrency::BTC => Money::from_atomic(0, self.decimals()),
+            PaymentCurrency::LTC => Money::from_atomic(0, self.decimals()),
+            PaymentCurrency::ETH => Money::from_atomic(0, self.decimals()),
+            PaymentCurrency::POL => Money::from_atomic(0, self.decimals()),
         }
     }
 }
@@ -271,6 +348,14 @@ impl From<PaymentCurrency> for Chain {
             | PaymentCurrency::DAI_BEP20
             | PaymentCurrency::BUSD_BEP20 => Chain::BinanceSmartChain,
             PaymentCurrency::TRX | PaymentCurrency::USDT_TRC20 => Chain::Tron,
+            PaymentCurrency::USDT_ERC20
+            | PaymentCurrency::USDC_ERC20
+            | PaymentCurrency::DAI_ERC20
+            | PaymentCurrency::EURC_ERC20 => Chain::Ethereum,
+            PaymentCurrency::BTC => Chain::Bitcoin,
+            PaymentCurrency::LTC => Chain::Litecoin,
+            PaymentCurrency::ETH => Chain::Ethereum,
+            PaymentCurrency::POL => Chain::Polygon,
         }
     }
 }
@@ -410,6 +495,36 @@ impl PricingCurrency {
                 symbol: "BUSD",
                 name: "Binance USD",
                 decimals: 18,
+            },
+            PricingCurrency::EURC => PricingCurrencyMeta {
+                asset_id: "EURC",
+                symbol: "EURC",
+                name: "EURC",
+                decimals: 6,
+            },
+            PricingCurrency::ETH => PricingCurrencyMeta {
+                asset_id: "ETH",
+                symbol: "ETH",
+                name: "Ethereum",
+                decimals: 18,
+            },
+            PricingCurrency::POL => PricingCurrencyMeta {
+                asset_id: "POL",
+                symbol: "POL",
+                name: "Polygon",
+                decimals: 18,
+            },
+            PricingCurrency::BTC => PricingCurrencyMeta {
+                asset_id: "BTC",
+                symbol: "BTC",
+                name: "Bitcoin",
+                decimals: 8,
+            },
+            PricingCurrency::LTC => PricingCurrencyMeta {
+                asset_id: "LTC",
+                symbol: "LTC",
+                name: "Litecoin",
+                decimals: 8,
             },
             // Fiat Currencies
             PricingCurrency::USD => {
