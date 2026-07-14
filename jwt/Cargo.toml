@@ -9,3 +9,4 @@ serde = { version = "1.0.228", features = ["derive"] }
 chrono = "0.4.44"
 thiserror = "2.0.18"
 uuid = { version = "1.23.1", features = ["v4"] }
+strum = { version = "0.28.0", features = ["derive"] }

@@ -4,3 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+chain-core = { workspace = true }
+utxo-core = { workspace = true }
+jamsrpay-types = { workspace = true }
+hex = { workspace = true }

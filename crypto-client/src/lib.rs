@@ -25,3 +25,13 @@ pub use ethereum::contracts as eth_contracts;
 // ── polygon re-exports ──────────────────────────────────────────────────────
 pub use polygon::client::PolygonClient;
 pub use polygon::contracts as polygon_contracts;
+
+// ── utxo-core re-exports ────────────────────────────────────────────────────
+pub use utxo_core::client::UtxoClient;
+pub use utxo_core::types::{UtxoPreparedTransfer, UtxoSignedTransfer, UtxoWallet};
+
+// ── bitcoin re-exports ──────────────────────────────────────────────────────
+pub use bitcoin_chain::client::BtcClient;
+
+// ── litecoin re-exports ─────────────────────────────────────────────────────
+pub use litecoin::client::LtcClient;

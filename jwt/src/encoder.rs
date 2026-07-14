@@ -1,4 +1,8 @@
-use crate::{Claims, error::JwtError};
+use crate::{
+    Claims,
+    claims::{Audience, Issuer, Role, Scope},
+    error::JwtError,
+};
 use chrono::{TimeDelta, Utc};
 use jsonwebtoken::{Algorithm, EncodingKey, Header, encode};
 use uuid::Uuid;
@@ -11,9 +15,9 @@ pub struct TokenParams {
     /// Subject — the user or entity UUID.
     pub sub: String,
     /// Token scope — use constants from [`scope`](crate::scope).
-    pub scope: String,
+    pub scope: Scope,
     /// Role — "merchant_admin", "admin", etc.
-    pub role: String,
+    pub role: Role,
     /// Session ID — login session UUID.
     pub session_id: String,
     /// Custom expiration override. Falls back to the encoder's default if `None`.
@@ -26,8 +30,8 @@ pub struct TokenParams {
 /// repeated calls to [`encode`](Self::encode) are fast.
 pub struct JwtEncoder {
     encoding_key: EncodingKey,
-    issuer: String,
-    audience: String,
+    issuer: Issuer,
+    audience: Audience,
     default_expiration: TimeDelta,
 }
 
@@ -44,8 +48,8 @@ impl JwtEncoder {
     /// Returns [`JwtError`] if the PEM key cannot be parsed.
     pub fn new(
         private_key_pem: &str,
-        issuer: String,
-        audience: String,
+        issuer: Issuer,
+        audience: Audience,
         default_expiration: TimeDelta,
     ) -> Result<Self, JwtError> {
         let encoding_key = EncodingKey::from_rsa_pem(private_key_pem.as_bytes())?;

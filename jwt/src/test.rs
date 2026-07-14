@@ -1,17 +1,14 @@
-use crate::{JwtDecoder, JwtEncoder, TokenParams, error::JwtError, scope};
+use crate::{Audience, Issuer, JwtDecoder, JwtEncoder, Role, Scope, TokenParams, error::JwtError};
 use chrono::{Duration, Utc};
 use std::{thread, time::Duration as StdDuration};
-
-const ISSUER: &str = "auth-service";
-const AUDIENCE: &str = "api";
 
 fn get_encoder() -> JwtEncoder {
     let private_key = std::fs::read_to_string("jwt_private.pem")
         .expect("missing private key file: jwt_private.pem");
     JwtEncoder::new(
         &private_key,
-        ISSUER.into(),
-        AUDIENCE.into(),
+        Issuer::AuthService,
+        Audience::ApiGateway,
         Duration::days(7),
     )
     .unwrap()
@@ -20,14 +17,14 @@ fn get_encoder() -> JwtEncoder {
 fn get_decoder() -> JwtDecoder {
     let public_key =
         std::fs::read_to_string("jwt_public.pem").expect("missing public key file: jwt_public.pem");
-    JwtDecoder::new(&public_key, ISSUER, AUDIENCE).unwrap()
+    JwtDecoder::new(&public_key, Issuer::AuthService, Audience::ApiGateway).unwrap()
 }
 
 fn access_token_params(sub: &str) -> TokenParams {
     TokenParams {
         sub: sub.to_string(),
-        scope: scope::ACCESS_TOKEN.to_string(),
-        role: "merchant_admin".to_string(),
+        scope: Scope::AccessToken,
+        role: Role::Admin,
         session_id: "session-uuid-001".to_string(),
         expires_in: None,
     }
@@ -44,10 +41,10 @@ fn test_encode_and_decode_success() {
     let claims = decoder.decode(&token).unwrap();
 
     assert_eq!(claims.sub, "user-123");
-    assert_eq!(claims.iss, ISSUER);
-    assert_eq!(claims.aud, AUDIENCE);
-    assert_eq!(claims.scope, scope::ACCESS_TOKEN);
-    assert_eq!(claims.role, "merchant_admin");
+    assert_eq!(claims.iss, Issuer::AuthService);
+    assert_eq!(claims.aud, Audience::ApiGateway);
+    assert_eq!(claims.scope, Scope::AccessToken);
+    assert_eq!(claims.role, Role::Admin);
     assert_eq!(claims.session_id, "session-uuid-001");
     assert!(claims.exp > claims.iat);
     assert!(!claims.jti.is_empty());
@@ -62,10 +59,10 @@ fn test_decode_with_scope_success() {
 
     let token = encoder.encode(access_token_params("user-1")).unwrap();
     let claims = decoder
-        .decode_with_scope(&token, scope::ACCESS_TOKEN)
+        .decode_with_scope(&token, Scope::AccessToken)
         .unwrap();
 
-    assert_eq!(claims.scope, scope::ACCESS_TOKEN);
+    assert_eq!(claims.scope, Scope::AccessToken);
 }
 
 #[test]
@@ -74,7 +71,7 @@ fn test_decode_with_scope_mismatch() {
     let decoder = get_decoder();
 
     let token = encoder.encode(access_token_params("user-1")).unwrap();
-    let result = decoder.decode_with_scope(&token, scope::REFRESH_TOKEN);
+    let result = decoder.decode_with_scope(&token, Scope::RefreshToken);
 
     assert!(matches!(result, Err(JwtError::ScopeMismatch { .. })));
 }
@@ -86,18 +83,18 @@ fn test_refresh_token_scope() {
 
     let params = TokenParams {
         sub: "user-1".to_string(),
-        scope: scope::REFRESH_TOKEN.to_string(),
-        role: "merchant_admin".to_string(),
+        scope: Scope::RefreshToken,
+        role: Role::Admin,
         session_id: "session-uuid-001".to_string(),
         expires_in: Some(Duration::days(30)),
     };
 
     let token = encoder.encode(params).unwrap();
     let claims = decoder
-        .decode_with_scope(&token, scope::REFRESH_TOKEN)
+        .decode_with_scope(&token, Scope::RefreshToken)
         .unwrap();
 
-    assert_eq!(claims.scope, scope::REFRESH_TOKEN);
+    assert_eq!(claims.scope, Scope::RefreshToken);
 }
 
 // ─── Expiration ──────────────────────────────────────────────────────
@@ -184,8 +181,8 @@ fn test_token_without_tenant_id() {
 
     let params = TokenParams {
         sub: "admin-uuid".to_string(),
-        scope: scope::ACCESS_TOKEN.to_string(),
-        role: "platform_admin".to_string(),
+        scope: Scope::AccessToken,
+        role: Role::Admin,
         session_id: "session-uuid-002".to_string(),
         expires_in: None,
     };
@@ -193,7 +190,7 @@ fn test_token_without_tenant_id() {
     let token = encoder.encode(params).unwrap();
     let claims = decoder.decode(&token).unwrap();
 
-    assert_eq!(claims.role, "platform_admin");
+    assert_eq!(claims.role, Role::Admin);
 }
 
 // ─── JTI uniqueness ─────────────────────────────────────────────────
@@ -236,12 +233,17 @@ fn test_multiple_tokens_independence() {
 
 #[test]
 fn test_encoder_rejects_invalid_pem() {
-    let result = JwtEncoder::new("not-a-pem", "iss".into(), "aud".into(), Duration::days(1));
+    let result = JwtEncoder::new(
+        "not-a-pem",
+        Issuer::AuthService,
+        Audience::ApiGateway,
+        Duration::days(1),
+    );
     assert!(result.is_err());
 }
 
 #[test]
 fn test_decoder_rejects_invalid_pem() {
-    let result = JwtDecoder::new("not-a-pem", "iss", "aud");
+    let result = JwtDecoder::new("not-a-pem", Issuer::AuthService, Audience::ApiGateway);
     assert!(result.is_err());
 }

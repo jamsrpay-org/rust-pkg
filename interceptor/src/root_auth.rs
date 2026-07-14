@@ -1,27 +1,27 @@
 use grpc::error::GrpcErrorContext;
 use jwt::JwtDecoder;
-use tonic::{Extensions, Request, Status, metadata::MetadataMap, service::Interceptor};
+use tonic::{Status, metadata::MetadataMap};
 use uuid::Uuid;
 
 const ERROR_CONTEXT: GrpcErrorContext = GrpcErrorContext::new("interceptor");
 
 #[derive(Clone)]
-pub struct AuthInterceptor {
+pub struct RootAuthInterceptor {
     decoder: JwtDecoder,
     error_code: &'static str,
 }
 
-impl AuthInterceptor {
+impl RootAuthInterceptor {
     pub fn new(decoder: JwtDecoder, error_code: &'static str) -> Self {
-        AuthInterceptor {
+        Self {
             decoder,
             error_code,
         }
     }
 
-    pub fn get_authed_user(&self, metadata: &MetadataMap) -> Result<AuthedUserContext, Status> {
+    pub fn validate(&self, metadata: &MetadataMap) -> Result<Uuid, Status> {
         let authorization = metadata
-            .get("authorization")
+            .get("x-root-auth")
             .ok_or_else(|| ERROR_CONTEXT.unauthenticated(self.error_code).build())?
             .to_str()
             .ok()
@@ -37,29 +37,6 @@ impl AuthInterceptor {
         let user_id = Uuid::parse_str(&decoded.sub)
             .map_err(|_| ERROR_CONTEXT.unauthenticated(self.error_code).build())?;
 
-        let authed_user = AuthedUserContext { user_id };
-        Ok(authed_user)
-    }
-}
-
-impl Interceptor for AuthInterceptor {
-    fn call(&mut self, mut request: Request<()>) -> Result<Request<()>, Status> {
-        let metadata = request.metadata();
-        let authed_user = self.get_authed_user(metadata)?;
-        request.extensions_mut().insert(authed_user);
-        Ok(request)
-    }
-}
-
-#[derive(Debug, Clone)]
-pub struct AuthedUserContext {
-    pub user_id: Uuid,
-}
-
-impl AuthedUserContext {
-    pub fn from_extensions(ctx: &Extensions, error_code: &'static str) -> Result<Self, Status> {
-        ctx.get::<Self>()
-            .cloned()
-            .ok_or_else(|| ERROR_CONTEXT.unauthenticated(error_code).build())
+        Ok(user_id)
     }
 }

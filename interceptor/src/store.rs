@@ -1,11 +1,16 @@
+use grpc::error::GrpcErrorContext;
 use tonic::{Status, service::Interceptor};
 
+const ERROR_CONTEXT: GrpcErrorContext = GrpcErrorContext::new("interceptor");
+
 #[derive(Debug, Clone)]
-pub struct StoreInterceptor {}
+pub struct StoreInterceptor {
+    error_code: &'static str,
+}
 
 impl StoreInterceptor {
-    pub fn new() -> Self {
-        Self {}
+    pub fn new(error_code: &'static str) -> Self {
+        Self { error_code }
     }
 }
 
@@ -17,10 +22,18 @@ impl Interceptor for StoreInterceptor {
         let store_id = request
             .metadata()
             .get("x-store-id")
-            .ok_or_else(|| Status::permission_denied("x-store-id is missing"))?
+            .ok_or_else(|| {
+                ERROR_CONTEXT
+                    .permission_denied(self.error_code)
+                    .build()
+            })?
             .to_str()
             .ok()
-            .ok_or_else(|| Status::permission_denied("x-store-id is missing"))?
+            .ok_or_else(|| {
+                ERROR_CONTEXT
+                    .permission_denied(self.error_code)
+                    .build()
+            })?
             .to_string();
         request.extensions_mut().insert(StoreContext::new(store_id));
         Ok(request)
@@ -37,10 +50,13 @@ impl StoreContext {
         Self { store_id }
     }
 
-    pub fn from_extensions(extensions: &tonic::Extensions) -> Result<Self, Status> {
+    pub fn from_extensions(
+        extensions: &tonic::Extensions,
+        error_code: &'static str,
+    ) -> Result<Self, Status> {
         extensions
             .get::<Self>()
             .cloned()
-            .ok_or_else(|| Status::permission_denied("x-store-id is missing"))
+            .ok_or_else(|| ERROR_CONTEXT.permission_denied(error_code).build())
     }
 }

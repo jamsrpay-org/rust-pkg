@@ -1,4 +1,4 @@
-use crate::{Claims, error::JwtError};
+use crate::{Audience, Claims, Issuer, claims::Scope, error::JwtError};
 use jsonwebtoken::{Algorithm, DecodingKey, Validation, decode};
 use std::collections::HashSet;
 
@@ -23,7 +23,7 @@ impl JwtDecoder {
     ///
     /// # Errors
     /// Returns [`JwtError`] if the PEM key cannot be parsed.
-    pub fn new(public_key_pem: &str, issuer: &str, audience: &str) -> Result<Self, JwtError> {
+    pub fn new(public_key_pem: &str, issuer: Issuer, audience: Audience) -> Result<Self, JwtError> {
         let decoding_key = DecodingKey::from_rsa_pem(public_key_pem.as_bytes())?;
 
         let mut validation = Validation::new(Algorithm::RS256);
@@ -61,11 +61,15 @@ impl JwtDecoder {
     ///
     /// Returns [`JwtError::ScopeMismatch`] if the token's `scope` does not
     /// match `expected_scope`.
-    pub fn decode_with_scope(&self, token: &str, expected_scope: &str) -> Result<Claims, JwtError> {
+    pub fn decode_with_scope(
+        &self,
+        token: &str,
+        expected_scope: Scope,
+    ) -> Result<Claims, JwtError> {
         let claims = self.decode(token)?;
         if claims.scope != expected_scope {
             return Err(JwtError::ScopeMismatch {
-                expected: expected_scope.to_string(),
+                expected: expected_scope,
                 actual: claims.scope,
             });
         }

@@ -10,6 +10,7 @@ members = [".", "crates/*"]
 # ── Shared ───────────────────────────────────────────────────────────────────
 chain-core = { path = "crates/chain-core" }
 evm-core = { path = "crates/evm-core" }
+utxo-core = { path = "crates/utxo-core" }
 jamsrpay-types = { git = "https://github.com/jamsrpay-org/rust-pkg", package = "jamsrpay-types", tag = "v0.1.18" }
 thiserror = "2.0.18"
 hex = "0.4.3"
@@ -37,12 +38,19 @@ serde_json = "1.0.149"
 serde = { version = "1.0.228", features = ["derive"] }
 tokio = { version = "1.52.2", features = ["full"] }
 
+# ── UTXO-specific ────────────────────────────────────────────────────────────
+bitcoin = { version = "0.32", features = ["rand-std"] }
+bech32 = "0.11"
+
 [dependencies]
 binance-smart-chain = { path = "crates/binance-smart-chain" }
+bitcoin-chain = { path = "crates/bitcoin" }
 ethereum = { path = "crates/ethereum" }
 evm-core = { workspace = true }
+litecoin = { path = "crates/litecoin" }
 polygon = { path = "crates/polygon" }
 tron = { path = "crates/tron" }
+utxo-core = { workspace = true }
 chain-core = { workspace = true }
 jamsrpay-types = { workspace = true }
 

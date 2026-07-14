@@ -13,6 +13,8 @@ pub const STORE_CURRENCY_EVENTS: &str = "store.store_currency.events.v1";
 pub const PAYOUT_EVENTS: &str = "payout.events.v1";
 pub const PAYOUT_WALLET_EVENTS: &str = "payout.payout_wallet.events.v1";
 
+// ----
+
 pub const TRON_NATIVE_TRANSFERS: &str = "tron.transfers.native.v1";
 pub const TRON_TOKEN_TRANSFERS: &str = "tron.transfers.token.v1";
 pub const TRON_BLOCKS: &str = "tron.blocks.v1";
@@ -28,3 +30,11 @@ pub const ETH_BLOCKS: &str = "eth.blocks.v1";
 pub const POL_NATIVE_TRANSFERS: &str = "pol.transfers.native.v1";
 pub const POL_TOKEN_TRANSFERS: &str = "pol.transfers.token.v1";
 pub const POL_BLOCKS: &str = "pol.blocks.v1";
+
+pub const BTC_NATIVE_TRANSFERS: &str = "btc.transfers.native.v1";
+pub const BTC_TOKEN_TRANSFERS: &str = "btc.transfers.token.v1";
+pub const BTC_BLOCKS: &str = "btc.blocks.v1";
+
+pub const LTC_NATIVE_TRANSFERS: &str = "ltc.transfers.native.v1";
+pub const LTC_TOKEN_TRANSFERS: &str = "ltc.transfers.token.v1";
+pub const LTC_BLOCKS: &str = "ltc.blocks.v1";
