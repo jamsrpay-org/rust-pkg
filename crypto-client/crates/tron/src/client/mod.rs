@@ -119,7 +119,7 @@ impl BlockchainClient for TronClient {
                 )
                 .await?
             }
-            PaymentCurrency::USDT_TRC20 => {
+            PaymentCurrency::USDT => {
                 let contract = self.contract_address(request.currency)?;
                 self.create_trc20_transfer(
                     request.from.as_str(),
@@ -170,7 +170,7 @@ impl BlockchainClient for TronClient {
                 let raw = self.get_balance(address.as_str()).await?;
                 Ok(Money::from_atomic(raw as i128, decimals))
             }
-            PaymentCurrency::USDT_TRC20 => {
+            PaymentCurrency::USDT => {
                 let contract = self.contract_address(currency)?;
                 let raw = self.get_trc20_balance(address.as_str(), contract).await?;
                 Ok(Money::from_atomic(raw as i128, decimals))
@@ -186,7 +186,7 @@ impl BlockchainClient for TronClient {
         let decimals = request.currency.decimals();
         match request.currency {
             PaymentCurrency::TRX => self.estimate_trx_withdrawable(&request, decimals).await,
-            PaymentCurrency::USDT_TRC20 => {
+            PaymentCurrency::USDT => {
                 // For TRC20 tokens, the full balance is withdrawable.
                 // Energy fees are paid in TRX, not in the token itself.
                 let contract = self.contract_address(request.currency)?;

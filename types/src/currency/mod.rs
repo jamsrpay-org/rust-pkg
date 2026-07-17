@@ -21,25 +21,8 @@ pub enum FiatCurrency {
 #[allow(non_camel_case_types)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Display, EnumString, AsRefStr)]
 #[strum(serialize_all = "SCREAMING_SNAKE_CASE")]
-pub enum CryptoAsset {
-    TRX,
-    BNB,
-    USDT,
-    USDC,
-    BUSD,
-    DAI,
-    EURC,
-    ETH,
-    POL,
-    BTC,
-    LTC,
-}
-
-#[allow(non_camel_case_types)]
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Display, EnumString, AsRefStr)]
-#[strum(serialize_all = "SCREAMING_SNAKE_CASE")]
 pub enum PricingCurrency {
-    // Crypto Assets
+    // Crypto Currencies
     TRX,
     BNB,
     USDT,
@@ -70,15 +53,11 @@ pub enum PricingCurrency {
 pub enum PaymentCurrency {
     TRX,
     BNB,
-    USDT_TRC20,
-    USDT_BEP20,
-    USDC_BEP20,
-    BUSD_BEP20,
-    DAI_BEP20,
-    USDT_ERC20,
-    USDC_ERC20,
-    EURC_ERC20,
-    DAI_ERC20,
+    USDT,
+    USDC,
+    BUSD,
+    DAI,
+    EURC,
     ETH,
     POL,
     BTC,
@@ -92,8 +71,6 @@ pub enum GasCurrency {
     BNB,
     ETH,
     POL,
-    BTC,
-    LTC,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Display, EnumString, AsRefStr)]
@@ -109,17 +86,22 @@ pub enum Chain {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Display, EnumString, AsRefStr)]
 #[strum(serialize_all = "snake_case")]
-pub enum ChainNetwork {
+pub enum NetworkId {
     TronMainnet,
     TronNile,
-    BSCMainnet,
-    BSCTestnet,
+
+    BscMainnet,
+    BscTestnet,
+
     EthMainnet,
     EthSepolia,
+
     PolMainnet,
     PolAmoy,
+
     BtcMainnet,
     BtcTestnet,
+
     LtcMainnet,
     LtcTestnet,
 }
@@ -136,6 +118,14 @@ pub enum TokenStandard {
 pub enum AssetKind {
     Native,
     Token { standard: TokenStandard },
+}
+
+#[derive(Debug, Clone, Copy)]
+pub struct PaymentCurrencyNetwork {
+    pub network_id: NetworkId,
+    pub chain: Chain,
+    pub standard: Option<TokenStandard>,
+    pub is_native: bool,
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -160,5 +150,5 @@ pub struct PricingCurrencyMeta {
 pub struct BlockchainMeta {
     pub symbol: &'static str,
     pub name: &'static str,
-    pub gas_currency: GasCurrency,
+    pub gas_currency: Option<GasCurrency>,
 }

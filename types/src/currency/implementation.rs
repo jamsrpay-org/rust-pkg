@@ -1,7 +1,8 @@
 use crate::{
     currency::{
-        AssetKind, BlockchainMeta, Chain, ChainNetwork, FiatCurrency, GasCurrency, PaymentCurrency,
-        PaymentCurrencyMeta, PricingCurrency, PricingCurrencyMeta, TokenStandard,
+        AssetKind, BlockchainMeta, Chain, FiatCurrency, GasCurrency, NetworkId, PaymentCurrency,
+        PaymentCurrencyMeta, PaymentCurrencyNetwork, PricingCurrency, PricingCurrencyMeta,
+        TokenStandard,
     },
     money::Money,
 };
@@ -12,37 +13,37 @@ impl Chain {
             Chain::Tron => BlockchainMeta {
                 symbol: "TRON",
                 name: "TRON",
-                gas_currency: GasCurrency::TRX,
+                gas_currency: Some(GasCurrency::TRX),
             },
             Chain::BinanceSmartChain => BlockchainMeta {
                 symbol: "BSC",
                 name: "Binance Smart Chain",
-                gas_currency: GasCurrency::BNB,
+                gas_currency: Some(GasCurrency::BNB),
             },
             Chain::Ethereum => BlockchainMeta {
                 symbol: "ETH",
                 name: "Ethereum",
-                gas_currency: GasCurrency::ETH,
+                gas_currency: Some(GasCurrency::ETH),
             },
             Chain::Polygon => BlockchainMeta {
                 symbol: "POL",
                 name: "Polygon",
-                gas_currency: GasCurrency::POL,
+                gas_currency: Some(GasCurrency::POL),
             },
             Chain::Bitcoin => BlockchainMeta {
                 symbol: "BTC",
                 name: "Bitcoin",
-                gas_currency: GasCurrency::BTC,
+                gas_currency: None,
             },
             Chain::Litecoin => BlockchainMeta {
                 symbol: "LTC",
                 name: "Litecoin",
-                gas_currency: GasCurrency::LTC,
+                gas_currency: None,
             },
         }
     }
 
-    pub fn gas_currency(&self) -> GasCurrency {
+    pub fn gas_currency(&self) -> Option<GasCurrency> {
         self.meta().gas_currency
     }
 
@@ -60,14 +61,29 @@ impl From<GasCurrency> for PaymentCurrency {
         match value {
             GasCurrency::TRX => PaymentCurrency::TRX,
             GasCurrency::BNB => PaymentCurrency::BNB,
-            GasCurrency::ETH | GasCurrency::POL | GasCurrency::BTC | GasCurrency::LTC => {
-                unimplemented!("PaymentCurrency not yet supported for {:?}", value)
-            }
+            GasCurrency::ETH => PaymentCurrency::ETH,
+            GasCurrency::POL => PaymentCurrency::POL,
         }
     }
 }
 
 impl PaymentCurrency {
+    pub const fn gas_currency(&self) -> Option<Self> {
+        match *self {
+            PaymentCurrency::BNB => Some(PaymentCurrency::BNB),
+            PaymentCurrency::ETH => Some(PaymentCurrency::ETH),
+            PaymentCurrency::POL => Some(PaymentCurrency::POL),
+            PaymentCurrency::TRX => Some(PaymentCurrency::TRX),
+            PaymentCurrency::USDT => None,
+            PaymentCurrency::USDC => None,
+            PaymentCurrency::BUSD => None,
+            PaymentCurrency::DAI => None,
+            PaymentCurrency::EURC => None,
+            PaymentCurrency::BTC => None,
+            PaymentCurrency::LTC => None,
+        }
+    }
+
     pub const fn meta(&self) -> PaymentCurrencyMeta {
         match self {
             PaymentCurrency::TRX => PaymentCurrencyMeta {
@@ -86,8 +102,8 @@ impl PaymentCurrency {
                 kind: AssetKind::Native,
                 decimals: 18,
             },
-            PaymentCurrency::USDT_TRC20 => PaymentCurrencyMeta {
-                asset_id: "USDT_TRC20",
+            PaymentCurrency::USDT => PaymentCurrencyMeta {
+                asset_id: "USDT",
                 symbol: "USDT",
                 name: "Tether USD",
                 chain: Chain::Tron,
@@ -96,18 +112,8 @@ impl PaymentCurrency {
                 },
                 decimals: 6,
             },
-            PaymentCurrency::USDT_BEP20 => PaymentCurrencyMeta {
-                asset_id: "USDT_BEP20",
-                symbol: "USDT",
-                name: "Tether USD",
-                chain: Chain::BinanceSmartChain,
-                kind: AssetKind::Token {
-                    standard: TokenStandard::Bep20,
-                },
-                decimals: 18,
-            },
-            PaymentCurrency::USDC_BEP20 => PaymentCurrencyMeta {
-                asset_id: "USDC_BEP20",
+            PaymentCurrency::USDC => PaymentCurrencyMeta {
+                asset_id: "USDC",
                 symbol: "USDC",
                 name: "USD Coin",
                 chain: Chain::BinanceSmartChain,
@@ -116,8 +122,8 @@ impl PaymentCurrency {
                 },
                 decimals: 18,
             },
-            PaymentCurrency::BUSD_BEP20 => PaymentCurrencyMeta {
-                asset_id: "BUSD_BEP20",
+            PaymentCurrency::BUSD => PaymentCurrencyMeta {
+                asset_id: "BUSD",
                 symbol: "BUSD",
                 name: "Binance USD",
                 chain: Chain::BinanceSmartChain,
@@ -126,8 +132,8 @@ impl PaymentCurrency {
                 },
                 decimals: 18,
             },
-            PaymentCurrency::DAI_BEP20 => PaymentCurrencyMeta {
-                asset_id: "DAI_BEP20",
+            PaymentCurrency::DAI => PaymentCurrencyMeta {
+                asset_id: "DAI",
                 symbol: "DAI",
                 name: "Dai",
                 chain: Chain::BinanceSmartChain,
@@ -136,28 +142,8 @@ impl PaymentCurrency {
                 },
                 decimals: 18,
             },
-            PaymentCurrency::USDT_ERC20 => PaymentCurrencyMeta {
-                asset_id: "USDT_ERC20",
-                symbol: "USDT",
-                name: "Tether USD",
-                chain: Chain::Ethereum,
-                kind: AssetKind::Token {
-                    standard: TokenStandard::Erc20,
-                },
-                decimals: 6,
-            },
-            PaymentCurrency::USDC_ERC20 => PaymentCurrencyMeta {
-                asset_id: "USDC_ERC20",
-                symbol: "USDC",
-                name: "USD Coin",
-                chain: Chain::Ethereum,
-                kind: AssetKind::Token {
-                    standard: TokenStandard::Erc20,
-                },
-                decimals: 6,
-            },
-            PaymentCurrency::EURC_ERC20 => PaymentCurrencyMeta {
-                asset_id: "EURC_ERC20",
+            PaymentCurrency::EURC => PaymentCurrencyMeta {
+                asset_id: "EURC",
                 symbol: "EURC",
                 name: "EURC",
                 chain: Chain::Ethereum,
@@ -165,16 +151,6 @@ impl PaymentCurrency {
                     standard: TokenStandard::Erc20,
                 },
                 decimals: 6,
-            },
-            PaymentCurrency::DAI_ERC20 => PaymentCurrencyMeta {
-                asset_id: "DAI_ERC20",
-                symbol: "DAI",
-                name: "Dai",
-                chain: Chain::Ethereum,
-                kind: AssetKind::Token {
-                    standard: TokenStandard::Erc20,
-                },
-                decimals: 18,
             },
             PaymentCurrency::BTC => PaymentCurrencyMeta {
                 asset_id: "BTC",
@@ -240,59 +216,185 @@ impl PaymentCurrency {
         let formatted = money.to_formatted();
         format!("{formatted} {}", self.symbol())
     }
+
+    pub fn networks(&self) -> &'static [PaymentCurrencyNetwork] {
+        use PaymentCurrencyNetwork as N;
+        match self {
+            PaymentCurrency::TRX => &[N {
+                network_id: NetworkId::TronMainnet,
+                chain: Chain::Tron,
+                standard: None,
+                is_native: true,
+            }],
+            PaymentCurrency::BNB => &[N {
+                network_id: NetworkId::BscMainnet,
+                chain: Chain::BinanceSmartChain,
+                standard: None,
+                is_native: true,
+            }],
+            PaymentCurrency::ETH => &[N {
+                network_id: NetworkId::EthMainnet,
+                chain: Chain::Ethereum,
+                standard: None,
+                is_native: true,
+            }],
+            PaymentCurrency::POL => &[N {
+                network_id: NetworkId::PolMainnet,
+                chain: Chain::Polygon,
+                standard: None,
+                is_native: true,
+            }],
+            PaymentCurrency::BTC => &[N {
+                network_id: NetworkId::BtcMainnet,
+                chain: Chain::Bitcoin,
+                standard: None,
+                is_native: true,
+            }],
+            PaymentCurrency::LTC => &[N {
+                network_id: NetworkId::LtcMainnet,
+                chain: Chain::Litecoin,
+                standard: None,
+                is_native: true,
+            }],
+            PaymentCurrency::USDT => &[
+                N {
+                    network_id: NetworkId::TronMainnet,
+                    chain: Chain::Tron,
+                    standard: Some(TokenStandard::Trc20),
+                    is_native: false,
+                },
+                N {
+                    network_id: NetworkId::BscMainnet,
+                    chain: Chain::BinanceSmartChain,
+                    standard: Some(TokenStandard::Bep20),
+                    is_native: false,
+                },
+                N {
+                    network_id: NetworkId::EthMainnet,
+                    chain: Chain::Ethereum,
+                    standard: Some(TokenStandard::Erc20),
+                    is_native: false,
+                },
+                N {
+                    network_id: NetworkId::PolMainnet,
+                    chain: Chain::Polygon,
+                    standard: Some(TokenStandard::Erc20),
+                    is_native: false,
+                },
+            ],
+            PaymentCurrency::USDC => &[
+                N {
+                    network_id: NetworkId::TronMainnet,
+                    chain: Chain::Tron,
+                    standard: Some(TokenStandard::Trc20),
+                    is_native: false,
+                },
+                N {
+                    network_id: NetworkId::BscMainnet,
+                    chain: Chain::BinanceSmartChain,
+                    standard: Some(TokenStandard::Bep20),
+                    is_native: false,
+                },
+                N {
+                    network_id: NetworkId::EthMainnet,
+                    chain: Chain::Ethereum,
+                    standard: Some(TokenStandard::Erc20),
+                    is_native: false,
+                },
+                N {
+                    network_id: NetworkId::PolMainnet,
+                    chain: Chain::Polygon,
+                    standard: Some(TokenStandard::Erc20),
+                    is_native: false,
+                },
+            ],
+            PaymentCurrency::DAI => &[
+                N {
+                    network_id: NetworkId::BscMainnet,
+                    chain: Chain::BinanceSmartChain,
+                    standard: Some(TokenStandard::Bep20),
+                    is_native: false,
+                },
+                N {
+                    network_id: NetworkId::EthMainnet,
+                    chain: Chain::Ethereum,
+                    standard: Some(TokenStandard::Erc20),
+                    is_native: false,
+                },
+                N {
+                    network_id: NetworkId::PolMainnet,
+                    chain: Chain::Polygon,
+                    standard: Some(TokenStandard::Erc20),
+                    is_native: false,
+                },
+            ],
+            PaymentCurrency::BUSD => &[N {
+                network_id: NetworkId::BscMainnet,
+                chain: Chain::BinanceSmartChain,
+                standard: Some(TokenStandard::Bep20),
+                is_native: false,
+            }],
+            PaymentCurrency::EURC => &[N {
+                network_id: NetworkId::EthMainnet,
+                chain: Chain::Ethereum,
+                standard: Some(TokenStandard::Erc20),
+                is_native: false,
+            }],
+        }
+    }
 }
 
 impl PaymentCurrency {
-    pub fn get_base_url(&self, network: ChainNetwork) -> &'static str {
+    pub fn get_base_url(&self, network: NetworkId) -> &'static str {
         match network {
-            ChainNetwork::TronMainnet => "https://tronscan.org",
-            ChainNetwork::TronNile => "https://nile.tronscan.org",
-            ChainNetwork::BSCMainnet => "https://bscscan.com",
-            ChainNetwork::BSCTestnet => "https://testnet.bscscan.com",
-            ChainNetwork::BtcMainnet => "https://btc.com",
-            ChainNetwork::BtcTestnet => "https://testnet.btc.com",
-            ChainNetwork::EthMainnet => "https://eth.com",
-            ChainNetwork::EthSepolia => "https://testnet.eth.com",
-            ChainNetwork::LtcMainnet => "https://ltc.com",
-            ChainNetwork::LtcTestnet => "https://testnet.ltc.com",
-            ChainNetwork::PolMainnet => "https://pol.com",
-            ChainNetwork::PolAmoy => "https://testnet.pol.com",
+            NetworkId::TronMainnet => "https://tronscan.org",
+            NetworkId::TronNile => "https://nile.tronscan.org",
+            NetworkId::BscMainnet => "https://bscscan.com",
+            NetworkId::BscTestnet => "https://testnet.bscscan.com",
+            NetworkId::BtcMainnet => "https://btc.com",
+            NetworkId::BtcTestnet => "https://testnet.btc.com",
+            NetworkId::EthMainnet => "https://eth.com",
+            NetworkId::EthSepolia => "https://testnet.eth.com",
+            NetworkId::LtcMainnet => "https://ltc.com",
+            NetworkId::LtcTestnet => "https://testnet.ltc.com",
+            NetworkId::PolMainnet => "https://pol.com",
+            NetworkId::PolAmoy => "https://testnet.pol.com",
         }
     }
 
-    pub fn address_view_url(&self, network: ChainNetwork, address: &str) -> String {
+    pub fn address_view_url(&self, network: NetworkId, address: &str) -> String {
         let base_url = self.get_base_url(network);
         match network {
-            ChainNetwork::TronMainnet => format!("{}/#/address/{}", base_url, address),
-            ChainNetwork::TronNile => format!("{}/#/address/{}", base_url, address),
-            ChainNetwork::BSCMainnet => format!("{}/address/{}", base_url, address),
-            ChainNetwork::BSCTestnet => format!("{}/address/{}", base_url, address),
-            ChainNetwork::EthMainnet => format!("{}/address/{}", base_url, address),
-            ChainNetwork::EthSepolia => format!("{}/address/{}", base_url, address),
-            ChainNetwork::PolMainnet => format!("{}/address/{}", base_url, address),
-            ChainNetwork::PolAmoy => format!("{}/address/{}", base_url, address),
-            ChainNetwork::BtcMainnet => format!("{}/address/{}", base_url, address),
-            ChainNetwork::BtcTestnet => format!("{}/address/{}", base_url, address),
-            ChainNetwork::LtcMainnet => format!("{}/address/{}", base_url, address),
-            ChainNetwork::LtcTestnet => format!("{}/address/{}", base_url, address),
+            NetworkId::TronMainnet => format!("{}/#/address/{}", base_url, address),
+            NetworkId::TronNile => format!("{}/#/address/{}", base_url, address),
+            NetworkId::BscMainnet => format!("{}/address/{}", base_url, address),
+            NetworkId::BscTestnet => format!("{}/address/{}", base_url, address),
+            NetworkId::EthMainnet => format!("{}/address/{}", base_url, address),
+            NetworkId::EthSepolia => format!("{}/address/{}", base_url, address),
+            NetworkId::PolMainnet => format!("{}/address/{}", base_url, address),
+            NetworkId::PolAmoy => format!("{}/address/{}", base_url, address),
+            NetworkId::BtcMainnet => format!("{}/address/{}", base_url, address),
+            NetworkId::BtcTestnet => format!("{}/address/{}", base_url, address),
+            NetworkId::LtcMainnet => format!("{}/address/{}", base_url, address),
+            NetworkId::LtcTestnet => format!("{}/address/{}", base_url, address),
         }
     }
 
-    pub fn transaction_view_url(&self, network: ChainNetwork, tx_id: &str) -> String {
+    pub fn transaction_view_url(&self, network: NetworkId, tx_id: &str) -> String {
         let base_url = self.get_base_url(network);
         match network {
-            ChainNetwork::TronMainnet => format!("{}/#/transaction/{}", base_url, tx_id),
-            ChainNetwork::TronNile => format!("{}/#/transaction/{}", base_url, tx_id),
-            ChainNetwork::BSCMainnet => format!("{}/tx/{}", base_url, tx_id),
-            ChainNetwork::BSCTestnet => format!("{}/tx/{}", base_url, tx_id),
-            ChainNetwork::EthMainnet => format!("{}/tx/{}", base_url, tx_id),
-            ChainNetwork::EthSepolia => format!("{}/tx/{}", base_url, tx_id),
-            ChainNetwork::PolMainnet => format!("{}/tx/{}", base_url, tx_id),
-            ChainNetwork::PolAmoy => format!("{}/tx/{}", base_url, tx_id),
-            ChainNetwork::BtcMainnet => format!("{}/tx/{}", base_url, tx_id),
-            ChainNetwork::BtcTestnet => format!("{}/tx/{}", base_url, tx_id),
-            ChainNetwork::LtcMainnet => format!("{}/tx/{}", base_url, tx_id),
-            ChainNetwork::LtcTestnet => format!("{}/tx/{}", base_url, tx_id),
+            NetworkId::TronMainnet => format!("{}/#/transaction/{}", base_url, tx_id),
+            NetworkId::TronNile => format!("{}/#/transaction/{}", base_url, tx_id),
+            NetworkId::BscMainnet => format!("{}/tx/{}", base_url, tx_id),
+            NetworkId::BscTestnet => format!("{}/tx/{}", base_url, tx_id),
+            NetworkId::EthMainnet => format!("{}/tx/{}", base_url, tx_id),
+            NetworkId::EthSepolia => format!("{}/tx/{}", base_url, tx_id),
+            NetworkId::PolMainnet => format!("{}/tx/{}", base_url, tx_id),
+            NetworkId::PolAmoy => format!("{}/tx/{}", base_url, tx_id),
+            NetworkId::BtcMainnet => format!("{}/tx/{}", base_url, tx_id),
+            NetworkId::BtcTestnet => format!("{}/tx/{}", base_url, tx_id),
+            NetworkId::LtcMainnet => format!("{}/tx/{}", base_url, tx_id),
+            NetworkId::LtcTestnet => format!("{}/tx/{}", base_url, tx_id),
         }
     }
 }
@@ -301,16 +403,12 @@ impl PaymentCurrency {
     pub fn min_payment_amount(&self) -> Money {
         match self {
             PaymentCurrency::TRX => Money::from_atomic(3_000_000, self.decimals()),
-            PaymentCurrency::USDT_TRC20 => Money::from_atomic(5_000_000, self.decimals()),
+            PaymentCurrency::USDT => Money::from_atomic(5_000_000, self.decimals()),
             PaymentCurrency::BNB => Money::from_atomic(1, 1),
-            PaymentCurrency::USDT_BEP20
-            | PaymentCurrency::USDC_BEP20
-            | PaymentCurrency::DAI_BEP20
-            | PaymentCurrency::BUSD_BEP20
-            | PaymentCurrency::USDT_ERC20
-            | PaymentCurrency::USDC_ERC20
-            | PaymentCurrency::DAI_ERC20
-            | PaymentCurrency::EURC_ERC20 => Money::from_atomic(1, 0),
+            PaymentCurrency::USDC
+            | PaymentCurrency::DAI
+            | PaymentCurrency::BUSD
+            | PaymentCurrency::EURC => Money::from_atomic(1, 0),
             PaymentCurrency::BTC => Money::from_atomic(1, 0),
             PaymentCurrency::LTC => Money::from_atomic(1, 0),
             PaymentCurrency::ETH => Money::from_atomic(1, 0),
@@ -321,41 +419,16 @@ impl PaymentCurrency {
     pub fn fixed_network_fee(&self) -> Money {
         match self {
             PaymentCurrency::TRX => Money::from_atomic(2_000_000, self.decimals()),
-            PaymentCurrency::USDT_TRC20 => Money::from_atomic(0, self.decimals()),
+            PaymentCurrency::USDT => Money::from_atomic(0, self.decimals()),
             PaymentCurrency::BNB
-            | PaymentCurrency::USDT_BEP20
-            | PaymentCurrency::USDC_BEP20
-            | PaymentCurrency::DAI_BEP20
-            | PaymentCurrency::BUSD_BEP20
-            | PaymentCurrency::USDT_ERC20
-            | PaymentCurrency::USDC_ERC20
-            | PaymentCurrency::DAI_ERC20
-            | PaymentCurrency::EURC_ERC20 => Money::from_atomic(0, self.decimals()),
+            | PaymentCurrency::USDC
+            | PaymentCurrency::DAI
+            | PaymentCurrency::BUSD
+            | PaymentCurrency::EURC => Money::from_atomic(0, self.decimals()),
             PaymentCurrency::BTC => Money::from_atomic(0, self.decimals()),
             PaymentCurrency::LTC => Money::from_atomic(0, self.decimals()),
             PaymentCurrency::ETH => Money::from_atomic(0, self.decimals()),
             PaymentCurrency::POL => Money::from_atomic(0, self.decimals()),
-        }
-    }
-}
-
-impl From<PaymentCurrency> for Chain {
-    fn from(value: PaymentCurrency) -> Self {
-        match value {
-            PaymentCurrency::BNB
-            | PaymentCurrency::USDT_BEP20
-            | PaymentCurrency::USDC_BEP20
-            | PaymentCurrency::DAI_BEP20
-            | PaymentCurrency::BUSD_BEP20 => Chain::BinanceSmartChain,
-            PaymentCurrency::TRX | PaymentCurrency::USDT_TRC20 => Chain::Tron,
-            PaymentCurrency::USDT_ERC20
-            | PaymentCurrency::USDC_ERC20
-            | PaymentCurrency::DAI_ERC20
-            | PaymentCurrency::EURC_ERC20 => Chain::Ethereum,
-            PaymentCurrency::BTC => Chain::Bitcoin,
-            PaymentCurrency::LTC => Chain::Litecoin,
-            PaymentCurrency::ETH => Chain::Ethereum,
-            PaymentCurrency::POL => Chain::Polygon,
         }
     }
 }
@@ -446,7 +519,7 @@ impl FiatCurrency {
     //
     pub fn format_money(self, money: Money) -> String {
         let formatted = money.to_formatted();
-        format!("{formatted} {}", self.symbol())
+        format!("{formatted} {}", self.asset())
     }
 }
 
@@ -640,5 +713,52 @@ impl PricingCurrency {
     pub fn format_money(self, money: Money) -> String {
         let formatted = money.to_formatted();
         format!("{formatted} {}", self.symbol())
+    }
+}
+
+impl NetworkId {
+    pub const fn is_testnet(self) -> bool {
+        matches!(
+            self,
+            Self::TronNile
+                | Self::EthSepolia
+                | Self::BscTestnet
+                | Self::PolAmoy
+                | Self::BtcTestnet
+                | Self::LtcTestnet
+        )
+    }
+
+    pub const fn display_name(self) -> &'static str {
+        match self {
+            Self::TronMainnet => "Tron",
+            Self::TronNile => "Tron Nile",
+
+            Self::EthMainnet => "Ethereum",
+            Self::EthSepolia => "Ethereum Sepolia",
+
+            Self::BscMainnet => "BNB Smart Chain",
+            Self::BscTestnet => "BNB Smart Chain Testnet",
+
+            Self::PolMainnet => "Polygon",
+            Self::PolAmoy => "Polygon Amoy",
+
+            Self::BtcMainnet => "Bitcoin",
+            Self::BtcTestnet => "Bitcoin Testnet",
+
+            Self::LtcMainnet => "Litecoin",
+            Self::LtcTestnet => "Litecoin Testnet",
+        }
+    }
+
+    pub const fn chain(self) -> Chain {
+        match self {
+            Self::TronMainnet | Self::TronNile => Chain::Tron,
+            Self::EthMainnet | Self::EthSepolia => Chain::Ethereum,
+            Self::BscMainnet | Self::BscTestnet => Chain::BinanceSmartChain,
+            Self::PolMainnet | Self::PolAmoy => Chain::Polygon,
+            Self::BtcMainnet | Self::BtcTestnet => Chain::Bitcoin,
+            Self::LtcMainnet | Self::LtcTestnet => Chain::Litecoin,
+        }
     }
 }

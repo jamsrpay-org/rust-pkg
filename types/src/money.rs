@@ -101,6 +101,12 @@ impl Money {
         Self::from_human_readable(decimal, decimals)
     }
 
+    /// Human-readable decimal representation.
+    /// Example: atomic=150000000, decimals=8 -> 1.5
+    pub fn to_formatted_decimal(&self) -> Decimal {
+        Decimal::from_i128_with_scale(self.atomic, self.decimals as u32)
+    }
+
     /// Get the atomic value (smallest unit) as an integer.
     pub fn atomic(&self) -> i128 {
         self.atomic
