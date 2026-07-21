@@ -1,7 +1,7 @@
 use grpc::error::GrpcErrorContext;
+use jamsrpay_types::user_id::UserId;
 use jwt::JwtDecoder;
 use tonic::{Status, metadata::MetadataMap};
-use uuid::Uuid;
 
 const ERROR_CONTEXT: GrpcErrorContext = GrpcErrorContext::new("interceptor");
 
@@ -19,7 +19,7 @@ impl RootAuthInterceptor {
         }
     }
 
-    pub fn validate(&self, metadata: &MetadataMap) -> Result<Uuid, Status> {
+    pub fn validate(&self, metadata: &MetadataMap) -> Result<UserId, Status> {
         let authorization = metadata
             .get("x-root-auth")
             .ok_or_else(|| ERROR_CONTEXT.unauthenticated(self.error_code).build())?
@@ -34,7 +34,7 @@ impl RootAuthInterceptor {
             .decoder
             .decode(token)
             .map_err(|_| ERROR_CONTEXT.unauthenticated(self.error_code).build())?;
-        let user_id = Uuid::parse_str(&decoded.sub)
+        let user_id = UserId::parse(&decoded.sub)
             .map_err(|_| ERROR_CONTEXT.unauthenticated(self.error_code).build())?;
 
         Ok(user_id)

@@ -1,7 +1,7 @@
 use grpc::error::GrpcErrorContext;
+use jamsrpay_types::user_id::UserId;
 use jwt::JwtDecoder;
 use tonic::{Extensions, Request, Status, metadata::MetadataMap, service::Interceptor};
-use uuid::Uuid;
 
 const ERROR_CONTEXT: GrpcErrorContext = GrpcErrorContext::new("interceptor");
 
@@ -34,7 +34,7 @@ impl AuthInterceptor {
             .decoder
             .decode(token)
             .map_err(|_| ERROR_CONTEXT.unauthenticated(self.error_code).build())?;
-        let user_id = Uuid::parse_str(&decoded.sub)
+        let user_id = UserId::parse(&decoded.sub)
             .map_err(|_| ERROR_CONTEXT.unauthenticated(self.error_code).build())?;
 
         let authed_user = AuthedUserContext { user_id };
@@ -53,7 +53,7 @@ impl Interceptor for AuthInterceptor {
 
 #[derive(Debug, Clone)]
 pub struct AuthedUserContext {
-    pub user_id: Uuid,
+    pub user_id: UserId,
 }
 
 impl AuthedUserContext {

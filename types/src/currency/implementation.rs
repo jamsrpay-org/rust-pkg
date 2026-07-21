@@ -220,45 +220,99 @@ impl PaymentCurrency {
     pub fn networks(&self) -> &'static [PaymentCurrencyNetwork] {
         use PaymentCurrencyNetwork as N;
         match self {
-            PaymentCurrency::TRX => &[N {
-                network_id: NetworkId::TronMainnet,
-                chain: Chain::Tron,
-                standard: None,
-                is_native: true,
-            }],
-            PaymentCurrency::BNB => &[N {
-                network_id: NetworkId::BscMainnet,
-                chain: Chain::BinanceSmartChain,
-                standard: None,
-                is_native: true,
-            }],
-            PaymentCurrency::ETH => &[N {
-                network_id: NetworkId::EthMainnet,
-                chain: Chain::Ethereum,
-                standard: None,
-                is_native: true,
-            }],
-            PaymentCurrency::POL => &[N {
-                network_id: NetworkId::PolMainnet,
-                chain: Chain::Polygon,
-                standard: None,
-                is_native: true,
-            }],
-            PaymentCurrency::BTC => &[N {
-                network_id: NetworkId::BtcMainnet,
-                chain: Chain::Bitcoin,
-                standard: None,
-                is_native: true,
-            }],
-            PaymentCurrency::LTC => &[N {
-                network_id: NetworkId::LtcMainnet,
-                chain: Chain::Litecoin,
-                standard: None,
-                is_native: true,
-            }],
+            PaymentCurrency::TRX => &[
+                N {
+                    network_id: NetworkId::TronMainnet,
+                    chain: Chain::Tron,
+                    standard: None,
+                    is_native: true,
+                },
+                N {
+                    network_id: NetworkId::TronNile,
+                    chain: Chain::Tron,
+                    standard: None,
+                    is_native: true,
+                },
+            ],
+            PaymentCurrency::BNB => &[
+                N {
+                    network_id: NetworkId::BscMainnet,
+                    chain: Chain::BinanceSmartChain,
+                    standard: None,
+                    is_native: true,
+                },
+                N {
+                    network_id: NetworkId::BscTestnet,
+                    chain: Chain::BinanceSmartChain,
+                    standard: None,
+                    is_native: true,
+                },
+            ],
+            PaymentCurrency::ETH => &[
+                N {
+                    network_id: NetworkId::EthMainnet,
+                    chain: Chain::Ethereum,
+                    standard: None,
+                    is_native: true,
+                },
+                N {
+                    network_id: NetworkId::EthSepolia,
+                    chain: Chain::Ethereum,
+                    standard: None,
+                    is_native: true,
+                },
+            ],
+            PaymentCurrency::POL => &[
+                N {
+                    network_id: NetworkId::PolMainnet,
+                    chain: Chain::Polygon,
+                    standard: None,
+                    is_native: true,
+                },
+                N {
+                    network_id: NetworkId::PolAmoy,
+                    chain: Chain::Polygon,
+                    standard: None,
+                    is_native: true,
+                },
+            ],
+            PaymentCurrency::BTC => &[
+                N {
+                    network_id: NetworkId::BtcMainnet,
+                    chain: Chain::Bitcoin,
+                    standard: None,
+                    is_native: true,
+                },
+                N {
+                    network_id: NetworkId::BtcTestnet,
+                    chain: Chain::Bitcoin,
+                    standard: None,
+                    is_native: true,
+                },
+            ],
+            PaymentCurrency::LTC => &[
+                N {
+                    network_id: NetworkId::LtcMainnet,
+                    chain: Chain::Litecoin,
+                    standard: None,
+                    is_native: true,
+                },
+                N {
+                    network_id: NetworkId::LtcTestnet,
+                    chain: Chain::Litecoin,
+                    standard: None,
+                    is_native: true,
+                },
+            ],
             PaymentCurrency::USDT => &[
                 N {
                     network_id: NetworkId::TronMainnet,
+                    chain: Chain::Tron,
+                    standard: Some(TokenStandard::Trc20),
+                    is_native: false,
+                },
+                N {
+                    network_id: NetworkId::TronNile,
                     chain: Chain::Tron,
                     standard: Some(TokenStandard::Trc20),
                     is_native: false,
@@ -270,7 +324,19 @@ impl PaymentCurrency {
                     is_native: false,
                 },
                 N {
+                    network_id: NetworkId::BscTestnet,
+                    chain: Chain::BinanceSmartChain,
+                    standard: Some(TokenStandard::Bep20),
+                    is_native: false,
+                },
+                N {
                     network_id: NetworkId::EthMainnet,
+                    chain: Chain::Ethereum,
+                    standard: Some(TokenStandard::Erc20),
+                    is_native: false,
+                },
+                N {
+                    network_id: NetworkId::EthSepolia,
                     chain: Chain::Ethereum,
                     standard: Some(TokenStandard::Erc20),
                     is_native: false,
@@ -281,16 +347,22 @@ impl PaymentCurrency {
                     standard: Some(TokenStandard::Erc20),
                     is_native: false,
                 },
+                N {
+                    network_id: NetworkId::PolAmoy,
+                    chain: Chain::Polygon,
+                    standard: Some(TokenStandard::Erc20),
+                    is_native: false,
+                },
             ],
             PaymentCurrency::USDC => &[
                 N {
-                    network_id: NetworkId::TronMainnet,
-                    chain: Chain::Tron,
-                    standard: Some(TokenStandard::Trc20),
+                    network_id: NetworkId::BscMainnet,
+                    chain: Chain::BinanceSmartChain,
+                    standard: Some(TokenStandard::Bep20),
                     is_native: false,
                 },
                 N {
-                    network_id: NetworkId::BscMainnet,
+                    network_id: NetworkId::BscTestnet,
                     chain: Chain::BinanceSmartChain,
                     standard: Some(TokenStandard::Bep20),
                     is_native: false,
@@ -302,7 +374,19 @@ impl PaymentCurrency {
                     is_native: false,
                 },
                 N {
+                    network_id: NetworkId::EthSepolia,
+                    chain: Chain::Ethereum,
+                    standard: Some(TokenStandard::Erc20),
+                    is_native: false,
+                },
+                N {
                     network_id: NetworkId::PolMainnet,
+                    chain: Chain::Polygon,
+                    standard: Some(TokenStandard::Erc20),
+                    is_native: false,
+                },
+                N {
+                    network_id: NetworkId::PolAmoy,
                     chain: Chain::Polygon,
                     standard: Some(TokenStandard::Erc20),
                     is_native: false,
@@ -316,7 +400,19 @@ impl PaymentCurrency {
                     is_native: false,
                 },
                 N {
+                    network_id: NetworkId::BscTestnet,
+                    chain: Chain::BinanceSmartChain,
+                    standard: Some(TokenStandard::Bep20),
+                    is_native: false,
+                },
+                N {
                     network_id: NetworkId::EthMainnet,
+                    chain: Chain::Ethereum,
+                    standard: Some(TokenStandard::Erc20),
+                    is_native: false,
+                },
+                N {
+                    network_id: NetworkId::EthSepolia,
                     chain: Chain::Ethereum,
                     standard: Some(TokenStandard::Erc20),
                     is_native: false,
@@ -327,19 +423,41 @@ impl PaymentCurrency {
                     standard: Some(TokenStandard::Erc20),
                     is_native: false,
                 },
+                N {
+                    network_id: NetworkId::PolAmoy,
+                    chain: Chain::Polygon,
+                    standard: Some(TokenStandard::Erc20),
+                    is_native: false,
+                },
             ],
-            PaymentCurrency::BUSD => &[N {
-                network_id: NetworkId::BscMainnet,
-                chain: Chain::BinanceSmartChain,
-                standard: Some(TokenStandard::Bep20),
-                is_native: false,
-            }],
-            PaymentCurrency::EURC => &[N {
-                network_id: NetworkId::EthMainnet,
-                chain: Chain::Ethereum,
-                standard: Some(TokenStandard::Erc20),
-                is_native: false,
-            }],
+            PaymentCurrency::BUSD => &[
+                N {
+                    network_id: NetworkId::BscMainnet,
+                    chain: Chain::BinanceSmartChain,
+                    standard: Some(TokenStandard::Bep20),
+                    is_native: false,
+                },
+                N {
+                    network_id: NetworkId::BscTestnet,
+                    chain: Chain::BinanceSmartChain,
+                    standard: Some(TokenStandard::Bep20),
+                    is_native: false,
+                },
+            ],
+            PaymentCurrency::EURC => &[
+                N {
+                    network_id: NetworkId::EthMainnet,
+                    chain: Chain::Ethereum,
+                    standard: Some(TokenStandard::Erc20),
+                    is_native: false,
+                },
+                N {
+                    network_id: NetworkId::EthSepolia,
+                    chain: Chain::Ethereum,
+                    standard: Some(TokenStandard::Erc20),
+                    is_native: false,
+                },
+            ],
         }
     }
 }

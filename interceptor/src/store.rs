@@ -1,4 +1,5 @@
 use grpc::error::GrpcErrorContext;
+use jamsrpay_types::store_id::StoreId;
 use tonic::{Status, service::Interceptor};
 
 const ERROR_CONTEXT: GrpcErrorContext = GrpcErrorContext::new("interceptor");
@@ -22,19 +23,13 @@ impl Interceptor for StoreInterceptor {
         let store_id = request
             .metadata()
             .get("x-store-id")
-            .ok_or_else(|| {
-                ERROR_CONTEXT
-                    .permission_denied(self.error_code)
-                    .build()
-            })?
+            .ok_or_else(|| ERROR_CONTEXT.permission_denied(self.error_code).build())?
             .to_str()
             .ok()
-            .ok_or_else(|| {
-                ERROR_CONTEXT
-                    .permission_denied(self.error_code)
-                    .build()
-            })?
+            .ok_or_else(|| ERROR_CONTEXT.permission_denied(self.error_code).build())?
             .to_string();
+        let store_id = StoreId::parse(&store_id)
+            .map_err(|_| ERROR_CONTEXT.permission_denied(self.error_code).build())?;
         request.extensions_mut().insert(StoreContext::new(store_id));
         Ok(request)
     }
@@ -42,11 +37,11 @@ impl Interceptor for StoreInterceptor {
 
 #[derive(Debug, Clone)]
 pub struct StoreContext {
-    pub store_id: String,
+    pub store_id: StoreId,
 }
 
 impl StoreContext {
-    pub fn new(store_id: String) -> Self {
+    pub fn new(store_id: StoreId) -> Self {
         Self { store_id }
     }
 
