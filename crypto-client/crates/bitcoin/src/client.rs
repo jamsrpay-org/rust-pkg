@@ -127,4 +127,8 @@ impl BlockchainClient for BtcClient {
         let pk_hex = hex::encode(private_key);
         Ok(UtxoClient::sign_raw(&pk_hex, raw_tx)?)
     }
+
+    fn is_valid_address(&self, address: &str) -> bool {
+        self.utxo.is_valid_address(address)
+    }
 }

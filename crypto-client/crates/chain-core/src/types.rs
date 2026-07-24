@@ -75,4 +75,9 @@ pub trait BlockchainClient {
         private_key: &[u8],
         raw_tx: &[u8],
     ) -> Result<Vec<u8>, BlockchainClientError>;
+
+    /// Check whether the given address string is valid for this chain.
+    ///
+    /// This is a local format check — no network call is made.
+    fn is_valid_address(&self, address: &str) -> bool;
 }

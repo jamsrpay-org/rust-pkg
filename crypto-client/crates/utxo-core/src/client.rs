@@ -160,15 +160,13 @@ impl UtxoClient {
         let inputs: Vec<TxIn> = selected
             .iter()
             .map(|utxo| {
-                let txid = Txid::from_slice(
-                    &hex::decode(&utxo.txid).unwrap_or_default(),
-                )
-                .unwrap_or_else(|_| {
-                    // Reverse byte order for txid (Bitcoin convention).
-                    let mut bytes = hex::decode(&utxo.txid).unwrap_or_default();
-                    bytes.reverse();
-                    Txid::from_slice(&bytes).expect("invalid txid")
-                });
+                let txid = Txid::from_slice(&hex::decode(&utxo.txid).unwrap_or_default())
+                    .unwrap_or_else(|_| {
+                        // Reverse byte order for txid (Bitcoin convention).
+                        let mut bytes = hex::decode(&utxo.txid).unwrap_or_default();
+                        bytes.reverse();
+                        Txid::from_slice(&bytes).expect("invalid txid")
+                    });
                 TxIn {
                     previous_output: OutPoint::new(txid, utxo.vout),
                     script_sig: ScriptBuf::new(),
@@ -234,10 +232,7 @@ impl UtxoClient {
     ///
     /// Input: consensus-encoded unsigned transaction.
     /// Output: consensus-encoded signed transaction (with witness data).
-    pub fn sign_raw(
-        private_key_hex: &str,
-        raw_tx: &[u8],
-    ) -> Result<Vec<u8>, UtxoClientError> {
+    pub fn sign_raw(private_key_hex: &str, raw_tx: &[u8]) -> Result<Vec<u8>, UtxoClientError> {
         let pk_bytes =
             hex::decode(private_key_hex).map_err(|_| UtxoClientError::InvalidPrivateKey)?;
         if pk_bytes.len() != 32 {
@@ -248,8 +243,7 @@ impl UtxoClient {
         let secret_key = SecretKey::from_slice(&pk_bytes)
             .map_err(|e| UtxoClientError::SignError(format!("invalid key: {}", e)))?;
         let private_key = PrivateKey::new(secret_key, bitcoin::Network::Bitcoin);
-        let public_key =
-            CompressedPublicKey::from_private_key(&secp, &private_key).unwrap();
+        let public_key = CompressedPublicKey::from_private_key(&secp, &private_key).unwrap();
 
         // Decode the unsigned transaction.
         let mut tx = Transaction::consensus_decode(&mut &raw_tx[..])
@@ -264,12 +258,7 @@ impl UtxoClient {
             // For now, use 0 to enable compilation; the actual signing in the chain-specific
             // client should pass the correct UTXO values.
             let sighash = sighasher
-                .p2wpkh_signature_hash(
-                    i,
-                    &script_code,
-                    Amount::from_sat(0),
-                    EcdsaSighashType::All,
-                )
+                .p2wpkh_signature_hash(i, &script_code, Amount::from_sat(0), EcdsaSighashType::All)
                 .map_err(|e| UtxoClientError::SignError(format!("sighash: {}", e)))?;
 
             let msg = bitcoin::secp256k1::Message::from_digest(sighash.to_byte_array());
@@ -360,6 +349,13 @@ impl UtxoClient {
         Ok(balance.saturating_sub(estimated_fee))
     }
 
+    // ── Address validation ───────────────────────────────────────────────
+
+    /// Check whether the given address string is valid for this UTXO network.
+    pub fn is_valid_address(&self, address: &str) -> bool {
+        self.address_to_script(address).is_ok()
+    }
+
     // ── Private helpers ─────────────────────────────────────────────────────
 
     /// Fetch address stats from the Esplora API.
@@ -397,11 +393,12 @@ impl UtxoClient {
             address.to_string()
         };
 
-        let addr: Address<bitcoin::address::NetworkUnchecked> = parse_addr
-            .parse()
-            .map_err(|e: bitcoin::address::ParseError| {
-                UtxoClientError::InvalidAddress(format!("{}: {}", address, e))
-            })?;
+        let addr: Address<bitcoin::address::NetworkUnchecked> =
+            parse_addr
+                .parse()
+                .map_err(|e: bitcoin::address::ParseError| {
+                    UtxoClientError::InvalidAddress(format!("{}: {}", address, e))
+                })?;
 
         let addr = addr
             .require_network(self.network.to_bitcoin_network())
@@ -421,8 +418,8 @@ impl UtxoClient {
 /// re-encodes with the new HRP, computing a fresh checksum (the checksum
 /// covers the HRP, so a simple string swap would produce an invalid address).
 fn re_encode_bech32_address(address: &str, target_hrp: &str) -> String {
-    use bech32::segwit;
     use bech32::Hrp;
+    use bech32::segwit;
 
     let new_hrp = match Hrp::parse(target_hrp) {
         Ok(h) => h,
@@ -522,5 +519,53 @@ mod tests {
             "Round-trip re-encoding should produce the original address"
         );
         dbg!(&wallet);
+    }
+
+    #[test]
+    fn test_validate_btc_address() {
+        let client = UtxoClient::new("https://blockstream.info/api", UtxoNetwork::BitcoinMainnet);
+
+        // Generated wallet should be valid
+        let wallet = UtxoClient::generate_wallet(UtxoNetwork::BitcoinMainnet);
+        assert!(
+            client.is_valid_address(&wallet.address),
+            "Generated BTC address should be valid"
+        );
+
+        // Invalid addresses
+        assert!(!client.is_valid_address(""));
+        assert!(!client.is_valid_address("not-an-address"));
+        assert!(!client.is_valid_address("0xdAC17F958D2ee523a2206206994597C13D831ec7"));
+    }
+
+    #[test]
+    fn test_validate_ltc_address() {
+        let client = UtxoClient::new(
+            "https://litecoinspace.org/api",
+            UtxoNetwork::LitecoinMainnet,
+        );
+
+        // Generated LTC wallet should be valid
+        let wallet = UtxoClient::generate_wallet(UtxoNetwork::LitecoinMainnet);
+        assert!(
+            client.is_valid_address(&wallet.address),
+            "Generated LTC address should be valid"
+        );
+
+        // Invalid addresses
+        assert!(!client.is_valid_address(""));
+        assert!(!client.is_valid_address("not-an-address"));
+        assert!(!client.is_valid_address("0xdAC17F958D2ee523a2206206994597C13D831ec7"));
+    }
+
+    #[test]
+    fn test_validate_btc_rejects_ltc() {
+        let client = UtxoClient::new("https://blockstream.info/api", UtxoNetwork::BitcoinMainnet);
+
+        let ltc_wallet = UtxoClient::generate_wallet(UtxoNetwork::LitecoinMainnet);
+        assert!(
+            !client.is_valid_address(&ltc_wallet.address),
+            "LTC address should not be valid for BTC client"
+        );
     }
 }

@@ -173,4 +173,8 @@ impl BlockchainClient for BscClient {
     ) -> Result<Vec<u8>, BlockchainClientError> {
         Ok(EvmClient::sign_raw(private_key, raw_tx)?)
     }
+
+    fn is_valid_address(&self, address: &str) -> bool {
+        EvmClient::is_valid_address(address)
+    }
 }

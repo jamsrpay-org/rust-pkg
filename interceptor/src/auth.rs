@@ -1,5 +1,5 @@
 use grpc::error::GrpcErrorContext;
-use jamsrpay_types::user_id::UserId;
+use jamsrpay_types::{session_id::SessionId, user_id::UserId};
 use jwt::JwtDecoder;
 use tonic::{Extensions, Request, Status, metadata::MetadataMap, service::Interceptor};
 
@@ -36,8 +36,13 @@ impl AuthInterceptor {
             .map_err(|_| ERROR_CONTEXT.unauthenticated(self.error_code).build())?;
         let user_id = UserId::parse(&decoded.sub)
             .map_err(|_| ERROR_CONTEXT.unauthenticated(self.error_code).build())?;
+        let session_id = SessionId::parse(&decoded.session_id)
+            .map_err(|_| ERROR_CONTEXT.unauthenticated(self.error_code).build())?;
 
-        let authed_user = AuthedUserContext { user_id };
+        let authed_user = AuthedUserContext {
+            user_id,
+            session_id,
+        };
         Ok(authed_user)
     }
 }
@@ -54,6 +59,7 @@ impl Interceptor for AuthInterceptor {
 #[derive(Debug, Clone)]
 pub struct AuthedUserContext {
     pub user_id: UserId,
+    pub session_id: SessionId,
 }
 
 impl AuthedUserContext {

@@ -215,6 +215,18 @@ impl BlockchainClient for TronClient {
         let signature = ec_key_sign(raw_tx, private_key)?;
         Ok(signature)
     }
+
+    fn is_valid_address(&self, address: &str) -> bool {
+        // Tron addresses are base58check-encoded, start with 'T',
+        // and decode to 21 bytes: 0x41 prefix + 20-byte address.
+        if !address.starts_with('T') {
+            return false;
+        }
+        match bs58::decode(address).with_check(None).into_vec() {
+            Ok(bytes) => bytes.len() == 21 && bytes[0] == 0x41,
+            Err(_) => false,
+        }
+    }
 }
 
 impl TronClient {
@@ -249,5 +261,43 @@ impl TronClient {
         }
 
         Ok(Money::from_atomic(balance as i128, decimals))
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::types::TronWallet;
+
+    #[test]
+    fn test_is_valid_address_valid() {
+        let client = TronClient::new("https://api.trongrid.io/wallet");
+
+        // Well-known USDT TRC20 contract address
+        assert!(client.is_valid_address("TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"));
+
+        // Generated wallet address should be valid
+        let wallet = TronWallet::new();
+        assert!(
+            client.is_valid_address(&wallet.address.base58),
+            "Generated Tron address should be valid, got: {}",
+            wallet.address.base58
+        );
+    }
+
+    #[test]
+    fn test_is_valid_address_invalid() {
+        let client = TronClient::new("https://api.trongrid.io/wallet");
+
+        // Empty
+        assert!(!client.is_valid_address(""));
+        // EVM address
+        assert!(!client.is_valid_address("0xdAC17F958D2ee523a2206206994597C13D831ec7"));
+        // Random garbage
+        assert!(!client.is_valid_address("not-a-tron-address"));
+        // Starts with T but invalid base58check
+        assert!(!client.is_valid_address("TZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"));
+        // BTC bech32 address
+        assert!(!client.is_valid_address("bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4"));
     }
 }

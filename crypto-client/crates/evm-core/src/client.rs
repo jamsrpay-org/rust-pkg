@@ -1,13 +1,13 @@
 use alloy::{
     consensus::{SignableTransaction, TxEnvelope, TxLegacy},
     eips::eip2718::Encodable2718,
-    transports::http::reqwest,
-    primitives::{Address, Bytes, TxKind, B256, U256},
+    primitives::{Address, B256, Bytes, TxKind, U256},
     providers::{Provider, ProviderBuilder},
     rlp::Decodable,
-    signers::{local::PrivateKeySigner, SignerSync},
+    signers::{SignerSync, local::PrivateKeySigner},
     sol,
     sol_types::SolCall,
+    transports::http::reqwest,
 };
 
 use crate::error::EvmClientError;
@@ -253,6 +253,13 @@ impl EvmClient {
 
     // ── Gas estimation ──────────────────────────────────────────────────────
 
+    // ── Address validation ───────────────────────────────────────────────
+
+    /// Check whether the given string is a valid EVM address (0x + 40 hex chars).
+    pub fn is_valid_address(address: &str) -> bool {
+        parse_address(address).is_ok()
+    }
+
     /// Estimate the maximum native token amount that can be sent from an address
     /// after accounting for gas costs.
     pub async fn estimate_native_withdrawable(
@@ -334,5 +341,47 @@ mod tests {
         let signed = EvmClient::sign(&prepared, &private_key).unwrap();
         assert!(!signed.signed_tx_bytes.is_empty());
         assert_eq!(signed.prepared.chain_id, 56);
+    }
+
+    #[test]
+    fn test_is_valid_address_valid() {
+        // Checksummed address
+        assert!(EvmClient::is_valid_address(
+            "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+        ));
+        // All lowercase (also valid)
+        assert!(EvmClient::is_valid_address(
+            "0xdac17f958d2ee523a2206206994597c13d831ec7"
+        ));
+        // Zero address
+        assert!(EvmClient::is_valid_address(
+            "0x0000000000000000000000000000000000000000"
+        ));
+    }
+
+    #[test]
+    fn test_is_valid_address_invalid() {
+        // Too short
+        assert!(!EvmClient::is_valid_address("0x1234"));
+        // Non-hex characters
+        assert!(!EvmClient::is_valid_address(
+            "0xZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        ));
+        // Empty
+        assert!(!EvmClient::is_valid_address(""));
+        // Tron address (wrong chain format)
+        assert!(!EvmClient::is_valid_address(
+            "TLsV52sRDL79HXGGm9yzwKibb6BeruhUzy"
+        ));
+        // Too long
+        assert!(!EvmClient::is_valid_address(
+            "0xdac17f958d2ee523a2206206994597c13d831ec7ff"
+        ));
+    }
+
+    #[test]
+    fn test_validate_generated_wallet_address() {
+        let wallet = EvmClient::generate_wallet();
+        assert!(EvmClient::is_valid_address(&wallet.address));
     }
 }
