@@ -463,61 +463,6 @@ impl PaymentCurrency {
 }
 
 impl PaymentCurrency {
-    pub fn get_base_url(&self, network: NetworkId) -> &'static str {
-        match network {
-            NetworkId::TronMainnet => "https://tronscan.org",
-            NetworkId::TronNile => "https://nile.tronscan.org",
-            NetworkId::BscMainnet => "https://bscscan.com",
-            NetworkId::BscTestnet => "https://testnet.bscscan.com",
-            NetworkId::BtcMainnet => "https://btc.com",
-            NetworkId::BtcTestnet => "https://testnet.btc.com",
-            NetworkId::EthMainnet => "https://eth.com",
-            NetworkId::EthSepolia => "https://testnet.eth.com",
-            NetworkId::LtcMainnet => "https://ltc.com",
-            NetworkId::LtcTestnet => "https://testnet.ltc.com",
-            NetworkId::PolMainnet => "https://pol.com",
-            NetworkId::PolAmoy => "https://testnet.pol.com",
-        }
-    }
-
-    pub fn address_view_url(&self, network: NetworkId, address: &str) -> String {
-        let base_url = self.get_base_url(network);
-        match network {
-            NetworkId::TronMainnet => format!("{}/address/{}", base_url, address),
-            NetworkId::TronNile => format!("{}/address/{}", base_url, address),
-            NetworkId::BscMainnet => format!("{}/address/{}", base_url, address),
-            NetworkId::BscTestnet => format!("{}/address/{}", base_url, address),
-            NetworkId::EthMainnet => format!("{}/address/{}", base_url, address),
-            NetworkId::EthSepolia => format!("{}/address/{}", base_url, address),
-            NetworkId::PolMainnet => format!("{}/address/{}", base_url, address),
-            NetworkId::PolAmoy => format!("{}/address/{}", base_url, address),
-            NetworkId::BtcMainnet => format!("{}/address/{}", base_url, address),
-            NetworkId::BtcTestnet => format!("{}/address/{}", base_url, address),
-            NetworkId::LtcMainnet => format!("{}/address/{}", base_url, address),
-            NetworkId::LtcTestnet => format!("{}/address/{}", base_url, address),
-        }
-    }
-
-    pub fn transaction_view_url(&self, network: NetworkId, tx_id: &str) -> String {
-        let base_url = self.get_base_url(network);
-        match network {
-            NetworkId::TronMainnet => format!("{}/transaction/{}", base_url, tx_id),
-            NetworkId::TronNile => format!("{}/transaction/{}", base_url, tx_id),
-            NetworkId::BscMainnet => format!("{}/tx/{}", base_url, tx_id),
-            NetworkId::BscTestnet => format!("{}/tx/{}", base_url, tx_id),
-            NetworkId::EthMainnet => format!("{}/tx/{}", base_url, tx_id),
-            NetworkId::EthSepolia => format!("{}/tx/{}", base_url, tx_id),
-            NetworkId::PolMainnet => format!("{}/tx/{}", base_url, tx_id),
-            NetworkId::PolAmoy => format!("{}/tx/{}", base_url, tx_id),
-            NetworkId::BtcMainnet => format!("{}/tx/{}", base_url, tx_id),
-            NetworkId::BtcTestnet => format!("{}/tx/{}", base_url, tx_id),
-            NetworkId::LtcMainnet => format!("{}/tx/{}", base_url, tx_id),
-            NetworkId::LtcTestnet => format!("{}/tx/{}", base_url, tx_id),
-        }
-    }
-}
-
-impl PaymentCurrency {
     pub fn min_payment_amount(&self) -> Money {
         match self {
             PaymentCurrency::TRX => Money::from_atomic(3_000_000, self.decimals()),
@@ -880,51 +825,61 @@ impl NetworkId {
         }
     }
 
-    pub fn address_view_url(&self, address: &str) -> String {
-        match self {
-            Self::TronMainnet => format!("https://tronscan.org/address/{address}"),
-            Self::TronNile => format!("https://nile.tronscan.org/address/{address}"),
+    pub fn get_base_url(&self) -> &'static str {
+        match *self {
+            NetworkId::TronMainnet => "https://tronscan.org",
+            NetworkId::TronNile => "https://nile.tronscan.org",
 
-            Self::EthMainnet => format!("https://etherscan.io/address/{address}"),
-            Self::EthSepolia => format!("https://sepolia.etherscan.io/address/{address}"),
+            NetworkId::BscMainnet => "https://bscscan.com",
+            NetworkId::BscTestnet => "https://testnet.bscscan.com",
 
-            Self::BscMainnet => format!("https://bscscan.com/address/{address}"),
-            Self::BscTestnet => format!("https://testnet.bscscan.com/address/{address}"),
+            NetworkId::BtcMainnet => "https://mempool.space",
+            NetworkId::BtcTestnet => "https://mempool.space/testnet4",
 
-            Self::PolMainnet => format!("https://polygonscan.com/address/{address}"),
-            Self::PolAmoy => format!("https://amoy.polygonscan.com/address/{address}"),
+            NetworkId::EthMainnet => "https://etherscan.io",
+            NetworkId::EthSepolia => "https://sepolia.etherscan.io",
 
-            Self::BtcMainnet => format!("https://www.blockchain.com/btc/address/{address}"),
-            Self::BtcTestnet => format!("https://www.blockchain.com/btc-testnet/address/{address}"),
+            NetworkId::LtcMainnet => "https://litecoinspace.org/",
+            NetworkId::LtcTestnet => "https://litecoinspace.org/testnet",
 
-            Self::LtcMainnet => format!("https://live.blockcypher.com/ltc/address/{address}"),
-            Self::LtcTestnet => {
-                format!("https://live.blockcypher.com/ltc-testnet/address/{address}")
-            }
+            NetworkId::PolMainnet => "https://polygonscan.com",
+            NetworkId::PolAmoy => "https://amoy.polygonscan.com",
         }
     }
 
-    pub fn transaction_view_url(&self, hash: &str) -> String {
-        match self {
-            Self::TronMainnet => format!("https://tronscan.org/#/tx/{hash}"),
-            Self::TronNile => format!("https://nile.tronscan.org/#/tx/{hash}"),
+    pub fn address_view_url(&self, address: &str) -> String {
+        let base_url = self.get_base_url();
+        match *self {
+            NetworkId::TronMainnet => format!("{}/address/{}", base_url, address),
+            NetworkId::TronNile => format!("{}/address/{}", base_url, address),
+            NetworkId::BscMainnet => format!("{}/address/{}", base_url, address),
+            NetworkId::BscTestnet => format!("{}/address/{}", base_url, address),
+            NetworkId::EthMainnet => format!("{}/address/{}", base_url, address),
+            NetworkId::EthSepolia => format!("{}/address/{}", base_url, address),
+            NetworkId::PolMainnet => format!("{}/address/{}", base_url, address),
+            NetworkId::PolAmoy => format!("{}/address/{}", base_url, address),
+            NetworkId::BtcMainnet => format!("{}/address/{}", base_url, address),
+            NetworkId::BtcTestnet => format!("{}/address/{}", base_url, address),
+            NetworkId::LtcMainnet => format!("{}/address/{}", base_url, address),
+            NetworkId::LtcTestnet => format!("{}/address/{}", base_url, address),
+        }
+    }
 
-            Self::EthMainnet => format!("https://etherscan.io/tx/{hash}"),
-            Self::EthSepolia => format!("https://sepolia.etherscan.io/tx/{hash}"),
-
-            Self::BscMainnet => format!("https://bscscan.com/tx/{hash}"),
-            Self::BscTestnet => format!("https://testnet.bscscan.com/tx/{hash}"),
-
-            Self::PolMainnet => format!("https://polygonscan.com/tx/{hash}"),
-            Self::PolAmoy => format!("https://amoy.polygonscan.com/tx/{hash}"),
-
-            Self::BtcMainnet => format!("https://www.blockchain.com/btc/tx/{hash}"),
-            Self::BtcTestnet => format!("https://www.blockchain.com/btc-testnet/tx/{hash}"),
-
-            Self::LtcMainnet => format!("https://live.blockcypher.com/ltc/tx/{hash}"),
-            Self::LtcTestnet => {
-                format!("https://live.blockcypher.com/ltc-testnet/tx/{hash}")
-            }
+    pub fn transaction_view_url(&self, tx_id: &str) -> String {
+        let base_url = self.get_base_url();
+        match *self {
+            NetworkId::TronMainnet => format!("{}/transaction/{}", base_url, tx_id),
+            NetworkId::TronNile => format!("{}/transaction/{}", base_url, tx_id),
+            NetworkId::BscMainnet => format!("{}/tx/{}", base_url, tx_id),
+            NetworkId::BscTestnet => format!("{}/tx/{}", base_url, tx_id),
+            NetworkId::EthMainnet => format!("{}/tx/{}", base_url, tx_id),
+            NetworkId::EthSepolia => format!("{}/tx/{}", base_url, tx_id),
+            NetworkId::PolMainnet => format!("{}/tx/{}", base_url, tx_id),
+            NetworkId::PolAmoy => format!("{}/tx/{}", base_url, tx_id),
+            NetworkId::BtcMainnet => format!("{}/tx/{}", base_url, tx_id),
+            NetworkId::BtcTestnet => format!("{}/tx/{}", base_url, tx_id),
+            NetworkId::LtcMainnet => format!("{}/tx/{}", base_url, tx_id),
+            NetworkId::LtcTestnet => format!("{}/tx/{}", base_url, tx_id),
         }
     }
 }
