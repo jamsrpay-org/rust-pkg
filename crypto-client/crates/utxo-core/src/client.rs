@@ -388,6 +388,16 @@ impl UtxoClient {
     fn address_to_script(&self, address: &str) -> Result<ScriptBuf, UtxoClientError> {
         // For Litecoin addresses, re-encode with Bitcoin HRP so rust-bitcoin can parse.
         let parse_addr = if self.network.is_litecoin() {
+            // Verify the address uses the correct bech32 HRP for this network
+            // before re-encoding. Without this, ltc1 (mainnet) would be accepted
+            // by a testnet client after re-encoding to tb1.
+            let expected_hrp = self.network.bech32_hrp();
+            if !address.to_lowercase().starts_with(&format!("{}1", expected_hrp)) {
+                return Err(UtxoClientError::InvalidAddress(format!(
+                    "{}: wrong network prefix (expected {})",
+                    address, expected_hrp
+                )));
+            }
             re_encode_bech32_address(address, self.network.bech32_hrp_btc_equiv())
         } else {
             address.to_string()
@@ -566,6 +576,89 @@ mod tests {
         assert!(
             !client.is_valid_address(&ltc_wallet.address),
             "LTC address should not be valid for BTC client"
+        );
+    }
+
+    // ── Testnet address validation ──────────────────────────────────────
+
+    #[test]
+    fn test_validate_btc_testnet_address() {
+        let client = UtxoClient::new("https://blockstream.info/testnet/api", UtxoNetwork::BitcoinTestnet);
+
+        // Generated testnet wallet should be valid
+        let wallet = UtxoClient::generate_wallet(UtxoNetwork::BitcoinTestnet);
+        assert!(
+            client.is_valid_address(&wallet.address),
+            "Generated BTC testnet address should be valid, got: {}",
+            wallet.address
+        );
+
+        // Invalid addresses
+        assert!(!client.is_valid_address(""));
+        assert!(!client.is_valid_address("not-an-address"));
+        assert!(!client.is_valid_address("0xdAC17F958D2ee523a2206206994597C13D831ec7"));
+    }
+
+    #[test]
+    fn test_validate_btc_testnet_rejects_mainnet() {
+        let testnet_client = UtxoClient::new("https://blockstream.info/testnet/api", UtxoNetwork::BitcoinTestnet);
+
+        // Mainnet BTC address should be rejected by testnet client
+        let mainnet_wallet = UtxoClient::generate_wallet(UtxoNetwork::BitcoinMainnet);
+        assert!(
+            !testnet_client.is_valid_address(&mainnet_wallet.address),
+            "BTC mainnet address should not be valid for testnet client, got: {}",
+            mainnet_wallet.address
+        );
+    }
+
+    #[test]
+    fn test_validate_btc_mainnet_rejects_testnet() {
+        let mainnet_client = UtxoClient::new("https://blockstream.info/api", UtxoNetwork::BitcoinMainnet);
+
+        // Testnet BTC address should be rejected by mainnet client
+        let testnet_wallet = UtxoClient::generate_wallet(UtxoNetwork::BitcoinTestnet);
+        assert!(
+            !mainnet_client.is_valid_address(&testnet_wallet.address),
+            "BTC testnet address should not be valid for mainnet client, got: {}",
+            testnet_wallet.address
+        );
+    }
+
+    #[test]
+    fn test_validate_ltc_testnet_address() {
+        let client = UtxoClient::new(
+            "https://litecoinspace.org/testnet/api",
+            UtxoNetwork::LitecoinTestnet,
+        );
+
+        // Generated testnet wallet should be valid
+        let wallet = UtxoClient::generate_wallet(UtxoNetwork::LitecoinTestnet);
+        assert!(
+            client.is_valid_address(&wallet.address),
+            "Generated LTC testnet address should be valid, got: {}",
+            wallet.address
+        );
+
+        // Invalid addresses
+        assert!(!client.is_valid_address(""));
+        assert!(!client.is_valid_address("not-an-address"));
+        assert!(!client.is_valid_address("0xdAC17F958D2ee523a2206206994597C13D831ec7"));
+    }
+
+    #[test]
+    fn test_validate_ltc_testnet_rejects_mainnet() {
+        let testnet_client = UtxoClient::new(
+            "https://litecoinspace.org/testnet/api",
+            UtxoNetwork::LitecoinTestnet,
+        );
+
+        // Mainnet LTC address should be rejected by testnet client
+        let mainnet_wallet = UtxoClient::generate_wallet(UtxoNetwork::LitecoinMainnet);
+        assert!(
+            !testnet_client.is_valid_address(&mainnet_wallet.address),
+            "LTC mainnet address should not be valid for testnet client, got: {}",
+            mainnet_wallet.address
         );
     }
 }
