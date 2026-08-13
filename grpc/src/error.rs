@@ -25,11 +25,7 @@ impl GrpcErrorContext {
 
         details.set_error_info(reason, self.domain, metadata);
 
-        ErrorBuilder {
-            code,
-            message: app_code.to_string(),
-            details,
-        }
+        ErrorBuilder::new(code, app_code.to_string(), details)
     }
 
     // ─────────────────────────────────────────
