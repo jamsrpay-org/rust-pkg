@@ -399,6 +399,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8f42a60cbdf9a97f5d2305f08a87dc4e09308d1276d28c869c684d7777685682"
 
 [[package]]
+name = "jamsrpay-proto"
+version = "0.1.0"
+dependencies = [
+ "prost",
+ "prost-types",
+ "prost-wkt-types",
+ "serde",
+ "tonic",
+ "tonic-prost",
+ "tonic-prost-build",
+]
+
+[[package]]
 name = "libc"
 version = "0.2.189"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -625,19 +638,6 @@ dependencies = [
  "serde",
  "serde_derive",
  "serde_json",
-]
-
-[[package]]
-name = "proto"
-version = "0.1.0"
-dependencies = [
- "prost",
- "prost-types",
- "prost-wkt-types",
- "serde",
- "tonic",
- "tonic-prost",
- "tonic-prost-build",
 ]
 
 [[package]]
