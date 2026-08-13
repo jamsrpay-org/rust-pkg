@@ -1,0 +1,7 @@
+# Generate Rust code from ../../../contracts/protos
+generate:
+    cargo run --manifest-path scripts/generate/Cargo.toml
+
+# Shortcut for generate
+gen:
+    just generate
