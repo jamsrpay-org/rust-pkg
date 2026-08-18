@@ -8,7 +8,7 @@ pub struct UserRegistered {
     #[prost(string, tag = "2")]
     pub email: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "3")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "99")]
     pub metadata: ::core::option::Option<
         super::super::super::shared::events::v1::EventMetadata,
@@ -102,7 +102,7 @@ pub struct LoginSucceeded {
     #[prost(string, optional, tag = "9")]
     pub os: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(message, optional, tag = "10")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "99")]
     pub metadata: ::core::option::Option<
         super::super::super::shared::events::v1::EventMetadata,

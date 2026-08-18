@@ -18,7 +18,7 @@ pub struct PaymentIntent {
     #[prost(string, optional, tag = "5")]
     pub redirect_url: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(message, optional, tag = "7")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(string, tag = "8")]
     pub store_id: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "9")]

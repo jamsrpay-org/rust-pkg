@@ -25,9 +25,9 @@ pub struct Session {
     #[prost(enumeration = "super::super::super::shared::v1::UserRole", tag = "11")]
     pub role: i32,
     #[prost(message, optional, tag = "12")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "13")]
-    pub valid_till: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub valid_till: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for Session {
     const NAME: &'static str = "Session";

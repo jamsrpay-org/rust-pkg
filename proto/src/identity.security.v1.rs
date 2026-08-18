@@ -49,7 +49,7 @@ pub struct GetChallengeResponse {
     #[prost(message, repeated, tag = "5")]
     pub methods: ::prost::alloc::vec::Vec<VerificationMethodDescriptor>,
     #[prost(message, optional, tag = "4")]
-    pub expires_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub expires_at: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for GetChallengeResponse {
     const NAME: &'static str = "GetChallengeResponse";
@@ -107,7 +107,7 @@ pub struct BeginVerificationResponse {
     #[prost(string, optional, tag = "2")]
     pub masked_destination: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(message, optional, tag = "3")]
-    pub resend_available_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub resend_available_at: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for BeginVerificationResponse {
     const NAME: &'static str = "BeginVerificationResponse";

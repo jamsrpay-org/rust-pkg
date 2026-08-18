@@ -21,7 +21,7 @@ pub struct Session {
     #[prost(enumeration = "super::super::super::shared::v1::LoginMethod", tag = "9")]
     pub login_method: i32,
     #[prost(message, optional, tag = "10")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(bool, tag = "11")]
     pub is_current_session: bool,
 }

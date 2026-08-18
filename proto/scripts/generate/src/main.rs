@@ -20,7 +20,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Find proto_root and out_dir flexibly depending on working directory
     let candidates = [
         (Path::new("../../../contracts/protos"), Path::new("./src")),
-        (Path::new("../../../../contracts/protos"), Path::new("../../src")),
+        (
+            Path::new("../../../../contracts/protos"),
+            Path::new("../../src"),
+        ),
     ];
 
     let mut selected = None;
@@ -62,13 +65,19 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     proto_files.sort();
 
-    println!("Found {} proto files across {} services.", proto_files.len(), services.len());
+    println!(
+        "Found {} proto files across {} services.",
+        proto_files.len(),
+        services.len()
+    );
 
     let mut config = tonic_prost_build::Config::new();
     config
         .enable_type_names()
         .type_attribute(".", "#[derive(serde::Serialize, serde::Deserialize)]")
-        .extern_path(".google.protobuf.Timestamp", "::prost_wkt_types::Timestamp");
+        .extern_path(".google.protobuf.Timestamp", "::pbjson_types::Timestamp");
+    // .type_attribute(".", "#[derive(serde::Serialize, serde::Deserialize)]");
+    // .extern_path(".google.protobuf.Timestamp", "::prost_wkt_types::Timestamp");
 
     tonic_prost_build::configure()
         .include_file("mod.rs")
@@ -94,7 +103,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
 
     fs::write(&mod_rs_path, new_lines.join("\n") + "\n")?;
-    println!("Successfully regenerated proto code into {:?} and updated mod.rs with feature gates!", out_dir);
+    println!(
+        "Successfully regenerated proto code into {:?} and updated mod.rs with feature gates!",
+        out_dir
+    );
 
     Ok(())
 }

@@ -23,9 +23,9 @@ pub struct WebhookDelivery {
     #[prost(uint32, tag = "7")]
     pub attempts: u32,
     #[prost(message, optional, tag = "8")]
-    pub next_retry_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub next_retry_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "9")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for WebhookDelivery {
     const NAME: &'static str = "WebhookDelivery";

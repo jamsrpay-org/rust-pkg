@@ -13,11 +13,11 @@ pub struct Ticket {
     #[prost(enumeration = "super::super::super::shared::v1::TicketStatus", tag = "5")]
     pub status: i32,
     #[prost(message, optional, tag = "6")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "7")]
-    pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub updated_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "8")]
-    pub closed_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub closed_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "9")]
     pub user: ::core::option::Option<
         super::super::super::super::shared::admin::v1::User,

@@ -21,9 +21,9 @@ pub struct PayoutTransfer {
     #[prost(uint64, optional, tag = "7")]
     pub block_number: ::core::option::Option<u64>,
     #[prost(message, optional, tag = "8")]
-    pub confirmed_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub confirmed_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "9")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(uint32, tag = "10")]
     pub retry_count: u32,
     #[prost(string, optional, tag = "11")]

@@ -11,9 +11,9 @@ pub struct Staff {
     #[prost(string, repeated, tag = "4")]
     pub category_ids: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     #[prost(message, optional, tag = "5")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "6")]
-    pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub updated_at: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for Staff {
     const NAME: &'static str = "Staff";

@@ -11,7 +11,7 @@ pub struct Store {
     #[prost(uint32, tag = "4")]
     pub position: u32,
     #[prost(message, optional, tag = "5")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(string, tag = "6")]
     pub payment_markup: ::prost::alloc::string::String,
     #[prost(string, tag = "7")]

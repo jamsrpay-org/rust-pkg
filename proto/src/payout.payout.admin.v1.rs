@@ -24,11 +24,11 @@ pub struct Payout {
         super::super::super::shared::v1::PayoutTransfer,
     >,
     #[prost(message, optional, tag = "8")]
-    pub settled_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub settled_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "9")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "10")]
-    pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub updated_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "11")]
     pub store: ::core::option::Option<
         super::super::super::super::shared::admin::v1::Store,

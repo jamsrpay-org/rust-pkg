@@ -9,9 +9,9 @@ pub struct Category {
     #[prost(string, optional, tag = "3")]
     pub description: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(message, optional, tag = "4")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "5")]
-    pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub updated_at: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for Category {
     const NAME: &'static str = "Category";

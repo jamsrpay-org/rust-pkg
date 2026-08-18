@@ -37,7 +37,7 @@ pub struct EventMetadata {
     pub producer: ::prost::alloc::string::String,
     /// When it happened
     #[prost(message, optional, tag = "11")]
-    pub timestamp: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub timestamp: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for EventMetadata {
     const NAME: &'static str = "EventMetadata";

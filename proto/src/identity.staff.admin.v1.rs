@@ -17,7 +17,7 @@ pub struct Staff {
     #[prost(bool, tag = "8")]
     pub is_readonly: bool,
     #[prost(message, optional, tag = "9")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for Staff {
     const NAME: &'static str = "Staff";

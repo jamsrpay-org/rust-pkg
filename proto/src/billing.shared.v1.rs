@@ -33,7 +33,7 @@ pub struct InvoiceTransaction {
         super::super::super::shared::types::v1::CryptoAddress,
     >,
     #[prost(message, optional, tag = "5")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for InvoiceTransaction {
     const NAME: &'static str = "InvoiceTransaction";

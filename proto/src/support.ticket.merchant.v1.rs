@@ -49,11 +49,11 @@ pub struct Ticket {
     #[prost(enumeration = "super::super::super::shared::v1::TicketStatus", tag = "4")]
     pub status: i32,
     #[prost(message, optional, tag = "5")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "6")]
-    pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub updated_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "7")]
-    pub closed_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub closed_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "8")]
     pub category: ::core::option::Option<Category>,
     #[prost(message, optional, tag = "9")]
@@ -344,7 +344,7 @@ pub struct TicketMessage {
     #[prost(string, repeated, tag = "4")]
     pub files: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     #[prost(message, optional, tag = "5")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for TicketMessage {
     const NAME: &'static str = "TicketMessage";

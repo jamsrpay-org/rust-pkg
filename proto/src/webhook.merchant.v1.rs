@@ -13,11 +13,11 @@ pub struct Webhook {
     #[prost(bool, tag = "5")]
     pub is_enabled: bool,
     #[prost(message, optional, tag = "6")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(enumeration = "WebhookEvent", repeated, tag = "7")]
     pub events: ::prost::alloc::vec::Vec<i32>,
     #[prost(message, optional, tag = "8")]
-    pub rotated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub rotated_at: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for Webhook {
     const NAME: &'static str = "Webhook";

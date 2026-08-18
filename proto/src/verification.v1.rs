@@ -27,7 +27,7 @@ pub struct InitiateOtpResponse {
     #[prost(string, tag = "3")]
     pub masked_destination: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "4")]
-    pub expires_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub expires_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(uint32, tag = "5")]
     pub attempts_left: u32,
     #[prost(uint32, tag = "6")]

@@ -13,7 +13,7 @@ pub struct Role {
     #[prost(bool, tag = "5")]
     pub is_readonly: bool,
     #[prost(message, optional, tag = "6")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(
         enumeration = "super::super::super::shared::v1::RolePermissionMode",
         tag = "7"

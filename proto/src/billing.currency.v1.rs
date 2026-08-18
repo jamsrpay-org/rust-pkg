@@ -233,7 +233,7 @@ pub struct CurrencyRate {
     #[prost(string, optional, tag = "3")]
     pub rate: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(message, optional, tag = "4")]
-    pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub updated_at: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for CurrencyRate {
     const NAME: &'static str = "CurrencyRate";

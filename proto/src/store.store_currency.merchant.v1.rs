@@ -17,9 +17,9 @@ pub struct StoreCurrency {
     #[prost(string, optional, tag = "4")]
     pub payment_tolerance: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(message, optional, tag = "5")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "6")]
-    pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub updated_at: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for StoreCurrency {
     const NAME: &'static str = "StoreCurrency";

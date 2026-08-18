@@ -43,7 +43,7 @@ pub struct Wallet {
     #[prost(string, tag = "5")]
     pub store_id: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "6")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for Wallet {
     const NAME: &'static str = "Wallet";

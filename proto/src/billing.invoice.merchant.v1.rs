@@ -22,11 +22,11 @@ pub struct Invoice {
     )]
     pub additional_status: i32,
     #[prost(message, optional, tag = "7")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "8")]
-    pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub updated_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "9")]
-    pub expires_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub expires_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "10")]
     pub payment_intent: ::core::option::Option<super::super::shared::v1::PaymentIntent>,
     #[prost(message, repeated, tag = "11")]

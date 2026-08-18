@@ -11,9 +11,9 @@ pub struct ApiKey {
     #[prost(bool, tag = "4")]
     pub is_enabled: bool,
     #[prost(message, optional, tag = "5")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "6")]
-    pub rotated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub rotated_at: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for ApiKey {
     const NAME: &'static str = "ApiKey";

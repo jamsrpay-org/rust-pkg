@@ -13,7 +13,7 @@ pub struct User {
     #[prost(enumeration = "super::super::shared::v1::UserStatus", tag = "5")]
     pub status: i32,
     #[prost(message, optional, tag = "6")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for User {
     const NAME: &'static str = "User";

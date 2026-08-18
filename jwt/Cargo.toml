@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-jsonwebtoken = { version = "10.3.0", features = ["rust_crypto"] }
+jsonwebtoken = { version = "11.0.0", default-features = false, features = ["rust_crypto", "use_pem"] }
 serde = { version = "1.0.228", features = ["derive"] }
 chrono = "0.4.44"
 thiserror = "2.0.18"

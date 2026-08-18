@@ -113,17 +113,17 @@ pub struct DepositWallet {
     #[prost(enumeration = "DepositWalletStatus", tag = "5")]
     pub status: i32,
     #[prost(message, optional, tag = "6")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(string, optional, tag = "7")]
     pub allocated_invoice_id: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(message, optional, tag = "8")]
-    pub allocated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub allocated_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "9")]
-    pub allocation_expires_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub allocation_expires_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(string, optional, tag = "10")]
     pub withdrawal_tx_hash: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(message, optional, tag = "11")]
-    pub withdrawn_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub withdrawn_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "12")]
     pub withdrawal_fee: ::core::option::Option<
         super::super::super::super::shared::types::v1::Money,

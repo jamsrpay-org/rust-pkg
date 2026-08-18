@@ -16,7 +16,7 @@ pub struct PayoutCreated {
     )]
     pub payment_currency: i32,
     #[prost(message, optional, tag = "6")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for PayoutCreated {
     const NAME: &'static str = "PayoutCreated";
@@ -34,7 +34,7 @@ pub struct PayoutProcessing {
     #[prost(string, tag = "1")]
     pub payout_id: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "2")]
-    pub timestamp: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub timestamp: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for PayoutProcessing {
     const NAME: &'static str = "PayoutProcessing";
@@ -52,7 +52,7 @@ pub struct PayoutSettled {
     #[prost(string, tag = "1")]
     pub payout_id: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "2")]
-    pub settled_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub settled_at: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for PayoutSettled {
     const NAME: &'static str = "PayoutSettled";
@@ -72,7 +72,7 @@ pub struct PayoutFailed {
     #[prost(string, tag = "2")]
     pub failure_reason: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "3")]
-    pub timestamp: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub timestamp: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for PayoutFailed {
     const NAME: &'static str = "PayoutFailed";

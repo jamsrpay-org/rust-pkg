@@ -24,9 +24,9 @@ pub struct Invoice {
     )]
     pub additional_status: i32,
     #[prost(message, optional, tag = "8")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "9")]
-    pub expires_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub expires_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "10")]
     pub payment_intent: ::core::option::Option<super::super::shared::v1::PaymentIntent>,
     #[prost(message, optional, tag = "11")]
@@ -120,6 +120,8 @@ pub struct CreateInvoiceRequest {
         tag = "6"
     )]
     pub network_id: i32,
+    #[prost(uint32, optional, tag = "7")]
+    pub expiration_minutes: ::core::option::Option<u32>,
 }
 impl ::prost::Name for CreateInvoiceRequest {
     const NAME: &'static str = "CreateInvoiceRequest";
@@ -165,6 +167,8 @@ pub struct CreateInvoiceForPaymentIntentRequest {
         tag = "3"
     )]
     pub network_id: i32,
+    #[prost(uint32, optional, tag = "4")]
+    pub expiration_minutes: ::core::option::Option<u32>,
 }
 impl ::prost::Name for CreateInvoiceForPaymentIntentRequest {
     const NAME: &'static str = "CreateInvoiceForPaymentIntentRequest";
@@ -227,7 +231,7 @@ pub struct SubscribeInvoiceResponse {
         super::super::super::super::shared::types::v1::Money,
     >,
     #[prost(message, optional, tag = "5")]
-    pub timestamp: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub timestamp: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for SubscribeInvoiceResponse {
     const NAME: &'static str = "SubscribeInvoiceResponse";

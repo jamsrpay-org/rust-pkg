@@ -20,7 +20,7 @@ pub struct InvoiceRealtimeEvent {
         super::super::super::super::shared::types::v1::Money,
     >,
     #[prost(message, optional, tag = "6")]
-    pub timestamp: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub timestamp: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for InvoiceRealtimeEvent {
     const NAME: &'static str = "InvoiceRealtimeEvent";

@@ -18,7 +18,7 @@ pub struct InvoiceCreated {
     )]
     pub payment_currency: i32,
     #[prost(message, optional, tag = "6")]
-    pub expires_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub expires_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(
         enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
         tag = "7"

@@ -13,7 +13,7 @@ pub struct PayoutWalletAddress {
     #[prost(bool, tag = "4")]
     pub is_primary: bool,
     #[prost(message, optional, tag = "5")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for PayoutWalletAddress {
     const NAME: &'static str = "PayoutWalletAddress";
@@ -44,7 +44,7 @@ pub struct PayoutWallet {
         super::super::super::super::shared::types::v1::CryptoAddress,
     >,
     #[prost(message, optional, tag = "6")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(
         enumeration = "super::super::super::super::shared::enums::v1::PaymentCurrency",
         repeated,

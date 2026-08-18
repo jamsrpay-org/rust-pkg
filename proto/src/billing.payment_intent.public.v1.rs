@@ -37,9 +37,9 @@ pub struct PaymentIntent {
     #[prost(message, optional, tag = "11")]
     pub store: ::core::option::Option<super::super::super::shared::v1::StoreBranding>,
     #[prost(message, optional, tag = "12")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "13")]
-    pub expires_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    pub expires_at: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for PaymentIntent {
     const NAME: &'static str = "PaymentIntent";
