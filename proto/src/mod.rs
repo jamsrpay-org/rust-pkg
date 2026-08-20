@@ -44,11 +44,6 @@ pub mod billing {
                 include!("billing.invoice.realtime.v1.rs");
             }
         }
-        pub mod shared {
-            pub mod v1 {
-                include!("billing.invoice.shared.v1.rs");
-            }
-        }
     }
     pub mod payment_intent {
         pub mod admin {

@@ -86,6 +86,48 @@ impl ::prost::Name for StoreBranding {
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct InvoiceAmounts {
+    #[prost(message, optional, tag = "1")]
+    pub pricing: ::core::option::Option<super::super::super::shared::types::v1::Money>,
+    #[prost(message, optional, tag = "2")]
+    pub payable: ::core::option::Option<super::super::super::shared::types::v1::Money>,
+    #[prost(message, optional, tag = "3")]
+    pub paid: ::core::option::Option<super::super::super::shared::types::v1::Money>,
+    #[prost(message, optional, tag = "4")]
+    pub due: ::core::option::Option<super::super::super::shared::types::v1::Money>,
+}
+impl ::prost::Name for InvoiceAmounts {
+    const NAME: &'static str = "InvoiceAmounts";
+    const PACKAGE: &'static str = "billing.shared.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "billing.shared.v1.InvoiceAmounts".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/billing.shared.v1.InvoiceAmounts".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct InvoicePaymentIntent {
+    #[prost(string, tag = "1")]
+    pub id: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "2")]
+    pub external_id: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(string, optional, tag = "3")]
+    pub redirect_url: ::core::option::Option<::prost::alloc::string::String>,
+}
+impl ::prost::Name for InvoicePaymentIntent {
+    const NAME: &'static str = "InvoicePaymentIntent";
+    const PACKAGE: &'static str = "billing.shared.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "billing.shared.v1.InvoicePaymentIntent".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/billing.shared.v1.InvoicePaymentIntent".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum InvoiceStatus {
@@ -184,6 +226,72 @@ impl InvoiceAddressAllocation {
             "INVOICE_ADDRESS_ALLOCATION_UNSPECIFIED" => Some(Self::Unspecified),
             "INVOICE_ADDRESS_ALLOCATION_NEW" => Some(Self::New),
             "INVOICE_ADDRESS_ALLOCATION_DEPOSIT_WALLET" => Some(Self::DepositWallet),
+            _ => None,
+        }
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[repr(i32)]
+pub enum InvoicePayoutStatus {
+    Unspecified = 0,
+    Pending = 1,
+    Processing = 2,
+    Settled = 3,
+    Failed = 4,
+}
+impl InvoicePayoutStatus {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            Self::Unspecified => "INVOICE_PAYOUT_STATUS_UNSPECIFIED",
+            Self::Pending => "INVOICE_PAYOUT_STATUS_PENDING",
+            Self::Processing => "INVOICE_PAYOUT_STATUS_PROCESSING",
+            Self::Settled => "INVOICE_PAYOUT_STATUS_SETTLED",
+            Self::Failed => "INVOICE_PAYOUT_STATUS_FAILED",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "INVOICE_PAYOUT_STATUS_UNSPECIFIED" => Some(Self::Unspecified),
+            "INVOICE_PAYOUT_STATUS_PENDING" => Some(Self::Pending),
+            "INVOICE_PAYOUT_STATUS_PROCESSING" => Some(Self::Processing),
+            "INVOICE_PAYOUT_STATUS_SETTLED" => Some(Self::Settled),
+            "INVOICE_PAYOUT_STATUS_FAILED" => Some(Self::Failed),
+            _ => None,
+        }
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[repr(i32)]
+pub enum InvoiceAddressStatus {
+    Unspecified = 0,
+    Active = 1,
+    Consumed = 2,
+}
+impl InvoiceAddressStatus {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            Self::Unspecified => "INVOICE_ADDRESS_STATUS_UNSPECIFIED",
+            Self::Active => "INVOICE_ADDRESS_STATUS_ACTIVE",
+            Self::Consumed => "INVOICE_ADDRESS_STATUS_CONSUMED",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "INVOICE_ADDRESS_STATUS_UNSPECIFIED" => Some(Self::Unspecified),
+            "INVOICE_ADDRESS_STATUS_ACTIVE" => Some(Self::Active),
+            "INVOICE_ADDRESS_STATUS_CONSUMED" => Some(Self::Consumed),
             _ => None,
         }
     }

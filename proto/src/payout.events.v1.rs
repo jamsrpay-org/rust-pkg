@@ -2,21 +2,13 @@
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct PayoutCreated {
-    #[prost(string, tag = "1")]
-    pub payout_id: ::prost::alloc::string::String,
-    #[prost(string, tag = "2")]
-    pub invoice_id: ::prost::alloc::string::String,
-    #[prost(string, tag = "3")]
-    pub store_id: ::prost::alloc::string::String,
-    #[prost(message, optional, tag = "4")]
+    #[prost(message, optional, tag = "1")]
     pub amount: ::core::option::Option<super::super::super::shared::types::v1::Money>,
     #[prost(
         enumeration = "super::super::super::shared::enums::v1::PaymentCurrency",
-        tag = "5"
+        tag = "2"
     )]
     pub payment_currency: i32,
-    #[prost(message, optional, tag = "6")]
-    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for PayoutCreated {
     const NAME: &'static str = "PayoutCreated";
@@ -29,13 +21,8 @@ impl ::prost::Name for PayoutCreated {
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
-#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct PayoutProcessing {
-    #[prost(string, tag = "1")]
-    pub payout_id: ::prost::alloc::string::String,
-    #[prost(message, optional, tag = "2")]
-    pub timestamp: ::core::option::Option<::pbjson_types::Timestamp>,
-}
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct PayoutProcessing {}
 impl ::prost::Name for PayoutProcessing {
     const NAME: &'static str = "PayoutProcessing";
     const PACKAGE: &'static str = "payout.events.v1";
@@ -47,12 +34,41 @@ impl ::prost::Name for PayoutProcessing {
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
-#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PayoutSettled {
-    #[prost(string, tag = "1")]
-    pub payout_id: ::prost::alloc::string::String,
-    #[prost(message, optional, tag = "2")]
-    pub settled_at: ::core::option::Option<::pbjson_types::Timestamp>,
+    #[prost(message, repeated, tag = "1")]
+    pub transactions: ::prost::alloc::vec::Vec<payout_settled::PayoutTransaction>,
+}
+/// Nested message and enum types in `PayoutSettled`.
+pub mod payout_settled {
+    #[derive(serde::Serialize, serde::Deserialize)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+    pub struct PayoutTransaction {
+        #[prost(message, optional, tag = "1")]
+        pub amount: ::core::option::Option<
+            super::super::super::super::shared::types::v1::Money,
+        >,
+        #[prost(
+            enumeration = "super::super::super::super::shared::enums::v1::PaymentCurrency",
+            tag = "2"
+        )]
+        pub payment_currency: i32,
+        #[prost(
+            enumeration = "super::super::super::shared::v1::PayoutReason",
+            tag = "3"
+        )]
+        pub reason: i32,
+    }
+    impl ::prost::Name for PayoutTransaction {
+        const NAME: &'static str = "PayoutTransaction";
+        const PACKAGE: &'static str = "payout.events.v1";
+        fn full_name() -> ::prost::alloc::string::String {
+            "payout.events.v1.PayoutSettled.PayoutTransaction".into()
+        }
+        fn type_url() -> ::prost::alloc::string::String {
+            "/payout.events.v1.PayoutSettled.PayoutTransaction".into()
+        }
+    }
 }
 impl ::prost::Name for PayoutSettled {
     const NAME: &'static str = "PayoutSettled";
@@ -68,11 +84,9 @@ impl ::prost::Name for PayoutSettled {
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct PayoutFailed {
     #[prost(string, tag = "1")]
-    pub payout_id: ::prost::alloc::string::String,
+    pub failure_code: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
     pub failure_reason: ::prost::alloc::string::String,
-    #[prost(message, optional, tag = "3")]
-    pub timestamp: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for PayoutFailed {
     const NAME: &'static str = "PayoutFailed";
@@ -85,27 +99,35 @@ impl ::prost::Name for PayoutFailed {
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
-#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PayoutEventEnvelope {
     #[prost(message, optional, tag = "1")]
     pub meta: ::core::option::Option<
         super::super::super::shared::events::v1::EventMetadata,
     >,
-    #[prost(oneof = "payout_event_envelope::Event", tags = "2, 3, 4, 5")]
+    #[prost(string, tag = "2")]
+    pub payout_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub reference_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "4")]
+    pub store_id: ::prost::alloc::string::String,
+    #[prost(enumeration = "super::super::payout::merchant::v1::PayoutKind", tag = "5")]
+    pub kind: i32,
+    #[prost(oneof = "payout_event_envelope::Event", tags = "10, 11, 12, 13")]
     pub event: ::core::option::Option<payout_event_envelope::Event>,
 }
 /// Nested message and enum types in `PayoutEventEnvelope`.
 pub mod payout_event_envelope {
     #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Event {
-        #[prost(message, tag = "2")]
+        #[prost(message, tag = "10")]
         Created(super::PayoutCreated),
-        #[prost(message, tag = "3")]
+        #[prost(message, tag = "11")]
         Processing(super::PayoutProcessing),
-        #[prost(message, tag = "4")]
+        #[prost(message, tag = "12")]
         Settled(super::PayoutSettled),
-        #[prost(message, tag = "5")]
+        #[prost(message, tag = "13")]
         Failed(super::PayoutFailed),
     }
 }

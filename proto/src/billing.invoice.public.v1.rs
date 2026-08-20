@@ -11,7 +11,7 @@ pub struct Invoice {
         super::super::super::super::shared::types::v1::CryptoAddress,
     >,
     #[prost(message, optional, tag = "4")]
-    pub amounts: ::core::option::Option<super::super::shared::v1::InvoiceAmounts>,
+    pub amounts: ::core::option::Option<super::super::super::shared::v1::InvoiceAmounts>,
     #[prost(message, optional, tag = "5")]
     pub exchange_rate: ::core::option::Option<
         super::super::super::shared::v1::ExchangeRate,
@@ -28,7 +28,9 @@ pub struct Invoice {
     #[prost(message, optional, tag = "9")]
     pub expires_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "10")]
-    pub payment_intent: ::core::option::Option<super::super::shared::v1::PaymentIntent>,
+    pub payment_intent: ::core::option::Option<
+        super::super::super::shared::v1::InvoicePaymentIntent,
+    >,
     #[prost(message, optional, tag = "11")]
     pub confirmations: ::core::option::Option<
         super::super::super::shared::v1::ConfirmationDetails,

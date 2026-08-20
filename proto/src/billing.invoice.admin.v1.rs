@@ -9,7 +9,7 @@ pub struct Invoice {
         super::super::super::super::shared::types::v1::CryptoAddress,
     >,
     #[prost(message, optional, tag = "3")]
-    pub amounts: ::core::option::Option<super::super::shared::v1::InvoiceAmounts>,
+    pub amounts: ::core::option::Option<super::super::super::shared::v1::InvoiceAmounts>,
     #[prost(message, optional, tag = "4")]
     pub exchange_rate: ::core::option::Option<
         super::super::super::shared::v1::ExchangeRate,
@@ -34,7 +34,9 @@ pub struct Invoice {
         super::super::super::super::shared::admin::v1::Store,
     >,
     #[prost(message, optional, tag = "12")]
-    pub payment_intent: ::core::option::Option<super::super::shared::v1::PaymentIntent>,
+    pub payment_intent: ::core::option::Option<
+        super::super::super::shared::v1::InvoicePaymentIntent,
+    >,
     #[prost(message, repeated, tag = "13")]
     pub transactions: ::prost::alloc::vec::Vec<
         super::super::super::shared::v1::InvoiceTransaction,

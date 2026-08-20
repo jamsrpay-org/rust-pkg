@@ -9,7 +9,7 @@ pub struct Invoice {
         super::super::super::super::shared::types::v1::CryptoAddress,
     >,
     #[prost(message, optional, tag = "3")]
-    pub amounts: ::core::option::Option<super::super::shared::v1::InvoiceAmounts>,
+    pub amounts: ::core::option::Option<super::super::super::shared::v1::InvoiceAmounts>,
     #[prost(message, optional, tag = "4")]
     pub exchange_rate: ::core::option::Option<
         super::super::super::shared::v1::ExchangeRate,
@@ -28,7 +28,9 @@ pub struct Invoice {
     #[prost(message, optional, tag = "9")]
     pub expires_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "10")]
-    pub payment_intent: ::core::option::Option<super::super::shared::v1::PaymentIntent>,
+    pub payment_intent: ::core::option::Option<
+        super::super::super::shared::v1::InvoicePaymentIntent,
+    >,
     #[prost(message, repeated, tag = "11")]
     pub transactions: ::prost::alloc::vec::Vec<
         super::super::super::shared::v1::InvoiceTransaction,
@@ -40,6 +42,21 @@ pub struct Invoice {
         tag = "13"
     )]
     pub network_id: i32,
+    #[prost(
+        enumeration = "super::super::super::shared::v1::InvoiceAddressAllocation",
+        tag = "14"
+    )]
+    pub address_allocation: i32,
+    #[prost(
+        enumeration = "super::super::super::shared::v1::InvoicePayoutStatus",
+        tag = "15"
+    )]
+    pub payout_status: i32,
+    #[prost(
+        enumeration = "super::super::super::shared::v1::InvoiceAddressStatus",
+        tag = "16"
+    )]
+    pub address_status: i32,
 }
 impl ::prost::Name for Invoice {
     const NAME: &'static str = "Invoice";
