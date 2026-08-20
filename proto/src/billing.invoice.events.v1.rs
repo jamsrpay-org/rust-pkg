@@ -102,6 +102,11 @@ pub struct InvoiceConfirmationStarted {
         tag = "8"
     )]
     pub network_id: i32,
+    #[prost(
+        enumeration = "super::super::super::shared::v1::InvoiceAddressAllocation",
+        tag = "9"
+    )]
+    pub address_allocation: i32,
 }
 impl ::prost::Name for InvoiceConfirmationStarted {
     const NAME: &'static str = "InvoiceConfirmationStarted";

@@ -1,6 +1,6 @@
 use alloy::{
-    consensus::{SignableTransaction, TxEnvelope, TxLegacy},
-    eips::eip2718::Encodable2718,
+    consensus::{SignableTransaction, TxEip1559, TxEnvelope},
+    eips::{eip2718::Encodable2718, eip2930::AccessList},
     primitives::{Address, B256, Bytes, TxKind, U256},
     providers::{Provider, ProviderBuilder},
     rlp::Decodable,
@@ -29,6 +29,9 @@ const NATIVE_TRANSFER_GAS: u128 = 21_000;
 ///
 /// Provides wallet generation, transaction building, signing, broadcasting,
 /// and balance queries for any EVM-compatible chain (BSC, ETH, Polygon, etc.).
+///
+/// All transactions use EIP-1559 (Type 2) fee model with dynamic base fee
+/// and priority fee (tip) for optimal gas pricing.
 ///
 /// Chain-specific crates (e.g. `binance-smart-chain`) wrap this client and
 /// add only currency routing + contract address configuration.
@@ -106,10 +109,46 @@ impl EvmClient {
         Ok(balance.to::<u128>())
     }
 
+    // ── EIP-1559 fee estimation ─────────────────────────────────────────────
+
+    /// Fetch EIP-1559 fee parameters from the node.
+    ///
+    /// Returns `(max_fee_per_gas, max_priority_fee_per_gas)`.
+    /// Uses a 2× base fee buffer to handle fee spikes across blocks.
+    async fn estimate_eip1559_fees(&self) -> Result<(u128, u128), EvmClientError> {
+        let provider = ProviderBuilder::new().connect_http(self.rpc_url.clone());
+
+        // Get the latest block's base fee
+        let latest_block = provider
+            .get_block_by_number(alloy::eips::BlockNumberOrTag::Latest)
+            .await
+            .map_err(|e| EvmClientError::RpcError(e.to_string()))?
+            .ok_or_else(|| EvmClientError::RpcError("no latest block found".into()))?;
+
+        let base_fee = latest_block
+            .header
+            .base_fee_per_gas
+            .ok_or_else(|| {
+                EvmClientError::RpcError("chain does not support EIP-1559 base fee".into())
+            })?;
+
+        // Priority fee (tip) — use eth_maxPriorityFeePerGas RPC
+        let max_priority_fee_per_gas = provider
+            .get_max_priority_fee_per_gas()
+            .await
+            .map_err(|e| EvmClientError::RpcError(e.to_string()))?;
+
+        // max_fee = 2 * base_fee + priority_fee
+        // The 2× buffer accounts for base fee increases across blocks.
+        let max_fee_per_gas = (base_fee as u128) * 2 + max_priority_fee_per_gas;
+
+        Ok((max_fee_per_gas, max_priority_fee_per_gas))
+    }
+
     // ── Build native transfer ───────────────────────────────────────────────
 
-    /// Build an unsigned native transfer transaction.
-    /// Fetches nonce, gas price, and estimates gas from the RPC node.
+    /// Build an unsigned native transfer transaction (EIP-1559).
+    /// Fetches nonce, EIP-1559 fees, and estimates gas from the RPC node.
     pub async fn build_native_transfer(
         &self,
         from: &str,
@@ -122,12 +161,12 @@ impl EvmClient {
 
         let nonce = provider
             .get_transaction_count(from_addr)
+            .pending()
             .await
             .map_err(|e| EvmClientError::RpcError(e.to_string()))?;
-        let gas_price = provider
-            .get_gas_price()
-            .await
-            .map_err(|e| EvmClientError::RpcError(e.to_string()))?;
+
+        let (max_fee_per_gas, max_priority_fee_per_gas) =
+            self.estimate_eip1559_fees().await?;
 
         let tx_request = alloy::rpc::types::TransactionRequest::default()
             .from(from_addr)
@@ -140,7 +179,8 @@ impl EvmClient {
 
         Ok(EvmPreparedTransfer {
             nonce,
-            gas_price,
+            max_fee_per_gas,
+            max_priority_fee_per_gas,
             gas_limit,
             to: to.to_string(),
             value: amount,
@@ -151,7 +191,7 @@ impl EvmClient {
 
     // ── Build ERC20 / BEP20 transfer ────────────────────────────────────────
 
-    /// Build an unsigned ERC20/BEP20 token transfer transaction.
+    /// Build an unsigned ERC20/BEP20 token transfer transaction (EIP-1559).
     pub async fn build_erc20_transfer(
         &self,
         from: &str,
@@ -173,12 +213,12 @@ impl EvmClient {
 
         let nonce = provider
             .get_transaction_count(from_addr)
+            .pending()
             .await
             .map_err(|e| EvmClientError::RpcError(e.to_string()))?;
-        let gas_price = provider
-            .get_gas_price()
-            .await
-            .map_err(|e| EvmClientError::RpcError(e.to_string()))?;
+
+        let (max_fee_per_gas, max_priority_fee_per_gas) =
+            self.estimate_eip1559_fees().await?;
 
         let tx_request = alloy::rpc::types::TransactionRequest::default()
             .from(from_addr)
@@ -191,7 +231,8 @@ impl EvmClient {
 
         Ok(EvmPreparedTransfer {
             nonce,
-            gas_price,
+            max_fee_per_gas,
+            max_priority_fee_per_gas,
             gas_limit,
             to: contract_address.to_string(),
             value: 0,
@@ -203,24 +244,26 @@ impl EvmClient {
     // ── Sign ────────────────────────────────────────────────────────────────
 
     /// Sign a prepared transfer with a private key (local, no RPC call).
-    /// Uses alloy's secp256k1 signer with EIP-155 replay protection.
+    /// Uses EIP-1559 (Type 2) transaction format with EIP-155 replay protection.
     pub fn sign(
         prepared: &EvmPreparedTransfer,
         private_key: &[u8],
     ) -> Result<EvmSignedTransfer, EvmClientError> {
         let to_addr = parse_address(&prepared.to)?;
 
-        let tx = TxLegacy {
-            chain_id: Some(prepared.chain_id),
+        let tx = TxEip1559 {
+            chain_id: prepared.chain_id,
             nonce: prepared.nonce,
-            gas_price: prepared.gas_price,
+            max_fee_per_gas: prepared.max_fee_per_gas,
+            max_priority_fee_per_gas: prepared.max_priority_fee_per_gas,
             gas_limit: prepared.gas_limit,
             to: TxKind::Call(to_addr),
             value: U256::from(prepared.value),
             input: Bytes::from(prepared.data.clone()),
+            access_list: AccessList::default(),
         };
 
-        let signed_bytes = sign_legacy_tx(tx, private_key)?;
+        let signed_bytes = sign_eip1559_tx(tx, private_key)?;
 
         Ok(EvmSignedTransfer {
             prepared: prepared.clone(),
@@ -230,12 +273,12 @@ impl EvmClient {
 
     /// Sign raw unsigned transaction bytes with a private key.
     ///
-    /// Input: RLP-encoded unsigned `TxLegacy` (with EIP-155 chain_id fields).
+    /// Input: RLP-encoded unsigned `TxEip1559`.
     /// Output: Full RLP-encoded signed transaction bytes (EIP-2718 envelope).
     pub fn sign_raw(private_key: &[u8], raw_tx: &[u8]) -> Result<Vec<u8>, EvmClientError> {
-        let tx = TxLegacy::decode(&mut &raw_tx[..])
+        let tx = TxEip1559::decode(&mut &raw_tx[..])
             .map_err(|e| EvmClientError::RpcError(format!("RLP decode error: {}", e)))?;
-        sign_legacy_tx(tx, private_key)
+        sign_eip1559_tx(tx, private_key)
     }
 
     // ── Broadcast ───────────────────────────────────────────────────────────
@@ -250,8 +293,6 @@ impl EvmClient {
             .map_err(|e| EvmClientError::RpcError(e.to_string()))?;
         Ok(pending.tx_hash().to_string())
     }
-
-    // ── Gas estimation ──────────────────────────────────────────────────────
 
     // ── Address validation ───────────────────────────────────────────────
 
@@ -271,13 +312,8 @@ impl EvmClient {
             return Ok(0);
         }
 
-        let provider = ProviderBuilder::new().connect_http(self.rpc_url.clone());
-        let gas_price = provider
-            .get_gas_price()
-            .await
-            .map_err(|e| EvmClientError::RpcError(e.to_string()))?;
-
-        let gas_cost = gas_price * NATIVE_TRANSFER_GAS;
+        let (max_fee_per_gas, _) = self.estimate_eip1559_fees().await?;
+        let gas_cost = max_fee_per_gas * NATIVE_TRANSFER_GAS;
         Ok(balance.saturating_sub(gas_cost))
     }
 }
@@ -290,8 +326,8 @@ fn parse_address(address: &str) -> Result<Address, EvmClientError> {
         .map_err(|_| EvmClientError::RpcError(format!("invalid address: {}", address)))
 }
 
-/// Sign a TxLegacy with a raw private key, returning the EIP-2718 encoded signed bytes.
-fn sign_legacy_tx(tx: TxLegacy, private_key: &[u8]) -> Result<Vec<u8>, EvmClientError> {
+/// Sign a TxEip1559 with a raw private key, returning the EIP-2718 encoded signed bytes.
+fn sign_eip1559_tx(tx: TxEip1559, private_key: &[u8]) -> Result<Vec<u8>, EvmClientError> {
     if private_key.len() != 32 {
         return Err(EvmClientError::InvalidPrivateKey);
     }
@@ -304,7 +340,7 @@ fn sign_legacy_tx(tx: TxLegacy, private_key: &[u8]) -> Result<Vec<u8>, EvmClient
         .map_err(|e| EvmClientError::SignError(e.to_string()))?;
 
     let signed = tx.into_signed(sig);
-    let envelope = TxEnvelope::Legacy(signed);
+    let envelope = TxEnvelope::Eip1559(signed);
 
     Ok(envelope.encoded_2718())
 }
@@ -330,17 +366,18 @@ mod tests {
 
         let prepared = EvmPreparedTransfer {
             nonce: 0,
-            gas_price: 5_000_000_000, // 5 gwei
+            max_fee_per_gas: 30_000_000_000,      // 30 gwei
+            max_priority_fee_per_gas: 1_500_000_000, // 1.5 gwei
             gas_limit: 21_000,
             to: "0x0000000000000000000000000000000000000001".to_string(),
             value: 1_000_000_000_000_000_000, // 1 ETH/BNB in wei
             data: vec![],
-            chain_id: 56, // BSC
+            chain_id: 1, // Ethereum mainnet
         };
 
         let signed = EvmClient::sign(&prepared, &private_key).unwrap();
         assert!(!signed.signed_tx_bytes.is_empty());
-        assert_eq!(signed.prepared.chain_id, 56);
+        assert_eq!(signed.prepared.chain_id, 1);
     }
 
     #[test]

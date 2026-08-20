@@ -3,12 +3,18 @@ use chain_core::types::CryptoWallet;
 // ── Transfer types (shared across all EVM chains) ───────────────────────────
 
 /// Prepared unsigned EVM transfer — holds everything needed to sign and broadcast.
+///
+/// Uses EIP-1559 (Type 2) fee model with `max_fee_per_gas` and
+/// `max_priority_fee_per_gas` instead of the legacy `gas_price`.
 #[derive(Debug, Clone)]
 pub struct EvmPreparedTransfer {
     /// Nonce used for this transaction.
     pub nonce: u64,
-    /// Gas price in wei.
-    pub gas_price: u128,
+    /// Maximum total fee per gas unit the sender is willing to pay (in wei).
+    /// Includes both the base fee and the priority fee.
+    pub max_fee_per_gas: u128,
+    /// Maximum priority fee (tip) per gas unit for the miner (in wei).
+    pub max_priority_fee_per_gas: u128,
     /// Gas limit.
     pub gas_limit: u64,
     /// Destination address (0x-prefixed hex).
