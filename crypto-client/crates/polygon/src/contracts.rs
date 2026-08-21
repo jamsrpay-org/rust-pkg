@@ -14,5 +14,7 @@ pub mod mainnet {
 
 pub mod amoy {
     /// USDT (Tether USD) on Polygon Amoy Testnet.
-    pub const USDT: &str = "0x1616d425Cd540B256475cBfb604586C8598eC0FB";
+    pub const USDT_ERC20: &str = "0x1616d425Cd540B256475cBfb604586C8598eC0FB";
+    /// USDC (USD Coin) on Polygon Amoy Testnet.
+    pub const USDC_ERC20: &str = "0x41E94Eb71898E8A90Fe2dC87e92a03C0cf1Fa5AB";
 }

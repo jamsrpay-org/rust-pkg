@@ -57,6 +57,10 @@ pub struct Invoice {
         tag = "16"
     )]
     pub address_status: i32,
+    #[prost(message, optional, tag = "17")]
+    pub payout_amount: ::core::option::Option<
+        super::super::super::super::shared::types::v1::Money,
+    >,
 }
 impl ::prost::Name for Invoice {
     const NAME: &'static str = "Invoice";

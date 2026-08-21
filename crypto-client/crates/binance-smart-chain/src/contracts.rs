@@ -13,4 +13,6 @@ pub mod mainnet {
 pub mod testnet {
     /// USDT (Tether USD) on BSC Testnet.
     pub const USDT_BEP20: &str = "0x337610d27c682E347C9cD60BD4b3b107C9d34dDd";
+    /// USDC (USD Coin) on BSC Testnet.
+    pub const USDC_BEP20: &str = "0x64544969ed7EBf5f083679233325356EbE738930";
 }

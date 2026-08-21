@@ -12,5 +12,7 @@ pub mod mainnet {
 
 pub mod sepolia {
     /// USDT (Tether USD) on Ethereum Sepolia Testnet.
-    pub const USDT_ERC20: &str = "0x7169D38820dfd117C3FA1f22a697dBA58d90BA06";
+    pub const USDT_ERC20: &str = "0xaA8E23Fb1079EA71e0a56F48a2aA51851D8433D0";
+    /// USDC (USD Coin) on Ethereum Sepolia Testnet.
+    pub const USDC_ERC20: &str = "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238";
 }

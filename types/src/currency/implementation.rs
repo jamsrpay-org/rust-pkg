@@ -56,6 +56,16 @@ impl Chain {
     }
 }
 
+impl Chain {
+    /// Returns true for EVM-compatible chains (Ethereum, BSC, Polygon).
+    pub const fn is_evm(&self) -> bool {
+        matches!(
+            self,
+            Chain::Ethereum | Chain::BinanceSmartChain | Chain::Polygon
+        )
+    }
+}
+
 impl From<GasCurrency> for PaymentCurrency {
     fn from(value: GasCurrency) -> Self {
         match value {
