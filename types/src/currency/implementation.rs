@@ -40,6 +40,11 @@ impl Chain {
                 name: "Litecoin",
                 gas_currency: None,
             },
+            Chain::Solana => BlockchainMeta {
+                symbol: "SOL",
+                name: "Solana",
+                gas_currency: Some(GasCurrency::SOL),
+            },
         }
     }
 
@@ -73,6 +78,7 @@ impl From<GasCurrency> for PaymentCurrency {
             GasCurrency::BNB => PaymentCurrency::BNB,
             GasCurrency::ETH => PaymentCurrency::ETH,
             GasCurrency::POL => PaymentCurrency::POL,
+            GasCurrency::SOL => PaymentCurrency::SOL,
         }
     }
 }
@@ -84,9 +90,9 @@ impl PaymentCurrency {
             PaymentCurrency::ETH => Some(PaymentCurrency::ETH),
             PaymentCurrency::POL => Some(PaymentCurrency::POL),
             PaymentCurrency::TRX => Some(PaymentCurrency::TRX),
+            PaymentCurrency::SOL => Some(PaymentCurrency::SOL),
             PaymentCurrency::USDT => None,
             PaymentCurrency::USDC => None,
-            PaymentCurrency::BUSD => None,
             PaymentCurrency::DAI => None,
             PaymentCurrency::EURC => None,
             PaymentCurrency::BTC => None,
@@ -126,16 +132,6 @@ impl PaymentCurrency {
                 asset_id: "USDC",
                 symbol: "USDC",
                 name: "USD Coin",
-                chain: Chain::BinanceSmartChain,
-                kind: AssetKind::Token {
-                    standard: TokenStandard::Bep20,
-                },
-                decimals: 18,
-            },
-            PaymentCurrency::BUSD => PaymentCurrencyMeta {
-                asset_id: "BUSD",
-                symbol: "BUSD",
-                name: "Binance USD",
                 chain: Chain::BinanceSmartChain,
                 kind: AssetKind::Token {
                     standard: TokenStandard::Bep20,
@@ -193,6 +189,14 @@ impl PaymentCurrency {
                 chain: Chain::Polygon,
                 kind: AssetKind::Native,
                 decimals: 18,
+            },
+            PaymentCurrency::SOL => PaymentCurrencyMeta {
+                asset_id: "SOL",
+                symbol: "SOL",
+                name: "Solana",
+                chain: Chain::Solana,
+                kind: AssetKind::Native,
+                decimals: 9,
             },
         }
     }
@@ -440,20 +444,6 @@ impl PaymentCurrency {
                     is_native: false,
                 },
             ],
-            PaymentCurrency::BUSD => &[
-                N {
-                    network_id: NetworkId::BscMainnet,
-                    chain: Chain::BinanceSmartChain,
-                    standard: Some(TokenStandard::Bep20),
-                    is_native: false,
-                },
-                N {
-                    network_id: NetworkId::BscTestnet,
-                    chain: Chain::BinanceSmartChain,
-                    standard: Some(TokenStandard::Bep20),
-                    is_native: false,
-                },
-            ],
             PaymentCurrency::EURC => &[
                 N {
                     network_id: NetworkId::EthMainnet,
@@ -468,6 +458,20 @@ impl PaymentCurrency {
                     is_native: false,
                 },
             ],
+            PaymentCurrency::SOL => &[
+                N {
+                    network_id: NetworkId::SolanaMainnet,
+                    chain: Chain::Solana,
+                    standard: None,
+                    is_native: true,
+                },
+                N {
+                    network_id: NetworkId::SolanaDevnet,
+                    chain: Chain::Solana,
+                    standard: None,
+                    is_native: true,
+                },
+            ],
         }
     }
 }
@@ -480,12 +484,12 @@ impl PaymentCurrency {
             PaymentCurrency::BNB => Money::from_atomic(1, 1),
             PaymentCurrency::USDC
             | PaymentCurrency::DAI
-            | PaymentCurrency::BUSD
             | PaymentCurrency::EURC => Money::from_atomic(1, 0),
             PaymentCurrency::BTC => Money::from_atomic(1, 0),
             PaymentCurrency::LTC => Money::from_atomic(1, 0),
             PaymentCurrency::ETH => Money::from_atomic(1, 0),
             PaymentCurrency::POL => Money::from_atomic(1, 0),
+            PaymentCurrency::SOL => Money::from_atomic(1, 0),
         }
     }
 
@@ -496,12 +500,12 @@ impl PaymentCurrency {
             PaymentCurrency::BNB
             | PaymentCurrency::USDC
             | PaymentCurrency::DAI
-            | PaymentCurrency::BUSD
             | PaymentCurrency::EURC => Money::from_atomic(0, self.decimals()),
             PaymentCurrency::BTC => Money::from_atomic(0, self.decimals()),
             PaymentCurrency::LTC => Money::from_atomic(0, self.decimals()),
             PaymentCurrency::ETH => Money::from_atomic(0, self.decimals()),
             PaymentCurrency::POL => Money::from_atomic(0, self.decimals()),
+            PaymentCurrency::SOL => Money::from_atomic(0, self.decimals()),
         }
     }
 }
@@ -636,12 +640,6 @@ impl PricingCurrency {
                 name: "Dai",
                 decimals: 18,
             },
-            PricingCurrency::BUSD => PricingCurrencyMeta {
-                asset_id: "BUSD",
-                symbol: "BUSD",
-                name: "Binance USD",
-                decimals: 18,
-            },
             PricingCurrency::EURC => PricingCurrencyMeta {
                 asset_id: "EURC",
                 symbol: "EURC",
@@ -671,6 +669,12 @@ impl PricingCurrency {
                 symbol: "LTC",
                 name: "Litecoin",
                 decimals: 8,
+            },
+            PricingCurrency::SOL => PricingCurrencyMeta {
+                asset_id: "SOL",
+                symbol: "SOL",
+                name: "Solana",
+                decimals: 9,
             },
             // Fiat Currencies
             PricingCurrency::USD => {
@@ -799,6 +803,8 @@ impl NetworkId {
                 | Self::PolAmoy
                 | Self::BtcTestnet
                 | Self::LtcTestnet
+                | Self::SolanaDevnet
+                | Self::SolanaTestnet
         )
     }
 
@@ -821,6 +827,10 @@ impl NetworkId {
 
             Self::LtcMainnet => "Litecoin",
             Self::LtcTestnet => "Litecoin Testnet",
+
+            Self::SolanaMainnet => "Solana",
+            Self::SolanaDevnet => "Solana Devnet",
+            Self::SolanaTestnet => "Solana Testnet",
         }
     }
 
@@ -832,6 +842,7 @@ impl NetworkId {
             Self::PolMainnet | Self::PolAmoy => Chain::Polygon,
             Self::BtcMainnet | Self::BtcTestnet => Chain::Bitcoin,
             Self::LtcMainnet | Self::LtcTestnet => Chain::Litecoin,
+            Self::SolanaMainnet | Self::SolanaDevnet | Self::SolanaTestnet => Chain::Solana,
         }
     }
 
@@ -854,6 +865,10 @@ impl NetworkId {
 
             NetworkId::PolMainnet => "https://polygonscan.com",
             NetworkId::PolAmoy => "https://amoy.polygonscan.com",
+
+            NetworkId::SolanaMainnet => "https://solscan.io",
+            NetworkId::SolanaDevnet => "https://solscan.io",
+            NetworkId::SolanaTestnet => "https://solscan.io",
         }
     }
 
@@ -872,6 +887,9 @@ impl NetworkId {
             NetworkId::BtcTestnet => format!("{}/address/{}", base_url, address),
             NetworkId::LtcMainnet => format!("{}/address/{}", base_url, address),
             NetworkId::LtcTestnet => format!("{}/address/{}", base_url, address),
+            NetworkId::SolanaMainnet => format!("{}/account/{}", base_url, address),
+            NetworkId::SolanaDevnet => format!("{}/account/{}?cluster=devnet", base_url, address),
+            NetworkId::SolanaTestnet => format!("{}/account/{}?cluster=testnet", base_url, address),
         }
     }
 
@@ -890,6 +908,9 @@ impl NetworkId {
             NetworkId::BtcTestnet => format!("{}/tx/{}", base_url, tx_id),
             NetworkId::LtcMainnet => format!("{}/tx/{}", base_url, tx_id),
             NetworkId::LtcTestnet => format!("{}/tx/{}", base_url, tx_id),
+            NetworkId::SolanaMainnet => format!("{}/tx/{}", base_url, tx_id),
+            NetworkId::SolanaDevnet => format!("{}/tx/{}?cluster=devnet", base_url, tx_id),
+            NetworkId::SolanaTestnet => format!("{}/tx/{}?cluster=testnet", base_url, tx_id),
         }
     }
 }

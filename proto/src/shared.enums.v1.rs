@@ -41,12 +41,12 @@ pub enum PaymentCurrency {
     Pol = 4,
     Btc = 5,
     Ltc = 6,
+    Sol = 7,
     /// ---- Tokens ----
     Usdt = 10,
     Usdc = 11,
     Dai = 12,
-    Busd = 13,
-    Eurc = 14,
+    Eurc = 13,
 }
 impl PaymentCurrency {
     /// String value of the enum field names used in the ProtoBuf definition.
@@ -62,10 +62,10 @@ impl PaymentCurrency {
             Self::Pol => "PAYMENT_CURRENCY_POL",
             Self::Btc => "PAYMENT_CURRENCY_BTC",
             Self::Ltc => "PAYMENT_CURRENCY_LTC",
+            Self::Sol => "PAYMENT_CURRENCY_SOL",
             Self::Usdt => "PAYMENT_CURRENCY_USDT",
             Self::Usdc => "PAYMENT_CURRENCY_USDC",
             Self::Dai => "PAYMENT_CURRENCY_DAI",
-            Self::Busd => "PAYMENT_CURRENCY_BUSD",
             Self::Eurc => "PAYMENT_CURRENCY_EURC",
         }
     }
@@ -79,10 +79,10 @@ impl PaymentCurrency {
             "PAYMENT_CURRENCY_POL" => Some(Self::Pol),
             "PAYMENT_CURRENCY_BTC" => Some(Self::Btc),
             "PAYMENT_CURRENCY_LTC" => Some(Self::Ltc),
+            "PAYMENT_CURRENCY_SOL" => Some(Self::Sol),
             "PAYMENT_CURRENCY_USDT" => Some(Self::Usdt),
             "PAYMENT_CURRENCY_USDC" => Some(Self::Usdc),
             "PAYMENT_CURRENCY_DAI" => Some(Self::Dai),
-            "PAYMENT_CURRENCY_BUSD" => Some(Self::Busd),
             "PAYMENT_CURRENCY_EURC" => Some(Self::Eurc),
             _ => None,
         }
@@ -123,18 +123,18 @@ pub enum PricingCurrency {
     Dai = 23,
     /// / USD Coin
     Usdc = 24,
-    /// / Binance USD
-    Busd = 25,
     /// / Euro Coin
-    Eurc = 26,
+    Eurc = 25,
     /// / Ethereum
-    Eth = 27,
+    Eth = 26,
     /// / Polygon
-    Pol = 28,
+    Pol = 27,
     /// / Bitcoin
-    Btc = 29,
+    Btc = 28,
     /// / Litecoin
-    Ltc = 30,
+    Ltc = 29,
+    /// / Solana
+    Sol = 30,
 }
 impl PricingCurrency {
     /// String value of the enum field names used in the ProtoBuf definition.
@@ -159,12 +159,12 @@ impl PricingCurrency {
             Self::Usdt => "PRICING_CURRENCY_USDT",
             Self::Dai => "PRICING_CURRENCY_DAI",
             Self::Usdc => "PRICING_CURRENCY_USDC",
-            Self::Busd => "PRICING_CURRENCY_BUSD",
             Self::Eurc => "PRICING_CURRENCY_EURC",
             Self::Eth => "PRICING_CURRENCY_ETH",
             Self::Pol => "PRICING_CURRENCY_POL",
             Self::Btc => "PRICING_CURRENCY_BTC",
             Self::Ltc => "PRICING_CURRENCY_LTC",
+            Self::Sol => "PRICING_CURRENCY_SOL",
         }
     }
     /// Creates an enum from field names used in the ProtoBuf definition.
@@ -186,12 +186,12 @@ impl PricingCurrency {
             "PRICING_CURRENCY_USDT" => Some(Self::Usdt),
             "PRICING_CURRENCY_DAI" => Some(Self::Dai),
             "PRICING_CURRENCY_USDC" => Some(Self::Usdc),
-            "PRICING_CURRENCY_BUSD" => Some(Self::Busd),
             "PRICING_CURRENCY_EURC" => Some(Self::Eurc),
             "PRICING_CURRENCY_ETH" => Some(Self::Eth),
             "PRICING_CURRENCY_POL" => Some(Self::Pol),
             "PRICING_CURRENCY_BTC" => Some(Self::Btc),
             "PRICING_CURRENCY_LTC" => Some(Self::Ltc),
+            "PRICING_CURRENCY_SOL" => Some(Self::Sol),
             _ => None,
         }
     }
@@ -261,6 +261,7 @@ pub enum Chain {
     Polygon = 4,
     Bitcoin = 5,
     Litecoin = 6,
+    Solana = 7,
 }
 impl Chain {
     /// String value of the enum field names used in the ProtoBuf definition.
@@ -276,6 +277,7 @@ impl Chain {
             Self::Polygon => "CHAIN_POLYGON",
             Self::Bitcoin => "CHAIN_BITCOIN",
             Self::Litecoin => "CHAIN_LITECOIN",
+            Self::Solana => "CHAIN_SOLANA",
         }
     }
     /// Creates an enum from field names used in the ProtoBuf definition.
@@ -288,6 +290,7 @@ impl Chain {
             "CHAIN_POLYGON" => Some(Self::Polygon),
             "CHAIN_BITCOIN" => Some(Self::Bitcoin),
             "CHAIN_LITECOIN" => Some(Self::Litecoin),
+            "CHAIN_SOLANA" => Some(Self::Solana),
             _ => None,
         }
     }
@@ -342,6 +345,9 @@ pub enum NetworkId {
     BtcTestnet = 10,
     LtcMainnet = 11,
     LtcTestnet = 12,
+    SolanaMainnet = 13,
+    SolanaDevnet = 14,
+    SolanaTestnet = 15,
 }
 impl NetworkId {
     /// String value of the enum field names used in the ProtoBuf definition.
@@ -363,6 +369,9 @@ impl NetworkId {
             Self::BtcTestnet => "NETWORK_ID_BTC_TESTNET",
             Self::LtcMainnet => "NETWORK_ID_LTC_MAINNET",
             Self::LtcTestnet => "NETWORK_ID_LTC_TESTNET",
+            Self::SolanaMainnet => "NETWORK_ID_SOLANA_MAINNET",
+            Self::SolanaDevnet => "NETWORK_ID_SOLANA_DEVNET",
+            Self::SolanaTestnet => "NETWORK_ID_SOLANA_TESTNET",
         }
     }
     /// Creates an enum from field names used in the ProtoBuf definition.
@@ -381,6 +390,9 @@ impl NetworkId {
             "NETWORK_ID_BTC_TESTNET" => Some(Self::BtcTestnet),
             "NETWORK_ID_LTC_MAINNET" => Some(Self::LtcMainnet),
             "NETWORK_ID_LTC_TESTNET" => Some(Self::LtcTestnet),
+            "NETWORK_ID_SOLANA_MAINNET" => Some(Self::SolanaMainnet),
+            "NETWORK_ID_SOLANA_DEVNET" => Some(Self::SolanaDevnet),
+            "NETWORK_ID_SOLANA_TESTNET" => Some(Self::SolanaTestnet),
             _ => None,
         }
     }

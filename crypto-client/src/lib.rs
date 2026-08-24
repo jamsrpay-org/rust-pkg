@@ -26,6 +26,11 @@ pub use ethereum::contracts as eth_contracts;
 pub use polygon::client::PolygonClient;
 pub use polygon::contracts as polygon_contracts;
 
+// ── solana re-exports ───────────────────────────────────────────────────────
+pub use solana::client::SolanaClient;
+pub use solana::contracts as solana_contracts;
+pub use solana::types::{SolanaPreparedTransfer, SolanaSignedTransfer};
+
 // ── utxo-core re-exports ────────────────────────────────────────────────────
 pub use utxo_core::client::UtxoClient;
 pub use utxo_core::types::{UtxoPreparedTransfer, UtxoSignedTransfer, UtxoWallet};

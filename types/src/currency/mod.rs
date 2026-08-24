@@ -27,13 +27,13 @@ pub enum PricingCurrency {
     BNB,
     USDT,
     USDC,
-    BUSD,
     DAI,
     EURC,
     ETH,
     POL,
     BTC,
     LTC,
+    SOL,
     // Fiat Currencies
     USD,
     EUR,
@@ -55,13 +55,13 @@ pub enum PaymentCurrency {
     BNB,
     USDT,
     USDC,
-    BUSD,
     DAI,
     EURC,
     ETH,
     POL,
     BTC,
     LTC,
+    SOL,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Display, EnumString, AsRefStr)]
@@ -71,6 +71,7 @@ pub enum GasCurrency {
     BNB,
     ETH,
     POL,
+    SOL,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Display, EnumString, AsRefStr)]
@@ -82,6 +83,7 @@ pub enum Chain {
     Polygon,
     Bitcoin,
     Litecoin,
+    Solana,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Display, EnumString, AsRefStr)]
@@ -104,6 +106,10 @@ pub enum NetworkId {
 
     LtcMainnet,
     LtcTestnet,
+
+    SolanaMainnet,
+    SolanaDevnet,
+    SolanaTestnet,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Display, EnumString, AsRefStr)]
