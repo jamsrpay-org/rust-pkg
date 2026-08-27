@@ -367,6 +367,18 @@ impl PaymentCurrency {
                     standard: Some(TokenStandard::Erc20),
                     is_native: false,
                 },
+                N {
+                    network_id: NetworkId::SolMainnet,
+                    chain: Chain::Solana,
+                    standard: Some(TokenStandard::Spl),
+                    is_native: false,
+                },
+                N {
+                    network_id: NetworkId::SolDevnet,
+                    chain: Chain::Solana,
+                    standard: Some(TokenStandard::Spl),
+                    is_native: false,
+                },
             ],
             PaymentCurrency::USDC => &[
                 N {
@@ -403,6 +415,18 @@ impl PaymentCurrency {
                     network_id: NetworkId::PolAmoy,
                     chain: Chain::Polygon,
                     standard: Some(TokenStandard::Erc20),
+                    is_native: false,
+                },
+                N {
+                    network_id: NetworkId::SolMainnet,
+                    chain: Chain::Solana,
+                    standard: Some(TokenStandard::Spl),
+                    is_native: false,
+                },
+                N {
+                    network_id: NetworkId::SolDevnet,
+                    chain: Chain::Solana,
+                    standard: Some(TokenStandard::Spl),
                     is_native: false,
                 },
             ],
@@ -460,13 +484,13 @@ impl PaymentCurrency {
             ],
             PaymentCurrency::SOL => &[
                 N {
-                    network_id: NetworkId::SolanaMainnet,
+                    network_id: NetworkId::SolMainnet,
                     chain: Chain::Solana,
                     standard: None,
                     is_native: true,
                 },
                 N {
-                    network_id: NetworkId::SolanaDevnet,
+                    network_id: NetworkId::SolDevnet,
                     chain: Chain::Solana,
                     standard: None,
                     is_native: true,
@@ -482,9 +506,9 @@ impl PaymentCurrency {
             PaymentCurrency::TRX => Money::from_atomic(3_000_000, self.decimals()),
             PaymentCurrency::USDT => Money::from_atomic(5_000_000, self.decimals()),
             PaymentCurrency::BNB => Money::from_atomic(1, 1),
-            PaymentCurrency::USDC
-            | PaymentCurrency::DAI
-            | PaymentCurrency::EURC => Money::from_atomic(1, 0),
+            PaymentCurrency::USDC | PaymentCurrency::DAI | PaymentCurrency::EURC => {
+                Money::from_atomic(1, 0)
+            }
             PaymentCurrency::BTC => Money::from_atomic(1, 0),
             PaymentCurrency::LTC => Money::from_atomic(1, 0),
             PaymentCurrency::ETH => Money::from_atomic(1, 0),
@@ -803,8 +827,7 @@ impl NetworkId {
                 | Self::PolAmoy
                 | Self::BtcTestnet
                 | Self::LtcTestnet
-                | Self::SolanaDevnet
-                | Self::SolanaTestnet
+                | Self::SolDevnet
         )
     }
 
@@ -828,9 +851,8 @@ impl NetworkId {
             Self::LtcMainnet => "Litecoin",
             Self::LtcTestnet => "Litecoin Testnet",
 
-            Self::SolanaMainnet => "Solana",
-            Self::SolanaDevnet => "Solana Devnet",
-            Self::SolanaTestnet => "Solana Testnet",
+            Self::SolMainnet => "Solana",
+            Self::SolDevnet => "Solana Devnet",
         }
     }
 
@@ -842,7 +864,7 @@ impl NetworkId {
             Self::PolMainnet | Self::PolAmoy => Chain::Polygon,
             Self::BtcMainnet | Self::BtcTestnet => Chain::Bitcoin,
             Self::LtcMainnet | Self::LtcTestnet => Chain::Litecoin,
-            Self::SolanaMainnet | Self::SolanaDevnet | Self::SolanaTestnet => Chain::Solana,
+            Self::SolMainnet | Self::SolDevnet => Chain::Solana,
         }
     }
 
@@ -866,9 +888,8 @@ impl NetworkId {
             NetworkId::PolMainnet => "https://polygonscan.com",
             NetworkId::PolAmoy => "https://amoy.polygonscan.com",
 
-            NetworkId::SolanaMainnet => "https://solscan.io",
-            NetworkId::SolanaDevnet => "https://solscan.io",
-            NetworkId::SolanaTestnet => "https://solscan.io",
+            NetworkId::SolMainnet => "https://solscan.io",
+            NetworkId::SolDevnet => "https://solscan.io",
         }
     }
 
@@ -887,9 +908,8 @@ impl NetworkId {
             NetworkId::BtcTestnet => format!("{}/address/{}", base_url, address),
             NetworkId::LtcMainnet => format!("{}/address/{}", base_url, address),
             NetworkId::LtcTestnet => format!("{}/address/{}", base_url, address),
-            NetworkId::SolanaMainnet => format!("{}/account/{}", base_url, address),
-            NetworkId::SolanaDevnet => format!("{}/account/{}?cluster=devnet", base_url, address),
-            NetworkId::SolanaTestnet => format!("{}/account/{}?cluster=testnet", base_url, address),
+            NetworkId::SolMainnet => format!("{}/account/{}", base_url, address),
+            NetworkId::SolDevnet => format!("{}/account/{}?cluster=devnet", base_url, address),
         }
     }
 
@@ -908,9 +928,91 @@ impl NetworkId {
             NetworkId::BtcTestnet => format!("{}/tx/{}", base_url, tx_id),
             NetworkId::LtcMainnet => format!("{}/tx/{}", base_url, tx_id),
             NetworkId::LtcTestnet => format!("{}/tx/{}", base_url, tx_id),
-            NetworkId::SolanaMainnet => format!("{}/tx/{}", base_url, tx_id),
-            NetworkId::SolanaDevnet => format!("{}/tx/{}?cluster=devnet", base_url, tx_id),
-            NetworkId::SolanaTestnet => format!("{}/tx/{}?cluster=testnet", base_url, tx_id),
+            NetworkId::SolMainnet => format!("{}/tx/{}", base_url, tx_id),
+            NetworkId::SolDevnet => format!("{}/tx/{}?cluster=devnet", base_url, tx_id),
         }
+    }
+
+    /// Default number of block confirmations required for a transaction to be
+    /// considered final on this network.
+    ///
+    /// These are sensible production defaults. Services may override via
+    /// configuration where appropriate.
+    pub const fn required_confirmations(self) -> u32 {
+        match self {
+            // TRON: ~3s blocks, 20 confirmations ≈ 1 minute
+            Self::TronMainnet | Self::TronNile => 20,
+
+            // Ethereum: ~12s blocks, 12 confirmations ≈ 2.5 minutes
+            Self::EthMainnet | Self::EthSepolia => 12,
+
+            // BSC: ~3s blocks, 15 confirmations ≈ 45 seconds
+            Self::BscMainnet | Self::BscTestnet => 15,
+
+            // Polygon: ~2s blocks, 30 confirmations ≈ 1 minute
+            Self::PolMainnet | Self::PolAmoy => 30,
+
+            // Bitcoin: ~10min blocks, 3 confirmations ≈ 30 minutes
+            Self::BtcMainnet | Self::BtcTestnet => 3,
+
+            // Litecoin: ~2.5min blocks, 6 confirmations ≈ 15 minutes
+            Self::LtcMainnet | Self::LtcTestnet => 6,
+
+            // Solana: uses slot-based finality, 1 = finalized slot
+            Self::SolMainnet | Self::SolDevnet => 1,
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::str::FromStr;
+
+    #[test]
+    fn test_token_standard_spl() {
+        assert_eq!(TokenStandard::Spl.to_string(), "SPL");
+        assert_eq!(TokenStandard::Spl.as_ref(), "SPL");
+        assert_eq!(TokenStandard::from_str("SPL"), Ok(TokenStandard::Spl));
+    }
+
+    #[test]
+    fn test_usdt_solana_networks() {
+        let networks = PaymentCurrency::USDT.networks();
+        let sol_mainnet = networks
+            .iter()
+            .find(|n| n.network_id == NetworkId::SolMainnet)
+            .expect("USDT should support SolMainnet");
+        assert_eq!(sol_mainnet.chain, Chain::Solana);
+        assert_eq!(sol_mainnet.standard, Some(TokenStandard::Spl));
+        assert!(!sol_mainnet.is_native);
+
+        let sol_devnet = networks
+            .iter()
+            .find(|n| n.network_id == NetworkId::SolDevnet)
+            .expect("USDT should support SolDevnet");
+        assert_eq!(sol_devnet.chain, Chain::Solana);
+        assert_eq!(sol_devnet.standard, Some(TokenStandard::Spl));
+        assert!(!sol_devnet.is_native);
+    }
+
+    #[test]
+    fn test_usdc_solana_networks() {
+        let networks = PaymentCurrency::USDC.networks();
+        let sol_mainnet = networks
+            .iter()
+            .find(|n| n.network_id == NetworkId::SolMainnet)
+            .expect("USDC should support SolMainnet");
+        assert_eq!(sol_mainnet.chain, Chain::Solana);
+        assert_eq!(sol_mainnet.standard, Some(TokenStandard::Spl));
+        assert!(!sol_mainnet.is_native);
+
+        let sol_devnet = networks
+            .iter()
+            .find(|n| n.network_id == NetworkId::SolDevnet)
+            .expect("USDC should support SolDevnet");
+        assert_eq!(sol_devnet.chain, Chain::Solana);
+        assert_eq!(sol_devnet.standard, Some(TokenStandard::Spl));
+        assert!(!sol_devnet.is_native);
     }
 }

@@ -1,16 +1,16 @@
-use crate::types::{SolanaPreparedTransfer, SolanaSignedTransfer, SolanaWallet};
-use chain_core::types::CryptoWallet;
-use chain_core::{
-    error::BlockchainClientError,
-    types::{
-        Address, BlockchainClient, BroadcastResult, EstimateWithdrawableRequest, TransactionId,
-        TransferRequest,
-    },
-};
-use jamsrpay_types::{currency::PaymentCurrency, money::Money};
-use reqwest::ClientBuilder;
 use std::collections::HashMap;
 use std::time::Duration;
+
+use chain_core::error::BlockchainClientError;
+use chain_core::types::{
+    Address, BlockchainClient, BroadcastResult, CryptoWallet, EstimateWithdrawableRequest,
+    TransactionId, TransferRequest,
+};
+use jamsrpay_types::currency::PaymentCurrency;
+use jamsrpay_types::money::Money;
+use reqwest::ClientBuilder;
+
+use crate::types::{SolanaPreparedTransfer, SolanaSignedTransfer, SolanaWallet};
 
 mod account;
 mod rpc;
@@ -22,7 +22,7 @@ pub(crate) mod transaction;
 ///
 /// Supports:
 /// - Native SOL transfers
-/// - SPL token transfers (via registered mint addresses)
+/// - SPL token transfers (standard Token Program and Token-2022)
 ///
 /// ```no_run
 /// use solana::client::SolanaClient;
@@ -94,11 +94,9 @@ impl SolanaClient {
         &self.client
     }
 
-    /// NOTE: Update this when `PaymentCurrency::SOL` is added to jamsrpay-types.
-    fn is_native(_currency: PaymentCurrency) -> bool {
-        // No SOL variant exists yet in PaymentCurrency.
-        // When added, this becomes: matches!(currency, PaymentCurrency::SOL)
-        false
+    /// Returns `true` for native SOL transfers, `false` for SPL token transfers.
+    fn is_native(currency: PaymentCurrency) -> bool {
+        matches!(currency, PaymentCurrency::SOL)
     }
 
     /// Standard Solana transaction fee in lamports (5000 per signature).
@@ -118,6 +116,43 @@ impl SolanaClient {
         Ok(SolanaSignedTransfer {
             signed_transaction_bytes: signed_bytes,
         })
+    }
+
+    /// Detect which token program owns a mint account on-chain.
+    ///
+    /// Queries `getAccountInfo` for the mint address and returns the 32-byte
+    /// token program public key. Supports both standard Token Program and
+    /// Token-2022 Program.
+    ///
+    /// Returns an error if:
+    /// - The mint account doesn't exist on-chain
+    /// - The mint's owner is neither the Token Program nor Token-2022 Program
+    async fn get_mint_token_program(
+        &self,
+        mint_address: &str,
+    ) -> Result<[u8; 32], BlockchainClientError> {
+        let owner = self
+            .get_account_owner(mint_address)
+            .await
+            .map_err(|e| BlockchainClientError::Unknown(e.to_string()))?
+            .ok_or_else(|| {
+                BlockchainClientError::Unknown(format!(
+                    "mint account does not exist: {}",
+                    mint_address
+                ))
+            })?;
+
+        // Check if the owner is the standard Token Program or Token-2022
+        if owner == spl::TOKEN_PROGRAM {
+            transaction::pubkey_from_base58(spl::TOKEN_PROGRAM)
+        } else if owner == spl::TOKEN_2022_PROGRAM {
+            transaction::pubkey_from_base58(spl::TOKEN_2022_PROGRAM)
+        } else {
+            Err(BlockchainClientError::Unknown(format!(
+                "mint {} is owned by unknown program: {} (expected Token or Token-2022)",
+                mint_address, owner
+            )))
+        }
     }
 }
 
@@ -143,7 +178,22 @@ impl BlockchainClient for SolanaClient {
             let mint_str = self.mint_address(request.currency)?;
             let mint = transaction::pubkey_from_base58(mint_str)?;
             let amount = request.amount.atomic() as u64;
-            spl::build_spl_transfer_message(&from, &to, &mint, amount, &recent_blockhash)?
+
+            // Auto-detect which token program (standard or Token-2022) owns
+            // this mint by querying the on-chain account owner.
+            let token_program = self.get_mint_token_program(mint_str).await?;
+
+            let decimals = request.currency.decimals();
+
+            spl::build_spl_transfer_message(
+                &from,
+                &to,
+                &mint,
+                amount,
+                decimals,
+                &recent_blockhash,
+                &token_program,
+            )?
         };
 
         Ok(SolanaPreparedTransfer {

@@ -303,6 +303,7 @@ pub enum CryptoStandard {
     Trc20 = 1,
     Bep20 = 2,
     Erc20 = 3,
+    Spl = 4,
 }
 impl CryptoStandard {
     /// String value of the enum field names used in the ProtoBuf definition.
@@ -315,6 +316,7 @@ impl CryptoStandard {
             Self::Trc20 => "CRYPTO_STANDARD_TRC20",
             Self::Bep20 => "CRYPTO_STANDARD_BEP20",
             Self::Erc20 => "CRYPTO_STANDARD_ERC20",
+            Self::Spl => "CRYPTO_STANDARD_SPL",
         }
     }
     /// Creates an enum from field names used in the ProtoBuf definition.
@@ -324,6 +326,7 @@ impl CryptoStandard {
             "CRYPTO_STANDARD_TRC20" => Some(Self::Trc20),
             "CRYPTO_STANDARD_BEP20" => Some(Self::Bep20),
             "CRYPTO_STANDARD_ERC20" => Some(Self::Erc20),
+            "CRYPTO_STANDARD_SPL" => Some(Self::Spl),
             _ => None,
         }
     }
@@ -345,9 +348,8 @@ pub enum NetworkId {
     BtcTestnet = 10,
     LtcMainnet = 11,
     LtcTestnet = 12,
-    SolanaMainnet = 13,
-    SolanaDevnet = 14,
-    SolanaTestnet = 15,
+    SolMainnet = 13,
+    SolDevnet = 14,
 }
 impl NetworkId {
     /// String value of the enum field names used in the ProtoBuf definition.
@@ -369,9 +371,8 @@ impl NetworkId {
             Self::BtcTestnet => "NETWORK_ID_BTC_TESTNET",
             Self::LtcMainnet => "NETWORK_ID_LTC_MAINNET",
             Self::LtcTestnet => "NETWORK_ID_LTC_TESTNET",
-            Self::SolanaMainnet => "NETWORK_ID_SOLANA_MAINNET",
-            Self::SolanaDevnet => "NETWORK_ID_SOLANA_DEVNET",
-            Self::SolanaTestnet => "NETWORK_ID_SOLANA_TESTNET",
+            Self::SolMainnet => "NETWORK_ID_SOL_MAINNET",
+            Self::SolDevnet => "NETWORK_ID_SOL_DEVNET",
         }
     }
     /// Creates an enum from field names used in the ProtoBuf definition.
@@ -390,9 +391,8 @@ impl NetworkId {
             "NETWORK_ID_BTC_TESTNET" => Some(Self::BtcTestnet),
             "NETWORK_ID_LTC_MAINNET" => Some(Self::LtcMainnet),
             "NETWORK_ID_LTC_TESTNET" => Some(Self::LtcTestnet),
-            "NETWORK_ID_SOLANA_MAINNET" => Some(Self::SolanaMainnet),
-            "NETWORK_ID_SOLANA_DEVNET" => Some(Self::SolanaDevnet),
-            "NETWORK_ID_SOLANA_TESTNET" => Some(Self::SolanaTestnet),
+            "NETWORK_ID_SOL_MAINNET" => Some(Self::SolMainnet),
+            "NETWORK_ID_SOL_DEVNET" => Some(Self::SolDevnet),
             _ => None,
         }
     }

@@ -14,6 +14,7 @@ impl super::SolanaClient {
     /// Get SPL token balance for a specific mint address.
     ///
     /// Returns the raw token amount (smallest unit).
+    /// Works for both standard Token Program and Token-2022 mints.
     pub async fn get_spl_token_balance(
         &self,
         owner: &str,
@@ -77,6 +78,39 @@ impl super::SolanaClient {
             .unwrap_or(0);
 
         Ok((blockhash, last_valid_block_height))
+    }
+
+    /// Get the owner program of an on-chain account.
+    ///
+    /// Returns the base58-encoded owner program ID, or `None` if the account
+    /// doesn't exist.
+    ///
+    /// This is used to detect whether a mint is owned by the standard Token
+    /// Program or the Token-2022 Program.
+    pub async fn get_account_owner(
+        &self,
+        address: &str,
+    ) -> Result<Option<String>, SolanaClientError> {
+        let result = self
+            .rpc_call(
+                "getAccountInfo",
+                json!([address, {"encoding": "base64"}]),
+            )
+            .await?;
+
+        let value = result.get("value");
+
+        // Account doesn't exist → null
+        if value.is_none() || value == Some(&serde_json::Value::Null) {
+            return Ok(None);
+        }
+
+        let owner = value
+            .and_then(|v| v.get("owner"))
+            .and_then(|o| o.as_str())
+            .map(|s| s.to_string());
+
+        Ok(owner)
     }
 }
 

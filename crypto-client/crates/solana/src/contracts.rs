@@ -8,7 +8,7 @@ pub mod mainnet {
 
 pub mod devnet {
     /// USDT (Tether USD) SPL token mint on Solana Devnet.
-    pub const USDT_SPL: &str = "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB";
+    pub const USDT_SPL: &str = "CXk2AMBfi3TwaEL2468s6zP8xq9NxTXjp9gjMgzeUynM";
     /// USDC SPL token mint on Solana Devnet.
-    pub const USDC_SPL: &str = "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU";
+    pub const USDC_SPL: &str = "CXk2AMBfi3TwaEL2468s6zP8xq9NxTXjp9gjMgzeUynM";
 }

@@ -9,6 +9,13 @@ pub struct PayoutCreated {
         tag = "2"
     )]
     pub payment_currency: i32,
+    #[prost(string, tag = "3")]
+    pub address: ::prost::alloc::string::String,
+    #[prost(
+        enumeration = "super::super::super::shared::enums::v1::NetworkId",
+        tag = "4"
+    )]
+    pub network_id: i32,
 }
 impl ::prost::Name for PayoutCreated {
     const NAME: &'static str = "PayoutCreated";

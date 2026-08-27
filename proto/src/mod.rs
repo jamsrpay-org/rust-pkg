@@ -153,6 +153,11 @@ pub mod payout {
         }
     }
     pub mod gas_wallet {
+        pub mod events {
+            pub mod v1 {
+                include!("payout.gas_wallet.events.v1.rs");
+            }
+        }
         pub mod merchant {
             pub mod v1 {
                 include!("payout.gas_wallet.merchant.v1.rs");
@@ -191,6 +196,13 @@ pub mod payout {
     pub mod shared {
         pub mod v1 {
             include!("payout.shared.v1.rs");
+        }
+    }
+    pub mod transfer {
+        pub mod events {
+            pub mod v1 {
+                include!("payout.transfer.events.v1.rs");
+            }
         }
     }
 }

@@ -107,9 +107,8 @@ pub enum NetworkId {
     LtcMainnet,
     LtcTestnet,
 
-    SolanaMainnet,
-    SolanaDevnet,
-    SolanaTestnet,
+    SolMainnet,
+    SolDevnet,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Display, EnumString, AsRefStr)]
@@ -118,6 +117,7 @@ pub enum TokenStandard {
     Trc20,
     Bep20,
     Erc20,
+    Spl,
 }
 
 #[derive(Debug, Clone, Copy)]

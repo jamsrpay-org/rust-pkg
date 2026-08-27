@@ -166,6 +166,13 @@ pub struct InvoiceExpired {
     pub invoice_id: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
     pub store_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub address: ::prost::alloc::string::String,
+    #[prost(
+        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        tag = "4"
+    )]
+    pub network_id: i32,
 }
 impl ::prost::Name for InvoiceExpired {
     const NAME: &'static str = "InvoiceExpired";

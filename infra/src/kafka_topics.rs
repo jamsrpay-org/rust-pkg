@@ -12,6 +12,7 @@ pub const STORE_CURRENCY_EVENTS: &str = "store.store_currency.events.v1";
 
 pub const PAYOUT_EVENTS: &str = "payout.events.v1";
 pub const PAYOUT_WALLET_EVENTS: &str = "payout.payout_wallet.events.v1";
+pub const GAS_WALLET_EVENTS: &str = "payout.gas_wallet.events.v1";
 
 // ----
 
@@ -38,3 +39,7 @@ pub const BTC_BLOCKS: &str = "btc.blocks.v1";
 pub const LTC_NATIVE_TRANSFERS: &str = "ltc.transfers.native.v1";
 pub const LTC_TOKEN_TRANSFERS: &str = "ltc.transfers.token.v1";
 pub const LTC_BLOCKS: &str = "ltc.blocks.v1";
+
+pub const SOL_NATIVE_TRANSFERS: &str = "sol.transfers.native.v1";
+pub const SOL_TOKEN_TRANSFERS: &str = "sol.transfers.token.v1";
+pub const SOL_BLOCKS: &str = "sol.blocks.v1";
