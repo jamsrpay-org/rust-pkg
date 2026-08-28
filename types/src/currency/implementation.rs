@@ -940,8 +940,8 @@ impl NetworkId {
     /// configuration where appropriate.
     pub const fn required_confirmations(self) -> u32 {
         match self {
-            // TRON: ~3s blocks, 20 confirmations ≈ 1 minute
-            Self::TronMainnet | Self::TronNile => 20,
+            // TRON: ~3s blocks, 6 confirmations ≈ 18 seconds
+            Self::TronMainnet | Self::TronNile => 6,
 
             // Ethereum: ~12s blocks, 12 confirmations ≈ 2.5 minutes
             Self::EthMainnet | Self::EthSepolia => 12,

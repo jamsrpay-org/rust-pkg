@@ -78,6 +78,14 @@ pub mod billing {
         }
     }
 }
+#[cfg(feature = "blockchain")]
+pub mod blockchain {
+    pub mod events {
+        pub mod v1 {
+            include!("blockchain.events.v1.rs");
+        }
+    }
+}
 #[cfg(feature = "identity")]
 pub mod identity {
     pub mod auth {

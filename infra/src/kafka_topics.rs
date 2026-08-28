@@ -43,3 +43,15 @@ pub const LTC_BLOCKS: &str = "ltc.blocks.v1";
 pub const SOL_NATIVE_TRANSFERS: &str = "sol.transfers.native.v1";
 pub const SOL_TOKEN_TRANSFERS: &str = "sol.transfers.token.v1";
 pub const SOL_BLOCKS: &str = "sol.blocks.v1";
+
+// Blockchain events (from blockchain service)
+pub const BLOCKCHAIN_INVOICE_PAYMENT_DETECTED: &str = "blockchain.invoice.payment_detected.v1";
+pub const BLOCKCHAIN_INVOICE_PAYMENT_CONFIRMED: &str = "blockchain.invoice.payment_confirmed.v1";
+pub const BLOCKCHAIN_GAS_WALLET_TRANSACTION_DETECTED: &str =
+    "blockchain.gas_wallet.transaction_detected.v1";
+pub const BLOCKCHAIN_PAYOUT_TRANSACTION_DETECTED: &str =
+    "blockchain.payout.transaction_detected.v1";
+pub const BLOCKCHAIN_PAYOUT_NATIVE_TRANSFER_DETECTED: &str =
+    "blockchain.payout.native_transfer_detected.v1";
+pub const BLOCKCHAIN_PAYOUT_TRANSACTION_STATUS_CHANGED: &str =
+    "blockchain.payout.transaction_status_changed.v1";

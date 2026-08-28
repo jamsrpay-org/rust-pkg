@@ -44,6 +44,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let services = [
         "billing",
+        "blockchain",
         "identity",
         "indexer",
         "payout",

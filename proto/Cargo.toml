@@ -15,6 +15,7 @@ tonic-prost = "0.14"
 default = []
 full = [
     "billing",
+    "blockchain",
     "identity",
     "indexer",
     "payout",
@@ -28,6 +29,7 @@ full = [
     "webhook",
 ]
 billing = ["shared"]
+blockchain = ["shared"]
 identity = ["shared"]
 indexer = ["shared"]
 payout = ["shared"]
