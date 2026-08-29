@@ -30,10 +30,9 @@ impl ::prost::Name for GasWalletCreated {
         "/payout.gas_wallet.events.v1.GasWalletCreated".into()
     }
 }
-/// Emitted when a gas wallet is deactivated or removed.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct GasWalletRemoved {
+pub struct GasWalletEnabled {
     #[prost(string, tag = "1")]
     pub gas_wallet_id: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
@@ -51,57 +50,44 @@ pub struct GasWalletRemoved {
     )]
     pub network_id: i32,
 }
-impl ::prost::Name for GasWalletRemoved {
-    const NAME: &'static str = "GasWalletRemoved";
+impl ::prost::Name for GasWalletEnabled {
+    const NAME: &'static str = "GasWalletEnabled";
     const PACKAGE: &'static str = "payout.gas_wallet.events.v1";
     fn full_name() -> ::prost::alloc::string::String {
-        "payout.gas_wallet.events.v1.GasWalletRemoved".into()
+        "payout.gas_wallet.events.v1.GasWalletEnabled".into()
     }
     fn type_url() -> ::prost::alloc::string::String {
-        "/payout.gas_wallet.events.v1.GasWalletRemoved".into()
+        "/payout.gas_wallet.events.v1.GasWalletEnabled".into()
     }
 }
-/// Emitted when a native transfer to a gas wallet address is detected on-chain.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct GasWalletTransactionDetected {
+pub struct GasWalletDisabled {
     #[prost(string, tag = "1")]
     pub gas_wallet_id: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
     pub store_id: ::prost::alloc::string::String,
     #[prost(string, tag = "3")]
-    pub tx_hash: ::prost::alloc::string::String,
-    #[prost(uint64, tag = "4")]
-    pub block_number: u64,
-    #[prost(string, tag = "5")]
-    pub from_address: ::prost::alloc::string::String,
-    #[prost(string, tag = "6")]
-    pub to_address: ::prost::alloc::string::String,
-    #[prost(message, optional, tag = "7")]
-    pub amount: ::core::option::Option<
-        super::super::super::super::shared::types::v1::Money,
-    >,
+    pub address: ::prost::alloc::string::String,
     #[prost(
         enumeration = "super::super::super::super::shared::enums::v1::Chain",
-        tag = "8"
+        tag = "4"
     )]
     pub chain: i32,
     #[prost(
         enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
-        tag = "9"
+        tag = "5"
     )]
     pub network_id: i32,
-    #[prost(uint64, tag = "10")]
-    pub timestamp: u64,
 }
-impl ::prost::Name for GasWalletTransactionDetected {
-    const NAME: &'static str = "GasWalletTransactionDetected";
+impl ::prost::Name for GasWalletDisabled {
+    const NAME: &'static str = "GasWalletDisabled";
     const PACKAGE: &'static str = "payout.gas_wallet.events.v1";
     fn full_name() -> ::prost::alloc::string::String {
-        "payout.gas_wallet.events.v1.GasWalletTransactionDetected".into()
+        "payout.gas_wallet.events.v1.GasWalletDisabled".into()
     }
     fn type_url() -> ::prost::alloc::string::String {
-        "/payout.gas_wallet.events.v1.GasWalletTransactionDetected".into()
+        "/payout.gas_wallet.events.v1.GasWalletDisabled".into()
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -122,9 +108,9 @@ pub mod gas_wallet_event_envelope {
         #[prost(message, tag = "2")]
         Created(super::GasWalletCreated),
         #[prost(message, tag = "3")]
-        Removed(super::GasWalletRemoved),
+        Disabled(super::GasWalletDisabled),
         #[prost(message, tag = "4")]
-        TransactionDetected(super::GasWalletTransactionDetected),
+        Enabled(super::GasWalletEnabled),
     }
 }
 impl ::prost::Name for GasWalletEventEnvelope {

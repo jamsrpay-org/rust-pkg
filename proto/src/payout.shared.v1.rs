@@ -4,7 +4,7 @@
 pub struct PayoutTransfer {
     #[prost(string, tag = "1")]
     pub id: ::prost::alloc::string::String,
-    #[prost(enumeration = "PayoutReason", tag = "2")]
+    #[prost(enumeration = "PayoutTransferType", tag = "2")]
     pub reason: i32,
     #[prost(message, optional, tag = "3")]
     pub tx_hash: ::core::option::Option<
@@ -150,32 +150,32 @@ impl PayoutStatus {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
-pub enum PayoutReason {
+pub enum PayoutTransferType {
     Unspecified = 0,
     Merchant = 1,
     Admin = 2,
     Referrer = 3,
 }
-impl PayoutReason {
+impl PayoutTransferType {
     /// String value of the enum field names used in the ProtoBuf definition.
     ///
     /// The values are not transformed in any way and thus are considered stable
     /// (if the ProtoBuf definition does not change) and safe for programmatic use.
     pub fn as_str_name(&self) -> &'static str {
         match self {
-            Self::Unspecified => "PAYOUT_REASON_UNSPECIFIED",
-            Self::Merchant => "PAYOUT_REASON_MERCHANT",
-            Self::Admin => "PAYOUT_REASON_ADMIN",
-            Self::Referrer => "PAYOUT_REASON_REFERRER",
+            Self::Unspecified => "PAYOUT_TRANSFER_TYPE_UNSPECIFIED",
+            Self::Merchant => "PAYOUT_TRANSFER_TYPE_MERCHANT",
+            Self::Admin => "PAYOUT_TRANSFER_TYPE_ADMIN",
+            Self::Referrer => "PAYOUT_TRANSFER_TYPE_REFERRER",
         }
     }
     /// Creates an enum from field names used in the ProtoBuf definition.
     pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
         match value {
-            "PAYOUT_REASON_UNSPECIFIED" => Some(Self::Unspecified),
-            "PAYOUT_REASON_MERCHANT" => Some(Self::Merchant),
-            "PAYOUT_REASON_ADMIN" => Some(Self::Admin),
-            "PAYOUT_REASON_REFERRER" => Some(Self::Referrer),
+            "PAYOUT_TRANSFER_TYPE_UNSPECIFIED" => Some(Self::Unspecified),
+            "PAYOUT_TRANSFER_TYPE_MERCHANT" => Some(Self::Merchant),
+            "PAYOUT_TRANSFER_TYPE_ADMIN" => Some(Self::Admin),
+            "PAYOUT_TRANSFER_TYPE_REFERRER" => Some(Self::Referrer),
             _ => None,
         }
     }
