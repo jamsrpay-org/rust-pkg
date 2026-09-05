@@ -34,8 +34,11 @@ impl ::prost::Name for GetDepositWalletResponse {
 }
 /// ======= ListDepositWallets =======
 #[derive(serde::Serialize, serde::Deserialize)]
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct ListDepositWalletsRequest {}
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct ListDepositWalletsRequest {
+    #[prost(enumeration = "DepositWalletStatus", repeated, tag = "1")]
+    pub status: ::prost::alloc::vec::Vec<i32>,
+}
 impl ::prost::Name for ListDepositWalletsRequest {
     const NAME: &'static str = "ListDepositWalletsRequest";
     const PACKAGE: &'static str = "billing.deposit_wallet.merchant.v1";

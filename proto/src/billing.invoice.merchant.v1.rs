@@ -61,6 +61,10 @@ pub struct Invoice {
     pub payout_amount: ::core::option::Option<
         super::super::super::super::shared::types::v1::Money,
     >,
+    #[prost(string, tag = "18")]
+    pub payment_markup: ::prost::alloc::string::String,
+    #[prost(string, tag = "19")]
+    pub payment_tolerance: ::prost::alloc::string::String,
 }
 impl ::prost::Name for Invoice {
     const NAME: &'static str = "Invoice";

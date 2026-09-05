@@ -83,6 +83,12 @@ pub struct ListPaymentIntentsRequest {
         tag = "1"
     )]
     pub r#type: ::prost::alloc::vec::Vec<i32>,
+    #[prost(
+        enumeration = "super::super::shared::v1::PaymentIntentStatus",
+        repeated,
+        tag = "2"
+    )]
+    pub status: ::prost::alloc::vec::Vec<i32>,
 }
 impl ::prost::Name for ListPaymentIntentsRequest {
     const NAME: &'static str = "ListPaymentIntentsRequest";

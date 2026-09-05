@@ -48,3 +48,19 @@ impl ::prost::Name for NumberConstraint {
         "/shared.schema.v1.NumberConstraint".into()
     }
 }
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct DateTimeConstraint {
+    #[prost(bool, tag = "1")]
+    pub required: bool,
+}
+impl ::prost::Name for DateTimeConstraint {
+    const NAME: &'static str = "DateTimeConstraint";
+    const PACKAGE: &'static str = "shared.schema.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "shared.schema.v1.DateTimeConstraint".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/shared.schema.v1.DateTimeConstraint".into()
+    }
+}

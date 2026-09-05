@@ -72,6 +72,11 @@ pub mod billing {
             }
         }
     }
+    pub mod schema {
+        pub mod v1 {
+            include!("billing.schema.v1.rs");
+        }
+    }
     pub mod shared {
         pub mod v1 {
             include!("billing.shared.v1.rs");
@@ -201,6 +206,11 @@ pub mod payout {
             }
         }
     }
+    pub mod schema {
+        pub mod v1 {
+            include!("payout.schema.v1.rs");
+        }
+    }
     pub mod shared {
         pub mod v1 {
             include!("payout.shared.v1.rs");
@@ -300,6 +310,11 @@ pub mod store {
                 include!("store.store_currency.events.v1.rs");
             }
         }
+        pub mod internal {
+            pub mod v1 {
+                include!("store.store_currency.internal.v1.rs");
+            }
+        }
         pub mod merchant {
             pub mod v1 {
                 include!("store.store_currency.merchant.v1.rs");
@@ -319,6 +334,11 @@ pub mod support {
             pub mod v1 {
                 include!("support.category.merchant.v1.rs");
             }
+        }
+    }
+    pub mod schema {
+        pub mod v1 {
+            include!("support.schema.v1.rs");
         }
     }
     pub mod shared {
@@ -368,6 +388,11 @@ pub mod user {
             include!("user.merchant.v1.rs");
         }
     }
+    pub mod schema {
+        pub mod v1 {
+            include!("user.schema.v1.rs");
+        }
+    }
     pub mod shared {
         pub mod v1 {
             include!("user.shared.v1.rs");
@@ -403,6 +428,11 @@ pub mod webhook {
     pub mod metadata {
         pub mod v1 {
             include!("webhook.metadata.v1.rs");
+        }
+    }
+    pub mod schema {
+        pub mod v1 {
+            include!("webhook.schema.v1.rs");
         }
     }
     pub mod shared {

@@ -40,6 +40,8 @@ pub struct StoreCurrencyDeleted {
         tag = "3"
     )]
     pub network_id: i32,
+    #[prost(bool, tag = "4")]
+    pub has_other_token_currencies: bool,
 }
 impl ::prost::Name for StoreCurrencyDeleted {
     const NAME: &'static str = "StoreCurrencyDeleted";

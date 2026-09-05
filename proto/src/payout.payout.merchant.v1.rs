@@ -91,10 +91,16 @@ impl ::prost::Name for GetPayoutResponse {
 }
 /// ======= ListPayouts =======
 #[derive(serde::Serialize, serde::Deserialize)]
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ListPayoutsRequest {
     #[prost(enumeration = "PayoutKind", tag = "1")]
     pub kind: i32,
+    #[prost(
+        enumeration = "super::super::super::shared::v1::PayoutStatus",
+        repeated,
+        tag = "2"
+    )]
+    pub status: ::prost::alloc::vec::Vec<i32>,
 }
 impl ::prost::Name for ListPayoutsRequest {
     const NAME: &'static str = "ListPayoutsRequest";

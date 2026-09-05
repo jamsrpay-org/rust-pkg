@@ -34,8 +34,9 @@ impl PaymentIntentType {
 #[repr(i32)]
 pub enum PaymentIntentStatus {
     Unspecified = 0,
-    Active = 1,
-    Expired = 2,
+    AwaitingPayment = 1,
+    Succeeded = 2,
+    Expired = 3,
 }
 impl PaymentIntentStatus {
     /// String value of the enum field names used in the ProtoBuf definition.
@@ -45,7 +46,8 @@ impl PaymentIntentStatus {
     pub fn as_str_name(&self) -> &'static str {
         match self {
             Self::Unspecified => "PAYMENT_INTENT_STATUS_UNSPECIFIED",
-            Self::Active => "PAYMENT_INTENT_STATUS_ACTIVE",
+            Self::AwaitingPayment => "PAYMENT_INTENT_STATUS_AWAITING_PAYMENT",
+            Self::Succeeded => "PAYMENT_INTENT_STATUS_SUCCEEDED",
             Self::Expired => "PAYMENT_INTENT_STATUS_EXPIRED",
         }
     }
@@ -53,7 +55,8 @@ impl PaymentIntentStatus {
     pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
         match value {
             "PAYMENT_INTENT_STATUS_UNSPECIFIED" => Some(Self::Unspecified),
-            "PAYMENT_INTENT_STATUS_ACTIVE" => Some(Self::Active),
+            "PAYMENT_INTENT_STATUS_AWAITING_PAYMENT" => Some(Self::AwaitingPayment),
+            "PAYMENT_INTENT_STATUS_SUCCEEDED" => Some(Self::Succeeded),
             "PAYMENT_INTENT_STATUS_EXPIRED" => Some(Self::Expired),
             _ => None,
         }
