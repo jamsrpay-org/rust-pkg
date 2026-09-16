@@ -74,8 +74,11 @@ impl ::prost::Name for GetSessionResponse {
 }
 /// ======= GetSessions ======= //
 #[derive(serde::Serialize, serde::Deserialize)]
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct ListSessionsRequest {}
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct ListSessionsRequest {
+    #[prost(string, optional, tag = "1")]
+    pub user_id: ::core::option::Option<::prost::alloc::string::String>,
+}
 impl ::prost::Name for ListSessionsRequest {
     const NAME: &'static str = "ListSessionsRequest";
     const PACKAGE: &'static str = "identity.session.admin.v1";

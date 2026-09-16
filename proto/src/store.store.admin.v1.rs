@@ -64,8 +64,11 @@ impl ::prost::Name for GetStoreResponse {
 }
 /// ======= ListStores =======
 #[derive(serde::Serialize, serde::Deserialize)]
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct ListStoresRequest {}
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct ListStoresRequest {
+    #[prost(string, optional, tag = "1")]
+    pub user_id: ::core::option::Option<::prost::alloc::string::String>,
+}
 impl ::prost::Name for ListStoresRequest {
     const NAME: &'static str = "ListStoresRequest";
     const PACKAGE: &'static str = "store.store.admin.v1";

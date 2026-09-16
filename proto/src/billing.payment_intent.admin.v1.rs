@@ -17,16 +17,30 @@ pub struct PaymentIntent {
     pub pricing_currency: i32,
     #[prost(string, optional, tag = "5")]
     pub redirect_url: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(message, optional, tag = "7")]
+    #[prost(message, optional, tag = "6")]
     pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
+    #[prost(message, optional, tag = "7")]
+    pub expires_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(string, tag = "8")]
+    pub checkout_url: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "9")]
+    pub description: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(string, optional, tag = "10")]
+    pub payment_title: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(enumeration = "super::super::shared::v1::PaymentIntentStatus", tag = "11")]
+    pub status: i32,
+    #[prost(string, tag = "12")]
     pub store_id: ::prost::alloc::string::String,
-    #[prost(message, optional, tag = "9")]
+    #[prost(message, optional, tag = "13")]
     pub store: ::core::option::Option<
         super::super::super::super::shared::admin::v1::Store,
     >,
-    #[prost(string, tag = "11")]
-    pub checkout_url: ::prost::alloc::string::String,
+    #[prost(string, tag = "14")]
+    pub user_id: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "15")]
+    pub user: ::core::option::Option<
+        super::super::super::super::shared::admin::v1::User,
+    >,
 }
 impl ::prost::Name for PaymentIntent {
     const NAME: &'static str = "PaymentIntent";
@@ -73,8 +87,25 @@ impl ::prost::Name for GetPaymentIntentResponse {
 }
 /// ======= ListPaymentIntents =======
 #[derive(serde::Serialize, serde::Deserialize)]
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct ListPaymentIntentsRequest {}
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct ListPaymentIntentsRequest {
+    #[prost(
+        enumeration = "super::super::shared::v1::PaymentIntentType",
+        repeated,
+        tag = "1"
+    )]
+    pub r#type: ::prost::alloc::vec::Vec<i32>,
+    #[prost(
+        enumeration = "super::super::shared::v1::PaymentIntentStatus",
+        repeated,
+        tag = "2"
+    )]
+    pub status: ::prost::alloc::vec::Vec<i32>,
+    #[prost(string, optional, tag = "3")]
+    pub store_id: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(string, optional, tag = "4")]
+    pub user_id: ::core::option::Option<::prost::alloc::string::String>,
+}
 impl ::prost::Name for ListPaymentIntentsRequest {
     const NAME: &'static str = "ListPaymentIntentsRequest";
     const PACKAGE: &'static str = "billing.payment_intent.admin.v1";

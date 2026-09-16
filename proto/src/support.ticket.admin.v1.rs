@@ -68,8 +68,11 @@ impl ::prost::Name for GetTicketResponse {
 }
 /// ======= GetTickets ====== //
 #[derive(serde::Serialize, serde::Deserialize)]
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct ListTicketsRequest {}
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct ListTicketsRequest {
+    #[prost(string, optional, tag = "1")]
+    pub user_id: ::core::option::Option<::prost::alloc::string::String>,
+}
 impl ::prost::Name for ListTicketsRequest {
     const NAME: &'static str = "ListTicketsRequest";
     const PACKAGE: &'static str = "support.ticket.admin.v1";

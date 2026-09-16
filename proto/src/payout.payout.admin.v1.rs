@@ -79,8 +79,21 @@ impl ::prost::Name for GetPayoutResponse {
 }
 /// ======= ListPayouts =======
 #[derive(serde::Serialize, serde::Deserialize)]
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct ListPayoutsRequest {}
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct ListPayoutsRequest {
+    #[prost(string, optional, tag = "1")]
+    pub store_id: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(string, optional, tag = "2")]
+    pub user_id: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(enumeration = "super::super::super::shared::v1::PayoutKind", tag = "3")]
+    pub kind: i32,
+    #[prost(
+        enumeration = "super::super::super::shared::v1::PayoutStatus",
+        repeated,
+        tag = "4"
+    )]
+    pub status: ::prost::alloc::vec::Vec<i32>,
+}
 impl ::prost::Name for ListPayoutsRequest {
     const NAME: &'static str = "ListPayoutsRequest";
     const PACKAGE: &'static str = "payout.payout.admin.v1";

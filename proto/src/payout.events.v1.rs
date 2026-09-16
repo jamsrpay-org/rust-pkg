@@ -172,7 +172,7 @@ pub struct PayoutEventEnvelope {
     pub reference_id: ::prost::alloc::string::String,
     #[prost(string, tag = "4")]
     pub store_id: ::prost::alloc::string::String,
-    #[prost(enumeration = "super::super::payout::merchant::v1::PayoutKind", tag = "5")]
+    #[prost(enumeration = "super::super::shared::v1::PayoutKind", tag = "5")]
     pub kind: i32,
     #[prost(oneof = "payout_event_envelope::Event", tags = "10, 11, 12, 13")]
     pub event: ::core::option::Option<payout_event_envelope::Event>,

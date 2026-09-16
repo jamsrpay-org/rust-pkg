@@ -27,27 +27,56 @@ pub struct Invoice {
     pub updated_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "9")]
     pub expires_at: ::core::option::Option<::pbjson_types::Timestamp>,
-    #[prost(string, tag = "10")]
-    pub store_id: ::prost::alloc::string::String,
-    #[prost(message, optional, tag = "11")]
-    pub store: ::core::option::Option<
-        super::super::super::super::shared::admin::v1::Store,
-    >,
-    #[prost(message, optional, tag = "12")]
+    #[prost(message, optional, tag = "10")]
     pub payment_intent: ::core::option::Option<
         super::super::super::shared::v1::InvoicePaymentIntent,
     >,
-    #[prost(message, repeated, tag = "13")]
+    #[prost(message, repeated, tag = "11")]
     pub transactions: ::prost::alloc::vec::Vec<
         super::super::super::shared::v1::InvoiceTransaction,
     >,
-    #[prost(string, tag = "14")]
+    #[prost(string, tag = "12")]
     pub checkout_url: ::prost::alloc::string::String,
     #[prost(
         enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
-        tag = "15"
+        tag = "13"
     )]
     pub network_id: i32,
+    #[prost(
+        enumeration = "super::super::super::shared::v1::InvoiceAddressAllocation",
+        tag = "14"
+    )]
+    pub address_allocation: i32,
+    #[prost(
+        enumeration = "super::super::super::shared::v1::InvoicePayoutStatus",
+        tag = "15"
+    )]
+    pub payout_status: i32,
+    #[prost(
+        enumeration = "super::super::super::shared::v1::InvoiceAddressStatus",
+        tag = "16"
+    )]
+    pub address_status: i32,
+    #[prost(message, optional, tag = "17")]
+    pub payout_amount: ::core::option::Option<
+        super::super::super::super::shared::types::v1::Money,
+    >,
+    #[prost(string, tag = "18")]
+    pub payment_markup: ::prost::alloc::string::String,
+    #[prost(string, tag = "19")]
+    pub payment_tolerance: ::prost::alloc::string::String,
+    #[prost(string, tag = "20")]
+    pub store_id: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "21")]
+    pub store: ::core::option::Option<
+        super::super::super::super::shared::admin::v1::Store,
+    >,
+    #[prost(string, tag = "22")]
+    pub user_id: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "23")]
+    pub user: ::core::option::Option<
+        super::super::super::super::shared::admin::v1::User,
+    >,
 }
 impl ::prost::Name for Invoice {
     const NAME: &'static str = "Invoice";
@@ -95,8 +124,41 @@ impl ::prost::Name for GetInvoiceResponse {
 }
 /// ======= ListInvoices =======
 #[derive(serde::Serialize, serde::Deserialize)]
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct ListInvoicesRequest {}
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct ListInvoicesRequest {
+    #[prost(string, optional, tag = "1")]
+    pub address: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(
+        enumeration = "super::super::super::super::shared::enums::v1::PaymentCurrency",
+        repeated,
+        tag = "2"
+    )]
+    pub payment_currency: ::prost::alloc::vec::Vec<i32>,
+    #[prost(
+        enumeration = "super::super::super::shared::v1::InvoiceStatus",
+        repeated,
+        tag = "3"
+    )]
+    pub status: ::prost::alloc::vec::Vec<i32>,
+    #[prost(
+        enumeration = "super::super::super::shared::v1::InvoiceAdditionalStatus",
+        repeated,
+        tag = "4"
+    )]
+    pub additional_status: ::prost::alloc::vec::Vec<i32>,
+    #[prost(
+        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        repeated,
+        tag = "5"
+    )]
+    pub network_id: ::prost::alloc::vec::Vec<i32>,
+    #[prost(string, optional, tag = "6")]
+    pub payment_intent_id: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(string, optional, tag = "7")]
+    pub store_id: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(string, optional, tag = "8")]
+    pub user_id: ::core::option::Option<::prost::alloc::string::String>,
+}
 impl ::prost::Name for ListInvoicesRequest {
     const NAME: &'static str = "ListInvoicesRequest";
     const PACKAGE: &'static str = "billing.invoice.admin.v1";

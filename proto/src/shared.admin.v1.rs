@@ -27,7 +27,7 @@ pub struct Store {
     #[prost(string, tag = "2")]
     pub name: ::prost::alloc::string::String,
     #[prost(string, optional, tag = "3")]
-    pub logo: ::core::option::Option<::prost::alloc::string::String>,
+    pub logo_url: ::core::option::Option<::prost::alloc::string::String>,
 }
 impl ::prost::Name for Store {
     const NAME: &'static str = "Store";

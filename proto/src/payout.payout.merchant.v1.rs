@@ -93,7 +93,7 @@ impl ::prost::Name for GetPayoutResponse {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ListPayoutsRequest {
-    #[prost(enumeration = "PayoutKind", tag = "1")]
+    #[prost(enumeration = "super::super::super::shared::v1::PayoutKind", tag = "1")]
     pub kind: i32,
     #[prost(
         enumeration = "super::super::super::shared::v1::PayoutStatus",
@@ -126,36 +126,6 @@ impl ::prost::Name for ListPayoutsResponse {
     }
     fn type_url() -> ::prost::alloc::string::String {
         "/payout.payout.merchant.v1.ListPayoutsResponse".into()
-    }
-}
-#[derive(serde::Serialize, serde::Deserialize)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
-#[repr(i32)]
-pub enum PayoutKind {
-    Unspecified = 0,
-    Invoice = 1,
-    DepositWallet = 2,
-}
-impl PayoutKind {
-    /// String value of the enum field names used in the ProtoBuf definition.
-    ///
-    /// The values are not transformed in any way and thus are considered stable
-    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
-    pub fn as_str_name(&self) -> &'static str {
-        match self {
-            Self::Unspecified => "PAYOUT_KIND_UNSPECIFIED",
-            Self::Invoice => "PAYOUT_KIND_INVOICE",
-            Self::DepositWallet => "PAYOUT_KIND_DEPOSIT_WALLET",
-        }
-    }
-    /// Creates an enum from field names used in the ProtoBuf definition.
-    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
-        match value {
-            "PAYOUT_KIND_UNSPECIFIED" => Some(Self::Unspecified),
-            "PAYOUT_KIND_INVOICE" => Some(Self::Invoice),
-            "PAYOUT_KIND_DEPOSIT_WALLET" => Some(Self::DepositWallet),
-            _ => None,
-        }
     }
 }
 /// Generated client implementations.

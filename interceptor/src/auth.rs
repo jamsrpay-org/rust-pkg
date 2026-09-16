@@ -2,6 +2,7 @@ use grpc::error::GrpcErrorContext;
 use jamsrpay_types::{session_id::SessionId, user_id::UserId};
 use jwt::JwtDecoder;
 use tonic::{Extensions, Request, Status, metadata::MetadataMap, service::Interceptor};
+use uuid::Uuid;
 
 const ERROR_CONTEXT: GrpcErrorContext = GrpcErrorContext::new("interceptor");
 
@@ -9,17 +10,35 @@ const ERROR_CONTEXT: GrpcErrorContext = GrpcErrorContext::new("interceptor");
 pub struct AuthInterceptor {
     decoder: JwtDecoder,
     error_code: &'static str,
+    is_admin: bool,
 }
 
 impl AuthInterceptor {
     pub fn new(decoder: JwtDecoder, error_code: &'static str) -> Self {
-        AuthInterceptor {
+        Self {
             decoder,
             error_code,
+            is_admin: false,
         }
     }
 
+    pub fn set_is_admin(mut self, is_admin: bool) -> Self {
+        self.is_admin = is_admin;
+        self
+    }
+
     pub fn get_authed_user(&self, metadata: &MetadataMap) -> Result<AuthedUserContext, Status> {
+        if self.is_admin {
+            let user_id = UserId::new(Uuid::new_v4());
+            let session_id = SessionId::new(Uuid::new_v4());
+
+            let authed_user = AuthedUserContext {
+                user_id,
+                session_id,
+            };
+            return Ok(authed_user);
+        }
+
         let authorization = metadata
             .get("authorization")
             .ok_or_else(|| ERROR_CONTEXT.unauthenticated(self.error_code).build())?
