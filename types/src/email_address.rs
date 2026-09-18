@@ -1,3 +1,4 @@
+use serde::{Deserialize, Serialize};
 use thiserror::Error;
 
 #[derive(Debug, Error)]
@@ -6,7 +7,7 @@ pub enum EmailAddressError {
     InvalidEmailAddress(String),
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct EmailAddress(String);
 
 impl EmailAddress {
@@ -28,14 +29,54 @@ impl EmailAddress {
         &self.0
     }
 
+    pub fn as_str(&self) -> &str {
+        &self.0
+    }
+
     pub fn into_inner(self) -> String {
         self.0
+    }
+}
+
+impl std::fmt::Display for EmailAddress {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
+
+impl AsRef<str> for EmailAddress {
+    fn as_ref(&self) -> &str {
+        &self.0
     }
 }
 
 impl From<String> for EmailAddress {
     fn from(value: String) -> Self {
         Self(value)
+    }
+}
+
+impl From<&str> for EmailAddress {
+    fn from(value: &str) -> Self {
+        Self(value.to_string())
+    }
+}
+
+impl PartialEq<str> for EmailAddress {
+    fn eq(&self, other: &str) -> bool {
+        self.0 == other
+    }
+}
+
+impl PartialEq<&str> for EmailAddress {
+    fn eq(&self, other: &&str) -> bool {
+        self.0 == *other
+    }
+}
+
+impl PartialEq<EmailAddress> for &str {
+    fn eq(&self, other: &EmailAddress) -> bool {
+        *self == other.0
     }
 }
 

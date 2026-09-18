@@ -298,3 +298,102 @@ impl ::prost::Name for SecurityChallengeOtpRequested {
         "/identity.events.v1.SecurityChallengeOtpRequested".into()
     }
 }
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct StaffCreated {
+    #[prost(string, tag = "1")]
+    pub staff_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub account_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub role_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "4")]
+    pub display_name: ::prost::alloc::string::String,
+    #[prost(bool, tag = "5")]
+    pub is_active: bool,
+}
+impl ::prost::Name for StaffCreated {
+    const NAME: &'static str = "StaffCreated";
+    const PACKAGE: &'static str = "identity.events.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "identity.events.v1.StaffCreated".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/identity.events.v1.StaffCreated".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct StaffUpdated {
+    #[prost(string, tag = "1")]
+    pub staff_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub account_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub role_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "4")]
+    pub display_name: ::prost::alloc::string::String,
+    #[prost(bool, tag = "5")]
+    pub is_active: bool,
+}
+impl ::prost::Name for StaffUpdated {
+    const NAME: &'static str = "StaffUpdated";
+    const PACKAGE: &'static str = "identity.events.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "identity.events.v1.StaffUpdated".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/identity.events.v1.StaffUpdated".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct StaffDeleted {
+    #[prost(string, tag = "1")]
+    pub staff_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub account_id: ::prost::alloc::string::String,
+}
+impl ::prost::Name for StaffDeleted {
+    const NAME: &'static str = "StaffDeleted";
+    const PACKAGE: &'static str = "identity.events.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "identity.events.v1.StaffDeleted".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/identity.events.v1.StaffDeleted".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct StaffEventEnvelope {
+    #[prost(message, optional, tag = "1")]
+    pub metadata: ::core::option::Option<
+        super::super::super::shared::events::v1::EventMetadata,
+    >,
+    #[prost(oneof = "staff_event_envelope::Event", tags = "10, 11, 12")]
+    pub event: ::core::option::Option<staff_event_envelope::Event>,
+}
+/// Nested message and enum types in `StaffEventEnvelope`.
+pub mod staff_event_envelope {
+    #[derive(serde::Serialize, serde::Deserialize)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
+    pub enum Event {
+        #[prost(message, tag = "10")]
+        Created(super::StaffCreated),
+        #[prost(message, tag = "11")]
+        Updated(super::StaffUpdated),
+        #[prost(message, tag = "12")]
+        Deleted(super::StaffDeleted),
+    }
+}
+impl ::prost::Name for StaffEventEnvelope {
+    const NAME: &'static str = "StaffEventEnvelope";
+    const PACKAGE: &'static str = "identity.events.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "identity.events.v1.StaffEventEnvelope".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/identity.events.v1.StaffEventEnvelope".into()
+    }
+}

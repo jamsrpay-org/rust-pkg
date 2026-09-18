@@ -24,7 +24,7 @@ fn access_token_params(sub: &str) -> TokenParams {
     TokenParams {
         sub: sub.to_string(),
         scope: Scope::AccessToken,
-        role: Role::Admin,
+        role: Role::Staff,
         session_id: "session-uuid-001".to_string(),
         expires_in: None,
     }
@@ -44,7 +44,7 @@ fn test_encode_and_decode_success() {
     assert_eq!(claims.iss, Issuer::AuthService);
     assert_eq!(claims.aud, Audience::ApiGateway);
     assert_eq!(claims.scope, Scope::AccessToken);
-    assert_eq!(claims.role, Role::Admin);
+    assert_eq!(claims.role, Role::Staff);
     assert_eq!(claims.session_id, "session-uuid-001");
     assert!(claims.exp > claims.iat);
     assert!(!claims.jti.is_empty());
@@ -84,7 +84,7 @@ fn test_refresh_token_scope() {
     let params = TokenParams {
         sub: "user-1".to_string(),
         scope: Scope::RefreshToken,
-        role: Role::Admin,
+        role: Role::Staff,
         session_id: "session-uuid-001".to_string(),
         expires_in: Some(Duration::days(30)),
     };
@@ -182,7 +182,7 @@ fn test_token_without_tenant_id() {
     let params = TokenParams {
         sub: "admin-uuid".to_string(),
         scope: Scope::AccessToken,
-        role: Role::Admin,
+        role: Role::Staff,
         session_id: "session-uuid-002".to_string(),
         expires_in: None,
     };
@@ -190,7 +190,7 @@ fn test_token_without_tenant_id() {
     let token = encoder.encode(params).unwrap();
     let claims = decoder.decode(&token).unwrap();
 
-    assert_eq!(claims.role, Role::Admin);
+    assert_eq!(claims.role, Role::Staff);
 }
 
 // ─── JTI uniqueness ─────────────────────────────────────────────────

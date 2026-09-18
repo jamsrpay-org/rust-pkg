@@ -26,9 +26,9 @@ pub enum Role {
     #[strum(serialize = "merchant")]
     #[serde(rename = "merchant")]
     Merchant,
-    #[strum(serialize = "admin")]
-    #[serde(rename = "admin")]
-    Admin,
+    #[strum(serialize = "staff")]
+    #[serde(rename = "staff")]
+    Staff,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, AsRefStr, Display, EnumString)]

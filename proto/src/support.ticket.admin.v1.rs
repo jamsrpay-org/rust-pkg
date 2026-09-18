@@ -200,6 +200,161 @@ impl ::prost::Name for ReplyTicketResponse {
         "/support.ticket.admin.v1.ReplyTicketResponse".into()
     }
 }
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct JoinTicketRequest {
+    #[prost(string, tag = "1")]
+    pub ticket_id: ::prost::alloc::string::String,
+}
+impl ::prost::Name for JoinTicketRequest {
+    const NAME: &'static str = "JoinTicketRequest";
+    const PACKAGE: &'static str = "support.ticket.admin.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "support.ticket.admin.v1.JoinTicketRequest".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/support.ticket.admin.v1.JoinTicketRequest".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct ChatMessage {
+    #[prost(string, tag = "1")]
+    pub message: ::prost::alloc::string::String,
+}
+impl ::prost::Name for ChatMessage {
+    const NAME: &'static str = "ChatMessage";
+    const PACKAGE: &'static str = "support.ticket.admin.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "support.ticket.admin.v1.ChatMessage".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/support.ticket.admin.v1.ChatMessage".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct JoinTicketResponse {
+    #[prost(oneof = "join_ticket_response::Event", tags = "1, 2, 3")]
+    pub event: ::core::option::Option<join_ticket_response::Event>,
+}
+/// Nested message and enum types in `JoinTicketResponse`.
+pub mod join_ticket_response {
+    #[derive(serde::Serialize, serde::Deserialize)]
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
+    pub enum Event {
+        #[prost(message, tag = "1")]
+        Message(super::ChatMessage),
+        #[prost(message, tag = "2")]
+        Typing(super::TypingEvent),
+        #[prost(message, tag = "3")]
+        Presence(super::PresenceEvent),
+    }
+}
+impl ::prost::Name for JoinTicketResponse {
+    const NAME: &'static str = "JoinTicketResponse";
+    const PACKAGE: &'static str = "support.ticket.admin.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "support.ticket.admin.v1.JoinTicketResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/support.ticket.admin.v1.JoinTicketResponse".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct TypingEvent {
+    #[prost(string, tag = "1")]
+    pub ticket_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub user_id: ::prost::alloc::string::String,
+    #[prost(bool, tag = "3")]
+    pub typing: bool,
+}
+impl ::prost::Name for TypingEvent {
+    const NAME: &'static str = "TypingEvent";
+    const PACKAGE: &'static str = "support.ticket.admin.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "support.ticket.admin.v1.TypingEvent".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/support.ticket.admin.v1.TypingEvent".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct PresenceEvent {
+    #[prost(string, tag = "1")]
+    pub user_id: ::prost::alloc::string::String,
+    #[prost(bool, tag = "2")]
+    pub online: bool,
+}
+impl ::prost::Name for PresenceEvent {
+    const NAME: &'static str = "PresenceEvent";
+    const PACKAGE: &'static str = "support.ticket.admin.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "support.ticket.admin.v1.PresenceEvent".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/support.ticket.admin.v1.PresenceEvent".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct TicketMessage {
+    #[prost(string, tag = "1")]
+    pub id: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub user_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub message: ::prost::alloc::string::String,
+    #[prost(string, repeated, tag = "4")]
+    pub files: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    #[prost(message, optional, tag = "5")]
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
+}
+impl ::prost::Name for TicketMessage {
+    const NAME: &'static str = "TicketMessage";
+    const PACKAGE: &'static str = "support.ticket.admin.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "support.ticket.admin.v1.TicketMessage".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/support.ticket.admin.v1.TicketMessage".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct GetTicketMessagesRequest {
+    #[prost(string, tag = "1")]
+    pub ticket_id: ::prost::alloc::string::String,
+}
+impl ::prost::Name for GetTicketMessagesRequest {
+    const NAME: &'static str = "GetTicketMessagesRequest";
+    const PACKAGE: &'static str = "support.ticket.admin.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "support.ticket.admin.v1.GetTicketMessagesRequest".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/support.ticket.admin.v1.GetTicketMessagesRequest".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GetTicketMessagesResponse {
+    #[prost(message, repeated, tag = "1")]
+    pub messages: ::prost::alloc::vec::Vec<TicketMessage>,
+}
+impl ::prost::Name for GetTicketMessagesResponse {
+    const NAME: &'static str = "GetTicketMessagesResponse";
+    const PACKAGE: &'static str = "support.ticket.admin.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "support.ticket.admin.v1.GetTicketMessagesResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/support.ticket.admin.v1.GetTicketMessagesResponse".into()
+    }
+}
 /// Generated client implementations.
 pub mod admin_ticket_service_client {
     #![allow(
@@ -436,6 +591,64 @@ pub mod admin_ticket_service_client {
                 );
             self.inner.unary(req, path, codec).await
         }
+        pub async fn join_ticket(
+            &mut self,
+            request: impl tonic::IntoRequest<super::JoinTicketRequest>,
+        ) -> std::result::Result<
+            tonic::Response<tonic::codec::Streaming<super::JoinTicketResponse>>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/support.ticket.admin.v1.AdminTicketService/JoinTicket",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "support.ticket.admin.v1.AdminTicketService",
+                        "JoinTicket",
+                    ),
+                );
+            self.inner.server_streaming(req, path, codec).await
+        }
+        pub async fn get_ticket_messages(
+            &mut self,
+            request: impl tonic::IntoRequest<super::GetTicketMessagesRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::GetTicketMessagesResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/support.ticket.admin.v1.AdminTicketService/GetTicketMessages",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "support.ticket.admin.v1.AdminTicketService",
+                        "GetTicketMessages",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
     }
 }
 /// Generated server implementations.
@@ -484,6 +697,23 @@ pub mod admin_ticket_service_server {
             request: tonic::Request<super::ReplyTicketRequest>,
         ) -> std::result::Result<
             tonic::Response<super::ReplyTicketResponse>,
+            tonic::Status,
+        >;
+        /// Server streaming response type for the JoinTicket method.
+        type JoinTicketStream: tonic::codegen::tokio_stream::Stream<
+                Item = std::result::Result<super::JoinTicketResponse, tonic::Status>,
+            >
+            + std::marker::Send
+            + 'static;
+        async fn join_ticket(
+            &self,
+            request: tonic::Request<super::JoinTicketRequest>,
+        ) -> std::result::Result<tonic::Response<Self::JoinTicketStream>, tonic::Status>;
+        async fn get_ticket_messages(
+            &self,
+            request: tonic::Request<super::GetTicketMessagesRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::GetTicketMessagesResponse>,
             tonic::Status,
         >;
     }
@@ -777,6 +1007,102 @@ pub mod admin_ticket_service_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = ReplyTicketSvc(inner);
+                        let codec = tonic_prost::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/support.ticket.admin.v1.AdminTicketService/JoinTicket" => {
+                    #[allow(non_camel_case_types)]
+                    struct JoinTicketSvc<T: AdminTicketService>(pub Arc<T>);
+                    impl<
+                        T: AdminTicketService,
+                    > tonic::server::ServerStreamingService<super::JoinTicketRequest>
+                    for JoinTicketSvc<T> {
+                        type Response = super::JoinTicketResponse;
+                        type ResponseStream = T::JoinTicketStream;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::ResponseStream>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::JoinTicketRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as AdminTicketService>::join_ticket(&inner, request)
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = JoinTicketSvc(inner);
+                        let codec = tonic_prost::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.server_streaming(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/support.ticket.admin.v1.AdminTicketService/GetTicketMessages" => {
+                    #[allow(non_camel_case_types)]
+                    struct GetTicketMessagesSvc<T: AdminTicketService>(pub Arc<T>);
+                    impl<
+                        T: AdminTicketService,
+                    > tonic::server::UnaryService<super::GetTicketMessagesRequest>
+                    for GetTicketMessagesSvc<T> {
+                        type Response = super::GetTicketMessagesResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::GetTicketMessagesRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as AdminTicketService>::get_ticket_messages(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = GetTicketMessagesSvc(inner);
                         let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(

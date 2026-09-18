@@ -1,7 +1,6 @@
 mod auth;
-mod root_auth;
 mod store;
+mod types;
 
 pub use auth::*;
-pub use root_auth::*;
 pub use store::*;

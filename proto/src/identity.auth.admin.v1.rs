@@ -18,8 +18,17 @@ impl ::prost::Name for LoginRequest {
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct LoginResponse {}
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct LoginResponse {
+    #[prost(string, optional, tag = "1")]
+    pub continuation_token: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(message, optional, tag = "2")]
+    pub tokens: ::core::option::Option<super::super::shared::v1::AuthTokens>,
+    #[prost(message, optional, tag = "3")]
+    pub verification_context: ::core::option::Option<
+        super::super::super::super::shared::types::v1::VerificationContext,
+    >,
+}
 impl ::prost::Name for LoginResponse {
     const NAME: &'static str = "LoginResponse";
     const PACKAGE: &'static str = "identity.auth.admin.v1";
@@ -28,6 +37,78 @@ impl ::prost::Name for LoginResponse {
     }
     fn type_url() -> ::prost::alloc::string::String {
         "/identity.auth.admin.v1.LoginResponse".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct VerifyLoginRequest {
+    #[prost(string, tag = "1")]
+    pub continuation_token: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub verification_code: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub verification_id: ::prost::alloc::string::String,
+}
+impl ::prost::Name for VerifyLoginRequest {
+    const NAME: &'static str = "VerifyLoginRequest";
+    const PACKAGE: &'static str = "identity.auth.admin.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "identity.auth.admin.v1.VerifyLoginRequest".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/identity.auth.admin.v1.VerifyLoginRequest".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct VerifyLoginResponse {
+    #[prost(message, optional, tag = "1")]
+    pub tokens: ::core::option::Option<super::super::shared::v1::AuthTokens>,
+}
+impl ::prost::Name for VerifyLoginResponse {
+    const NAME: &'static str = "VerifyLoginResponse";
+    const PACKAGE: &'static str = "identity.auth.admin.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "identity.auth.admin.v1.VerifyLoginResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/identity.auth.admin.v1.VerifyLoginResponse".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct ResendLoginCodeRequest {
+    #[prost(string, tag = "1")]
+    pub verification_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub continuation_token: ::prost::alloc::string::String,
+}
+impl ::prost::Name for ResendLoginCodeRequest {
+    const NAME: &'static str = "ResendLoginCodeRequest";
+    const PACKAGE: &'static str = "identity.auth.admin.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "identity.auth.admin.v1.ResendLoginCodeRequest".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/identity.auth.admin.v1.ResendLoginCodeRequest".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct ResendLoginCodeResponse {
+    #[prost(message, optional, tag = "1")]
+    pub verification_context: ::core::option::Option<
+        super::super::super::super::shared::types::v1::VerificationContext,
+    >,
+}
+impl ::prost::Name for ResendLoginCodeResponse {
+    const NAME: &'static str = "ResendLoginCodeResponse";
+    const PACKAGE: &'static str = "identity.auth.admin.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "identity.auth.admin.v1.ResendLoginCodeResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/identity.auth.admin.v1.ResendLoginCodeResponse".into()
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -60,8 +141,10 @@ impl ::prost::Name for LogoutResponse {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct LoginWithGoogleRequest {
-    #[prost(string, tag = "1")]
-    pub token: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "1")]
+    pub credential: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(string, optional, tag = "2")]
+    pub authorization_code: ::core::option::Option<::prost::alloc::string::String>,
 }
 impl ::prost::Name for LoginWithGoogleRequest {
     const NAME: &'static str = "LoginWithGoogleRequest";
@@ -74,8 +157,11 @@ impl ::prost::Name for LoginWithGoogleRequest {
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct LoginWithGoogleResponse {}
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct LoginWithGoogleResponse {
+    #[prost(message, optional, tag = "1")]
+    pub tokens: ::core::option::Option<super::super::shared::v1::AuthTokens>,
+}
 impl ::prost::Name for LoginWithGoogleResponse {
     const NAME: &'static str = "LoginWithGoogleResponse";
     const PACKAGE: &'static str = "identity.auth.admin.v1";
@@ -91,7 +177,7 @@ impl ::prost::Name for LoginWithGoogleResponse {
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct LoginWithGithubRequest {
     #[prost(string, tag = "1")]
-    pub token: ::prost::alloc::string::String,
+    pub credential: ::prost::alloc::string::String,
 }
 impl ::prost::Name for LoginWithGithubRequest {
     const NAME: &'static str = "LoginWithGithubRequest";
@@ -104,8 +190,11 @@ impl ::prost::Name for LoginWithGithubRequest {
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct LoginWithGithubResponse {}
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct LoginWithGithubResponse {
+    #[prost(message, optional, tag = "1")]
+    pub tokens: ::core::option::Option<super::super::shared::v1::AuthTokens>,
+}
 impl ::prost::Name for LoginWithGithubResponse {
     const NAME: &'static str = "LoginWithGithubResponse";
     const PACKAGE: &'static str = "identity.auth.admin.v1";
@@ -207,6 +296,7 @@ pub mod admin_auth_service_client {
             self.inner = self.inner.max_encoding_message_size(limit);
             self
         }
+        /// Login
         pub async fn login(
             &mut self,
             request: impl tonic::IntoRequest<super::LoginRequest>,
@@ -227,6 +317,64 @@ pub mod admin_auth_service_client {
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new("identity.auth.admin.v1.AdminAuthService", "Login"),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn verify_login(
+            &mut self,
+            request: impl tonic::IntoRequest<super::VerifyLoginRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::VerifyLoginResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/identity.auth.admin.v1.AdminAuthService/VerifyLogin",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "identity.auth.admin.v1.AdminAuthService",
+                        "VerifyLogin",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn resend_login_code(
+            &mut self,
+            request: impl tonic::IntoRequest<super::ResendLoginCodeRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::ResendLoginCodeResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/identity.auth.admin.v1.AdminAuthService/ResendLoginCode",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "identity.auth.admin.v1.AdminAuthService",
+                        "ResendLoginCode",
+                    ),
                 );
             self.inner.unary(req, path, codec).await
         }
@@ -326,10 +474,25 @@ pub mod admin_auth_service_server {
     /// Generated trait containing gRPC methods that should be implemented for use with AdminAuthServiceServer.
     #[async_trait]
     pub trait AdminAuthService: std::marker::Send + std::marker::Sync + 'static {
+        /// Login
         async fn login(
             &self,
             request: tonic::Request<super::LoginRequest>,
         ) -> std::result::Result<tonic::Response<super::LoginResponse>, tonic::Status>;
+        async fn verify_login(
+            &self,
+            request: tonic::Request<super::VerifyLoginRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::VerifyLoginResponse>,
+            tonic::Status,
+        >;
+        async fn resend_login_code(
+            &self,
+            request: tonic::Request<super::ResendLoginCodeRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::ResendLoginCodeResponse>,
+            tonic::Status,
+        >;
         async fn logout(
             &self,
             request: tonic::Request<super::LogoutRequest>,
@@ -454,6 +617,97 @@ pub mod admin_auth_service_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = LoginSvc(inner);
+                        let codec = tonic_prost::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/identity.auth.admin.v1.AdminAuthService/VerifyLogin" => {
+                    #[allow(non_camel_case_types)]
+                    struct VerifyLoginSvc<T: AdminAuthService>(pub Arc<T>);
+                    impl<
+                        T: AdminAuthService,
+                    > tonic::server::UnaryService<super::VerifyLoginRequest>
+                    for VerifyLoginSvc<T> {
+                        type Response = super::VerifyLoginResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::VerifyLoginRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as AdminAuthService>::verify_login(&inner, request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = VerifyLoginSvc(inner);
+                        let codec = tonic_prost::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/identity.auth.admin.v1.AdminAuthService/ResendLoginCode" => {
+                    #[allow(non_camel_case_types)]
+                    struct ResendLoginCodeSvc<T: AdminAuthService>(pub Arc<T>);
+                    impl<
+                        T: AdminAuthService,
+                    > tonic::server::UnaryService<super::ResendLoginCodeRequest>
+                    for ResendLoginCodeSvc<T> {
+                        type Response = super::ResendLoginCodeResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::ResendLoginCodeRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as AdminAuthService>::resend_login_code(&inner, request)
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = ResendLoginCodeSvc(inner);
                         let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(

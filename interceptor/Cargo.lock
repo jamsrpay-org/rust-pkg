@@ -894,6 +894,7 @@ dependencies = [
 name = "jamsrpay-interceptor"
 version = "0.1.0"
 dependencies = [
+ "chrono",
  "jamsrpay-grpc",
  "jamsrpay-jwt",
  "jamsrpay-types",

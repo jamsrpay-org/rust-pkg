@@ -10,3 +10,6 @@ jwt = { path = "../jwt", package = "jamsrpay-jwt" }
 grpc = { path = "../grpc", package = "jamsrpay-grpc" }
 uuid = { version = "1.23.1", features = ["v7"] }
 jamsrpay-types = { path = "../types" }
+
+[dev-dependencies]
+chrono = "0.4"
