@@ -160,6 +160,23 @@ pub mod indexer {
 }
 #[cfg(feature = "payout")]
 pub mod payout {
+    pub mod batch {
+        pub mod admin {
+            pub mod v1 {
+                include!("payout.batch.admin.v1.rs");
+            }
+        }
+        pub mod merchant {
+            pub mod v1 {
+                include!("payout.batch.merchant.v1.rs");
+            }
+        }
+        pub mod shared {
+            pub mod v1 {
+                include!("payout.batch.shared.v1.rs");
+            }
+        }
+    }
     pub mod events {
         pub mod v1 {
             include!("payout.events.v1.rs");
