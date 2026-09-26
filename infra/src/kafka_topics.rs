@@ -13,6 +13,7 @@ pub const STORE_CURRENCY_EVENTS: &str = "store.store_currency.events.v1";
 pub const PAYOUT_EVENTS: &str = "payout.events.v1";
 pub const PAYOUT_WALLET_EVENTS: &str = "payout.payout_wallet.events.v1";
 pub const GAS_WALLET_EVENTS: &str = "payout.gas_wallet.events.v1";
+pub const PAYOUT_FUNDING_WALLET_EVENTS: &str = "payout.funding_wallet.events.v1";
 
 // ----
 
@@ -55,3 +56,5 @@ pub const BLOCKCHAIN_PAYOUT_NATIVE_TRANSFER_DETECTED: &str =
     "blockchain.payout.native_transfer_detected.v1";
 pub const BLOCKCHAIN_PAYOUT_TRANSACTION_STATUS_CHANGED: &str =
     "blockchain.payout.transaction_status_changed.v1";
+pub const BLOCKCHAIN_PAYOUT_FUNDING_WALLET_TRANSACTION_DETECTED: &str =
+    "blockchain.payout_funding_wallet.transaction_detected.v1";

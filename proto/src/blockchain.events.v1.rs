@@ -229,6 +229,27 @@ impl ::prost::Name for PayoutNativeTransferDetected {
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct PayoutFundingWalletTransactionDetected {
+    /// Jamsrpay payout funding wallet ID.
+    #[prost(string, tag = "1")]
+    pub funding_wallet_id: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "2")]
+    pub transfer: ::core::option::Option<BlockchainTransfer>,
+    #[prost(message, optional, tag = "3")]
+    pub detected_at: ::core::option::Option<::pbjson_types::Timestamp>,
+}
+impl ::prost::Name for PayoutFundingWalletTransactionDetected {
+    const NAME: &'static str = "PayoutFundingWalletTransactionDetected";
+    const PACKAGE: &'static str = "blockchain.events.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "blockchain.events.v1.PayoutFundingWalletTransactionDetected".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/blockchain.events.v1.PayoutFundingWalletTransactionDetected".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct PayoutTransactionStatusChanged {
     #[prost(string, tag = "1")]
     pub payout_id: ::prost::alloc::string::String,

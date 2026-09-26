@@ -6,10 +6,14 @@ pub struct PayoutBatchItem {
     pub id: ::prost::alloc::string::String,
     #[prost(string, optional, tag = "2")]
     pub reference: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(string, tag = "3")]
-    pub address: ::prost::alloc::string::String,
-    #[prost(string, tag = "4")]
-    pub amount: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "3")]
+    pub address: ::core::option::Option<
+        super::super::super::super::shared::types::v1::CryptoAddress,
+    >,
+    #[prost(message, optional, tag = "4")]
+    pub amount: ::core::option::Option<
+        super::super::super::super::shared::types::v1::Money,
+    >,
 }
 impl ::prost::Name for PayoutBatchItem {
     const NAME: &'static str = "PayoutBatchItem";
@@ -19,6 +23,66 @@ impl ::prost::Name for PayoutBatchItem {
     }
     fn type_url() -> ::prost::alloc::string::String {
         "/payout.batch.shared.v1.PayoutBatchItem".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct CreatePayoutBatchItem {
+    #[prost(string, tag = "1")]
+    pub id: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "2")]
+    pub reference: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(string, tag = "3")]
+    pub address: ::prost::alloc::string::String,
+    #[prost(string, tag = "4")]
+    pub amount: ::prost::alloc::string::String,
+}
+impl ::prost::Name for CreatePayoutBatchItem {
+    const NAME: &'static str = "CreatePayoutBatchItem";
+    const PACKAGE: &'static str = "payout.batch.shared.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "payout.batch.shared.v1.CreatePayoutBatchItem".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/payout.batch.shared.v1.CreatePayoutBatchItem".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct PayoutBatchExecutionItem {
+    #[prost(string, tag = "1")]
+    pub id: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub payout_batch_execution_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub payout_batch_item_id: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "4")]
+    pub payout_id: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(string, optional, tag = "5")]
+    pub reference: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(message, optional, tag = "6")]
+    pub recipient_address: ::core::option::Option<
+        super::super::super::super::shared::types::v1::CryptoAddress,
+    >,
+    #[prost(message, optional, tag = "7")]
+    pub amount: ::core::option::Option<
+        super::super::super::super::shared::types::v1::Money,
+    >,
+    #[prost(enumeration = "PayoutBatchExecutionItemStatus", tag = "8")]
+    pub status: i32,
+    #[prost(message, optional, tag = "9")]
+    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
+    #[prost(message, optional, tag = "10")]
+    pub updated_at: ::core::option::Option<::pbjson_types::Timestamp>,
+}
+impl ::prost::Name for PayoutBatchExecutionItem {
+    const NAME: &'static str = "PayoutBatchExecutionItem";
+    const PACKAGE: &'static str = "payout.batch.shared.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "payout.batch.shared.v1.PayoutBatchExecutionItem".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/payout.batch.shared.v1.PayoutBatchExecutionItem".into()
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -59,6 +123,85 @@ impl PayoutBatchStatus {
             "PAYOUT_BATCH_STATUS_PARTIALLY_COMPLETED" => Some(Self::PartiallyCompleted),
             "PAYOUT_BATCH_STATUS_FAILED" => Some(Self::Failed),
             "PAYOUT_BATCH_STATUS_CANCELLED" => Some(Self::Cancelled),
+            _ => None,
+        }
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[repr(i32)]
+pub enum PayoutBatchExecutionStatus {
+    Unspecified = 0,
+    Pending = 1,
+    Processing = 2,
+    Completed = 3,
+    PartiallyCompleted = 4,
+    Failed = 5,
+}
+impl PayoutBatchExecutionStatus {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            Self::Unspecified => "PAYOUT_BATCH_EXECUTION_STATUS_UNSPECIFIED",
+            Self::Pending => "PAYOUT_BATCH_EXECUTION_STATUS_PENDING",
+            Self::Processing => "PAYOUT_BATCH_EXECUTION_STATUS_PROCESSING",
+            Self::Completed => "PAYOUT_BATCH_EXECUTION_STATUS_COMPLETED",
+            Self::PartiallyCompleted => {
+                "PAYOUT_BATCH_EXECUTION_STATUS_PARTIALLY_COMPLETED"
+            }
+            Self::Failed => "PAYOUT_BATCH_EXECUTION_STATUS_FAILED",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "PAYOUT_BATCH_EXECUTION_STATUS_UNSPECIFIED" => Some(Self::Unspecified),
+            "PAYOUT_BATCH_EXECUTION_STATUS_PENDING" => Some(Self::Pending),
+            "PAYOUT_BATCH_EXECUTION_STATUS_PROCESSING" => Some(Self::Processing),
+            "PAYOUT_BATCH_EXECUTION_STATUS_COMPLETED" => Some(Self::Completed),
+            "PAYOUT_BATCH_EXECUTION_STATUS_PARTIALLY_COMPLETED" => {
+                Some(Self::PartiallyCompleted)
+            }
+            "PAYOUT_BATCH_EXECUTION_STATUS_FAILED" => Some(Self::Failed),
+            _ => None,
+        }
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[repr(i32)]
+pub enum PayoutBatchExecutionItemStatus {
+    Unspecified = 0,
+    Pending = 1,
+    Processing = 2,
+    Completed = 3,
+    Failed = 4,
+}
+impl PayoutBatchExecutionItemStatus {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            Self::Unspecified => "PAYOUT_BATCH_EXECUTION_ITEM_STATUS_UNSPECIFIED",
+            Self::Pending => "PAYOUT_BATCH_EXECUTION_ITEM_STATUS_PENDING",
+            Self::Processing => "PAYOUT_BATCH_EXECUTION_ITEM_STATUS_PROCESSING",
+            Self::Completed => "PAYOUT_BATCH_EXECUTION_ITEM_STATUS_COMPLETED",
+            Self::Failed => "PAYOUT_BATCH_EXECUTION_ITEM_STATUS_FAILED",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "PAYOUT_BATCH_EXECUTION_ITEM_STATUS_UNSPECIFIED" => Some(Self::Unspecified),
+            "PAYOUT_BATCH_EXECUTION_ITEM_STATUS_PENDING" => Some(Self::Pending),
+            "PAYOUT_BATCH_EXECUTION_ITEM_STATUS_PROCESSING" => Some(Self::Processing),
+            "PAYOUT_BATCH_EXECUTION_ITEM_STATUS_COMPLETED" => Some(Self::Completed),
+            "PAYOUT_BATCH_EXECUTION_ITEM_STATUS_FAILED" => Some(Self::Failed),
             _ => None,
         }
     }

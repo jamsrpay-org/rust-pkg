@@ -187,6 +187,7 @@ pub enum PayoutKind {
     Unspecified = 0,
     Invoice = 1,
     DepositWallet = 2,
+    Batch = 3,
 }
 impl PayoutKind {
     /// String value of the enum field names used in the ProtoBuf definition.
@@ -198,6 +199,7 @@ impl PayoutKind {
             Self::Unspecified => "PAYOUT_KIND_UNSPECIFIED",
             Self::Invoice => "PAYOUT_KIND_INVOICE",
             Self::DepositWallet => "PAYOUT_KIND_DEPOSIT_WALLET",
+            Self::Batch => "PAYOUT_KIND_BATCH",
         }
     }
     /// Creates an enum from field names used in the ProtoBuf definition.
@@ -206,6 +208,7 @@ impl PayoutKind {
             "PAYOUT_KIND_UNSPECIFIED" => Some(Self::Unspecified),
             "PAYOUT_KIND_INVOICE" => Some(Self::Invoice),
             "PAYOUT_KIND_DEPOSIT_WALLET" => Some(Self::DepositWallet),
+            "PAYOUT_KIND_BATCH" => Some(Self::Batch),
             _ => None,
         }
     }

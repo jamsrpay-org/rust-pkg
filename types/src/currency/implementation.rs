@@ -231,6 +231,22 @@ impl PaymentCurrency {
         format!("{formatted} {}", self.symbol())
     }
 
+    pub const fn to_pricing_currency(&self) -> PricingCurrency {
+        match self {
+            PaymentCurrency::TRX => PricingCurrency::TRX,
+            PaymentCurrency::BNB => PricingCurrency::BNB,
+            PaymentCurrency::USDT => PricingCurrency::USDT,
+            PaymentCurrency::USDC => PricingCurrency::USDC,
+            PaymentCurrency::DAI => PricingCurrency::DAI,
+            PaymentCurrency::EURC => PricingCurrency::EURC,
+            PaymentCurrency::ETH => PricingCurrency::ETH,
+            PaymentCurrency::POL => PricingCurrency::POL,
+            PaymentCurrency::BTC => PricingCurrency::BTC,
+            PaymentCurrency::LTC => PricingCurrency::LTC,
+            PaymentCurrency::SOL => PricingCurrency::SOL,
+        }
+    }
+
     pub fn networks(&self) -> &'static [PaymentCurrencyNetwork] {
         use PaymentCurrencyNetwork as N;
         match self {
@@ -621,6 +637,12 @@ impl FiatCurrency {
     pub fn format_money(self, money: Money) -> String {
         let formatted = money.to_formatted();
         format!("{formatted} {}", self.asset())
+    }
+}
+
+impl From<PaymentCurrency> for PricingCurrency {
+    fn from(currency: PaymentCurrency) -> Self {
+        currency.to_pricing_currency()
     }
 }
 

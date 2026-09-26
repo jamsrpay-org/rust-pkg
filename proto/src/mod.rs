@@ -182,6 +182,18 @@ pub mod payout {
             include!("payout.events.v1.rs");
         }
     }
+    pub mod funding_wallet {
+        pub mod events {
+            pub mod v1 {
+                include!("payout.funding_wallet.events.v1.rs");
+            }
+        }
+        pub mod merchant {
+            pub mod v1 {
+                include!("payout.funding_wallet.merchant.v1.rs");
+            }
+        }
+    }
     pub mod gas_wallet {
         pub mod events {
             pub mod v1 {
