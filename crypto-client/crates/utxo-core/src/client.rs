@@ -5,9 +5,11 @@ use bitcoin::blockdata::transaction::{OutPoint, Transaction, TxIn, TxOut};
 use bitcoin::consensus::{Decodable, Encodable};
 use bitcoin::hashes::Hash;
 use bitcoin::key::{Keypair, PrivateKey, Secp256k1};
+use bitcoin::psbt::Psbt;
 use bitcoin::secp256k1::SecretKey;
 use bitcoin::sighash::{EcdsaSighashType, SighashCache};
 use bitcoin::{Amount, CompressedPublicKey, Sequence, Txid, Witness};
+use std::str::FromStr;
 
 use crate::error::UtxoClientError;
 use crate::types::{
@@ -157,26 +159,20 @@ impl UtxoClient {
         }
 
         // Build inputs.
-        let inputs: Vec<TxIn> = selected
-            .iter()
-            .map(|utxo| {
-                let txid = Txid::from_slice(&hex::decode(&utxo.txid).unwrap_or_default())
-                    .unwrap_or_else(|_| {
-                        // Reverse byte order for txid (Bitcoin convention).
-                        let mut bytes = hex::decode(&utxo.txid).unwrap_or_default();
-                        bytes.reverse();
-                        Txid::from_slice(&bytes).expect("invalid txid")
-                    });
-                TxIn {
-                    previous_output: OutPoint::new(txid, utxo.vout),
-                    script_sig: ScriptBuf::new(),
-                    sequence: Sequence::ENABLE_RBF_NO_LOCKTIME,
-                    witness: Witness::default(),
-                }
-            })
-            .collect();
+        let mut inputs: Vec<TxIn> = Vec::with_capacity(selected.len());
+        for utxo in &selected {
+            let txid = Txid::from_str(&utxo.txid)
+                .map_err(|e| UtxoClientError::SignError(format!("invalid utxo txid {}: {}", utxo.txid, e)))?;
+            inputs.push(TxIn {
+                previous_output: OutPoint::new(txid, utxo.vout),
+                script_sig: ScriptBuf::new(),
+                sequence: Sequence::ENABLE_RBF_NO_LOCKTIME,
+                witness: Witness::default(),
+            });
+        }
 
         // Build outputs.
+        let from_script = self.address_to_script(from)?;
         let to_script = self.address_to_script(to)?;
         let mut outputs = vec![TxOut {
             value: Amount::from_sat(amount),
@@ -187,10 +183,9 @@ impl UtxoClient {
         let change = selected_total - total_needed;
         if change > 546 {
             // 546 = dust limit
-            let from_script = self.address_to_script(from)?;
             outputs.push(TxOut {
                 value: Amount::from_sat(change),
-                script_pubkey: from_script,
+                script_pubkey: from_script.clone(),
             });
         }
 
@@ -201,10 +196,16 @@ impl UtxoClient {
             output: outputs,
         };
 
-        // Serialize the unsigned transaction.
-        let mut raw_tx_bytes = Vec::new();
-        tx.consensus_encode(&mut raw_tx_bytes)
-            .map_err(|e| UtxoClientError::SignError(format!("tx encode: {}", e)))?;
+        // Create PSBT so input amounts and scripts are preserved for SegWit signing.
+        let mut psbt = Psbt::from_unsigned_tx(tx)
+            .map_err(|e| UtxoClientError::SignError(format!("psbt from unsigned tx: {}", e)))?;
+        for (i, utxo) in selected.iter().enumerate() {
+            psbt.inputs[i].witness_utxo = Some(TxOut {
+                value: Amount::from_sat(utxo.value),
+                script_pubkey: from_script.clone(),
+            });
+        }
+        let raw_tx_bytes = psbt.serialize();
 
         Ok(UtxoPreparedTransfer {
             raw_tx_bytes,
@@ -230,7 +231,7 @@ impl UtxoClient {
 
     /// Sign raw unsigned transaction bytes with a private key.
     ///
-    /// Input: consensus-encoded unsigned transaction.
+    /// Input: PSBT or consensus-encoded unsigned transaction.
     /// Output: consensus-encoded signed transaction (with witness data).
     pub fn sign_raw(private_key_hex: &str, raw_tx: &[u8]) -> Result<Vec<u8>, UtxoClientError> {
         let pk_bytes =
@@ -245,20 +246,39 @@ impl UtxoClient {
         let private_key = PrivateKey::new(secret_key, bitcoin::Network::Bitcoin);
         let public_key = CompressedPublicKey::from_private_key(&secp, &private_key).unwrap();
 
-        // Decode the unsigned transaction.
-        let mut tx = Transaction::consensus_decode(&mut &raw_tx[..])
-            .map_err(|e| UtxoClientError::SignError(format!("tx decode: {}", e)))?;
+        // Support both PSBT (which carries input amounts) and legacy consensus-encoded Transaction.
+        let (mut tx, input_amounts, script_pubkeys) = if let Ok(psbt) = Psbt::deserialize(raw_tx) {
+            let mut amounts = Vec::with_capacity(psbt.inputs.len());
+            let mut spks = Vec::with_capacity(psbt.inputs.len());
+            for inp in &psbt.inputs {
+                if let Some(utxo) = &inp.witness_utxo {
+                    amounts.push(utxo.value);
+                    spks.push(utxo.script_pubkey.clone());
+                } else {
+                    amounts.push(Amount::from_sat(0));
+                    spks.push(ScriptBuf::new_p2wpkh(&public_key.wpubkey_hash()));
+                }
+            }
+            (psbt.unsigned_tx, amounts, spks)
+        } else {
+            let tx = Transaction::consensus_decode(&mut &raw_tx[..])
+                .map_err(|e| UtxoClientError::SignError(format!("tx decode: {}", e)))?;
+            let amounts = vec![Amount::from_sat(0); tx.input.len()];
+            let spks = vec![ScriptBuf::new_p2wpkh(&public_key.wpubkey_hash()); tx.input.len()];
+            (tx, amounts, spks)
+        };
 
         // Sign each input (P2WPKH).
         let mut sighasher = SighashCache::new(tx.clone());
         for i in 0..tx.input.len() {
-            // For P2WPKH, the scriptcode is OP_DUP OP_HASH160 <pubkey_hash> OP_EQUALVERIFY OP_CHECKSIG
-            let script_code = ScriptBuf::new_p2pkh(&public_key.pubkey_hash());
-            // We use a placeholder amount here — in production you'd track input values.
-            // For now, use 0 to enable compilation; the actual signing in the chain-specific
-            // client should pass the correct UTXO values.
+            let amount = input_amounts.get(i).copied().unwrap_or(Amount::from_sat(0));
+            let spk = script_pubkeys
+                .get(i)
+                .cloned()
+                .unwrap_or_else(|| ScriptBuf::new_p2wpkh(&public_key.wpubkey_hash()));
+
             let sighash = sighasher
-                .p2wpkh_signature_hash(i, &script_code, Amount::from_sat(0), EcdsaSighashType::All)
+                .p2wpkh_signature_hash(i, &spk, amount, EcdsaSighashType::All)
                 .map_err(|e| UtxoClientError::SignError(format!("sighash: {}", e)))?;
 
             let msg = bitcoin::secp256k1::Message::from_digest(sighash.to_byte_array());
@@ -661,4 +681,54 @@ mod tests {
             mainnet_wallet.address
         );
     }
+
+    #[test]
+    fn test_sign_raw_psbt() {
+        let wallet = UtxoClient::generate_wallet(UtxoNetwork::BitcoinTestnet);
+        let client = UtxoClient::new(
+            "https://blockstream.info/testnet/api",
+            UtxoNetwork::BitcoinTestnet,
+        );
+
+        let tx = Transaction {
+            version: bitcoin::transaction::Version::TWO,
+            lock_time: LockTime::ZERO,
+            input: vec![TxIn {
+                previous_output: OutPoint::null(),
+                script_sig: ScriptBuf::new(),
+                sequence: Sequence::ENABLE_RBF_NO_LOCKTIME,
+                witness: Witness::default(),
+            }],
+            output: vec![TxOut {
+                value: Amount::from_sat(10000),
+                script_pubkey: client.address_to_script(&wallet.address).unwrap(),
+            }],
+        };
+
+        let mut psbt = Psbt::from_unsigned_tx(tx).unwrap();
+        psbt.inputs[0].witness_utxo = Some(TxOut {
+            value: Amount::from_sat(20000),
+            script_pubkey: client.address_to_script(&wallet.address).unwrap(),
+        });
+
+        let raw_tx = psbt.serialize();
+        let signed_bytes = UtxoClient::sign_raw(&wallet.private_key, &raw_tx).expect("signing PSBT should succeed");
+        assert!(!signed_bytes.is_empty());
+
+        let signed_tx: Transaction = Transaction::consensus_decode(&mut &signed_bytes[..]).unwrap();
+        assert!(!signed_tx.input[0].witness.is_empty());
+    }
+
+    #[test]
+    fn test_txid_parsing() {
+        use std::str::FromStr;
+        let hex_str = "b850ae7addab2cbeebb0d10185a9453342f0b261044ed9887d6305d3be8e2b86";
+        let txid_from_str = Txid::from_str(hex_str).unwrap();
+        let txid_from_slice = Txid::from_slice(&hex::decode(hex_str).unwrap()).unwrap();
+        println!("from_str:   {}", txid_from_str);
+        println!("from_slice: {}", txid_from_slice);
+        assert_eq!(txid_from_str.to_string(), hex_str);
+    }
 }
+
+
