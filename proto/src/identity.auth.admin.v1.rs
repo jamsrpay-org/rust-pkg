@@ -206,7 +206,7 @@ impl ::prost::Name for LoginWithGithubResponse {
     }
 }
 /// Generated client implementations.
-pub mod admin_auth_service_client {
+pub mod auth_admin_service_client {
     #![allow(
         unused_variables,
         dead_code,
@@ -217,10 +217,10 @@ pub mod admin_auth_service_client {
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
-    pub struct AdminAuthServiceClient<T> {
+    pub struct AuthAdminServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl AdminAuthServiceClient<tonic::transport::Channel> {
+    impl AuthAdminServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -231,7 +231,7 @@ pub mod admin_auth_service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> AdminAuthServiceClient<T>
+    impl<T> AuthAdminServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
@@ -249,7 +249,7 @@ pub mod admin_auth_service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> AdminAuthServiceClient<InterceptedService<T, F>>
+        ) -> AuthAdminServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -263,7 +263,7 @@ pub mod admin_auth_service_client {
                 http::Request<tonic::body::Body>,
             >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
-            AdminAuthServiceClient::new(InterceptedService::new(inner, interceptor))
+            AuthAdminServiceClient::new(InterceptedService::new(inner, interceptor))
         }
         /// Compress requests with the given encoding.
         ///
@@ -311,12 +311,12 @@ pub mod admin_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.admin.v1.AdminAuthService/Login",
+                "/identity.auth.admin.v1.AuthAdminService/Login",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
-                    GrpcMethod::new("identity.auth.admin.v1.AdminAuthService", "Login"),
+                    GrpcMethod::new("identity.auth.admin.v1.AuthAdminService", "Login"),
                 );
             self.inner.unary(req, path, codec).await
         }
@@ -337,13 +337,13 @@ pub mod admin_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.admin.v1.AdminAuthService/VerifyLogin",
+                "/identity.auth.admin.v1.AuthAdminService/VerifyLogin",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.auth.admin.v1.AdminAuthService",
+                        "identity.auth.admin.v1.AuthAdminService",
                         "VerifyLogin",
                     ),
                 );
@@ -366,13 +366,13 @@ pub mod admin_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.admin.v1.AdminAuthService/ResendLoginCode",
+                "/identity.auth.admin.v1.AuthAdminService/ResendLoginCode",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.auth.admin.v1.AdminAuthService",
+                        "identity.auth.admin.v1.AuthAdminService",
                         "ResendLoginCode",
                     ),
                 );
@@ -392,12 +392,12 @@ pub mod admin_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.admin.v1.AdminAuthService/Logout",
+                "/identity.auth.admin.v1.AuthAdminService/Logout",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
-                    GrpcMethod::new("identity.auth.admin.v1.AdminAuthService", "Logout"),
+                    GrpcMethod::new("identity.auth.admin.v1.AuthAdminService", "Logout"),
                 );
             self.inner.unary(req, path, codec).await
         }
@@ -418,13 +418,13 @@ pub mod admin_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.admin.v1.AdminAuthService/LoginWithGoogle",
+                "/identity.auth.admin.v1.AuthAdminService/LoginWithGoogle",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.auth.admin.v1.AdminAuthService",
+                        "identity.auth.admin.v1.AuthAdminService",
                         "LoginWithGoogle",
                     ),
                 );
@@ -447,13 +447,13 @@ pub mod admin_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.admin.v1.AdminAuthService/LoginWithGithub",
+                "/identity.auth.admin.v1.AuthAdminService/LoginWithGithub",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.auth.admin.v1.AdminAuthService",
+                        "identity.auth.admin.v1.AuthAdminService",
                         "LoginWithGithub",
                     ),
                 );
@@ -462,7 +462,7 @@ pub mod admin_auth_service_client {
     }
 }
 /// Generated server implementations.
-pub mod admin_auth_service_server {
+pub mod auth_admin_service_server {
     #![allow(
         unused_variables,
         dead_code,
@@ -471,9 +471,9 @@ pub mod admin_auth_service_server {
         clippy::let_unit_value,
     )]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with AdminAuthServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with AuthAdminServiceServer.
     #[async_trait]
-    pub trait AdminAuthService: std::marker::Send + std::marker::Sync + 'static {
+    pub trait AuthAdminService: std::marker::Send + std::marker::Sync + 'static {
         /// Login
         async fn login(
             &self,
@@ -513,14 +513,14 @@ pub mod admin_auth_service_server {
         >;
     }
     #[derive(Debug)]
-    pub struct AdminAuthServiceServer<T> {
+    pub struct AuthAdminServiceServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T> AdminAuthServiceServer<T> {
+    impl<T> AuthAdminServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -571,9 +571,9 @@ pub mod admin_auth_service_server {
             self
         }
     }
-    impl<T, B> tonic::codegen::Service<http::Request<B>> for AdminAuthServiceServer<T>
+    impl<T, B> tonic::codegen::Service<http::Request<B>> for AuthAdminServiceServer<T>
     where
-        T: AdminAuthService,
+        T: AuthAdminService,
         B: Body + std::marker::Send + 'static,
         B::Error: Into<StdError> + std::marker::Send + 'static,
     {
@@ -588,11 +588,11 @@ pub mod admin_auth_service_server {
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             match req.uri().path() {
-                "/identity.auth.admin.v1.AdminAuthService/Login" => {
+                "/identity.auth.admin.v1.AuthAdminService/Login" => {
                     #[allow(non_camel_case_types)]
-                    struct LoginSvc<T: AdminAuthService>(pub Arc<T>);
+                    struct LoginSvc<T: AuthAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminAuthService,
+                        T: AuthAdminService,
                     > tonic::server::UnaryService<super::LoginRequest> for LoginSvc<T> {
                         type Response = super::LoginResponse;
                         type Future = BoxFuture<
@@ -605,7 +605,7 @@ pub mod admin_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminAuthService>::login(&inner, request).await
+                                <T as AuthAdminService>::login(&inner, request).await
                             };
                             Box::pin(fut)
                         }
@@ -632,11 +632,11 @@ pub mod admin_auth_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.auth.admin.v1.AdminAuthService/VerifyLogin" => {
+                "/identity.auth.admin.v1.AuthAdminService/VerifyLogin" => {
                     #[allow(non_camel_case_types)]
-                    struct VerifyLoginSvc<T: AdminAuthService>(pub Arc<T>);
+                    struct VerifyLoginSvc<T: AuthAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminAuthService,
+                        T: AuthAdminService,
                     > tonic::server::UnaryService<super::VerifyLoginRequest>
                     for VerifyLoginSvc<T> {
                         type Response = super::VerifyLoginResponse;
@@ -650,7 +650,7 @@ pub mod admin_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminAuthService>::verify_login(&inner, request).await
+                                <T as AuthAdminService>::verify_login(&inner, request).await
                             };
                             Box::pin(fut)
                         }
@@ -677,11 +677,11 @@ pub mod admin_auth_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.auth.admin.v1.AdminAuthService/ResendLoginCode" => {
+                "/identity.auth.admin.v1.AuthAdminService/ResendLoginCode" => {
                     #[allow(non_camel_case_types)]
-                    struct ResendLoginCodeSvc<T: AdminAuthService>(pub Arc<T>);
+                    struct ResendLoginCodeSvc<T: AuthAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminAuthService,
+                        T: AuthAdminService,
                     > tonic::server::UnaryService<super::ResendLoginCodeRequest>
                     for ResendLoginCodeSvc<T> {
                         type Response = super::ResendLoginCodeResponse;
@@ -695,7 +695,7 @@ pub mod admin_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminAuthService>::resend_login_code(&inner, request)
+                                <T as AuthAdminService>::resend_login_code(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -723,11 +723,11 @@ pub mod admin_auth_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.auth.admin.v1.AdminAuthService/Logout" => {
+                "/identity.auth.admin.v1.AuthAdminService/Logout" => {
                     #[allow(non_camel_case_types)]
-                    struct LogoutSvc<T: AdminAuthService>(pub Arc<T>);
+                    struct LogoutSvc<T: AuthAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminAuthService,
+                        T: AuthAdminService,
                     > tonic::server::UnaryService<super::LogoutRequest>
                     for LogoutSvc<T> {
                         type Response = super::LogoutResponse;
@@ -741,7 +741,7 @@ pub mod admin_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminAuthService>::logout(&inner, request).await
+                                <T as AuthAdminService>::logout(&inner, request).await
                             };
                             Box::pin(fut)
                         }
@@ -768,11 +768,11 @@ pub mod admin_auth_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.auth.admin.v1.AdminAuthService/LoginWithGoogle" => {
+                "/identity.auth.admin.v1.AuthAdminService/LoginWithGoogle" => {
                     #[allow(non_camel_case_types)]
-                    struct LoginWithGoogleSvc<T: AdminAuthService>(pub Arc<T>);
+                    struct LoginWithGoogleSvc<T: AuthAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminAuthService,
+                        T: AuthAdminService,
                     > tonic::server::UnaryService<super::LoginWithGoogleRequest>
                     for LoginWithGoogleSvc<T> {
                         type Response = super::LoginWithGoogleResponse;
@@ -786,7 +786,7 @@ pub mod admin_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminAuthService>::login_with_google(&inner, request)
+                                <T as AuthAdminService>::login_with_google(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -814,11 +814,11 @@ pub mod admin_auth_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.auth.admin.v1.AdminAuthService/LoginWithGithub" => {
+                "/identity.auth.admin.v1.AuthAdminService/LoginWithGithub" => {
                     #[allow(non_camel_case_types)]
-                    struct LoginWithGithubSvc<T: AdminAuthService>(pub Arc<T>);
+                    struct LoginWithGithubSvc<T: AuthAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminAuthService,
+                        T: AuthAdminService,
                     > tonic::server::UnaryService<super::LoginWithGithubRequest>
                     for LoginWithGithubSvc<T> {
                         type Response = super::LoginWithGithubResponse;
@@ -832,7 +832,7 @@ pub mod admin_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminAuthService>::login_with_github(&inner, request)
+                                <T as AuthAdminService>::login_with_github(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -882,7 +882,7 @@ pub mod admin_auth_service_server {
             }
         }
     }
-    impl<T> Clone for AdminAuthServiceServer<T> {
+    impl<T> Clone for AuthAdminServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -895,8 +895,8 @@ pub mod admin_auth_service_server {
         }
     }
     /// Generated gRPC service name
-    pub const SERVICE_NAME: &str = "identity.auth.admin.v1.AdminAuthService";
-    impl<T> tonic::server::NamedService for AdminAuthServiceServer<T> {
+    pub const SERVICE_NAME: &str = "identity.auth.admin.v1.AuthAdminService";
+    impl<T> tonic::server::NamedService for AuthAdminServiceServer<T> {
         const NAME: &'static str = SERVICE_NAME;
     }
 }

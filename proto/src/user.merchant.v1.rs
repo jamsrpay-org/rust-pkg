@@ -98,7 +98,7 @@ impl ::prost::Name for DeleteAccountResponse {
     }
 }
 /// Generated client implementations.
-pub mod merchant_user_service_client {
+pub mod user_merchant_service_client {
     #![allow(
         unused_variables,
         dead_code,
@@ -109,10 +109,10 @@ pub mod merchant_user_service_client {
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
-    pub struct MerchantUserServiceClient<T> {
+    pub struct UserMerchantServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl MerchantUserServiceClient<tonic::transport::Channel> {
+    impl UserMerchantServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -123,7 +123,7 @@ pub mod merchant_user_service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> MerchantUserServiceClient<T>
+    impl<T> UserMerchantServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
@@ -141,7 +141,7 @@ pub mod merchant_user_service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> MerchantUserServiceClient<InterceptedService<T, F>>
+        ) -> UserMerchantServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -155,7 +155,7 @@ pub mod merchant_user_service_client {
                 http::Request<tonic::body::Body>,
             >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
-            MerchantUserServiceClient::new(InterceptedService::new(inner, interceptor))
+            UserMerchantServiceClient::new(InterceptedService::new(inner, interceptor))
         }
         /// Compress requests with the given encoding.
         ///
@@ -205,12 +205,12 @@ pub mod merchant_user_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/user.merchant.v1.MerchantUserService/GetProfile",
+                "/user.merchant.v1.UserMerchantService/GetProfile",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
-                    GrpcMethod::new("user.merchant.v1.MerchantUserService", "GetProfile"),
+                    GrpcMethod::new("user.merchant.v1.UserMerchantService", "GetProfile"),
                 );
             self.inner.unary(req, path, codec).await
         }
@@ -231,13 +231,13 @@ pub mod merchant_user_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/user.merchant.v1.MerchantUserService/UpdateProfile",
+                "/user.merchant.v1.UserMerchantService/UpdateProfile",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "user.merchant.v1.MerchantUserService",
+                        "user.merchant.v1.UserMerchantService",
                         "UpdateProfile",
                     ),
                 );
@@ -260,13 +260,13 @@ pub mod merchant_user_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/user.merchant.v1.MerchantUserService/DeleteAccount",
+                "/user.merchant.v1.UserMerchantService/DeleteAccount",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "user.merchant.v1.MerchantUserService",
+                        "user.merchant.v1.UserMerchantService",
                         "DeleteAccount",
                     ),
                 );
@@ -275,7 +275,7 @@ pub mod merchant_user_service_client {
     }
 }
 /// Generated server implementations.
-pub mod merchant_user_service_server {
+pub mod user_merchant_service_server {
     #![allow(
         unused_variables,
         dead_code,
@@ -284,9 +284,9 @@ pub mod merchant_user_service_server {
         clippy::let_unit_value,
     )]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with MerchantUserServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with UserMerchantServiceServer.
     #[async_trait]
-    pub trait MerchantUserService: std::marker::Send + std::marker::Sync + 'static {
+    pub trait UserMerchantService: std::marker::Send + std::marker::Sync + 'static {
         async fn get_profile(
             &self,
             request: tonic::Request<super::GetProfileRequest>,
@@ -310,14 +310,14 @@ pub mod merchant_user_service_server {
         >;
     }
     #[derive(Debug)]
-    pub struct MerchantUserServiceServer<T> {
+    pub struct UserMerchantServiceServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T> MerchantUserServiceServer<T> {
+    impl<T> UserMerchantServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -368,9 +368,9 @@ pub mod merchant_user_service_server {
             self
         }
     }
-    impl<T, B> tonic::codegen::Service<http::Request<B>> for MerchantUserServiceServer<T>
+    impl<T, B> tonic::codegen::Service<http::Request<B>> for UserMerchantServiceServer<T>
     where
-        T: MerchantUserService,
+        T: UserMerchantService,
         B: Body + std::marker::Send + 'static,
         B::Error: Into<StdError> + std::marker::Send + 'static,
     {
@@ -385,11 +385,11 @@ pub mod merchant_user_service_server {
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             match req.uri().path() {
-                "/user.merchant.v1.MerchantUserService/GetProfile" => {
+                "/user.merchant.v1.UserMerchantService/GetProfile" => {
                     #[allow(non_camel_case_types)]
-                    struct GetProfileSvc<T: MerchantUserService>(pub Arc<T>);
+                    struct GetProfileSvc<T: UserMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantUserService,
+                        T: UserMerchantService,
                     > tonic::server::UnaryService<super::GetProfileRequest>
                     for GetProfileSvc<T> {
                         type Response = super::GetProfileResponse;
@@ -403,7 +403,7 @@ pub mod merchant_user_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantUserService>::get_profile(&inner, request)
+                                <T as UserMerchantService>::get_profile(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -431,11 +431,11 @@ pub mod merchant_user_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/user.merchant.v1.MerchantUserService/UpdateProfile" => {
+                "/user.merchant.v1.UserMerchantService/UpdateProfile" => {
                     #[allow(non_camel_case_types)]
-                    struct UpdateProfileSvc<T: MerchantUserService>(pub Arc<T>);
+                    struct UpdateProfileSvc<T: UserMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantUserService,
+                        T: UserMerchantService,
                     > tonic::server::UnaryService<super::UpdateProfileRequest>
                     for UpdateProfileSvc<T> {
                         type Response = super::UpdateProfileResponse;
@@ -449,7 +449,7 @@ pub mod merchant_user_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantUserService>::update_profile(&inner, request)
+                                <T as UserMerchantService>::update_profile(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -477,11 +477,11 @@ pub mod merchant_user_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/user.merchant.v1.MerchantUserService/DeleteAccount" => {
+                "/user.merchant.v1.UserMerchantService/DeleteAccount" => {
                     #[allow(non_camel_case_types)]
-                    struct DeleteAccountSvc<T: MerchantUserService>(pub Arc<T>);
+                    struct DeleteAccountSvc<T: UserMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantUserService,
+                        T: UserMerchantService,
                     > tonic::server::UnaryService<super::DeleteAccountRequest>
                     for DeleteAccountSvc<T> {
                         type Response = super::DeleteAccountResponse;
@@ -495,7 +495,7 @@ pub mod merchant_user_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantUserService>::delete_account(&inner, request)
+                                <T as UserMerchantService>::delete_account(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -545,7 +545,7 @@ pub mod merchant_user_service_server {
             }
         }
     }
-    impl<T> Clone for MerchantUserServiceServer<T> {
+    impl<T> Clone for UserMerchantServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -558,8 +558,8 @@ pub mod merchant_user_service_server {
         }
     }
     /// Generated gRPC service name
-    pub const SERVICE_NAME: &str = "user.merchant.v1.MerchantUserService";
-    impl<T> tonic::server::NamedService for MerchantUserServiceServer<T> {
+    pub const SERVICE_NAME: &str = "user.merchant.v1.UserMerchantService";
+    impl<T> tonic::server::NamedService for UserMerchantServiceServer<T> {
         const NAME: &'static str = SERVICE_NAME;
     }
 }

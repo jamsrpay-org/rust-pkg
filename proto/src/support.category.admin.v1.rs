@@ -195,7 +195,7 @@ impl ::prost::Name for DeleteCategoryResponse {
     }
 }
 /// Generated client implementations.
-pub mod admin_category_service_client {
+pub mod category_admin_service_client {
     #![allow(
         unused_variables,
         dead_code,
@@ -206,10 +206,10 @@ pub mod admin_category_service_client {
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
-    pub struct AdminCategoryServiceClient<T> {
+    pub struct CategoryAdminServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl AdminCategoryServiceClient<tonic::transport::Channel> {
+    impl CategoryAdminServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -220,7 +220,7 @@ pub mod admin_category_service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> AdminCategoryServiceClient<T>
+    impl<T> CategoryAdminServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
@@ -238,7 +238,7 @@ pub mod admin_category_service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> AdminCategoryServiceClient<InterceptedService<T, F>>
+        ) -> CategoryAdminServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -252,7 +252,7 @@ pub mod admin_category_service_client {
                 http::Request<tonic::body::Body>,
             >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
-            AdminCategoryServiceClient::new(InterceptedService::new(inner, interceptor))
+            CategoryAdminServiceClient::new(InterceptedService::new(inner, interceptor))
         }
         /// Compress requests with the given encoding.
         ///
@@ -302,13 +302,13 @@ pub mod admin_category_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/support.category.admin.v1.AdminCategoryService/GetCategory",
+                "/support.category.admin.v1.CategoryAdminService/GetCategory",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "support.category.admin.v1.AdminCategoryService",
+                        "support.category.admin.v1.CategoryAdminService",
                         "GetCategory",
                     ),
                 );
@@ -331,13 +331,13 @@ pub mod admin_category_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/support.category.admin.v1.AdminCategoryService/ListCategories",
+                "/support.category.admin.v1.CategoryAdminService/ListCategories",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "support.category.admin.v1.AdminCategoryService",
+                        "support.category.admin.v1.CategoryAdminService",
                         "ListCategories",
                     ),
                 );
@@ -360,13 +360,13 @@ pub mod admin_category_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/support.category.admin.v1.AdminCategoryService/CreateCategory",
+                "/support.category.admin.v1.CategoryAdminService/CreateCategory",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "support.category.admin.v1.AdminCategoryService",
+                        "support.category.admin.v1.CategoryAdminService",
                         "CreateCategory",
                     ),
                 );
@@ -389,13 +389,13 @@ pub mod admin_category_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/support.category.admin.v1.AdminCategoryService/UpdateCategory",
+                "/support.category.admin.v1.CategoryAdminService/UpdateCategory",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "support.category.admin.v1.AdminCategoryService",
+                        "support.category.admin.v1.CategoryAdminService",
                         "UpdateCategory",
                     ),
                 );
@@ -418,13 +418,13 @@ pub mod admin_category_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/support.category.admin.v1.AdminCategoryService/DeleteCategory",
+                "/support.category.admin.v1.CategoryAdminService/DeleteCategory",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "support.category.admin.v1.AdminCategoryService",
+                        "support.category.admin.v1.CategoryAdminService",
                         "DeleteCategory",
                     ),
                 );
@@ -433,7 +433,7 @@ pub mod admin_category_service_client {
     }
 }
 /// Generated server implementations.
-pub mod admin_category_service_server {
+pub mod category_admin_service_server {
     #![allow(
         unused_variables,
         dead_code,
@@ -442,9 +442,9 @@ pub mod admin_category_service_server {
         clippy::let_unit_value,
     )]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with AdminCategoryServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with CategoryAdminServiceServer.
     #[async_trait]
-    pub trait AdminCategoryService: std::marker::Send + std::marker::Sync + 'static {
+    pub trait CategoryAdminService: std::marker::Send + std::marker::Sync + 'static {
         async fn get_category(
             &self,
             request: tonic::Request<super::GetCategoryRequest>,
@@ -482,14 +482,14 @@ pub mod admin_category_service_server {
         >;
     }
     #[derive(Debug)]
-    pub struct AdminCategoryServiceServer<T> {
+    pub struct CategoryAdminServiceServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T> AdminCategoryServiceServer<T> {
+    impl<T> CategoryAdminServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -541,9 +541,9 @@ pub mod admin_category_service_server {
         }
     }
     impl<T, B> tonic::codegen::Service<http::Request<B>>
-    for AdminCategoryServiceServer<T>
+    for CategoryAdminServiceServer<T>
     where
-        T: AdminCategoryService,
+        T: CategoryAdminService,
         B: Body + std::marker::Send + 'static,
         B::Error: Into<StdError> + std::marker::Send + 'static,
     {
@@ -558,11 +558,11 @@ pub mod admin_category_service_server {
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             match req.uri().path() {
-                "/support.category.admin.v1.AdminCategoryService/GetCategory" => {
+                "/support.category.admin.v1.CategoryAdminService/GetCategory" => {
                     #[allow(non_camel_case_types)]
-                    struct GetCategorySvc<T: AdminCategoryService>(pub Arc<T>);
+                    struct GetCategorySvc<T: CategoryAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminCategoryService,
+                        T: CategoryAdminService,
                     > tonic::server::UnaryService<super::GetCategoryRequest>
                     for GetCategorySvc<T> {
                         type Response = super::GetCategoryResponse;
@@ -576,7 +576,7 @@ pub mod admin_category_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminCategoryService>::get_category(&inner, request)
+                                <T as CategoryAdminService>::get_category(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -604,11 +604,11 @@ pub mod admin_category_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/support.category.admin.v1.AdminCategoryService/ListCategories" => {
+                "/support.category.admin.v1.CategoryAdminService/ListCategories" => {
                     #[allow(non_camel_case_types)]
-                    struct ListCategoriesSvc<T: AdminCategoryService>(pub Arc<T>);
+                    struct ListCategoriesSvc<T: CategoryAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminCategoryService,
+                        T: CategoryAdminService,
                     > tonic::server::UnaryService<super::ListCategoriesRequest>
                     for ListCategoriesSvc<T> {
                         type Response = super::ListCategoriesResponse;
@@ -622,7 +622,7 @@ pub mod admin_category_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminCategoryService>::list_categories(
+                                <T as CategoryAdminService>::list_categories(
                                         &inner,
                                         request,
                                     )
@@ -653,11 +653,11 @@ pub mod admin_category_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/support.category.admin.v1.AdminCategoryService/CreateCategory" => {
+                "/support.category.admin.v1.CategoryAdminService/CreateCategory" => {
                     #[allow(non_camel_case_types)]
-                    struct CreateCategorySvc<T: AdminCategoryService>(pub Arc<T>);
+                    struct CreateCategorySvc<T: CategoryAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminCategoryService,
+                        T: CategoryAdminService,
                     > tonic::server::UnaryService<super::CreateCategoryRequest>
                     for CreateCategorySvc<T> {
                         type Response = super::CreateCategoryResponse;
@@ -671,7 +671,7 @@ pub mod admin_category_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminCategoryService>::create_category(
+                                <T as CategoryAdminService>::create_category(
                                         &inner,
                                         request,
                                     )
@@ -702,11 +702,11 @@ pub mod admin_category_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/support.category.admin.v1.AdminCategoryService/UpdateCategory" => {
+                "/support.category.admin.v1.CategoryAdminService/UpdateCategory" => {
                     #[allow(non_camel_case_types)]
-                    struct UpdateCategorySvc<T: AdminCategoryService>(pub Arc<T>);
+                    struct UpdateCategorySvc<T: CategoryAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminCategoryService,
+                        T: CategoryAdminService,
                     > tonic::server::UnaryService<super::UpdateCategoryRequest>
                     for UpdateCategorySvc<T> {
                         type Response = super::UpdateCategoryResponse;
@@ -720,7 +720,7 @@ pub mod admin_category_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminCategoryService>::update_category(
+                                <T as CategoryAdminService>::update_category(
                                         &inner,
                                         request,
                                     )
@@ -751,11 +751,11 @@ pub mod admin_category_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/support.category.admin.v1.AdminCategoryService/DeleteCategory" => {
+                "/support.category.admin.v1.CategoryAdminService/DeleteCategory" => {
                     #[allow(non_camel_case_types)]
-                    struct DeleteCategorySvc<T: AdminCategoryService>(pub Arc<T>);
+                    struct DeleteCategorySvc<T: CategoryAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminCategoryService,
+                        T: CategoryAdminService,
                     > tonic::server::UnaryService<super::DeleteCategoryRequest>
                     for DeleteCategorySvc<T> {
                         type Response = super::DeleteCategoryResponse;
@@ -769,7 +769,7 @@ pub mod admin_category_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminCategoryService>::delete_category(
+                                <T as CategoryAdminService>::delete_category(
                                         &inner,
                                         request,
                                     )
@@ -822,7 +822,7 @@ pub mod admin_category_service_server {
             }
         }
     }
-    impl<T> Clone for AdminCategoryServiceServer<T> {
+    impl<T> Clone for CategoryAdminServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -835,8 +835,8 @@ pub mod admin_category_service_server {
         }
     }
     /// Generated gRPC service name
-    pub const SERVICE_NAME: &str = "support.category.admin.v1.AdminCategoryService";
-    impl<T> tonic::server::NamedService for AdminCategoryServiceServer<T> {
+    pub const SERVICE_NAME: &str = "support.category.admin.v1.CategoryAdminService";
+    impl<T> tonic::server::NamedService for CategoryAdminServiceServer<T> {
         const NAME: &'static str = SERVICE_NAME;
     }
 }

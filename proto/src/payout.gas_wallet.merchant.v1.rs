@@ -135,7 +135,7 @@ impl GasWalletHealth {
     }
 }
 /// Generated client implementations.
-pub mod merchant_gas_wallet_service_client {
+pub mod gas_wallet_merchant_service_client {
     #![allow(
         unused_variables,
         dead_code,
@@ -146,10 +146,10 @@ pub mod merchant_gas_wallet_service_client {
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
-    pub struct MerchantGasWalletServiceClient<T> {
+    pub struct GasWalletMerchantServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl MerchantGasWalletServiceClient<tonic::transport::Channel> {
+    impl GasWalletMerchantServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -160,7 +160,7 @@ pub mod merchant_gas_wallet_service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> MerchantGasWalletServiceClient<T>
+    impl<T> GasWalletMerchantServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
@@ -178,7 +178,7 @@ pub mod merchant_gas_wallet_service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> MerchantGasWalletServiceClient<InterceptedService<T, F>>
+        ) -> GasWalletMerchantServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -192,7 +192,7 @@ pub mod merchant_gas_wallet_service_client {
                 http::Request<tonic::body::Body>,
             >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
-            MerchantGasWalletServiceClient::new(
+            GasWalletMerchantServiceClient::new(
                 InterceptedService::new(inner, interceptor),
             )
         }
@@ -244,13 +244,13 @@ pub mod merchant_gas_wallet_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/payout.gas_wallet.merchant.v1.MerchantGasWalletService/GetGasWallet",
+                "/payout.gas_wallet.merchant.v1.GasWalletMerchantService/GetGasWallet",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "payout.gas_wallet.merchant.v1.MerchantGasWalletService",
+                        "payout.gas_wallet.merchant.v1.GasWalletMerchantService",
                         "GetGasWallet",
                     ),
                 );
@@ -273,13 +273,13 @@ pub mod merchant_gas_wallet_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/payout.gas_wallet.merchant.v1.MerchantGasWalletService/ListGasWallets",
+                "/payout.gas_wallet.merchant.v1.GasWalletMerchantService/ListGasWallets",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "payout.gas_wallet.merchant.v1.MerchantGasWalletService",
+                        "payout.gas_wallet.merchant.v1.GasWalletMerchantService",
                         "ListGasWallets",
                     ),
                 );
@@ -288,7 +288,7 @@ pub mod merchant_gas_wallet_service_client {
     }
 }
 /// Generated server implementations.
-pub mod merchant_gas_wallet_service_server {
+pub mod gas_wallet_merchant_service_server {
     #![allow(
         unused_variables,
         dead_code,
@@ -297,9 +297,9 @@ pub mod merchant_gas_wallet_service_server {
         clippy::let_unit_value,
     )]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with MerchantGasWalletServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with GasWalletMerchantServiceServer.
     #[async_trait]
-    pub trait MerchantGasWalletService: std::marker::Send + std::marker::Sync + 'static {
+    pub trait GasWalletMerchantService: std::marker::Send + std::marker::Sync + 'static {
         async fn get_gas_wallet(
             &self,
             request: tonic::Request<super::GetGasWalletRequest>,
@@ -316,14 +316,14 @@ pub mod merchant_gas_wallet_service_server {
         >;
     }
     #[derive(Debug)]
-    pub struct MerchantGasWalletServiceServer<T> {
+    pub struct GasWalletMerchantServiceServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T> MerchantGasWalletServiceServer<T> {
+    impl<T> GasWalletMerchantServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -375,9 +375,9 @@ pub mod merchant_gas_wallet_service_server {
         }
     }
     impl<T, B> tonic::codegen::Service<http::Request<B>>
-    for MerchantGasWalletServiceServer<T>
+    for GasWalletMerchantServiceServer<T>
     where
-        T: MerchantGasWalletService,
+        T: GasWalletMerchantService,
         B: Body + std::marker::Send + 'static,
         B::Error: Into<StdError> + std::marker::Send + 'static,
     {
@@ -392,11 +392,11 @@ pub mod merchant_gas_wallet_service_server {
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             match req.uri().path() {
-                "/payout.gas_wallet.merchant.v1.MerchantGasWalletService/GetGasWallet" => {
+                "/payout.gas_wallet.merchant.v1.GasWalletMerchantService/GetGasWallet" => {
                     #[allow(non_camel_case_types)]
-                    struct GetGasWalletSvc<T: MerchantGasWalletService>(pub Arc<T>);
+                    struct GetGasWalletSvc<T: GasWalletMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantGasWalletService,
+                        T: GasWalletMerchantService,
                     > tonic::server::UnaryService<super::GetGasWalletRequest>
                     for GetGasWalletSvc<T> {
                         type Response = super::GetGasWalletResponse;
@@ -410,7 +410,7 @@ pub mod merchant_gas_wallet_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantGasWalletService>::get_gas_wallet(
+                                <T as GasWalletMerchantService>::get_gas_wallet(
                                         &inner,
                                         request,
                                     )
@@ -441,11 +441,11 @@ pub mod merchant_gas_wallet_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/payout.gas_wallet.merchant.v1.MerchantGasWalletService/ListGasWallets" => {
+                "/payout.gas_wallet.merchant.v1.GasWalletMerchantService/ListGasWallets" => {
                     #[allow(non_camel_case_types)]
-                    struct ListGasWalletsSvc<T: MerchantGasWalletService>(pub Arc<T>);
+                    struct ListGasWalletsSvc<T: GasWalletMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantGasWalletService,
+                        T: GasWalletMerchantService,
                     > tonic::server::UnaryService<super::ListGasWalletsRequest>
                     for ListGasWalletsSvc<T> {
                         type Response = super::ListGasWalletsResponse;
@@ -459,7 +459,7 @@ pub mod merchant_gas_wallet_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantGasWalletService>::list_gas_wallets(
+                                <T as GasWalletMerchantService>::list_gas_wallets(
                                         &inner,
                                         request,
                                     )
@@ -512,7 +512,7 @@ pub mod merchant_gas_wallet_service_server {
             }
         }
     }
-    impl<T> Clone for MerchantGasWalletServiceServer<T> {
+    impl<T> Clone for GasWalletMerchantServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -525,8 +525,8 @@ pub mod merchant_gas_wallet_service_server {
         }
     }
     /// Generated gRPC service name
-    pub const SERVICE_NAME: &str = "payout.gas_wallet.merchant.v1.MerchantGasWalletService";
-    impl<T> tonic::server::NamedService for MerchantGasWalletServiceServer<T> {
+    pub const SERVICE_NAME: &str = "payout.gas_wallet.merchant.v1.GasWalletMerchantService";
+    impl<T> tonic::server::NamedService for GasWalletMerchantServiceServer<T> {
         const NAME: &'static str = SERVICE_NAME;
     }
 }

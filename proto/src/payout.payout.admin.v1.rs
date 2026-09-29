@@ -154,7 +154,7 @@ impl ::prost::Name for RetryPayoutResponse {
     }
 }
 /// Generated client implementations.
-pub mod admin_payout_service_client {
+pub mod payout_admin_service_client {
     #![allow(
         unused_variables,
         dead_code,
@@ -165,10 +165,10 @@ pub mod admin_payout_service_client {
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
-    pub struct AdminPayoutServiceClient<T> {
+    pub struct PayoutAdminServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl AdminPayoutServiceClient<tonic::transport::Channel> {
+    impl PayoutAdminServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -179,7 +179,7 @@ pub mod admin_payout_service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> AdminPayoutServiceClient<T>
+    impl<T> PayoutAdminServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
@@ -197,7 +197,7 @@ pub mod admin_payout_service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> AdminPayoutServiceClient<InterceptedService<T, F>>
+        ) -> PayoutAdminServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -211,7 +211,7 @@ pub mod admin_payout_service_client {
                 http::Request<tonic::body::Body>,
             >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
-            AdminPayoutServiceClient::new(InterceptedService::new(inner, interceptor))
+            PayoutAdminServiceClient::new(InterceptedService::new(inner, interceptor))
         }
         /// Compress requests with the given encoding.
         ///
@@ -261,13 +261,13 @@ pub mod admin_payout_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/payout.payout.admin.v1.AdminPayoutService/GetPayout",
+                "/payout.payout.admin.v1.PayoutAdminService/GetPayout",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "payout.payout.admin.v1.AdminPayoutService",
+                        "payout.payout.admin.v1.PayoutAdminService",
                         "GetPayout",
                     ),
                 );
@@ -290,13 +290,13 @@ pub mod admin_payout_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/payout.payout.admin.v1.AdminPayoutService/ListPayouts",
+                "/payout.payout.admin.v1.PayoutAdminService/ListPayouts",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "payout.payout.admin.v1.AdminPayoutService",
+                        "payout.payout.admin.v1.PayoutAdminService",
                         "ListPayouts",
                     ),
                 );
@@ -319,13 +319,13 @@ pub mod admin_payout_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/payout.payout.admin.v1.AdminPayoutService/RetryPayout",
+                "/payout.payout.admin.v1.PayoutAdminService/RetryPayout",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "payout.payout.admin.v1.AdminPayoutService",
+                        "payout.payout.admin.v1.PayoutAdminService",
                         "RetryPayout",
                     ),
                 );
@@ -334,7 +334,7 @@ pub mod admin_payout_service_client {
     }
 }
 /// Generated server implementations.
-pub mod admin_payout_service_server {
+pub mod payout_admin_service_server {
     #![allow(
         unused_variables,
         dead_code,
@@ -343,9 +343,9 @@ pub mod admin_payout_service_server {
         clippy::let_unit_value,
     )]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with AdminPayoutServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with PayoutAdminServiceServer.
     #[async_trait]
-    pub trait AdminPayoutService: std::marker::Send + std::marker::Sync + 'static {
+    pub trait PayoutAdminService: std::marker::Send + std::marker::Sync + 'static {
         async fn get_payout(
             &self,
             request: tonic::Request<super::GetPayoutRequest>,
@@ -369,14 +369,14 @@ pub mod admin_payout_service_server {
         >;
     }
     #[derive(Debug)]
-    pub struct AdminPayoutServiceServer<T> {
+    pub struct PayoutAdminServiceServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T> AdminPayoutServiceServer<T> {
+    impl<T> PayoutAdminServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -427,9 +427,9 @@ pub mod admin_payout_service_server {
             self
         }
     }
-    impl<T, B> tonic::codegen::Service<http::Request<B>> for AdminPayoutServiceServer<T>
+    impl<T, B> tonic::codegen::Service<http::Request<B>> for PayoutAdminServiceServer<T>
     where
-        T: AdminPayoutService,
+        T: PayoutAdminService,
         B: Body + std::marker::Send + 'static,
         B::Error: Into<StdError> + std::marker::Send + 'static,
     {
@@ -444,11 +444,11 @@ pub mod admin_payout_service_server {
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             match req.uri().path() {
-                "/payout.payout.admin.v1.AdminPayoutService/GetPayout" => {
+                "/payout.payout.admin.v1.PayoutAdminService/GetPayout" => {
                     #[allow(non_camel_case_types)]
-                    struct GetPayoutSvc<T: AdminPayoutService>(pub Arc<T>);
+                    struct GetPayoutSvc<T: PayoutAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminPayoutService,
+                        T: PayoutAdminService,
                     > tonic::server::UnaryService<super::GetPayoutRequest>
                     for GetPayoutSvc<T> {
                         type Response = super::GetPayoutResponse;
@@ -462,7 +462,7 @@ pub mod admin_payout_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminPayoutService>::get_payout(&inner, request).await
+                                <T as PayoutAdminService>::get_payout(&inner, request).await
                             };
                             Box::pin(fut)
                         }
@@ -489,11 +489,11 @@ pub mod admin_payout_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/payout.payout.admin.v1.AdminPayoutService/ListPayouts" => {
+                "/payout.payout.admin.v1.PayoutAdminService/ListPayouts" => {
                     #[allow(non_camel_case_types)]
-                    struct ListPayoutsSvc<T: AdminPayoutService>(pub Arc<T>);
+                    struct ListPayoutsSvc<T: PayoutAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminPayoutService,
+                        T: PayoutAdminService,
                     > tonic::server::UnaryService<super::ListPayoutsRequest>
                     for ListPayoutsSvc<T> {
                         type Response = super::ListPayoutsResponse;
@@ -507,7 +507,7 @@ pub mod admin_payout_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminPayoutService>::list_payouts(&inner, request)
+                                <T as PayoutAdminService>::list_payouts(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -535,11 +535,11 @@ pub mod admin_payout_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/payout.payout.admin.v1.AdminPayoutService/RetryPayout" => {
+                "/payout.payout.admin.v1.PayoutAdminService/RetryPayout" => {
                     #[allow(non_camel_case_types)]
-                    struct RetryPayoutSvc<T: AdminPayoutService>(pub Arc<T>);
+                    struct RetryPayoutSvc<T: PayoutAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminPayoutService,
+                        T: PayoutAdminService,
                     > tonic::server::UnaryService<super::RetryPayoutRequest>
                     for RetryPayoutSvc<T> {
                         type Response = super::RetryPayoutResponse;
@@ -553,7 +553,7 @@ pub mod admin_payout_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminPayoutService>::retry_payout(&inner, request)
+                                <T as PayoutAdminService>::retry_payout(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -603,7 +603,7 @@ pub mod admin_payout_service_server {
             }
         }
     }
-    impl<T> Clone for AdminPayoutServiceServer<T> {
+    impl<T> Clone for PayoutAdminServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -616,8 +616,8 @@ pub mod admin_payout_service_server {
         }
     }
     /// Generated gRPC service name
-    pub const SERVICE_NAME: &str = "payout.payout.admin.v1.AdminPayoutService";
-    impl<T> tonic::server::NamedService for AdminPayoutServiceServer<T> {
+    pub const SERVICE_NAME: &str = "payout.payout.admin.v1.PayoutAdminService";
+    impl<T> tonic::server::NamedService for PayoutAdminServiceServer<T> {
         const NAME: &'static str = SERVICE_NAME;
     }
 }

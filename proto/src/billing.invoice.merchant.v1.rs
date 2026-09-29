@@ -169,7 +169,7 @@ impl ::prost::Name for ListInvoicesResponse {
     }
 }
 /// Generated client implementations.
-pub mod merchant_invoice_service_client {
+pub mod invoice_merchant_service_client {
     #![allow(
         unused_variables,
         dead_code,
@@ -180,10 +180,10 @@ pub mod merchant_invoice_service_client {
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
-    pub struct MerchantInvoiceServiceClient<T> {
+    pub struct InvoiceMerchantServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl MerchantInvoiceServiceClient<tonic::transport::Channel> {
+    impl InvoiceMerchantServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -194,7 +194,7 @@ pub mod merchant_invoice_service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> MerchantInvoiceServiceClient<T>
+    impl<T> InvoiceMerchantServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
@@ -212,7 +212,7 @@ pub mod merchant_invoice_service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> MerchantInvoiceServiceClient<InterceptedService<T, F>>
+        ) -> InvoiceMerchantServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -226,7 +226,7 @@ pub mod merchant_invoice_service_client {
                 http::Request<tonic::body::Body>,
             >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
-            MerchantInvoiceServiceClient::new(
+            InvoiceMerchantServiceClient::new(
                 InterceptedService::new(inner, interceptor),
             )
         }
@@ -279,13 +279,13 @@ pub mod merchant_invoice_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/billing.invoice.merchant.v1.MerchantInvoiceService/GetInvoice",
+                "/billing.invoice.merchant.v1.InvoiceMerchantService/GetInvoice",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "billing.invoice.merchant.v1.MerchantInvoiceService",
+                        "billing.invoice.merchant.v1.InvoiceMerchantService",
                         "GetInvoice",
                     ),
                 );
@@ -309,13 +309,13 @@ pub mod merchant_invoice_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/billing.invoice.merchant.v1.MerchantInvoiceService/ListInvoices",
+                "/billing.invoice.merchant.v1.InvoiceMerchantService/ListInvoices",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "billing.invoice.merchant.v1.MerchantInvoiceService",
+                        "billing.invoice.merchant.v1.InvoiceMerchantService",
                         "ListInvoices",
                     ),
                 );
@@ -324,7 +324,7 @@ pub mod merchant_invoice_service_client {
     }
 }
 /// Generated server implementations.
-pub mod merchant_invoice_service_server {
+pub mod invoice_merchant_service_server {
     #![allow(
         unused_variables,
         dead_code,
@@ -333,9 +333,9 @@ pub mod merchant_invoice_service_server {
         clippy::let_unit_value,
     )]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with MerchantInvoiceServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with InvoiceMerchantServiceServer.
     #[async_trait]
-    pub trait MerchantInvoiceService: std::marker::Send + std::marker::Sync + 'static {
+    pub trait InvoiceMerchantService: std::marker::Send + std::marker::Sync + 'static {
         /// Get a specific invoice by ID
         async fn get_invoice(
             &self,
@@ -354,14 +354,14 @@ pub mod merchant_invoice_service_server {
         >;
     }
     #[derive(Debug)]
-    pub struct MerchantInvoiceServiceServer<T> {
+    pub struct InvoiceMerchantServiceServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T> MerchantInvoiceServiceServer<T> {
+    impl<T> InvoiceMerchantServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -413,9 +413,9 @@ pub mod merchant_invoice_service_server {
         }
     }
     impl<T, B> tonic::codegen::Service<http::Request<B>>
-    for MerchantInvoiceServiceServer<T>
+    for InvoiceMerchantServiceServer<T>
     where
-        T: MerchantInvoiceService,
+        T: InvoiceMerchantService,
         B: Body + std::marker::Send + 'static,
         B::Error: Into<StdError> + std::marker::Send + 'static,
     {
@@ -430,11 +430,11 @@ pub mod merchant_invoice_service_server {
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             match req.uri().path() {
-                "/billing.invoice.merchant.v1.MerchantInvoiceService/GetInvoice" => {
+                "/billing.invoice.merchant.v1.InvoiceMerchantService/GetInvoice" => {
                     #[allow(non_camel_case_types)]
-                    struct GetInvoiceSvc<T: MerchantInvoiceService>(pub Arc<T>);
+                    struct GetInvoiceSvc<T: InvoiceMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantInvoiceService,
+                        T: InvoiceMerchantService,
                     > tonic::server::UnaryService<super::GetInvoiceRequest>
                     for GetInvoiceSvc<T> {
                         type Response = super::GetInvoiceResponse;
@@ -448,7 +448,7 @@ pub mod merchant_invoice_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantInvoiceService>::get_invoice(&inner, request)
+                                <T as InvoiceMerchantService>::get_invoice(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -476,11 +476,11 @@ pub mod merchant_invoice_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/billing.invoice.merchant.v1.MerchantInvoiceService/ListInvoices" => {
+                "/billing.invoice.merchant.v1.InvoiceMerchantService/ListInvoices" => {
                     #[allow(non_camel_case_types)]
-                    struct ListInvoicesSvc<T: MerchantInvoiceService>(pub Arc<T>);
+                    struct ListInvoicesSvc<T: InvoiceMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantInvoiceService,
+                        T: InvoiceMerchantService,
                     > tonic::server::UnaryService<super::ListInvoicesRequest>
                     for ListInvoicesSvc<T> {
                         type Response = super::ListInvoicesResponse;
@@ -494,7 +494,7 @@ pub mod merchant_invoice_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantInvoiceService>::list_invoices(
+                                <T as InvoiceMerchantService>::list_invoices(
                                         &inner,
                                         request,
                                     )
@@ -547,7 +547,7 @@ pub mod merchant_invoice_service_server {
             }
         }
     }
-    impl<T> Clone for MerchantInvoiceServiceServer<T> {
+    impl<T> Clone for InvoiceMerchantServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -560,8 +560,8 @@ pub mod merchant_invoice_service_server {
         }
     }
     /// Generated gRPC service name
-    pub const SERVICE_NAME: &str = "billing.invoice.merchant.v1.MerchantInvoiceService";
-    impl<T> tonic::server::NamedService for MerchantInvoiceServiceServer<T> {
+    pub const SERVICE_NAME: &str = "billing.invoice.merchant.v1.InvoiceMerchantService";
+    impl<T> tonic::server::NamedService for InvoiceMerchantServiceServer<T> {
         const NAME: &'static str = SERVICE_NAME;
     }
 }

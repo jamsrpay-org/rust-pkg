@@ -72,6 +72,30 @@ pub mod billing {
             }
         }
     }
+    pub mod pricing_plan {
+        pub mod admin {
+            pub mod v1 {
+                include!("billing.pricing_plan.admin.v1.rs");
+            }
+        }
+    }
+    pub mod pricing_plan_purchase {
+        pub mod admin {
+            pub mod v1 {
+                include!("billing.pricing_plan_purchase.admin.v1.rs");
+            }
+        }
+        pub mod merchant {
+            pub mod v1 {
+                include!("billing.pricing_plan_purchase.merchant.v1.rs");
+            }
+        }
+        pub mod shared {
+            pub mod v1 {
+                include!("billing.pricing_plan_purchase.shared.v1.rs");
+            }
+        }
+    }
     pub mod schema {
         pub mod v1 {
             include!("billing.schema.v1.rs");

@@ -85,7 +85,7 @@ impl ::prost::Name for ListStaffsResponse {
     }
 }
 /// Generated client implementations.
-pub mod merchant_staff_service_client {
+pub mod staff_merchant_service_client {
     #![allow(
         unused_variables,
         dead_code,
@@ -96,10 +96,10 @@ pub mod merchant_staff_service_client {
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
-    pub struct MerchantStaffServiceClient<T> {
+    pub struct StaffMerchantServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl MerchantStaffServiceClient<tonic::transport::Channel> {
+    impl StaffMerchantServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -110,7 +110,7 @@ pub mod merchant_staff_service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> MerchantStaffServiceClient<T>
+    impl<T> StaffMerchantServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
@@ -128,7 +128,7 @@ pub mod merchant_staff_service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> MerchantStaffServiceClient<InterceptedService<T, F>>
+        ) -> StaffMerchantServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -142,7 +142,7 @@ pub mod merchant_staff_service_client {
                 http::Request<tonic::body::Body>,
             >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
-            MerchantStaffServiceClient::new(InterceptedService::new(inner, interceptor))
+            StaffMerchantServiceClient::new(InterceptedService::new(inner, interceptor))
         }
         /// Compress requests with the given encoding.
         ///
@@ -192,13 +192,13 @@ pub mod merchant_staff_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/support.staff.merchant.v1.MerchantStaffService/GetStaff",
+                "/support.staff.merchant.v1.StaffMerchantService/GetStaff",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "support.staff.merchant.v1.MerchantStaffService",
+                        "support.staff.merchant.v1.StaffMerchantService",
                         "GetStaff",
                     ),
                 );
@@ -221,13 +221,13 @@ pub mod merchant_staff_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/support.staff.merchant.v1.MerchantStaffService/ListStaffs",
+                "/support.staff.merchant.v1.StaffMerchantService/ListStaffs",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "support.staff.merchant.v1.MerchantStaffService",
+                        "support.staff.merchant.v1.StaffMerchantService",
                         "ListStaffs",
                     ),
                 );
@@ -236,7 +236,7 @@ pub mod merchant_staff_service_client {
     }
 }
 /// Generated server implementations.
-pub mod merchant_staff_service_server {
+pub mod staff_merchant_service_server {
     #![allow(
         unused_variables,
         dead_code,
@@ -245,9 +245,9 @@ pub mod merchant_staff_service_server {
         clippy::let_unit_value,
     )]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with MerchantStaffServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with StaffMerchantServiceServer.
     #[async_trait]
-    pub trait MerchantStaffService: std::marker::Send + std::marker::Sync + 'static {
+    pub trait StaffMerchantService: std::marker::Send + std::marker::Sync + 'static {
         async fn get_staff(
             &self,
             request: tonic::Request<super::GetStaffRequest>,
@@ -264,14 +264,14 @@ pub mod merchant_staff_service_server {
         >;
     }
     #[derive(Debug)]
-    pub struct MerchantStaffServiceServer<T> {
+    pub struct StaffMerchantServiceServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T> MerchantStaffServiceServer<T> {
+    impl<T> StaffMerchantServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -323,9 +323,9 @@ pub mod merchant_staff_service_server {
         }
     }
     impl<T, B> tonic::codegen::Service<http::Request<B>>
-    for MerchantStaffServiceServer<T>
+    for StaffMerchantServiceServer<T>
     where
-        T: MerchantStaffService,
+        T: StaffMerchantService,
         B: Body + std::marker::Send + 'static,
         B::Error: Into<StdError> + std::marker::Send + 'static,
     {
@@ -340,11 +340,11 @@ pub mod merchant_staff_service_server {
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             match req.uri().path() {
-                "/support.staff.merchant.v1.MerchantStaffService/GetStaff" => {
+                "/support.staff.merchant.v1.StaffMerchantService/GetStaff" => {
                     #[allow(non_camel_case_types)]
-                    struct GetStaffSvc<T: MerchantStaffService>(pub Arc<T>);
+                    struct GetStaffSvc<T: StaffMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantStaffService,
+                        T: StaffMerchantService,
                     > tonic::server::UnaryService<super::GetStaffRequest>
                     for GetStaffSvc<T> {
                         type Response = super::GetStaffResponse;
@@ -358,7 +358,7 @@ pub mod merchant_staff_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantStaffService>::get_staff(&inner, request)
+                                <T as StaffMerchantService>::get_staff(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -386,11 +386,11 @@ pub mod merchant_staff_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/support.staff.merchant.v1.MerchantStaffService/ListStaffs" => {
+                "/support.staff.merchant.v1.StaffMerchantService/ListStaffs" => {
                     #[allow(non_camel_case_types)]
-                    struct ListStaffsSvc<T: MerchantStaffService>(pub Arc<T>);
+                    struct ListStaffsSvc<T: StaffMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantStaffService,
+                        T: StaffMerchantService,
                     > tonic::server::UnaryService<super::ListStaffsRequest>
                     for ListStaffsSvc<T> {
                         type Response = super::ListStaffsResponse;
@@ -404,7 +404,7 @@ pub mod merchant_staff_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantStaffService>::list_staffs(&inner, request)
+                                <T as StaffMerchantService>::list_staffs(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -454,7 +454,7 @@ pub mod merchant_staff_service_server {
             }
         }
     }
-    impl<T> Clone for MerchantStaffServiceServer<T> {
+    impl<T> Clone for StaffMerchantServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -467,8 +467,8 @@ pub mod merchant_staff_service_server {
         }
     }
     /// Generated gRPC service name
-    pub const SERVICE_NAME: &str = "support.staff.merchant.v1.MerchantStaffService";
-    impl<T> tonic::server::NamedService for MerchantStaffServiceServer<T> {
+    pub const SERVICE_NAME: &str = "support.staff.merchant.v1.StaffMerchantService";
+    impl<T> tonic::server::NamedService for StaffMerchantServiceServer<T> {
         const NAME: &'static str = SERVICE_NAME;
     }
 }

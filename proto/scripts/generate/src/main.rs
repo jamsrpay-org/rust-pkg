@@ -76,7 +76,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     config
         .enable_type_names()
         .type_attribute(".", "#[derive(serde::Serialize, serde::Deserialize)]")
-        .extern_path(".google.protobuf.Timestamp", "::pbjson_types::Timestamp");
+        .extern_path(".google.protobuf.Timestamp", "::pbjson_types::Timestamp")
+        .extern_path(".google.protobuf.FieldMask", "::pbjson_types::FieldMask");
     // .type_attribute(".", "#[derive(serde::Serialize, serde::Deserialize)]");
     // .extern_path(".google.protobuf.Timestamp", "::prost_wkt_types::Timestamp");
 

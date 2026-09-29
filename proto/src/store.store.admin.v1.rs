@@ -96,7 +96,7 @@ impl ::prost::Name for ListStoresResponse {
     }
 }
 /// Generated client implementations.
-pub mod admin_store_service_client {
+pub mod store_admin_service_client {
     #![allow(
         unused_variables,
         dead_code,
@@ -107,10 +107,10 @@ pub mod admin_store_service_client {
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
-    pub struct AdminStoreServiceClient<T> {
+    pub struct StoreAdminServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl AdminStoreServiceClient<tonic::transport::Channel> {
+    impl StoreAdminServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -121,7 +121,7 @@ pub mod admin_store_service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> AdminStoreServiceClient<T>
+    impl<T> StoreAdminServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
@@ -139,7 +139,7 @@ pub mod admin_store_service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> AdminStoreServiceClient<InterceptedService<T, F>>
+        ) -> StoreAdminServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -153,7 +153,7 @@ pub mod admin_store_service_client {
                 http::Request<tonic::body::Body>,
             >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
-            AdminStoreServiceClient::new(InterceptedService::new(inner, interceptor))
+            StoreAdminServiceClient::new(InterceptedService::new(inner, interceptor))
         }
         /// Compress requests with the given encoding.
         ///
@@ -203,12 +203,12 @@ pub mod admin_store_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/store.store.admin.v1.AdminStoreService/GetStore",
+                "/store.store.admin.v1.StoreAdminService/GetStore",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
-                    GrpcMethod::new("store.store.admin.v1.AdminStoreService", "GetStore"),
+                    GrpcMethod::new("store.store.admin.v1.StoreAdminService", "GetStore"),
                 );
             self.inner.unary(req, path, codec).await
         }
@@ -229,13 +229,13 @@ pub mod admin_store_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/store.store.admin.v1.AdminStoreService/ListStores",
+                "/store.store.admin.v1.StoreAdminService/ListStores",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "store.store.admin.v1.AdminStoreService",
+                        "store.store.admin.v1.StoreAdminService",
                         "ListStores",
                     ),
                 );
@@ -244,7 +244,7 @@ pub mod admin_store_service_client {
     }
 }
 /// Generated server implementations.
-pub mod admin_store_service_server {
+pub mod store_admin_service_server {
     #![allow(
         unused_variables,
         dead_code,
@@ -253,9 +253,9 @@ pub mod admin_store_service_server {
         clippy::let_unit_value,
     )]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with AdminStoreServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with StoreAdminServiceServer.
     #[async_trait]
-    pub trait AdminStoreService: std::marker::Send + std::marker::Sync + 'static {
+    pub trait StoreAdminService: std::marker::Send + std::marker::Sync + 'static {
         async fn get_store(
             &self,
             request: tonic::Request<super::GetStoreRequest>,
@@ -272,14 +272,14 @@ pub mod admin_store_service_server {
         >;
     }
     #[derive(Debug)]
-    pub struct AdminStoreServiceServer<T> {
+    pub struct StoreAdminServiceServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T> AdminStoreServiceServer<T> {
+    impl<T> StoreAdminServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -330,9 +330,9 @@ pub mod admin_store_service_server {
             self
         }
     }
-    impl<T, B> tonic::codegen::Service<http::Request<B>> for AdminStoreServiceServer<T>
+    impl<T, B> tonic::codegen::Service<http::Request<B>> for StoreAdminServiceServer<T>
     where
-        T: AdminStoreService,
+        T: StoreAdminService,
         B: Body + std::marker::Send + 'static,
         B::Error: Into<StdError> + std::marker::Send + 'static,
     {
@@ -347,11 +347,11 @@ pub mod admin_store_service_server {
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             match req.uri().path() {
-                "/store.store.admin.v1.AdminStoreService/GetStore" => {
+                "/store.store.admin.v1.StoreAdminService/GetStore" => {
                     #[allow(non_camel_case_types)]
-                    struct GetStoreSvc<T: AdminStoreService>(pub Arc<T>);
+                    struct GetStoreSvc<T: StoreAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminStoreService,
+                        T: StoreAdminService,
                     > tonic::server::UnaryService<super::GetStoreRequest>
                     for GetStoreSvc<T> {
                         type Response = super::GetStoreResponse;
@@ -365,7 +365,7 @@ pub mod admin_store_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminStoreService>::get_store(&inner, request).await
+                                <T as StoreAdminService>::get_store(&inner, request).await
                             };
                             Box::pin(fut)
                         }
@@ -392,11 +392,11 @@ pub mod admin_store_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/store.store.admin.v1.AdminStoreService/ListStores" => {
+                "/store.store.admin.v1.StoreAdminService/ListStores" => {
                     #[allow(non_camel_case_types)]
-                    struct ListStoresSvc<T: AdminStoreService>(pub Arc<T>);
+                    struct ListStoresSvc<T: StoreAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminStoreService,
+                        T: StoreAdminService,
                     > tonic::server::UnaryService<super::ListStoresRequest>
                     for ListStoresSvc<T> {
                         type Response = super::ListStoresResponse;
@@ -410,7 +410,7 @@ pub mod admin_store_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminStoreService>::list_stores(&inner, request).await
+                                <T as StoreAdminService>::list_stores(&inner, request).await
                             };
                             Box::pin(fut)
                         }
@@ -459,7 +459,7 @@ pub mod admin_store_service_server {
             }
         }
     }
-    impl<T> Clone for AdminStoreServiceServer<T> {
+    impl<T> Clone for StoreAdminServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -472,8 +472,8 @@ pub mod admin_store_service_server {
         }
     }
     /// Generated gRPC service name
-    pub const SERVICE_NAME: &str = "store.store.admin.v1.AdminStoreService";
-    impl<T> tonic::server::NamedService for AdminStoreServiceServer<T> {
+    pub const SERVICE_NAME: &str = "store.store.admin.v1.StoreAdminService";
+    impl<T> tonic::server::NamedService for StoreAdminServiceServer<T> {
         const NAME: &'static str = SERVICE_NAME;
     }
 }

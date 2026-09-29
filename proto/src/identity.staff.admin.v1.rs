@@ -203,7 +203,7 @@ impl ::prost::Name for UpdateStaffResponse {
     }
 }
 /// Generated client implementations.
-pub mod admin_staff_service_client {
+pub mod staff_admin_service_client {
     #![allow(
         unused_variables,
         dead_code,
@@ -214,10 +214,10 @@ pub mod admin_staff_service_client {
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
-    pub struct AdminStaffServiceClient<T> {
+    pub struct StaffAdminServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl AdminStaffServiceClient<tonic::transport::Channel> {
+    impl StaffAdminServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -228,7 +228,7 @@ pub mod admin_staff_service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> AdminStaffServiceClient<T>
+    impl<T> StaffAdminServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
@@ -246,7 +246,7 @@ pub mod admin_staff_service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> AdminStaffServiceClient<InterceptedService<T, F>>
+        ) -> StaffAdminServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -260,7 +260,7 @@ pub mod admin_staff_service_client {
                 http::Request<tonic::body::Body>,
             >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
-            AdminStaffServiceClient::new(InterceptedService::new(inner, interceptor))
+            StaffAdminServiceClient::new(InterceptedService::new(inner, interceptor))
         }
         /// Compress requests with the given encoding.
         ///
@@ -310,13 +310,13 @@ pub mod admin_staff_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.staff.admin.v1.AdminStaffService/GetStaff",
+                "/identity.staff.admin.v1.StaffAdminService/GetStaff",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.staff.admin.v1.AdminStaffService",
+                        "identity.staff.admin.v1.StaffAdminService",
                         "GetStaff",
                     ),
                 );
@@ -339,13 +339,13 @@ pub mod admin_staff_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.staff.admin.v1.AdminStaffService/ListStaff",
+                "/identity.staff.admin.v1.StaffAdminService/ListStaff",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.staff.admin.v1.AdminStaffService",
+                        "identity.staff.admin.v1.StaffAdminService",
                         "ListStaff",
                     ),
                 );
@@ -368,13 +368,13 @@ pub mod admin_staff_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.staff.admin.v1.AdminStaffService/CreateStaff",
+                "/identity.staff.admin.v1.StaffAdminService/CreateStaff",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.staff.admin.v1.AdminStaffService",
+                        "identity.staff.admin.v1.StaffAdminService",
                         "CreateStaff",
                     ),
                 );
@@ -397,13 +397,13 @@ pub mod admin_staff_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.staff.admin.v1.AdminStaffService/UpdateStaff",
+                "/identity.staff.admin.v1.StaffAdminService/UpdateStaff",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.staff.admin.v1.AdminStaffService",
+                        "identity.staff.admin.v1.StaffAdminService",
                         "UpdateStaff",
                     ),
                 );
@@ -426,13 +426,13 @@ pub mod admin_staff_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.staff.admin.v1.AdminStaffService/DeleteStaff",
+                "/identity.staff.admin.v1.StaffAdminService/DeleteStaff",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.staff.admin.v1.AdminStaffService",
+                        "identity.staff.admin.v1.StaffAdminService",
                         "DeleteStaff",
                     ),
                 );
@@ -441,7 +441,7 @@ pub mod admin_staff_service_client {
     }
 }
 /// Generated server implementations.
-pub mod admin_staff_service_server {
+pub mod staff_admin_service_server {
     #![allow(
         unused_variables,
         dead_code,
@@ -450,9 +450,9 @@ pub mod admin_staff_service_server {
         clippy::let_unit_value,
     )]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with AdminStaffServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with StaffAdminServiceServer.
     #[async_trait]
-    pub trait AdminStaffService: std::marker::Send + std::marker::Sync + 'static {
+    pub trait StaffAdminService: std::marker::Send + std::marker::Sync + 'static {
         async fn get_staff(
             &self,
             request: tonic::Request<super::GetStaffRequest>,
@@ -490,14 +490,14 @@ pub mod admin_staff_service_server {
         >;
     }
     #[derive(Debug)]
-    pub struct AdminStaffServiceServer<T> {
+    pub struct StaffAdminServiceServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T> AdminStaffServiceServer<T> {
+    impl<T> StaffAdminServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -548,9 +548,9 @@ pub mod admin_staff_service_server {
             self
         }
     }
-    impl<T, B> tonic::codegen::Service<http::Request<B>> for AdminStaffServiceServer<T>
+    impl<T, B> tonic::codegen::Service<http::Request<B>> for StaffAdminServiceServer<T>
     where
-        T: AdminStaffService,
+        T: StaffAdminService,
         B: Body + std::marker::Send + 'static,
         B::Error: Into<StdError> + std::marker::Send + 'static,
     {
@@ -565,11 +565,11 @@ pub mod admin_staff_service_server {
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             match req.uri().path() {
-                "/identity.staff.admin.v1.AdminStaffService/GetStaff" => {
+                "/identity.staff.admin.v1.StaffAdminService/GetStaff" => {
                     #[allow(non_camel_case_types)]
-                    struct GetStaffSvc<T: AdminStaffService>(pub Arc<T>);
+                    struct GetStaffSvc<T: StaffAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminStaffService,
+                        T: StaffAdminService,
                     > tonic::server::UnaryService<super::GetStaffRequest>
                     for GetStaffSvc<T> {
                         type Response = super::GetStaffResponse;
@@ -583,7 +583,7 @@ pub mod admin_staff_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminStaffService>::get_staff(&inner, request).await
+                                <T as StaffAdminService>::get_staff(&inner, request).await
                             };
                             Box::pin(fut)
                         }
@@ -610,11 +610,11 @@ pub mod admin_staff_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.staff.admin.v1.AdminStaffService/ListStaff" => {
+                "/identity.staff.admin.v1.StaffAdminService/ListStaff" => {
                     #[allow(non_camel_case_types)]
-                    struct ListStaffSvc<T: AdminStaffService>(pub Arc<T>);
+                    struct ListStaffSvc<T: StaffAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminStaffService,
+                        T: StaffAdminService,
                     > tonic::server::UnaryService<super::ListStaffRequest>
                     for ListStaffSvc<T> {
                         type Response = super::ListStaffResponse;
@@ -628,7 +628,7 @@ pub mod admin_staff_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminStaffService>::list_staff(&inner, request).await
+                                <T as StaffAdminService>::list_staff(&inner, request).await
                             };
                             Box::pin(fut)
                         }
@@ -655,11 +655,11 @@ pub mod admin_staff_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.staff.admin.v1.AdminStaffService/CreateStaff" => {
+                "/identity.staff.admin.v1.StaffAdminService/CreateStaff" => {
                     #[allow(non_camel_case_types)]
-                    struct CreateStaffSvc<T: AdminStaffService>(pub Arc<T>);
+                    struct CreateStaffSvc<T: StaffAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminStaffService,
+                        T: StaffAdminService,
                     > tonic::server::UnaryService<super::CreateStaffRequest>
                     for CreateStaffSvc<T> {
                         type Response = super::CreateStaffResponse;
@@ -673,7 +673,7 @@ pub mod admin_staff_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminStaffService>::create_staff(&inner, request)
+                                <T as StaffAdminService>::create_staff(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -701,11 +701,11 @@ pub mod admin_staff_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.staff.admin.v1.AdminStaffService/UpdateStaff" => {
+                "/identity.staff.admin.v1.StaffAdminService/UpdateStaff" => {
                     #[allow(non_camel_case_types)]
-                    struct UpdateStaffSvc<T: AdminStaffService>(pub Arc<T>);
+                    struct UpdateStaffSvc<T: StaffAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminStaffService,
+                        T: StaffAdminService,
                     > tonic::server::UnaryService<super::UpdateStaffRequest>
                     for UpdateStaffSvc<T> {
                         type Response = super::UpdateStaffResponse;
@@ -719,7 +719,7 @@ pub mod admin_staff_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminStaffService>::update_staff(&inner, request)
+                                <T as StaffAdminService>::update_staff(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -747,11 +747,11 @@ pub mod admin_staff_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.staff.admin.v1.AdminStaffService/DeleteStaff" => {
+                "/identity.staff.admin.v1.StaffAdminService/DeleteStaff" => {
                     #[allow(non_camel_case_types)]
-                    struct DeleteStaffSvc<T: AdminStaffService>(pub Arc<T>);
+                    struct DeleteStaffSvc<T: StaffAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminStaffService,
+                        T: StaffAdminService,
                     > tonic::server::UnaryService<super::DeleteStaffRequest>
                     for DeleteStaffSvc<T> {
                         type Response = super::DeleteStaffResponse;
@@ -765,7 +765,7 @@ pub mod admin_staff_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminStaffService>::delete_staff(&inner, request)
+                                <T as StaffAdminService>::delete_staff(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -815,7 +815,7 @@ pub mod admin_staff_service_server {
             }
         }
     }
-    impl<T> Clone for AdminStaffServiceServer<T> {
+    impl<T> Clone for StaffAdminServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -828,8 +828,8 @@ pub mod admin_staff_service_server {
         }
     }
     /// Generated gRPC service name
-    pub const SERVICE_NAME: &str = "identity.staff.admin.v1.AdminStaffService";
-    impl<T> tonic::server::NamedService for AdminStaffServiceServer<T> {
+    pub const SERVICE_NAME: &str = "identity.staff.admin.v1.StaffAdminService";
+    impl<T> tonic::server::NamedService for StaffAdminServiceServer<T> {
         const NAME: &'static str = SERVICE_NAME;
     }
 }

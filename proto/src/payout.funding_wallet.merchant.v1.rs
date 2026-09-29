@@ -219,7 +219,7 @@ impl PayoutFundingWalletStatus {
     }
 }
 /// Generated client implementations.
-pub mod merchant_payout_funding_wallet_service_client {
+pub mod payout_funding_wallet_merchant_service_client {
     #![allow(
         unused_variables,
         dead_code,
@@ -230,10 +230,10 @@ pub mod merchant_payout_funding_wallet_service_client {
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
-    pub struct MerchantPayoutFundingWalletServiceClient<T> {
+    pub struct PayoutFundingWalletMerchantServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl MerchantPayoutFundingWalletServiceClient<tonic::transport::Channel> {
+    impl PayoutFundingWalletMerchantServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -244,7 +244,7 @@ pub mod merchant_payout_funding_wallet_service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> MerchantPayoutFundingWalletServiceClient<T>
+    impl<T> PayoutFundingWalletMerchantServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
@@ -262,7 +262,7 @@ pub mod merchant_payout_funding_wallet_service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> MerchantPayoutFundingWalletServiceClient<InterceptedService<T, F>>
+        ) -> PayoutFundingWalletMerchantServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -276,7 +276,7 @@ pub mod merchant_payout_funding_wallet_service_client {
                 http::Request<tonic::body::Body>,
             >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
-            MerchantPayoutFundingWalletServiceClient::new(
+            PayoutFundingWalletMerchantServiceClient::new(
                 InterceptedService::new(inner, interceptor),
             )
         }
@@ -328,13 +328,13 @@ pub mod merchant_payout_funding_wallet_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/payout.funding_wallet.merchant.v1.MerchantPayoutFundingWalletService/GetPayoutFundingWallet",
+                "/payout.funding_wallet.merchant.v1.PayoutFundingWalletMerchantService/GetPayoutFundingWallet",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "payout.funding_wallet.merchant.v1.MerchantPayoutFundingWalletService",
+                        "payout.funding_wallet.merchant.v1.PayoutFundingWalletMerchantService",
                         "GetPayoutFundingWallet",
                     ),
                 );
@@ -357,13 +357,13 @@ pub mod merchant_payout_funding_wallet_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/payout.funding_wallet.merchant.v1.MerchantPayoutFundingWalletService/ListPayoutFundingWallets",
+                "/payout.funding_wallet.merchant.v1.PayoutFundingWalletMerchantService/ListPayoutFundingWallets",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "payout.funding_wallet.merchant.v1.MerchantPayoutFundingWalletService",
+                        "payout.funding_wallet.merchant.v1.PayoutFundingWalletMerchantService",
                         "ListPayoutFundingWallets",
                     ),
                 );
@@ -386,13 +386,13 @@ pub mod merchant_payout_funding_wallet_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/payout.funding_wallet.merchant.v1.MerchantPayoutFundingWalletService/EnablePayoutFundingAsset",
+                "/payout.funding_wallet.merchant.v1.PayoutFundingWalletMerchantService/EnablePayoutFundingAsset",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "payout.funding_wallet.merchant.v1.MerchantPayoutFundingWalletService",
+                        "payout.funding_wallet.merchant.v1.PayoutFundingWalletMerchantService",
                         "EnablePayoutFundingAsset",
                     ),
                 );
@@ -415,13 +415,13 @@ pub mod merchant_payout_funding_wallet_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/payout.funding_wallet.merchant.v1.MerchantPayoutFundingWalletService/DisablePayoutFundingAsset",
+                "/payout.funding_wallet.merchant.v1.PayoutFundingWalletMerchantService/DisablePayoutFundingAsset",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "payout.funding_wallet.merchant.v1.MerchantPayoutFundingWalletService",
+                        "payout.funding_wallet.merchant.v1.PayoutFundingWalletMerchantService",
                         "DisablePayoutFundingAsset",
                     ),
                 );
@@ -430,7 +430,7 @@ pub mod merchant_payout_funding_wallet_service_client {
     }
 }
 /// Generated server implementations.
-pub mod merchant_payout_funding_wallet_service_server {
+pub mod payout_funding_wallet_merchant_service_server {
     #![allow(
         unused_variables,
         dead_code,
@@ -439,9 +439,9 @@ pub mod merchant_payout_funding_wallet_service_server {
         clippy::let_unit_value,
     )]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with MerchantPayoutFundingWalletServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with PayoutFundingWalletMerchantServiceServer.
     #[async_trait]
-    pub trait MerchantPayoutFundingWalletService: std::marker::Send + std::marker::Sync + 'static {
+    pub trait PayoutFundingWalletMerchantService: std::marker::Send + std::marker::Sync + 'static {
         async fn get_payout_funding_wallet(
             &self,
             request: tonic::Request<super::GetPayoutFundingWalletRequest>,
@@ -472,14 +472,14 @@ pub mod merchant_payout_funding_wallet_service_server {
         >;
     }
     #[derive(Debug)]
-    pub struct MerchantPayoutFundingWalletServiceServer<T> {
+    pub struct PayoutFundingWalletMerchantServiceServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T> MerchantPayoutFundingWalletServiceServer<T> {
+    impl<T> PayoutFundingWalletMerchantServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -531,9 +531,9 @@ pub mod merchant_payout_funding_wallet_service_server {
         }
     }
     impl<T, B> tonic::codegen::Service<http::Request<B>>
-    for MerchantPayoutFundingWalletServiceServer<T>
+    for PayoutFundingWalletMerchantServiceServer<T>
     where
-        T: MerchantPayoutFundingWalletService,
+        T: PayoutFundingWalletMerchantService,
         B: Body + std::marker::Send + 'static,
         B::Error: Into<StdError> + std::marker::Send + 'static,
     {
@@ -548,15 +548,15 @@ pub mod merchant_payout_funding_wallet_service_server {
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             match req.uri().path() {
-                "/payout.funding_wallet.merchant.v1.MerchantPayoutFundingWalletService/GetPayoutFundingWallet" => {
+                "/payout.funding_wallet.merchant.v1.PayoutFundingWalletMerchantService/GetPayoutFundingWallet" => {
                     #[allow(non_camel_case_types)]
                     struct GetPayoutFundingWalletSvc<
-                        T: MerchantPayoutFundingWalletService,
+                        T: PayoutFundingWalletMerchantService,
                     >(
                         pub Arc<T>,
                     );
                     impl<
-                        T: MerchantPayoutFundingWalletService,
+                        T: PayoutFundingWalletMerchantService,
                     > tonic::server::UnaryService<super::GetPayoutFundingWalletRequest>
                     for GetPayoutFundingWalletSvc<T> {
                         type Response = super::GetPayoutFundingWalletResponse;
@@ -570,7 +570,7 @@ pub mod merchant_payout_funding_wallet_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantPayoutFundingWalletService>::get_payout_funding_wallet(
+                                <T as PayoutFundingWalletMerchantService>::get_payout_funding_wallet(
                                         &inner,
                                         request,
                                     )
@@ -601,15 +601,15 @@ pub mod merchant_payout_funding_wallet_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/payout.funding_wallet.merchant.v1.MerchantPayoutFundingWalletService/ListPayoutFundingWallets" => {
+                "/payout.funding_wallet.merchant.v1.PayoutFundingWalletMerchantService/ListPayoutFundingWallets" => {
                     #[allow(non_camel_case_types)]
                     struct ListPayoutFundingWalletsSvc<
-                        T: MerchantPayoutFundingWalletService,
+                        T: PayoutFundingWalletMerchantService,
                     >(
                         pub Arc<T>,
                     );
                     impl<
-                        T: MerchantPayoutFundingWalletService,
+                        T: PayoutFundingWalletMerchantService,
                     > tonic::server::UnaryService<super::ListPayoutFundingWalletsRequest>
                     for ListPayoutFundingWalletsSvc<T> {
                         type Response = super::ListPayoutFundingWalletsResponse;
@@ -625,7 +625,7 @@ pub mod merchant_payout_funding_wallet_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantPayoutFundingWalletService>::list_payout_funding_wallets(
+                                <T as PayoutFundingWalletMerchantService>::list_payout_funding_wallets(
                                         &inner,
                                         request,
                                     )
@@ -656,15 +656,15 @@ pub mod merchant_payout_funding_wallet_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/payout.funding_wallet.merchant.v1.MerchantPayoutFundingWalletService/EnablePayoutFundingAsset" => {
+                "/payout.funding_wallet.merchant.v1.PayoutFundingWalletMerchantService/EnablePayoutFundingAsset" => {
                     #[allow(non_camel_case_types)]
                     struct EnablePayoutFundingAssetSvc<
-                        T: MerchantPayoutFundingWalletService,
+                        T: PayoutFundingWalletMerchantService,
                     >(
                         pub Arc<T>,
                     );
                     impl<
-                        T: MerchantPayoutFundingWalletService,
+                        T: PayoutFundingWalletMerchantService,
                     > tonic::server::UnaryService<super::EnablePayoutFundingAssetRequest>
                     for EnablePayoutFundingAssetSvc<T> {
                         type Response = super::EnablePayoutFundingAssetResponse;
@@ -680,7 +680,7 @@ pub mod merchant_payout_funding_wallet_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantPayoutFundingWalletService>::enable_payout_funding_asset(
+                                <T as PayoutFundingWalletMerchantService>::enable_payout_funding_asset(
                                         &inner,
                                         request,
                                     )
@@ -711,15 +711,15 @@ pub mod merchant_payout_funding_wallet_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/payout.funding_wallet.merchant.v1.MerchantPayoutFundingWalletService/DisablePayoutFundingAsset" => {
+                "/payout.funding_wallet.merchant.v1.PayoutFundingWalletMerchantService/DisablePayoutFundingAsset" => {
                     #[allow(non_camel_case_types)]
                     struct DisablePayoutFundingAssetSvc<
-                        T: MerchantPayoutFundingWalletService,
+                        T: PayoutFundingWalletMerchantService,
                     >(
                         pub Arc<T>,
                     );
                     impl<
-                        T: MerchantPayoutFundingWalletService,
+                        T: PayoutFundingWalletMerchantService,
                     > tonic::server::UnaryService<
                         super::DisablePayoutFundingAssetRequest,
                     > for DisablePayoutFundingAssetSvc<T> {
@@ -736,7 +736,7 @@ pub mod merchant_payout_funding_wallet_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantPayoutFundingWalletService>::disable_payout_funding_asset(
+                                <T as PayoutFundingWalletMerchantService>::disable_payout_funding_asset(
                                         &inner,
                                         request,
                                     )
@@ -789,7 +789,7 @@ pub mod merchant_payout_funding_wallet_service_server {
             }
         }
     }
-    impl<T> Clone for MerchantPayoutFundingWalletServiceServer<T> {
+    impl<T> Clone for PayoutFundingWalletMerchantServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -802,8 +802,8 @@ pub mod merchant_payout_funding_wallet_service_server {
         }
     }
     /// Generated gRPC service name
-    pub const SERVICE_NAME: &str = "payout.funding_wallet.merchant.v1.MerchantPayoutFundingWalletService";
-    impl<T> tonic::server::NamedService for MerchantPayoutFundingWalletServiceServer<T> {
+    pub const SERVICE_NAME: &str = "payout.funding_wallet.merchant.v1.PayoutFundingWalletMerchantService";
+    impl<T> tonic::server::NamedService for PayoutFundingWalletMerchantServiceServer<T> {
         const NAME: &'static str = SERVICE_NAME;
     }
 }

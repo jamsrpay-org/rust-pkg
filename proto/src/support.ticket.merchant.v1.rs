@@ -389,7 +389,7 @@ impl ::prost::Name for GetTicketMessagesResponse {
     }
 }
 /// Generated client implementations.
-pub mod merchant_ticket_service_client {
+pub mod ticket_merchant_service_client {
     #![allow(
         unused_variables,
         dead_code,
@@ -400,10 +400,10 @@ pub mod merchant_ticket_service_client {
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
-    pub struct MerchantTicketServiceClient<T> {
+    pub struct TicketMerchantServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl MerchantTicketServiceClient<tonic::transport::Channel> {
+    impl TicketMerchantServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -414,7 +414,7 @@ pub mod merchant_ticket_service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> MerchantTicketServiceClient<T>
+    impl<T> TicketMerchantServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
@@ -432,7 +432,7 @@ pub mod merchant_ticket_service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> MerchantTicketServiceClient<InterceptedService<T, F>>
+        ) -> TicketMerchantServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -446,7 +446,7 @@ pub mod merchant_ticket_service_client {
                 http::Request<tonic::body::Body>,
             >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
-            MerchantTicketServiceClient::new(InterceptedService::new(inner, interceptor))
+            TicketMerchantServiceClient::new(InterceptedService::new(inner, interceptor))
         }
         /// Compress requests with the given encoding.
         ///
@@ -496,13 +496,13 @@ pub mod merchant_ticket_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/support.ticket.merchant.v1.MerchantTicketService/GetTicket",
+                "/support.ticket.merchant.v1.TicketMerchantService/GetTicket",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "support.ticket.merchant.v1.MerchantTicketService",
+                        "support.ticket.merchant.v1.TicketMerchantService",
                         "GetTicket",
                     ),
                 );
@@ -525,13 +525,13 @@ pub mod merchant_ticket_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/support.ticket.merchant.v1.MerchantTicketService/ListTickets",
+                "/support.ticket.merchant.v1.TicketMerchantService/ListTickets",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "support.ticket.merchant.v1.MerchantTicketService",
+                        "support.ticket.merchant.v1.TicketMerchantService",
                         "ListTickets",
                     ),
                 );
@@ -554,13 +554,13 @@ pub mod merchant_ticket_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/support.ticket.merchant.v1.MerchantTicketService/CreateTicket",
+                "/support.ticket.merchant.v1.TicketMerchantService/CreateTicket",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "support.ticket.merchant.v1.MerchantTicketService",
+                        "support.ticket.merchant.v1.TicketMerchantService",
                         "CreateTicket",
                     ),
                 );
@@ -583,13 +583,13 @@ pub mod merchant_ticket_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/support.ticket.merchant.v1.MerchantTicketService/CloseTicket",
+                "/support.ticket.merchant.v1.TicketMerchantService/CloseTicket",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "support.ticket.merchant.v1.MerchantTicketService",
+                        "support.ticket.merchant.v1.TicketMerchantService",
                         "CloseTicket",
                     ),
                 );
@@ -612,13 +612,13 @@ pub mod merchant_ticket_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/support.ticket.merchant.v1.MerchantTicketService/ReplyTicket",
+                "/support.ticket.merchant.v1.TicketMerchantService/ReplyTicket",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "support.ticket.merchant.v1.MerchantTicketService",
+                        "support.ticket.merchant.v1.TicketMerchantService",
                         "ReplyTicket",
                     ),
                 );
@@ -641,13 +641,13 @@ pub mod merchant_ticket_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/support.ticket.merchant.v1.MerchantTicketService/JoinTicket",
+                "/support.ticket.merchant.v1.TicketMerchantService/JoinTicket",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "support.ticket.merchant.v1.MerchantTicketService",
+                        "support.ticket.merchant.v1.TicketMerchantService",
                         "JoinTicket",
                     ),
                 );
@@ -670,13 +670,13 @@ pub mod merchant_ticket_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/support.ticket.merchant.v1.MerchantTicketService/GetTicketMessages",
+                "/support.ticket.merchant.v1.TicketMerchantService/GetTicketMessages",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "support.ticket.merchant.v1.MerchantTicketService",
+                        "support.ticket.merchant.v1.TicketMerchantService",
                         "GetTicketMessages",
                     ),
                 );
@@ -685,7 +685,7 @@ pub mod merchant_ticket_service_client {
     }
 }
 /// Generated server implementations.
-pub mod merchant_ticket_service_server {
+pub mod ticket_merchant_service_server {
     #![allow(
         unused_variables,
         dead_code,
@@ -694,9 +694,9 @@ pub mod merchant_ticket_service_server {
         clippy::let_unit_value,
     )]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with MerchantTicketServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with TicketMerchantServiceServer.
     #[async_trait]
-    pub trait MerchantTicketService: std::marker::Send + std::marker::Sync + 'static {
+    pub trait TicketMerchantService: std::marker::Send + std::marker::Sync + 'static {
         async fn get_ticket(
             &self,
             request: tonic::Request<super::GetTicketRequest>,
@@ -751,14 +751,14 @@ pub mod merchant_ticket_service_server {
         >;
     }
     #[derive(Debug)]
-    pub struct MerchantTicketServiceServer<T> {
+    pub struct TicketMerchantServiceServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T> MerchantTicketServiceServer<T> {
+    impl<T> TicketMerchantServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -810,9 +810,9 @@ pub mod merchant_ticket_service_server {
         }
     }
     impl<T, B> tonic::codegen::Service<http::Request<B>>
-    for MerchantTicketServiceServer<T>
+    for TicketMerchantServiceServer<T>
     where
-        T: MerchantTicketService,
+        T: TicketMerchantService,
         B: Body + std::marker::Send + 'static,
         B::Error: Into<StdError> + std::marker::Send + 'static,
     {
@@ -827,11 +827,11 @@ pub mod merchant_ticket_service_server {
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             match req.uri().path() {
-                "/support.ticket.merchant.v1.MerchantTicketService/GetTicket" => {
+                "/support.ticket.merchant.v1.TicketMerchantService/GetTicket" => {
                     #[allow(non_camel_case_types)]
-                    struct GetTicketSvc<T: MerchantTicketService>(pub Arc<T>);
+                    struct GetTicketSvc<T: TicketMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantTicketService,
+                        T: TicketMerchantService,
                     > tonic::server::UnaryService<super::GetTicketRequest>
                     for GetTicketSvc<T> {
                         type Response = super::GetTicketResponse;
@@ -845,7 +845,7 @@ pub mod merchant_ticket_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantTicketService>::get_ticket(&inner, request)
+                                <T as TicketMerchantService>::get_ticket(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -873,11 +873,11 @@ pub mod merchant_ticket_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/support.ticket.merchant.v1.MerchantTicketService/ListTickets" => {
+                "/support.ticket.merchant.v1.TicketMerchantService/ListTickets" => {
                     #[allow(non_camel_case_types)]
-                    struct ListTicketsSvc<T: MerchantTicketService>(pub Arc<T>);
+                    struct ListTicketsSvc<T: TicketMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantTicketService,
+                        T: TicketMerchantService,
                     > tonic::server::UnaryService<super::ListTicketsRequest>
                     for ListTicketsSvc<T> {
                         type Response = super::ListTicketsResponse;
@@ -891,7 +891,7 @@ pub mod merchant_ticket_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantTicketService>::list_tickets(&inner, request)
+                                <T as TicketMerchantService>::list_tickets(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -919,11 +919,11 @@ pub mod merchant_ticket_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/support.ticket.merchant.v1.MerchantTicketService/CreateTicket" => {
+                "/support.ticket.merchant.v1.TicketMerchantService/CreateTicket" => {
                     #[allow(non_camel_case_types)]
-                    struct CreateTicketSvc<T: MerchantTicketService>(pub Arc<T>);
+                    struct CreateTicketSvc<T: TicketMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantTicketService,
+                        T: TicketMerchantService,
                     > tonic::server::UnaryService<super::CreateTicketRequest>
                     for CreateTicketSvc<T> {
                         type Response = super::CreateTicketResponse;
@@ -937,7 +937,7 @@ pub mod merchant_ticket_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantTicketService>::create_ticket(&inner, request)
+                                <T as TicketMerchantService>::create_ticket(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -965,11 +965,11 @@ pub mod merchant_ticket_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/support.ticket.merchant.v1.MerchantTicketService/CloseTicket" => {
+                "/support.ticket.merchant.v1.TicketMerchantService/CloseTicket" => {
                     #[allow(non_camel_case_types)]
-                    struct CloseTicketSvc<T: MerchantTicketService>(pub Arc<T>);
+                    struct CloseTicketSvc<T: TicketMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantTicketService,
+                        T: TicketMerchantService,
                     > tonic::server::UnaryService<super::CloseTicketRequest>
                     for CloseTicketSvc<T> {
                         type Response = super::CloseTicketResponse;
@@ -983,7 +983,7 @@ pub mod merchant_ticket_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantTicketService>::close_ticket(&inner, request)
+                                <T as TicketMerchantService>::close_ticket(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -1011,11 +1011,11 @@ pub mod merchant_ticket_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/support.ticket.merchant.v1.MerchantTicketService/ReplyTicket" => {
+                "/support.ticket.merchant.v1.TicketMerchantService/ReplyTicket" => {
                     #[allow(non_camel_case_types)]
-                    struct ReplyTicketSvc<T: MerchantTicketService>(pub Arc<T>);
+                    struct ReplyTicketSvc<T: TicketMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantTicketService,
+                        T: TicketMerchantService,
                     > tonic::server::UnaryService<super::ReplyTicketRequest>
                     for ReplyTicketSvc<T> {
                         type Response = super::ReplyTicketResponse;
@@ -1029,7 +1029,7 @@ pub mod merchant_ticket_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantTicketService>::reply_ticket(&inner, request)
+                                <T as TicketMerchantService>::reply_ticket(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -1057,11 +1057,11 @@ pub mod merchant_ticket_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/support.ticket.merchant.v1.MerchantTicketService/JoinTicket" => {
+                "/support.ticket.merchant.v1.TicketMerchantService/JoinTicket" => {
                     #[allow(non_camel_case_types)]
-                    struct JoinTicketSvc<T: MerchantTicketService>(pub Arc<T>);
+                    struct JoinTicketSvc<T: TicketMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantTicketService,
+                        T: TicketMerchantService,
                     > tonic::server::ServerStreamingService<super::JoinTicketRequest>
                     for JoinTicketSvc<T> {
                         type Response = super::JoinTicketResponse;
@@ -1076,7 +1076,7 @@ pub mod merchant_ticket_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantTicketService>::join_ticket(&inner, request)
+                                <T as TicketMerchantService>::join_ticket(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -1104,11 +1104,11 @@ pub mod merchant_ticket_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/support.ticket.merchant.v1.MerchantTicketService/GetTicketMessages" => {
+                "/support.ticket.merchant.v1.TicketMerchantService/GetTicketMessages" => {
                     #[allow(non_camel_case_types)]
-                    struct GetTicketMessagesSvc<T: MerchantTicketService>(pub Arc<T>);
+                    struct GetTicketMessagesSvc<T: TicketMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantTicketService,
+                        T: TicketMerchantService,
                     > tonic::server::UnaryService<super::GetTicketMessagesRequest>
                     for GetTicketMessagesSvc<T> {
                         type Response = super::GetTicketMessagesResponse;
@@ -1122,7 +1122,7 @@ pub mod merchant_ticket_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantTicketService>::get_ticket_messages(
+                                <T as TicketMerchantService>::get_ticket_messages(
                                         &inner,
                                         request,
                                     )
@@ -1175,7 +1175,7 @@ pub mod merchant_ticket_service_server {
             }
         }
     }
-    impl<T> Clone for MerchantTicketServiceServer<T> {
+    impl<T> Clone for TicketMerchantServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -1188,8 +1188,8 @@ pub mod merchant_ticket_service_server {
         }
     }
     /// Generated gRPC service name
-    pub const SERVICE_NAME: &str = "support.ticket.merchant.v1.MerchantTicketService";
-    impl<T> tonic::server::NamedService for MerchantTicketServiceServer<T> {
+    pub const SERVICE_NAME: &str = "support.ticket.merchant.v1.TicketMerchantService";
+    impl<T> tonic::server::NamedService for TicketMerchantServiceServer<T> {
         const NAME: &'static str = SERVICE_NAME;
     }
 }

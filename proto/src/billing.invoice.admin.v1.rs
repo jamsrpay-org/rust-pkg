@@ -186,7 +186,7 @@ impl ::prost::Name for ListInvoicesResponse {
     }
 }
 /// Generated client implementations.
-pub mod admin_invoice_service_client {
+pub mod invoice_admin_service_client {
     #![allow(
         unused_variables,
         dead_code,
@@ -197,10 +197,10 @@ pub mod admin_invoice_service_client {
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
-    pub struct AdminInvoiceServiceClient<T> {
+    pub struct InvoiceAdminServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl AdminInvoiceServiceClient<tonic::transport::Channel> {
+    impl InvoiceAdminServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -211,7 +211,7 @@ pub mod admin_invoice_service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> AdminInvoiceServiceClient<T>
+    impl<T> InvoiceAdminServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
@@ -229,7 +229,7 @@ pub mod admin_invoice_service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> AdminInvoiceServiceClient<InterceptedService<T, F>>
+        ) -> InvoiceAdminServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -243,7 +243,7 @@ pub mod admin_invoice_service_client {
                 http::Request<tonic::body::Body>,
             >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
-            AdminInvoiceServiceClient::new(InterceptedService::new(inner, interceptor))
+            InvoiceAdminServiceClient::new(InterceptedService::new(inner, interceptor))
         }
         /// Compress requests with the given encoding.
         ///
@@ -294,13 +294,13 @@ pub mod admin_invoice_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/billing.invoice.admin.v1.AdminInvoiceService/GetInvoice",
+                "/billing.invoice.admin.v1.InvoiceAdminService/GetInvoice",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "billing.invoice.admin.v1.AdminInvoiceService",
+                        "billing.invoice.admin.v1.InvoiceAdminService",
                         "GetInvoice",
                     ),
                 );
@@ -324,13 +324,13 @@ pub mod admin_invoice_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/billing.invoice.admin.v1.AdminInvoiceService/ListInvoices",
+                "/billing.invoice.admin.v1.InvoiceAdminService/ListInvoices",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "billing.invoice.admin.v1.AdminInvoiceService",
+                        "billing.invoice.admin.v1.InvoiceAdminService",
                         "ListInvoices",
                     ),
                 );
@@ -339,7 +339,7 @@ pub mod admin_invoice_service_client {
     }
 }
 /// Generated server implementations.
-pub mod admin_invoice_service_server {
+pub mod invoice_admin_service_server {
     #![allow(
         unused_variables,
         dead_code,
@@ -348,9 +348,9 @@ pub mod admin_invoice_service_server {
         clippy::let_unit_value,
     )]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with AdminInvoiceServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with InvoiceAdminServiceServer.
     #[async_trait]
-    pub trait AdminInvoiceService: std::marker::Send + std::marker::Sync + 'static {
+    pub trait InvoiceAdminService: std::marker::Send + std::marker::Sync + 'static {
         /// Get a specific invoice by ID
         async fn get_invoice(
             &self,
@@ -369,14 +369,14 @@ pub mod admin_invoice_service_server {
         >;
     }
     #[derive(Debug)]
-    pub struct AdminInvoiceServiceServer<T> {
+    pub struct InvoiceAdminServiceServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T> AdminInvoiceServiceServer<T> {
+    impl<T> InvoiceAdminServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -427,9 +427,9 @@ pub mod admin_invoice_service_server {
             self
         }
     }
-    impl<T, B> tonic::codegen::Service<http::Request<B>> for AdminInvoiceServiceServer<T>
+    impl<T, B> tonic::codegen::Service<http::Request<B>> for InvoiceAdminServiceServer<T>
     where
-        T: AdminInvoiceService,
+        T: InvoiceAdminService,
         B: Body + std::marker::Send + 'static,
         B::Error: Into<StdError> + std::marker::Send + 'static,
     {
@@ -444,11 +444,11 @@ pub mod admin_invoice_service_server {
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             match req.uri().path() {
-                "/billing.invoice.admin.v1.AdminInvoiceService/GetInvoice" => {
+                "/billing.invoice.admin.v1.InvoiceAdminService/GetInvoice" => {
                     #[allow(non_camel_case_types)]
-                    struct GetInvoiceSvc<T: AdminInvoiceService>(pub Arc<T>);
+                    struct GetInvoiceSvc<T: InvoiceAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminInvoiceService,
+                        T: InvoiceAdminService,
                     > tonic::server::UnaryService<super::GetInvoiceRequest>
                     for GetInvoiceSvc<T> {
                         type Response = super::GetInvoiceResponse;
@@ -462,7 +462,7 @@ pub mod admin_invoice_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminInvoiceService>::get_invoice(&inner, request)
+                                <T as InvoiceAdminService>::get_invoice(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -490,11 +490,11 @@ pub mod admin_invoice_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/billing.invoice.admin.v1.AdminInvoiceService/ListInvoices" => {
+                "/billing.invoice.admin.v1.InvoiceAdminService/ListInvoices" => {
                     #[allow(non_camel_case_types)]
-                    struct ListInvoicesSvc<T: AdminInvoiceService>(pub Arc<T>);
+                    struct ListInvoicesSvc<T: InvoiceAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminInvoiceService,
+                        T: InvoiceAdminService,
                     > tonic::server::UnaryService<super::ListInvoicesRequest>
                     for ListInvoicesSvc<T> {
                         type Response = super::ListInvoicesResponse;
@@ -508,7 +508,7 @@ pub mod admin_invoice_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminInvoiceService>::list_invoices(&inner, request)
+                                <T as InvoiceAdminService>::list_invoices(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -558,7 +558,7 @@ pub mod admin_invoice_service_server {
             }
         }
     }
-    impl<T> Clone for AdminInvoiceServiceServer<T> {
+    impl<T> Clone for InvoiceAdminServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -571,8 +571,8 @@ pub mod admin_invoice_service_server {
         }
     }
     /// Generated gRPC service name
-    pub const SERVICE_NAME: &str = "billing.invoice.admin.v1.AdminInvoiceService";
-    impl<T> tonic::server::NamedService for AdminInvoiceServiceServer<T> {
+    pub const SERVICE_NAME: &str = "billing.invoice.admin.v1.InvoiceAdminService";
+    impl<T> tonic::server::NamedService for InvoiceAdminServiceServer<T> {
         const NAME: &'static str = SERVICE_NAME;
     }
 }

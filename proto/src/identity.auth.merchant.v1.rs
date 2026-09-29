@@ -784,7 +784,7 @@ impl ::prost::Name for VerifyChangeEmailResponse {
     }
 }
 /// Generated client implementations.
-pub mod merchant_auth_service_client {
+pub mod auth_merchant_service_client {
     #![allow(
         unused_variables,
         dead_code,
@@ -795,10 +795,10 @@ pub mod merchant_auth_service_client {
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
-    pub struct MerchantAuthServiceClient<T> {
+    pub struct AuthMerchantServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl MerchantAuthServiceClient<tonic::transport::Channel> {
+    impl AuthMerchantServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -809,7 +809,7 @@ pub mod merchant_auth_service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> MerchantAuthServiceClient<T>
+    impl<T> AuthMerchantServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
@@ -827,7 +827,7 @@ pub mod merchant_auth_service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> MerchantAuthServiceClient<InterceptedService<T, F>>
+        ) -> AuthMerchantServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -841,7 +841,7 @@ pub mod merchant_auth_service_client {
                 http::Request<tonic::body::Body>,
             >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
-            MerchantAuthServiceClient::new(InterceptedService::new(inner, interceptor))
+            AuthMerchantServiceClient::new(InterceptedService::new(inner, interceptor))
         }
         /// Compress requests with the given encoding.
         ///
@@ -889,13 +889,13 @@ pub mod merchant_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.merchant.v1.MerchantAuthService/Login",
+                "/identity.auth.merchant.v1.AuthMerchantService/Login",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.auth.merchant.v1.MerchantAuthService",
+                        "identity.auth.merchant.v1.AuthMerchantService",
                         "Login",
                     ),
                 );
@@ -918,13 +918,13 @@ pub mod merchant_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.merchant.v1.MerchantAuthService/VerifyLogin",
+                "/identity.auth.merchant.v1.AuthMerchantService/VerifyLogin",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.auth.merchant.v1.MerchantAuthService",
+                        "identity.auth.merchant.v1.AuthMerchantService",
                         "VerifyLogin",
                     ),
                 );
@@ -947,13 +947,13 @@ pub mod merchant_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.merchant.v1.MerchantAuthService/ResendLoginCode",
+                "/identity.auth.merchant.v1.AuthMerchantService/ResendLoginCode",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.auth.merchant.v1.MerchantAuthService",
+                        "identity.auth.merchant.v1.AuthMerchantService",
                         "ResendLoginCode",
                     ),
                 );
@@ -976,13 +976,13 @@ pub mod merchant_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.merchant.v1.MerchantAuthService/RootLogin",
+                "/identity.auth.merchant.v1.AuthMerchantService/RootLogin",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.auth.merchant.v1.MerchantAuthService",
+                        "identity.auth.merchant.v1.AuthMerchantService",
                         "RootLogin",
                     ),
                 );
@@ -1006,13 +1006,13 @@ pub mod merchant_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.merchant.v1.MerchantAuthService/InitiatePasswordReset",
+                "/identity.auth.merchant.v1.AuthMerchantService/InitiatePasswordReset",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.auth.merchant.v1.MerchantAuthService",
+                        "identity.auth.merchant.v1.AuthMerchantService",
                         "InitiatePasswordReset",
                     ),
                 );
@@ -1035,13 +1035,13 @@ pub mod merchant_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.merchant.v1.MerchantAuthService/VerifyPasswordResetCode",
+                "/identity.auth.merchant.v1.AuthMerchantService/VerifyPasswordResetCode",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.auth.merchant.v1.MerchantAuthService",
+                        "identity.auth.merchant.v1.AuthMerchantService",
                         "VerifyPasswordResetCode",
                     ),
                 );
@@ -1064,13 +1064,13 @@ pub mod merchant_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.merchant.v1.MerchantAuthService/ResendPasswordResetCode",
+                "/identity.auth.merchant.v1.AuthMerchantService/ResendPasswordResetCode",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.auth.merchant.v1.MerchantAuthService",
+                        "identity.auth.merchant.v1.AuthMerchantService",
                         "ResendPasswordResetCode",
                     ),
                 );
@@ -1093,13 +1093,13 @@ pub mod merchant_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.merchant.v1.MerchantAuthService/CompletePasswordReset",
+                "/identity.auth.merchant.v1.AuthMerchantService/CompletePasswordReset",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.auth.merchant.v1.MerchantAuthService",
+                        "identity.auth.merchant.v1.AuthMerchantService",
                         "CompletePasswordReset",
                     ),
                 );
@@ -1123,13 +1123,13 @@ pub mod merchant_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.merchant.v1.MerchantAuthService/RefreshToken",
+                "/identity.auth.merchant.v1.AuthMerchantService/RefreshToken",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.auth.merchant.v1.MerchantAuthService",
+                        "identity.auth.merchant.v1.AuthMerchantService",
                         "RefreshToken",
                     ),
                 );
@@ -1149,13 +1149,13 @@ pub mod merchant_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.merchant.v1.MerchantAuthService/Logout",
+                "/identity.auth.merchant.v1.AuthMerchantService/Logout",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.auth.merchant.v1.MerchantAuthService",
+                        "identity.auth.merchant.v1.AuthMerchantService",
                         "Logout",
                     ),
                 );
@@ -1179,13 +1179,13 @@ pub mod merchant_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.merchant.v1.MerchantAuthService/LoginWithGoogle",
+                "/identity.auth.merchant.v1.AuthMerchantService/LoginWithGoogle",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.auth.merchant.v1.MerchantAuthService",
+                        "identity.auth.merchant.v1.AuthMerchantService",
                         "LoginWithGoogle",
                     ),
                 );
@@ -1208,13 +1208,13 @@ pub mod merchant_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.merchant.v1.MerchantAuthService/LoginWithGithub",
+                "/identity.auth.merchant.v1.AuthMerchantService/LoginWithGithub",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.auth.merchant.v1.MerchantAuthService",
+                        "identity.auth.merchant.v1.AuthMerchantService",
                         "LoginWithGithub",
                     ),
                 );
@@ -1237,13 +1237,13 @@ pub mod merchant_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.merchant.v1.MerchantAuthService/LinkOAuthProvider",
+                "/identity.auth.merchant.v1.AuthMerchantService/LinkOAuthProvider",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.auth.merchant.v1.MerchantAuthService",
+                        "identity.auth.merchant.v1.AuthMerchantService",
                         "LinkOAuthProvider",
                     ),
                 );
@@ -1266,13 +1266,13 @@ pub mod merchant_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.merchant.v1.MerchantAuthService/UnlinkOAuthProvider",
+                "/identity.auth.merchant.v1.AuthMerchantService/UnlinkOAuthProvider",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.auth.merchant.v1.MerchantAuthService",
+                        "identity.auth.merchant.v1.AuthMerchantService",
                         "UnlinkOAuthProvider",
                     ),
                 );
@@ -1296,13 +1296,13 @@ pub mod merchant_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.merchant.v1.MerchantAuthService/ChangePassword",
+                "/identity.auth.merchant.v1.AuthMerchantService/ChangePassword",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.auth.merchant.v1.MerchantAuthService",
+                        "identity.auth.merchant.v1.AuthMerchantService",
                         "ChangePassword",
                     ),
                 );
@@ -1325,13 +1325,13 @@ pub mod merchant_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.merchant.v1.MerchantAuthService/SetupPassword",
+                "/identity.auth.merchant.v1.AuthMerchantService/SetupPassword",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.auth.merchant.v1.MerchantAuthService",
+                        "identity.auth.merchant.v1.AuthMerchantService",
                         "SetupPassword",
                     ),
                 );
@@ -1355,13 +1355,13 @@ pub mod merchant_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.merchant.v1.MerchantAuthService/InitiateTwoFactorSetup",
+                "/identity.auth.merchant.v1.AuthMerchantService/InitiateTwoFactorSetup",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.auth.merchant.v1.MerchantAuthService",
+                        "identity.auth.merchant.v1.AuthMerchantService",
                         "InitiateTwoFactorSetup",
                     ),
                 );
@@ -1384,13 +1384,13 @@ pub mod merchant_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.merchant.v1.MerchantAuthService/VerifyTwoFactorSetup",
+                "/identity.auth.merchant.v1.AuthMerchantService/VerifyTwoFactorSetup",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.auth.merchant.v1.MerchantAuthService",
+                        "identity.auth.merchant.v1.AuthMerchantService",
                         "VerifyTwoFactorSetup",
                     ),
                 );
@@ -1413,13 +1413,13 @@ pub mod merchant_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.merchant.v1.MerchantAuthService/DisableTwoFactor",
+                "/identity.auth.merchant.v1.AuthMerchantService/DisableTwoFactor",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.auth.merchant.v1.MerchantAuthService",
+                        "identity.auth.merchant.v1.AuthMerchantService",
                         "DisableTwoFactor",
                     ),
                 );
@@ -1442,13 +1442,13 @@ pub mod merchant_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.merchant.v1.MerchantAuthService/RegenerateRecoveryCodes",
+                "/identity.auth.merchant.v1.AuthMerchantService/RegenerateRecoveryCodes",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.auth.merchant.v1.MerchantAuthService",
+                        "identity.auth.merchant.v1.AuthMerchantService",
                         "RegenerateRecoveryCodes",
                     ),
                 );
@@ -1472,13 +1472,13 @@ pub mod merchant_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.merchant.v1.MerchantAuthService/GetAuthSettings",
+                "/identity.auth.merchant.v1.AuthMerchantService/GetAuthSettings",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.auth.merchant.v1.MerchantAuthService",
+                        "identity.auth.merchant.v1.AuthMerchantService",
                         "GetAuthSettings",
                     ),
                 );
@@ -1501,13 +1501,13 @@ pub mod merchant_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.merchant.v1.MerchantAuthService/ListSecurityActivities",
+                "/identity.auth.merchant.v1.AuthMerchantService/ListSecurityActivities",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.auth.merchant.v1.MerchantAuthService",
+                        "identity.auth.merchant.v1.AuthMerchantService",
                         "ListSecurityActivities",
                     ),
                 );
@@ -1531,13 +1531,13 @@ pub mod merchant_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.merchant.v1.MerchantAuthService/ChangeEmail",
+                "/identity.auth.merchant.v1.AuthMerchantService/ChangeEmail",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.auth.merchant.v1.MerchantAuthService",
+                        "identity.auth.merchant.v1.AuthMerchantService",
                         "ChangeEmail",
                     ),
                 );
@@ -1560,13 +1560,13 @@ pub mod merchant_auth_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.auth.merchant.v1.MerchantAuthService/VerifyChangeEmail",
+                "/identity.auth.merchant.v1.AuthMerchantService/VerifyChangeEmail",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.auth.merchant.v1.MerchantAuthService",
+                        "identity.auth.merchant.v1.AuthMerchantService",
                         "VerifyChangeEmail",
                     ),
                 );
@@ -1575,7 +1575,7 @@ pub mod merchant_auth_service_client {
     }
 }
 /// Generated server implementations.
-pub mod merchant_auth_service_server {
+pub mod auth_merchant_service_server {
     #![allow(
         unused_variables,
         dead_code,
@@ -1584,9 +1584,9 @@ pub mod merchant_auth_service_server {
         clippy::let_unit_value,
     )]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with MerchantAuthServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with AuthMerchantServiceServer.
     #[async_trait]
-    pub trait MerchantAuthService: std::marker::Send + std::marker::Sync + 'static {
+    pub trait AuthMerchantService: std::marker::Send + std::marker::Sync + 'static {
         /// Login
         async fn login(
             &self,
@@ -1759,14 +1759,14 @@ pub mod merchant_auth_service_server {
         >;
     }
     #[derive(Debug)]
-    pub struct MerchantAuthServiceServer<T> {
+    pub struct AuthMerchantServiceServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T> MerchantAuthServiceServer<T> {
+    impl<T> AuthMerchantServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -1817,9 +1817,9 @@ pub mod merchant_auth_service_server {
             self
         }
     }
-    impl<T, B> tonic::codegen::Service<http::Request<B>> for MerchantAuthServiceServer<T>
+    impl<T, B> tonic::codegen::Service<http::Request<B>> for AuthMerchantServiceServer<T>
     where
-        T: MerchantAuthService,
+        T: AuthMerchantService,
         B: Body + std::marker::Send + 'static,
         B::Error: Into<StdError> + std::marker::Send + 'static,
     {
@@ -1834,11 +1834,11 @@ pub mod merchant_auth_service_server {
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             match req.uri().path() {
-                "/identity.auth.merchant.v1.MerchantAuthService/Login" => {
+                "/identity.auth.merchant.v1.AuthMerchantService/Login" => {
                     #[allow(non_camel_case_types)]
-                    struct LoginSvc<T: MerchantAuthService>(pub Arc<T>);
+                    struct LoginSvc<T: AuthMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantAuthService,
+                        T: AuthMerchantService,
                     > tonic::server::UnaryService<super::LoginRequest> for LoginSvc<T> {
                         type Response = super::LoginResponse;
                         type Future = BoxFuture<
@@ -1851,7 +1851,7 @@ pub mod merchant_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantAuthService>::login(&inner, request).await
+                                <T as AuthMerchantService>::login(&inner, request).await
                             };
                             Box::pin(fut)
                         }
@@ -1878,11 +1878,11 @@ pub mod merchant_auth_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.auth.merchant.v1.MerchantAuthService/VerifyLogin" => {
+                "/identity.auth.merchant.v1.AuthMerchantService/VerifyLogin" => {
                     #[allow(non_camel_case_types)]
-                    struct VerifyLoginSvc<T: MerchantAuthService>(pub Arc<T>);
+                    struct VerifyLoginSvc<T: AuthMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantAuthService,
+                        T: AuthMerchantService,
                     > tonic::server::UnaryService<super::VerifyLoginRequest>
                     for VerifyLoginSvc<T> {
                         type Response = super::VerifyLoginResponse;
@@ -1896,7 +1896,7 @@ pub mod merchant_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantAuthService>::verify_login(&inner, request)
+                                <T as AuthMerchantService>::verify_login(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -1924,11 +1924,11 @@ pub mod merchant_auth_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.auth.merchant.v1.MerchantAuthService/ResendLoginCode" => {
+                "/identity.auth.merchant.v1.AuthMerchantService/ResendLoginCode" => {
                     #[allow(non_camel_case_types)]
-                    struct ResendLoginCodeSvc<T: MerchantAuthService>(pub Arc<T>);
+                    struct ResendLoginCodeSvc<T: AuthMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantAuthService,
+                        T: AuthMerchantService,
                     > tonic::server::UnaryService<super::ResendLoginCodeRequest>
                     for ResendLoginCodeSvc<T> {
                         type Response = super::ResendLoginCodeResponse;
@@ -1942,7 +1942,7 @@ pub mod merchant_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantAuthService>::resend_login_code(
+                                <T as AuthMerchantService>::resend_login_code(
                                         &inner,
                                         request,
                                     )
@@ -1973,11 +1973,11 @@ pub mod merchant_auth_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.auth.merchant.v1.MerchantAuthService/RootLogin" => {
+                "/identity.auth.merchant.v1.AuthMerchantService/RootLogin" => {
                     #[allow(non_camel_case_types)]
-                    struct RootLoginSvc<T: MerchantAuthService>(pub Arc<T>);
+                    struct RootLoginSvc<T: AuthMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantAuthService,
+                        T: AuthMerchantService,
                     > tonic::server::UnaryService<super::RootLoginRequest>
                     for RootLoginSvc<T> {
                         type Response = super::RootLoginResponse;
@@ -1991,7 +1991,7 @@ pub mod merchant_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantAuthService>::root_login(&inner, request)
+                                <T as AuthMerchantService>::root_login(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -2019,11 +2019,11 @@ pub mod merchant_auth_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.auth.merchant.v1.MerchantAuthService/InitiatePasswordReset" => {
+                "/identity.auth.merchant.v1.AuthMerchantService/InitiatePasswordReset" => {
                     #[allow(non_camel_case_types)]
-                    struct InitiatePasswordResetSvc<T: MerchantAuthService>(pub Arc<T>);
+                    struct InitiatePasswordResetSvc<T: AuthMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantAuthService,
+                        T: AuthMerchantService,
                     > tonic::server::UnaryService<super::InitiatePasswordResetRequest>
                     for InitiatePasswordResetSvc<T> {
                         type Response = super::InitiatePasswordResetResponse;
@@ -2037,7 +2037,7 @@ pub mod merchant_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantAuthService>::initiate_password_reset(
+                                <T as AuthMerchantService>::initiate_password_reset(
                                         &inner,
                                         request,
                                     )
@@ -2068,13 +2068,13 @@ pub mod merchant_auth_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.auth.merchant.v1.MerchantAuthService/VerifyPasswordResetCode" => {
+                "/identity.auth.merchant.v1.AuthMerchantService/VerifyPasswordResetCode" => {
                     #[allow(non_camel_case_types)]
-                    struct VerifyPasswordResetCodeSvc<T: MerchantAuthService>(
+                    struct VerifyPasswordResetCodeSvc<T: AuthMerchantService>(
                         pub Arc<T>,
                     );
                     impl<
-                        T: MerchantAuthService,
+                        T: AuthMerchantService,
                     > tonic::server::UnaryService<super::VerifyPasswordResetCodeRequest>
                     for VerifyPasswordResetCodeSvc<T> {
                         type Response = super::VerifyPasswordResetCodeResponse;
@@ -2090,7 +2090,7 @@ pub mod merchant_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantAuthService>::verify_password_reset_code(
+                                <T as AuthMerchantService>::verify_password_reset_code(
                                         &inner,
                                         request,
                                     )
@@ -2121,13 +2121,13 @@ pub mod merchant_auth_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.auth.merchant.v1.MerchantAuthService/ResendPasswordResetCode" => {
+                "/identity.auth.merchant.v1.AuthMerchantService/ResendPasswordResetCode" => {
                     #[allow(non_camel_case_types)]
-                    struct ResendPasswordResetCodeSvc<T: MerchantAuthService>(
+                    struct ResendPasswordResetCodeSvc<T: AuthMerchantService>(
                         pub Arc<T>,
                     );
                     impl<
-                        T: MerchantAuthService,
+                        T: AuthMerchantService,
                     > tonic::server::UnaryService<super::ResendPasswordResetCodeRequest>
                     for ResendPasswordResetCodeSvc<T> {
                         type Response = super::ResendPasswordResetCodeResponse;
@@ -2143,7 +2143,7 @@ pub mod merchant_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantAuthService>::resend_password_reset_code(
+                                <T as AuthMerchantService>::resend_password_reset_code(
                                         &inner,
                                         request,
                                     )
@@ -2174,11 +2174,11 @@ pub mod merchant_auth_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.auth.merchant.v1.MerchantAuthService/CompletePasswordReset" => {
+                "/identity.auth.merchant.v1.AuthMerchantService/CompletePasswordReset" => {
                     #[allow(non_camel_case_types)]
-                    struct CompletePasswordResetSvc<T: MerchantAuthService>(pub Arc<T>);
+                    struct CompletePasswordResetSvc<T: AuthMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantAuthService,
+                        T: AuthMerchantService,
                     > tonic::server::UnaryService<super::CompletePasswordResetRequest>
                     for CompletePasswordResetSvc<T> {
                         type Response = super::CompletePasswordResetResponse;
@@ -2192,7 +2192,7 @@ pub mod merchant_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantAuthService>::complete_password_reset(
+                                <T as AuthMerchantService>::complete_password_reset(
                                         &inner,
                                         request,
                                     )
@@ -2223,11 +2223,11 @@ pub mod merchant_auth_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.auth.merchant.v1.MerchantAuthService/RefreshToken" => {
+                "/identity.auth.merchant.v1.AuthMerchantService/RefreshToken" => {
                     #[allow(non_camel_case_types)]
-                    struct RefreshTokenSvc<T: MerchantAuthService>(pub Arc<T>);
+                    struct RefreshTokenSvc<T: AuthMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantAuthService,
+                        T: AuthMerchantService,
                     > tonic::server::UnaryService<super::RefreshTokenRequest>
                     for RefreshTokenSvc<T> {
                         type Response = super::RefreshTokenResponse;
@@ -2241,7 +2241,7 @@ pub mod merchant_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantAuthService>::refresh_token(&inner, request)
+                                <T as AuthMerchantService>::refresh_token(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -2269,11 +2269,11 @@ pub mod merchant_auth_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.auth.merchant.v1.MerchantAuthService/Logout" => {
+                "/identity.auth.merchant.v1.AuthMerchantService/Logout" => {
                     #[allow(non_camel_case_types)]
-                    struct LogoutSvc<T: MerchantAuthService>(pub Arc<T>);
+                    struct LogoutSvc<T: AuthMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantAuthService,
+                        T: AuthMerchantService,
                     > tonic::server::UnaryService<super::LogoutRequest>
                     for LogoutSvc<T> {
                         type Response = super::LogoutResponse;
@@ -2287,7 +2287,7 @@ pub mod merchant_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantAuthService>::logout(&inner, request).await
+                                <T as AuthMerchantService>::logout(&inner, request).await
                             };
                             Box::pin(fut)
                         }
@@ -2314,11 +2314,11 @@ pub mod merchant_auth_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.auth.merchant.v1.MerchantAuthService/LoginWithGoogle" => {
+                "/identity.auth.merchant.v1.AuthMerchantService/LoginWithGoogle" => {
                     #[allow(non_camel_case_types)]
-                    struct LoginWithGoogleSvc<T: MerchantAuthService>(pub Arc<T>);
+                    struct LoginWithGoogleSvc<T: AuthMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantAuthService,
+                        T: AuthMerchantService,
                     > tonic::server::UnaryService<super::LoginWithGoogleRequest>
                     for LoginWithGoogleSvc<T> {
                         type Response = super::LoginWithGoogleResponse;
@@ -2332,7 +2332,7 @@ pub mod merchant_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantAuthService>::login_with_google(
+                                <T as AuthMerchantService>::login_with_google(
                                         &inner,
                                         request,
                                     )
@@ -2363,11 +2363,11 @@ pub mod merchant_auth_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.auth.merchant.v1.MerchantAuthService/LoginWithGithub" => {
+                "/identity.auth.merchant.v1.AuthMerchantService/LoginWithGithub" => {
                     #[allow(non_camel_case_types)]
-                    struct LoginWithGithubSvc<T: MerchantAuthService>(pub Arc<T>);
+                    struct LoginWithGithubSvc<T: AuthMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantAuthService,
+                        T: AuthMerchantService,
                     > tonic::server::UnaryService<super::LoginWithGithubRequest>
                     for LoginWithGithubSvc<T> {
                         type Response = super::LoginWithGithubResponse;
@@ -2381,7 +2381,7 @@ pub mod merchant_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantAuthService>::login_with_github(
+                                <T as AuthMerchantService>::login_with_github(
                                         &inner,
                                         request,
                                     )
@@ -2412,11 +2412,11 @@ pub mod merchant_auth_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.auth.merchant.v1.MerchantAuthService/LinkOAuthProvider" => {
+                "/identity.auth.merchant.v1.AuthMerchantService/LinkOAuthProvider" => {
                     #[allow(non_camel_case_types)]
-                    struct LinkOAuthProviderSvc<T: MerchantAuthService>(pub Arc<T>);
+                    struct LinkOAuthProviderSvc<T: AuthMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantAuthService,
+                        T: AuthMerchantService,
                     > tonic::server::UnaryService<super::LinkOAuthProviderRequest>
                     for LinkOAuthProviderSvc<T> {
                         type Response = super::LinkOAuthProviderResponse;
@@ -2430,7 +2430,7 @@ pub mod merchant_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantAuthService>::link_o_auth_provider(
+                                <T as AuthMerchantService>::link_o_auth_provider(
                                         &inner,
                                         request,
                                     )
@@ -2461,11 +2461,11 @@ pub mod merchant_auth_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.auth.merchant.v1.MerchantAuthService/UnlinkOAuthProvider" => {
+                "/identity.auth.merchant.v1.AuthMerchantService/UnlinkOAuthProvider" => {
                     #[allow(non_camel_case_types)]
-                    struct UnlinkOAuthProviderSvc<T: MerchantAuthService>(pub Arc<T>);
+                    struct UnlinkOAuthProviderSvc<T: AuthMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantAuthService,
+                        T: AuthMerchantService,
                     > tonic::server::UnaryService<super::UnlinkOAuthProviderRequest>
                     for UnlinkOAuthProviderSvc<T> {
                         type Response = super::UnlinkOAuthProviderResponse;
@@ -2479,7 +2479,7 @@ pub mod merchant_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantAuthService>::unlink_o_auth_provider(
+                                <T as AuthMerchantService>::unlink_o_auth_provider(
                                         &inner,
                                         request,
                                     )
@@ -2510,11 +2510,11 @@ pub mod merchant_auth_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.auth.merchant.v1.MerchantAuthService/ChangePassword" => {
+                "/identity.auth.merchant.v1.AuthMerchantService/ChangePassword" => {
                     #[allow(non_camel_case_types)]
-                    struct ChangePasswordSvc<T: MerchantAuthService>(pub Arc<T>);
+                    struct ChangePasswordSvc<T: AuthMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantAuthService,
+                        T: AuthMerchantService,
                     > tonic::server::UnaryService<super::ChangePasswordRequest>
                     for ChangePasswordSvc<T> {
                         type Response = super::ChangePasswordResponse;
@@ -2528,7 +2528,7 @@ pub mod merchant_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantAuthService>::change_password(&inner, request)
+                                <T as AuthMerchantService>::change_password(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -2556,11 +2556,11 @@ pub mod merchant_auth_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.auth.merchant.v1.MerchantAuthService/SetupPassword" => {
+                "/identity.auth.merchant.v1.AuthMerchantService/SetupPassword" => {
                     #[allow(non_camel_case_types)]
-                    struct SetupPasswordSvc<T: MerchantAuthService>(pub Arc<T>);
+                    struct SetupPasswordSvc<T: AuthMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantAuthService,
+                        T: AuthMerchantService,
                     > tonic::server::UnaryService<super::SetupPasswordRequest>
                     for SetupPasswordSvc<T> {
                         type Response = super::SetupPasswordResponse;
@@ -2574,7 +2574,7 @@ pub mod merchant_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantAuthService>::setup_password(&inner, request)
+                                <T as AuthMerchantService>::setup_password(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -2602,11 +2602,11 @@ pub mod merchant_auth_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.auth.merchant.v1.MerchantAuthService/InitiateTwoFactorSetup" => {
+                "/identity.auth.merchant.v1.AuthMerchantService/InitiateTwoFactorSetup" => {
                     #[allow(non_camel_case_types)]
-                    struct InitiateTwoFactorSetupSvc<T: MerchantAuthService>(pub Arc<T>);
+                    struct InitiateTwoFactorSetupSvc<T: AuthMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantAuthService,
+                        T: AuthMerchantService,
                     > tonic::server::UnaryService<super::InitiateTwoFactorSetupRequest>
                     for InitiateTwoFactorSetupSvc<T> {
                         type Response = super::InitiateTwoFactorSetupResponse;
@@ -2620,7 +2620,7 @@ pub mod merchant_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantAuthService>::initiate_two_factor_setup(
+                                <T as AuthMerchantService>::initiate_two_factor_setup(
                                         &inner,
                                         request,
                                     )
@@ -2651,11 +2651,11 @@ pub mod merchant_auth_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.auth.merchant.v1.MerchantAuthService/VerifyTwoFactorSetup" => {
+                "/identity.auth.merchant.v1.AuthMerchantService/VerifyTwoFactorSetup" => {
                     #[allow(non_camel_case_types)]
-                    struct VerifyTwoFactorSetupSvc<T: MerchantAuthService>(pub Arc<T>);
+                    struct VerifyTwoFactorSetupSvc<T: AuthMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantAuthService,
+                        T: AuthMerchantService,
                     > tonic::server::UnaryService<super::VerifyTwoFactorSetupRequest>
                     for VerifyTwoFactorSetupSvc<T> {
                         type Response = super::VerifyTwoFactorSetupResponse;
@@ -2669,7 +2669,7 @@ pub mod merchant_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantAuthService>::verify_two_factor_setup(
+                                <T as AuthMerchantService>::verify_two_factor_setup(
                                         &inner,
                                         request,
                                     )
@@ -2700,11 +2700,11 @@ pub mod merchant_auth_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.auth.merchant.v1.MerchantAuthService/DisableTwoFactor" => {
+                "/identity.auth.merchant.v1.AuthMerchantService/DisableTwoFactor" => {
                     #[allow(non_camel_case_types)]
-                    struct DisableTwoFactorSvc<T: MerchantAuthService>(pub Arc<T>);
+                    struct DisableTwoFactorSvc<T: AuthMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantAuthService,
+                        T: AuthMerchantService,
                     > tonic::server::UnaryService<super::DisableTwoFactorRequest>
                     for DisableTwoFactorSvc<T> {
                         type Response = super::DisableTwoFactorResponse;
@@ -2718,7 +2718,7 @@ pub mod merchant_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantAuthService>::disable_two_factor(
+                                <T as AuthMerchantService>::disable_two_factor(
                                         &inner,
                                         request,
                                     )
@@ -2749,13 +2749,13 @@ pub mod merchant_auth_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.auth.merchant.v1.MerchantAuthService/RegenerateRecoveryCodes" => {
+                "/identity.auth.merchant.v1.AuthMerchantService/RegenerateRecoveryCodes" => {
                     #[allow(non_camel_case_types)]
-                    struct RegenerateRecoveryCodesSvc<T: MerchantAuthService>(
+                    struct RegenerateRecoveryCodesSvc<T: AuthMerchantService>(
                         pub Arc<T>,
                     );
                     impl<
-                        T: MerchantAuthService,
+                        T: AuthMerchantService,
                     > tonic::server::UnaryService<super::RegenerateRecoveryCodesRequest>
                     for RegenerateRecoveryCodesSvc<T> {
                         type Response = super::RegenerateRecoveryCodesResponse;
@@ -2771,7 +2771,7 @@ pub mod merchant_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantAuthService>::regenerate_recovery_codes(
+                                <T as AuthMerchantService>::regenerate_recovery_codes(
                                         &inner,
                                         request,
                                     )
@@ -2802,11 +2802,11 @@ pub mod merchant_auth_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.auth.merchant.v1.MerchantAuthService/GetAuthSettings" => {
+                "/identity.auth.merchant.v1.AuthMerchantService/GetAuthSettings" => {
                     #[allow(non_camel_case_types)]
-                    struct GetAuthSettingsSvc<T: MerchantAuthService>(pub Arc<T>);
+                    struct GetAuthSettingsSvc<T: AuthMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantAuthService,
+                        T: AuthMerchantService,
                     > tonic::server::UnaryService<super::GetAuthSettingsRequest>
                     for GetAuthSettingsSvc<T> {
                         type Response = super::GetAuthSettingsResponse;
@@ -2820,7 +2820,7 @@ pub mod merchant_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantAuthService>::get_auth_settings(
+                                <T as AuthMerchantService>::get_auth_settings(
                                         &inner,
                                         request,
                                     )
@@ -2851,11 +2851,11 @@ pub mod merchant_auth_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.auth.merchant.v1.MerchantAuthService/ListSecurityActivities" => {
+                "/identity.auth.merchant.v1.AuthMerchantService/ListSecurityActivities" => {
                     #[allow(non_camel_case_types)]
-                    struct ListSecurityActivitiesSvc<T: MerchantAuthService>(pub Arc<T>);
+                    struct ListSecurityActivitiesSvc<T: AuthMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantAuthService,
+                        T: AuthMerchantService,
                     > tonic::server::UnaryService<super::ListSecurityActivitiesRequest>
                     for ListSecurityActivitiesSvc<T> {
                         type Response = super::ListSecurityActivitiesResponse;
@@ -2869,7 +2869,7 @@ pub mod merchant_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantAuthService>::list_security_activities(
+                                <T as AuthMerchantService>::list_security_activities(
                                         &inner,
                                         request,
                                     )
@@ -2900,11 +2900,11 @@ pub mod merchant_auth_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.auth.merchant.v1.MerchantAuthService/ChangeEmail" => {
+                "/identity.auth.merchant.v1.AuthMerchantService/ChangeEmail" => {
                     #[allow(non_camel_case_types)]
-                    struct ChangeEmailSvc<T: MerchantAuthService>(pub Arc<T>);
+                    struct ChangeEmailSvc<T: AuthMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantAuthService,
+                        T: AuthMerchantService,
                     > tonic::server::UnaryService<super::ChangeEmailRequest>
                     for ChangeEmailSvc<T> {
                         type Response = super::ChangeEmailResponse;
@@ -2918,7 +2918,7 @@ pub mod merchant_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantAuthService>::change_email(&inner, request)
+                                <T as AuthMerchantService>::change_email(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -2946,11 +2946,11 @@ pub mod merchant_auth_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.auth.merchant.v1.MerchantAuthService/VerifyChangeEmail" => {
+                "/identity.auth.merchant.v1.AuthMerchantService/VerifyChangeEmail" => {
                     #[allow(non_camel_case_types)]
-                    struct VerifyChangeEmailSvc<T: MerchantAuthService>(pub Arc<T>);
+                    struct VerifyChangeEmailSvc<T: AuthMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantAuthService,
+                        T: AuthMerchantService,
                     > tonic::server::UnaryService<super::VerifyChangeEmailRequest>
                     for VerifyChangeEmailSvc<T> {
                         type Response = super::VerifyChangeEmailResponse;
@@ -2964,7 +2964,7 @@ pub mod merchant_auth_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantAuthService>::verify_change_email(
+                                <T as AuthMerchantService>::verify_change_email(
                                         &inner,
                                         request,
                                     )
@@ -3017,7 +3017,7 @@ pub mod merchant_auth_service_server {
             }
         }
     }
-    impl<T> Clone for MerchantAuthServiceServer<T> {
+    impl<T> Clone for AuthMerchantServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -3030,8 +3030,8 @@ pub mod merchant_auth_service_server {
         }
     }
     /// Generated gRPC service name
-    pub const SERVICE_NAME: &str = "identity.auth.merchant.v1.MerchantAuthService";
-    impl<T> tonic::server::NamedService for MerchantAuthServiceServer<T> {
+    pub const SERVICE_NAME: &str = "identity.auth.merchant.v1.AuthMerchantService";
+    impl<T> tonic::server::NamedService for AuthMerchantServiceServer<T> {
         const NAME: &'static str = SERVICE_NAME;
     }
 }

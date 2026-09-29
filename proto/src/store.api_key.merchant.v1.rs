@@ -228,7 +228,7 @@ impl ::prost::Name for RotateApiKeySecretResponse {
     }
 }
 /// Generated client implementations.
-pub mod merchant_api_key_service_client {
+pub mod api_key_merchant_service_client {
     #![allow(
         unused_variables,
         dead_code,
@@ -239,10 +239,10 @@ pub mod merchant_api_key_service_client {
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
-    pub struct MerchantApiKeyServiceClient<T> {
+    pub struct ApiKeyMerchantServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl MerchantApiKeyServiceClient<tonic::transport::Channel> {
+    impl ApiKeyMerchantServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -253,7 +253,7 @@ pub mod merchant_api_key_service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> MerchantApiKeyServiceClient<T>
+    impl<T> ApiKeyMerchantServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
@@ -271,7 +271,7 @@ pub mod merchant_api_key_service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> MerchantApiKeyServiceClient<InterceptedService<T, F>>
+        ) -> ApiKeyMerchantServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -285,7 +285,7 @@ pub mod merchant_api_key_service_client {
                 http::Request<tonic::body::Body>,
             >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
-            MerchantApiKeyServiceClient::new(InterceptedService::new(inner, interceptor))
+            ApiKeyMerchantServiceClient::new(InterceptedService::new(inner, interceptor))
         }
         /// Compress requests with the given encoding.
         ///
@@ -335,13 +335,13 @@ pub mod merchant_api_key_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/store.api_key.merchant.v1.MerchantApiKeyService/GetApiKey",
+                "/store.api_key.merchant.v1.ApiKeyMerchantService/GetApiKey",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "store.api_key.merchant.v1.MerchantApiKeyService",
+                        "store.api_key.merchant.v1.ApiKeyMerchantService",
                         "GetApiKey",
                     ),
                 );
@@ -364,13 +364,13 @@ pub mod merchant_api_key_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/store.api_key.merchant.v1.MerchantApiKeyService/ListApiKeys",
+                "/store.api_key.merchant.v1.ApiKeyMerchantService/ListApiKeys",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "store.api_key.merchant.v1.MerchantApiKeyService",
+                        "store.api_key.merchant.v1.ApiKeyMerchantService",
                         "ListApiKeys",
                     ),
                 );
@@ -393,13 +393,13 @@ pub mod merchant_api_key_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/store.api_key.merchant.v1.MerchantApiKeyService/CreateApiKey",
+                "/store.api_key.merchant.v1.ApiKeyMerchantService/CreateApiKey",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "store.api_key.merchant.v1.MerchantApiKeyService",
+                        "store.api_key.merchant.v1.ApiKeyMerchantService",
                         "CreateApiKey",
                     ),
                 );
@@ -422,13 +422,13 @@ pub mod merchant_api_key_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/store.api_key.merchant.v1.MerchantApiKeyService/UpdateApiKey",
+                "/store.api_key.merchant.v1.ApiKeyMerchantService/UpdateApiKey",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "store.api_key.merchant.v1.MerchantApiKeyService",
+                        "store.api_key.merchant.v1.ApiKeyMerchantService",
                         "UpdateApiKey",
                     ),
                 );
@@ -451,13 +451,13 @@ pub mod merchant_api_key_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/store.api_key.merchant.v1.MerchantApiKeyService/RevokeApiKey",
+                "/store.api_key.merchant.v1.ApiKeyMerchantService/RevokeApiKey",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "store.api_key.merchant.v1.MerchantApiKeyService",
+                        "store.api_key.merchant.v1.ApiKeyMerchantService",
                         "RevokeApiKey",
                     ),
                 );
@@ -480,13 +480,13 @@ pub mod merchant_api_key_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/store.api_key.merchant.v1.MerchantApiKeyService/RotateApiKeySecret",
+                "/store.api_key.merchant.v1.ApiKeyMerchantService/RotateApiKeySecret",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "store.api_key.merchant.v1.MerchantApiKeyService",
+                        "store.api_key.merchant.v1.ApiKeyMerchantService",
                         "RotateApiKeySecret",
                     ),
                 );
@@ -495,7 +495,7 @@ pub mod merchant_api_key_service_client {
     }
 }
 /// Generated server implementations.
-pub mod merchant_api_key_service_server {
+pub mod api_key_merchant_service_server {
     #![allow(
         unused_variables,
         dead_code,
@@ -504,9 +504,9 @@ pub mod merchant_api_key_service_server {
         clippy::let_unit_value,
     )]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with MerchantApiKeyServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with ApiKeyMerchantServiceServer.
     #[async_trait]
-    pub trait MerchantApiKeyService: std::marker::Send + std::marker::Sync + 'static {
+    pub trait ApiKeyMerchantService: std::marker::Send + std::marker::Sync + 'static {
         async fn get_api_key(
             &self,
             request: tonic::Request<super::GetApiKeyRequest>,
@@ -551,14 +551,14 @@ pub mod merchant_api_key_service_server {
         >;
     }
     #[derive(Debug)]
-    pub struct MerchantApiKeyServiceServer<T> {
+    pub struct ApiKeyMerchantServiceServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T> MerchantApiKeyServiceServer<T> {
+    impl<T> ApiKeyMerchantServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -610,9 +610,9 @@ pub mod merchant_api_key_service_server {
         }
     }
     impl<T, B> tonic::codegen::Service<http::Request<B>>
-    for MerchantApiKeyServiceServer<T>
+    for ApiKeyMerchantServiceServer<T>
     where
-        T: MerchantApiKeyService,
+        T: ApiKeyMerchantService,
         B: Body + std::marker::Send + 'static,
         B::Error: Into<StdError> + std::marker::Send + 'static,
     {
@@ -627,11 +627,11 @@ pub mod merchant_api_key_service_server {
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             match req.uri().path() {
-                "/store.api_key.merchant.v1.MerchantApiKeyService/GetApiKey" => {
+                "/store.api_key.merchant.v1.ApiKeyMerchantService/GetApiKey" => {
                     #[allow(non_camel_case_types)]
-                    struct GetApiKeySvc<T: MerchantApiKeyService>(pub Arc<T>);
+                    struct GetApiKeySvc<T: ApiKeyMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantApiKeyService,
+                        T: ApiKeyMerchantService,
                     > tonic::server::UnaryService<super::GetApiKeyRequest>
                     for GetApiKeySvc<T> {
                         type Response = super::GetApiKeyResponse;
@@ -645,7 +645,7 @@ pub mod merchant_api_key_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantApiKeyService>::get_api_key(&inner, request)
+                                <T as ApiKeyMerchantService>::get_api_key(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -673,11 +673,11 @@ pub mod merchant_api_key_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/store.api_key.merchant.v1.MerchantApiKeyService/ListApiKeys" => {
+                "/store.api_key.merchant.v1.ApiKeyMerchantService/ListApiKeys" => {
                     #[allow(non_camel_case_types)]
-                    struct ListApiKeysSvc<T: MerchantApiKeyService>(pub Arc<T>);
+                    struct ListApiKeysSvc<T: ApiKeyMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantApiKeyService,
+                        T: ApiKeyMerchantService,
                     > tonic::server::UnaryService<super::ListApiKeysRequest>
                     for ListApiKeysSvc<T> {
                         type Response = super::ListApiKeysResponse;
@@ -691,7 +691,7 @@ pub mod merchant_api_key_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantApiKeyService>::list_api_keys(&inner, request)
+                                <T as ApiKeyMerchantService>::list_api_keys(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -719,11 +719,11 @@ pub mod merchant_api_key_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/store.api_key.merchant.v1.MerchantApiKeyService/CreateApiKey" => {
+                "/store.api_key.merchant.v1.ApiKeyMerchantService/CreateApiKey" => {
                     #[allow(non_camel_case_types)]
-                    struct CreateApiKeySvc<T: MerchantApiKeyService>(pub Arc<T>);
+                    struct CreateApiKeySvc<T: ApiKeyMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantApiKeyService,
+                        T: ApiKeyMerchantService,
                     > tonic::server::UnaryService<super::CreateApiKeyRequest>
                     for CreateApiKeySvc<T> {
                         type Response = super::CreateApiKeyResponse;
@@ -737,7 +737,7 @@ pub mod merchant_api_key_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantApiKeyService>::create_api_key(
+                                <T as ApiKeyMerchantService>::create_api_key(
                                         &inner,
                                         request,
                                     )
@@ -768,11 +768,11 @@ pub mod merchant_api_key_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/store.api_key.merchant.v1.MerchantApiKeyService/UpdateApiKey" => {
+                "/store.api_key.merchant.v1.ApiKeyMerchantService/UpdateApiKey" => {
                     #[allow(non_camel_case_types)]
-                    struct UpdateApiKeySvc<T: MerchantApiKeyService>(pub Arc<T>);
+                    struct UpdateApiKeySvc<T: ApiKeyMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantApiKeyService,
+                        T: ApiKeyMerchantService,
                     > tonic::server::UnaryService<super::UpdateApiKeyRequest>
                     for UpdateApiKeySvc<T> {
                         type Response = super::UpdateApiKeyResponse;
@@ -786,7 +786,7 @@ pub mod merchant_api_key_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantApiKeyService>::update_api_key(
+                                <T as ApiKeyMerchantService>::update_api_key(
                                         &inner,
                                         request,
                                     )
@@ -817,11 +817,11 @@ pub mod merchant_api_key_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/store.api_key.merchant.v1.MerchantApiKeyService/RevokeApiKey" => {
+                "/store.api_key.merchant.v1.ApiKeyMerchantService/RevokeApiKey" => {
                     #[allow(non_camel_case_types)]
-                    struct RevokeApiKeySvc<T: MerchantApiKeyService>(pub Arc<T>);
+                    struct RevokeApiKeySvc<T: ApiKeyMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantApiKeyService,
+                        T: ApiKeyMerchantService,
                     > tonic::server::UnaryService<super::RevokeApiKeyRequest>
                     for RevokeApiKeySvc<T> {
                         type Response = super::RevokeApiKeyResponse;
@@ -835,7 +835,7 @@ pub mod merchant_api_key_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantApiKeyService>::revoke_api_key(
+                                <T as ApiKeyMerchantService>::revoke_api_key(
                                         &inner,
                                         request,
                                     )
@@ -866,11 +866,11 @@ pub mod merchant_api_key_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/store.api_key.merchant.v1.MerchantApiKeyService/RotateApiKeySecret" => {
+                "/store.api_key.merchant.v1.ApiKeyMerchantService/RotateApiKeySecret" => {
                     #[allow(non_camel_case_types)]
-                    struct RotateApiKeySecretSvc<T: MerchantApiKeyService>(pub Arc<T>);
+                    struct RotateApiKeySecretSvc<T: ApiKeyMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantApiKeyService,
+                        T: ApiKeyMerchantService,
                     > tonic::server::UnaryService<super::RotateApiKeySecretRequest>
                     for RotateApiKeySecretSvc<T> {
                         type Response = super::RotateApiKeySecretResponse;
@@ -884,7 +884,7 @@ pub mod merchant_api_key_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantApiKeyService>::rotate_api_key_secret(
+                                <T as ApiKeyMerchantService>::rotate_api_key_secret(
                                         &inner,
                                         request,
                                     )
@@ -937,7 +937,7 @@ pub mod merchant_api_key_service_server {
             }
         }
     }
-    impl<T> Clone for MerchantApiKeyServiceServer<T> {
+    impl<T> Clone for ApiKeyMerchantServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -950,8 +950,8 @@ pub mod merchant_api_key_service_server {
         }
     }
     /// Generated gRPC service name
-    pub const SERVICE_NAME: &str = "store.api_key.merchant.v1.MerchantApiKeyService";
-    impl<T> tonic::server::NamedService for MerchantApiKeyServiceServer<T> {
+    pub const SERVICE_NAME: &str = "store.api_key.merchant.v1.ApiKeyMerchantService";
+    impl<T> tonic::server::NamedService for ApiKeyMerchantServiceServer<T> {
         const NAME: &'static str = SERVICE_NAME;
     }
 }

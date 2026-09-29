@@ -123,7 +123,7 @@ impl ::prost::Name for ListPayoutBatchesResponse {
     }
 }
 /// Generated client implementations.
-pub mod admin_payout_batch_service_client {
+pub mod payout_batch_admin_service_client {
     #![allow(
         unused_variables,
         dead_code,
@@ -134,10 +134,10 @@ pub mod admin_payout_batch_service_client {
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
-    pub struct AdminPayoutBatchServiceClient<T> {
+    pub struct PayoutBatchAdminServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl AdminPayoutBatchServiceClient<tonic::transport::Channel> {
+    impl PayoutBatchAdminServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -148,7 +148,7 @@ pub mod admin_payout_batch_service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> AdminPayoutBatchServiceClient<T>
+    impl<T> PayoutBatchAdminServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
@@ -166,7 +166,7 @@ pub mod admin_payout_batch_service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> AdminPayoutBatchServiceClient<InterceptedService<T, F>>
+        ) -> PayoutBatchAdminServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -180,7 +180,7 @@ pub mod admin_payout_batch_service_client {
                 http::Request<tonic::body::Body>,
             >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
-            AdminPayoutBatchServiceClient::new(
+            PayoutBatchAdminServiceClient::new(
                 InterceptedService::new(inner, interceptor),
             )
         }
@@ -232,13 +232,13 @@ pub mod admin_payout_batch_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/payout.batch.admin.v1.AdminPayoutBatchService/GetPayoutBatch",
+                "/payout.batch.admin.v1.PayoutBatchAdminService/GetPayoutBatch",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "payout.batch.admin.v1.AdminPayoutBatchService",
+                        "payout.batch.admin.v1.PayoutBatchAdminService",
                         "GetPayoutBatch",
                     ),
                 );
@@ -261,13 +261,13 @@ pub mod admin_payout_batch_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/payout.batch.admin.v1.AdminPayoutBatchService/ListPayoutBatches",
+                "/payout.batch.admin.v1.PayoutBatchAdminService/ListPayoutBatches",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "payout.batch.admin.v1.AdminPayoutBatchService",
+                        "payout.batch.admin.v1.PayoutBatchAdminService",
                         "ListPayoutBatches",
                     ),
                 );
@@ -276,7 +276,7 @@ pub mod admin_payout_batch_service_client {
     }
 }
 /// Generated server implementations.
-pub mod admin_payout_batch_service_server {
+pub mod payout_batch_admin_service_server {
     #![allow(
         unused_variables,
         dead_code,
@@ -285,9 +285,9 @@ pub mod admin_payout_batch_service_server {
         clippy::let_unit_value,
     )]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with AdminPayoutBatchServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with PayoutBatchAdminServiceServer.
     #[async_trait]
-    pub trait AdminPayoutBatchService: std::marker::Send + std::marker::Sync + 'static {
+    pub trait PayoutBatchAdminService: std::marker::Send + std::marker::Sync + 'static {
         async fn get_payout_batch(
             &self,
             request: tonic::Request<super::GetPayoutBatchRequest>,
@@ -304,14 +304,14 @@ pub mod admin_payout_batch_service_server {
         >;
     }
     #[derive(Debug)]
-    pub struct AdminPayoutBatchServiceServer<T> {
+    pub struct PayoutBatchAdminServiceServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T> AdminPayoutBatchServiceServer<T> {
+    impl<T> PayoutBatchAdminServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -363,9 +363,9 @@ pub mod admin_payout_batch_service_server {
         }
     }
     impl<T, B> tonic::codegen::Service<http::Request<B>>
-    for AdminPayoutBatchServiceServer<T>
+    for PayoutBatchAdminServiceServer<T>
     where
-        T: AdminPayoutBatchService,
+        T: PayoutBatchAdminService,
         B: Body + std::marker::Send + 'static,
         B::Error: Into<StdError> + std::marker::Send + 'static,
     {
@@ -380,11 +380,11 @@ pub mod admin_payout_batch_service_server {
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             match req.uri().path() {
-                "/payout.batch.admin.v1.AdminPayoutBatchService/GetPayoutBatch" => {
+                "/payout.batch.admin.v1.PayoutBatchAdminService/GetPayoutBatch" => {
                     #[allow(non_camel_case_types)]
-                    struct GetPayoutBatchSvc<T: AdminPayoutBatchService>(pub Arc<T>);
+                    struct GetPayoutBatchSvc<T: PayoutBatchAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminPayoutBatchService,
+                        T: PayoutBatchAdminService,
                     > tonic::server::UnaryService<super::GetPayoutBatchRequest>
                     for GetPayoutBatchSvc<T> {
                         type Response = super::GetPayoutBatchResponse;
@@ -398,7 +398,7 @@ pub mod admin_payout_batch_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminPayoutBatchService>::get_payout_batch(
+                                <T as PayoutBatchAdminService>::get_payout_batch(
                                         &inner,
                                         request,
                                     )
@@ -429,11 +429,11 @@ pub mod admin_payout_batch_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/payout.batch.admin.v1.AdminPayoutBatchService/ListPayoutBatches" => {
+                "/payout.batch.admin.v1.PayoutBatchAdminService/ListPayoutBatches" => {
                     #[allow(non_camel_case_types)]
-                    struct ListPayoutBatchesSvc<T: AdminPayoutBatchService>(pub Arc<T>);
+                    struct ListPayoutBatchesSvc<T: PayoutBatchAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminPayoutBatchService,
+                        T: PayoutBatchAdminService,
                     > tonic::server::UnaryService<super::ListPayoutBatchesRequest>
                     for ListPayoutBatchesSvc<T> {
                         type Response = super::ListPayoutBatchesResponse;
@@ -447,7 +447,7 @@ pub mod admin_payout_batch_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminPayoutBatchService>::list_payout_batches(
+                                <T as PayoutBatchAdminService>::list_payout_batches(
                                         &inner,
                                         request,
                                     )
@@ -500,7 +500,7 @@ pub mod admin_payout_batch_service_server {
             }
         }
     }
-    impl<T> Clone for AdminPayoutBatchServiceServer<T> {
+    impl<T> Clone for PayoutBatchAdminServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -513,8 +513,8 @@ pub mod admin_payout_batch_service_server {
         }
     }
     /// Generated gRPC service name
-    pub const SERVICE_NAME: &str = "payout.batch.admin.v1.AdminPayoutBatchService";
-    impl<T> tonic::server::NamedService for AdminPayoutBatchServiceServer<T> {
+    pub const SERVICE_NAME: &str = "payout.batch.admin.v1.PayoutBatchAdminService";
+    impl<T> tonic::server::NamedService for PayoutBatchAdminServiceServer<T> {
         const NAME: &'static str = SERVICE_NAME;
     }
 }

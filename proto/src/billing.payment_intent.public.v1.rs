@@ -132,7 +132,7 @@ impl ::prost::Name for CreatePaymentIntentResponse {
     }
 }
 /// Generated client implementations.
-pub mod payment_intent_service_client {
+pub mod payment_intent_public_service_client {
     #![allow(
         unused_variables,
         dead_code,
@@ -143,10 +143,10 @@ pub mod payment_intent_service_client {
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
-    pub struct PaymentIntentServiceClient<T> {
+    pub struct PaymentIntentPublicServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl PaymentIntentServiceClient<tonic::transport::Channel> {
+    impl PaymentIntentPublicServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -157,7 +157,7 @@ pub mod payment_intent_service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> PaymentIntentServiceClient<T>
+    impl<T> PaymentIntentPublicServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
@@ -175,7 +175,7 @@ pub mod payment_intent_service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> PaymentIntentServiceClient<InterceptedService<T, F>>
+        ) -> PaymentIntentPublicServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -189,7 +189,9 @@ pub mod payment_intent_service_client {
                 http::Request<tonic::body::Body>,
             >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
-            PaymentIntentServiceClient::new(InterceptedService::new(inner, interceptor))
+            PaymentIntentPublicServiceClient::new(
+                InterceptedService::new(inner, interceptor),
+            )
         }
         /// Compress requests with the given encoding.
         ///
@@ -240,13 +242,13 @@ pub mod payment_intent_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/billing.payment_intent.public.v1.PaymentIntentService/GetPaymentIntent",
+                "/billing.payment_intent.public.v1.PaymentIntentPublicService/GetPaymentIntent",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "billing.payment_intent.public.v1.PaymentIntentService",
+                        "billing.payment_intent.public.v1.PaymentIntentPublicService",
                         "GetPaymentIntent",
                     ),
                 );
@@ -270,13 +272,13 @@ pub mod payment_intent_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/billing.payment_intent.public.v1.PaymentIntentService/CreatePaymentIntent",
+                "/billing.payment_intent.public.v1.PaymentIntentPublicService/CreatePaymentIntent",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "billing.payment_intent.public.v1.PaymentIntentService",
+                        "billing.payment_intent.public.v1.PaymentIntentPublicService",
                         "CreatePaymentIntent",
                     ),
                 );
@@ -285,7 +287,7 @@ pub mod payment_intent_service_client {
     }
 }
 /// Generated server implementations.
-pub mod payment_intent_service_server {
+pub mod payment_intent_public_service_server {
     #![allow(
         unused_variables,
         dead_code,
@@ -294,9 +296,9 @@ pub mod payment_intent_service_server {
         clippy::let_unit_value,
     )]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with PaymentIntentServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with PaymentIntentPublicServiceServer.
     #[async_trait]
-    pub trait PaymentIntentService: std::marker::Send + std::marker::Sync + 'static {
+    pub trait PaymentIntentPublicService: std::marker::Send + std::marker::Sync + 'static {
         /// / Get a specific payment by ID
         async fn get_payment_intent(
             &self,
@@ -315,14 +317,14 @@ pub mod payment_intent_service_server {
         >;
     }
     #[derive(Debug)]
-    pub struct PaymentIntentServiceServer<T> {
+    pub struct PaymentIntentPublicServiceServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T> PaymentIntentServiceServer<T> {
+    impl<T> PaymentIntentPublicServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -374,9 +376,9 @@ pub mod payment_intent_service_server {
         }
     }
     impl<T, B> tonic::codegen::Service<http::Request<B>>
-    for PaymentIntentServiceServer<T>
+    for PaymentIntentPublicServiceServer<T>
     where
-        T: PaymentIntentService,
+        T: PaymentIntentPublicService,
         B: Body + std::marker::Send + 'static,
         B::Error: Into<StdError> + std::marker::Send + 'static,
     {
@@ -391,11 +393,13 @@ pub mod payment_intent_service_server {
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             match req.uri().path() {
-                "/billing.payment_intent.public.v1.PaymentIntentService/GetPaymentIntent" => {
+                "/billing.payment_intent.public.v1.PaymentIntentPublicService/GetPaymentIntent" => {
                     #[allow(non_camel_case_types)]
-                    struct GetPaymentIntentSvc<T: PaymentIntentService>(pub Arc<T>);
+                    struct GetPaymentIntentSvc<T: PaymentIntentPublicService>(
+                        pub Arc<T>,
+                    );
                     impl<
-                        T: PaymentIntentService,
+                        T: PaymentIntentPublicService,
                     > tonic::server::UnaryService<super::GetPaymentIntentRequest>
                     for GetPaymentIntentSvc<T> {
                         type Response = super::GetPaymentIntentResponse;
@@ -409,7 +413,7 @@ pub mod payment_intent_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as PaymentIntentService>::get_payment_intent(
+                                <T as PaymentIntentPublicService>::get_payment_intent(
                                         &inner,
                                         request,
                                     )
@@ -440,11 +444,13 @@ pub mod payment_intent_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/billing.payment_intent.public.v1.PaymentIntentService/CreatePaymentIntent" => {
+                "/billing.payment_intent.public.v1.PaymentIntentPublicService/CreatePaymentIntent" => {
                     #[allow(non_camel_case_types)]
-                    struct CreatePaymentIntentSvc<T: PaymentIntentService>(pub Arc<T>);
+                    struct CreatePaymentIntentSvc<T: PaymentIntentPublicService>(
+                        pub Arc<T>,
+                    );
                     impl<
-                        T: PaymentIntentService,
+                        T: PaymentIntentPublicService,
                     > tonic::server::UnaryService<super::CreatePaymentIntentRequest>
                     for CreatePaymentIntentSvc<T> {
                         type Response = super::CreatePaymentIntentResponse;
@@ -458,7 +464,7 @@ pub mod payment_intent_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as PaymentIntentService>::create_payment_intent(
+                                <T as PaymentIntentPublicService>::create_payment_intent(
                                         &inner,
                                         request,
                                     )
@@ -511,7 +517,7 @@ pub mod payment_intent_service_server {
             }
         }
     }
-    impl<T> Clone for PaymentIntentServiceServer<T> {
+    impl<T> Clone for PaymentIntentPublicServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -524,8 +530,8 @@ pub mod payment_intent_service_server {
         }
     }
     /// Generated gRPC service name
-    pub const SERVICE_NAME: &str = "billing.payment_intent.public.v1.PaymentIntentService";
-    impl<T> tonic::server::NamedService for PaymentIntentServiceServer<T> {
+    pub const SERVICE_NAME: &str = "billing.payment_intent.public.v1.PaymentIntentPublicService";
+    impl<T> tonic::server::NamedService for PaymentIntentPublicServiceServer<T> {
         const NAME: &'static str = SERVICE_NAME;
     }
 }

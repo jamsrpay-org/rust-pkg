@@ -242,7 +242,7 @@ impl ::prost::Name for DeleteStoreCurrencyResponse {
     }
 }
 /// Generated client implementations.
-pub mod merchant_store_currency_service_client {
+pub mod store_currency_merchant_service_client {
     #![allow(
         unused_variables,
         dead_code,
@@ -253,10 +253,10 @@ pub mod merchant_store_currency_service_client {
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
-    pub struct MerchantStoreCurrencyServiceClient<T> {
+    pub struct StoreCurrencyMerchantServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl MerchantStoreCurrencyServiceClient<tonic::transport::Channel> {
+    impl StoreCurrencyMerchantServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -267,7 +267,7 @@ pub mod merchant_store_currency_service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> MerchantStoreCurrencyServiceClient<T>
+    impl<T> StoreCurrencyMerchantServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
@@ -285,7 +285,7 @@ pub mod merchant_store_currency_service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> MerchantStoreCurrencyServiceClient<InterceptedService<T, F>>
+        ) -> StoreCurrencyMerchantServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -299,7 +299,7 @@ pub mod merchant_store_currency_service_client {
                 http::Request<tonic::body::Body>,
             >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
-            MerchantStoreCurrencyServiceClient::new(
+            StoreCurrencyMerchantServiceClient::new(
                 InterceptedService::new(inner, interceptor),
             )
         }
@@ -351,13 +351,13 @@ pub mod merchant_store_currency_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/store.store_currency.merchant.v1.MerchantStoreCurrencyService/GetStoreCurrency",
+                "/store.store_currency.merchant.v1.StoreCurrencyMerchantService/GetStoreCurrency",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "store.store_currency.merchant.v1.MerchantStoreCurrencyService",
+                        "store.store_currency.merchant.v1.StoreCurrencyMerchantService",
                         "GetStoreCurrency",
                     ),
                 );
@@ -380,13 +380,13 @@ pub mod merchant_store_currency_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/store.store_currency.merchant.v1.MerchantStoreCurrencyService/ListStoreCurrencies",
+                "/store.store_currency.merchant.v1.StoreCurrencyMerchantService/ListStoreCurrencies",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "store.store_currency.merchant.v1.MerchantStoreCurrencyService",
+                        "store.store_currency.merchant.v1.StoreCurrencyMerchantService",
                         "ListStoreCurrencies",
                     ),
                 );
@@ -409,13 +409,13 @@ pub mod merchant_store_currency_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/store.store_currency.merchant.v1.MerchantStoreCurrencyService/CreateStoreCurrency",
+                "/store.store_currency.merchant.v1.StoreCurrencyMerchantService/CreateStoreCurrency",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "store.store_currency.merchant.v1.MerchantStoreCurrencyService",
+                        "store.store_currency.merchant.v1.StoreCurrencyMerchantService",
                         "CreateStoreCurrency",
                     ),
                 );
@@ -438,13 +438,13 @@ pub mod merchant_store_currency_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/store.store_currency.merchant.v1.MerchantStoreCurrencyService/UpdateStoreCurrency",
+                "/store.store_currency.merchant.v1.StoreCurrencyMerchantService/UpdateStoreCurrency",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "store.store_currency.merchant.v1.MerchantStoreCurrencyService",
+                        "store.store_currency.merchant.v1.StoreCurrencyMerchantService",
                         "UpdateStoreCurrency",
                     ),
                 );
@@ -467,13 +467,13 @@ pub mod merchant_store_currency_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/store.store_currency.merchant.v1.MerchantStoreCurrencyService/DeleteStoreCurrency",
+                "/store.store_currency.merchant.v1.StoreCurrencyMerchantService/DeleteStoreCurrency",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "store.store_currency.merchant.v1.MerchantStoreCurrencyService",
+                        "store.store_currency.merchant.v1.StoreCurrencyMerchantService",
                         "DeleteStoreCurrency",
                     ),
                 );
@@ -482,7 +482,7 @@ pub mod merchant_store_currency_service_client {
     }
 }
 /// Generated server implementations.
-pub mod merchant_store_currency_service_server {
+pub mod store_currency_merchant_service_server {
     #![allow(
         unused_variables,
         dead_code,
@@ -491,9 +491,9 @@ pub mod merchant_store_currency_service_server {
         clippy::let_unit_value,
     )]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with MerchantStoreCurrencyServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with StoreCurrencyMerchantServiceServer.
     #[async_trait]
-    pub trait MerchantStoreCurrencyService: std::marker::Send + std::marker::Sync + 'static {
+    pub trait StoreCurrencyMerchantService: std::marker::Send + std::marker::Sync + 'static {
         async fn get_store_currency(
             &self,
             request: tonic::Request<super::GetStoreCurrencyRequest>,
@@ -531,14 +531,14 @@ pub mod merchant_store_currency_service_server {
         >;
     }
     #[derive(Debug)]
-    pub struct MerchantStoreCurrencyServiceServer<T> {
+    pub struct StoreCurrencyMerchantServiceServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T> MerchantStoreCurrencyServiceServer<T> {
+    impl<T> StoreCurrencyMerchantServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -590,9 +590,9 @@ pub mod merchant_store_currency_service_server {
         }
     }
     impl<T, B> tonic::codegen::Service<http::Request<B>>
-    for MerchantStoreCurrencyServiceServer<T>
+    for StoreCurrencyMerchantServiceServer<T>
     where
-        T: MerchantStoreCurrencyService,
+        T: StoreCurrencyMerchantService,
         B: Body + std::marker::Send + 'static,
         B::Error: Into<StdError> + std::marker::Send + 'static,
     {
@@ -607,13 +607,13 @@ pub mod merchant_store_currency_service_server {
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             match req.uri().path() {
-                "/store.store_currency.merchant.v1.MerchantStoreCurrencyService/GetStoreCurrency" => {
+                "/store.store_currency.merchant.v1.StoreCurrencyMerchantService/GetStoreCurrency" => {
                     #[allow(non_camel_case_types)]
-                    struct GetStoreCurrencySvc<T: MerchantStoreCurrencyService>(
+                    struct GetStoreCurrencySvc<T: StoreCurrencyMerchantService>(
                         pub Arc<T>,
                     );
                     impl<
-                        T: MerchantStoreCurrencyService,
+                        T: StoreCurrencyMerchantService,
                     > tonic::server::UnaryService<super::GetStoreCurrencyRequest>
                     for GetStoreCurrencySvc<T> {
                         type Response = super::GetStoreCurrencyResponse;
@@ -627,7 +627,7 @@ pub mod merchant_store_currency_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantStoreCurrencyService>::get_store_currency(
+                                <T as StoreCurrencyMerchantService>::get_store_currency(
                                         &inner,
                                         request,
                                     )
@@ -658,13 +658,13 @@ pub mod merchant_store_currency_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/store.store_currency.merchant.v1.MerchantStoreCurrencyService/ListStoreCurrencies" => {
+                "/store.store_currency.merchant.v1.StoreCurrencyMerchantService/ListStoreCurrencies" => {
                     #[allow(non_camel_case_types)]
-                    struct ListStoreCurrenciesSvc<T: MerchantStoreCurrencyService>(
+                    struct ListStoreCurrenciesSvc<T: StoreCurrencyMerchantService>(
                         pub Arc<T>,
                     );
                     impl<
-                        T: MerchantStoreCurrencyService,
+                        T: StoreCurrencyMerchantService,
                     > tonic::server::UnaryService<super::ListStoreCurrenciesRequest>
                     for ListStoreCurrenciesSvc<T> {
                         type Response = super::ListStoreCurrenciesResponse;
@@ -678,7 +678,7 @@ pub mod merchant_store_currency_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantStoreCurrencyService>::list_store_currencies(
+                                <T as StoreCurrencyMerchantService>::list_store_currencies(
                                         &inner,
                                         request,
                                     )
@@ -709,13 +709,13 @@ pub mod merchant_store_currency_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/store.store_currency.merchant.v1.MerchantStoreCurrencyService/CreateStoreCurrency" => {
+                "/store.store_currency.merchant.v1.StoreCurrencyMerchantService/CreateStoreCurrency" => {
                     #[allow(non_camel_case_types)]
-                    struct CreateStoreCurrencySvc<T: MerchantStoreCurrencyService>(
+                    struct CreateStoreCurrencySvc<T: StoreCurrencyMerchantService>(
                         pub Arc<T>,
                     );
                     impl<
-                        T: MerchantStoreCurrencyService,
+                        T: StoreCurrencyMerchantService,
                     > tonic::server::UnaryService<super::CreateStoreCurrencyRequest>
                     for CreateStoreCurrencySvc<T> {
                         type Response = super::CreateStoreCurrencyResponse;
@@ -729,7 +729,7 @@ pub mod merchant_store_currency_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantStoreCurrencyService>::create_store_currency(
+                                <T as StoreCurrencyMerchantService>::create_store_currency(
                                         &inner,
                                         request,
                                     )
@@ -760,13 +760,13 @@ pub mod merchant_store_currency_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/store.store_currency.merchant.v1.MerchantStoreCurrencyService/UpdateStoreCurrency" => {
+                "/store.store_currency.merchant.v1.StoreCurrencyMerchantService/UpdateStoreCurrency" => {
                     #[allow(non_camel_case_types)]
-                    struct UpdateStoreCurrencySvc<T: MerchantStoreCurrencyService>(
+                    struct UpdateStoreCurrencySvc<T: StoreCurrencyMerchantService>(
                         pub Arc<T>,
                     );
                     impl<
-                        T: MerchantStoreCurrencyService,
+                        T: StoreCurrencyMerchantService,
                     > tonic::server::UnaryService<super::UpdateStoreCurrencyRequest>
                     for UpdateStoreCurrencySvc<T> {
                         type Response = super::UpdateStoreCurrencyResponse;
@@ -780,7 +780,7 @@ pub mod merchant_store_currency_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantStoreCurrencyService>::update_store_currency(
+                                <T as StoreCurrencyMerchantService>::update_store_currency(
                                         &inner,
                                         request,
                                     )
@@ -811,13 +811,13 @@ pub mod merchant_store_currency_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/store.store_currency.merchant.v1.MerchantStoreCurrencyService/DeleteStoreCurrency" => {
+                "/store.store_currency.merchant.v1.StoreCurrencyMerchantService/DeleteStoreCurrency" => {
                     #[allow(non_camel_case_types)]
-                    struct DeleteStoreCurrencySvc<T: MerchantStoreCurrencyService>(
+                    struct DeleteStoreCurrencySvc<T: StoreCurrencyMerchantService>(
                         pub Arc<T>,
                     );
                     impl<
-                        T: MerchantStoreCurrencyService,
+                        T: StoreCurrencyMerchantService,
                     > tonic::server::UnaryService<super::DeleteStoreCurrencyRequest>
                     for DeleteStoreCurrencySvc<T> {
                         type Response = super::DeleteStoreCurrencyResponse;
@@ -831,7 +831,7 @@ pub mod merchant_store_currency_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantStoreCurrencyService>::delete_store_currency(
+                                <T as StoreCurrencyMerchantService>::delete_store_currency(
                                         &inner,
                                         request,
                                     )
@@ -884,7 +884,7 @@ pub mod merchant_store_currency_service_server {
             }
         }
     }
-    impl<T> Clone for MerchantStoreCurrencyServiceServer<T> {
+    impl<T> Clone for StoreCurrencyMerchantServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -897,8 +897,8 @@ pub mod merchant_store_currency_service_server {
         }
     }
     /// Generated gRPC service name
-    pub const SERVICE_NAME: &str = "store.store_currency.merchant.v1.MerchantStoreCurrencyService";
-    impl<T> tonic::server::NamedService for MerchantStoreCurrencyServiceServer<T> {
+    pub const SERVICE_NAME: &str = "store.store_currency.merchant.v1.StoreCurrencyMerchantService";
+    impl<T> tonic::server::NamedService for StoreCurrencyMerchantServiceServer<T> {
         const NAME: &'static str = SERVICE_NAME;
     }
 }

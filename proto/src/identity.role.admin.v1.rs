@@ -210,7 +210,7 @@ impl ::prost::Name for UpdateRoleResponse {
     }
 }
 /// Generated client implementations.
-pub mod admin_role_service_client {
+pub mod role_admin_service_client {
     #![allow(
         unused_variables,
         dead_code,
@@ -221,10 +221,10 @@ pub mod admin_role_service_client {
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
-    pub struct AdminRoleServiceClient<T> {
+    pub struct RoleAdminServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl AdminRoleServiceClient<tonic::transport::Channel> {
+    impl RoleAdminServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -235,7 +235,7 @@ pub mod admin_role_service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> AdminRoleServiceClient<T>
+    impl<T> RoleAdminServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
@@ -253,7 +253,7 @@ pub mod admin_role_service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> AdminRoleServiceClient<InterceptedService<T, F>>
+        ) -> RoleAdminServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -267,7 +267,7 @@ pub mod admin_role_service_client {
                 http::Request<tonic::body::Body>,
             >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
-            AdminRoleServiceClient::new(InterceptedService::new(inner, interceptor))
+            RoleAdminServiceClient::new(InterceptedService::new(inner, interceptor))
         }
         /// Compress requests with the given encoding.
         ///
@@ -317,12 +317,12 @@ pub mod admin_role_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.role.admin.v1.AdminRoleService/GetRole",
+                "/identity.role.admin.v1.RoleAdminService/GetRole",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
-                    GrpcMethod::new("identity.role.admin.v1.AdminRoleService", "GetRole"),
+                    GrpcMethod::new("identity.role.admin.v1.RoleAdminService", "GetRole"),
                 );
             self.inner.unary(req, path, codec).await
         }
@@ -343,13 +343,13 @@ pub mod admin_role_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.role.admin.v1.AdminRoleService/ListRoles",
+                "/identity.role.admin.v1.RoleAdminService/ListRoles",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.role.admin.v1.AdminRoleService",
+                        "identity.role.admin.v1.RoleAdminService",
                         "ListRoles",
                     ),
                 );
@@ -372,13 +372,13 @@ pub mod admin_role_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.role.admin.v1.AdminRoleService/CreateRole",
+                "/identity.role.admin.v1.RoleAdminService/CreateRole",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.role.admin.v1.AdminRoleService",
+                        "identity.role.admin.v1.RoleAdminService",
                         "CreateRole",
                     ),
                 );
@@ -401,13 +401,13 @@ pub mod admin_role_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.role.admin.v1.AdminRoleService/DeleteRole",
+                "/identity.role.admin.v1.RoleAdminService/DeleteRole",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.role.admin.v1.AdminRoleService",
+                        "identity.role.admin.v1.RoleAdminService",
                         "DeleteRole",
                     ),
                 );
@@ -430,13 +430,13 @@ pub mod admin_role_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.role.admin.v1.AdminRoleService/UpdateRole",
+                "/identity.role.admin.v1.RoleAdminService/UpdateRole",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.role.admin.v1.AdminRoleService",
+                        "identity.role.admin.v1.RoleAdminService",
                         "UpdateRole",
                     ),
                 );
@@ -445,7 +445,7 @@ pub mod admin_role_service_client {
     }
 }
 /// Generated server implementations.
-pub mod admin_role_service_server {
+pub mod role_admin_service_server {
     #![allow(
         unused_variables,
         dead_code,
@@ -454,9 +454,9 @@ pub mod admin_role_service_server {
         clippy::let_unit_value,
     )]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with AdminRoleServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with RoleAdminServiceServer.
     #[async_trait]
-    pub trait AdminRoleService: std::marker::Send + std::marker::Sync + 'static {
+    pub trait RoleAdminService: std::marker::Send + std::marker::Sync + 'static {
         async fn get_role(
             &self,
             request: tonic::Request<super::GetRoleRequest>,
@@ -491,14 +491,14 @@ pub mod admin_role_service_server {
         >;
     }
     #[derive(Debug)]
-    pub struct AdminRoleServiceServer<T> {
+    pub struct RoleAdminServiceServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T> AdminRoleServiceServer<T> {
+    impl<T> RoleAdminServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -549,9 +549,9 @@ pub mod admin_role_service_server {
             self
         }
     }
-    impl<T, B> tonic::codegen::Service<http::Request<B>> for AdminRoleServiceServer<T>
+    impl<T, B> tonic::codegen::Service<http::Request<B>> for RoleAdminServiceServer<T>
     where
-        T: AdminRoleService,
+        T: RoleAdminService,
         B: Body + std::marker::Send + 'static,
         B::Error: Into<StdError> + std::marker::Send + 'static,
     {
@@ -566,11 +566,11 @@ pub mod admin_role_service_server {
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             match req.uri().path() {
-                "/identity.role.admin.v1.AdminRoleService/GetRole" => {
+                "/identity.role.admin.v1.RoleAdminService/GetRole" => {
                     #[allow(non_camel_case_types)]
-                    struct GetRoleSvc<T: AdminRoleService>(pub Arc<T>);
+                    struct GetRoleSvc<T: RoleAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminRoleService,
+                        T: RoleAdminService,
                     > tonic::server::UnaryService<super::GetRoleRequest>
                     for GetRoleSvc<T> {
                         type Response = super::GetRoleResponse;
@@ -584,7 +584,7 @@ pub mod admin_role_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminRoleService>::get_role(&inner, request).await
+                                <T as RoleAdminService>::get_role(&inner, request).await
                             };
                             Box::pin(fut)
                         }
@@ -611,11 +611,11 @@ pub mod admin_role_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.role.admin.v1.AdminRoleService/ListRoles" => {
+                "/identity.role.admin.v1.RoleAdminService/ListRoles" => {
                     #[allow(non_camel_case_types)]
-                    struct ListRolesSvc<T: AdminRoleService>(pub Arc<T>);
+                    struct ListRolesSvc<T: RoleAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminRoleService,
+                        T: RoleAdminService,
                     > tonic::server::UnaryService<super::ListRolesRequest>
                     for ListRolesSvc<T> {
                         type Response = super::ListRolesResponse;
@@ -629,7 +629,7 @@ pub mod admin_role_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminRoleService>::list_roles(&inner, request).await
+                                <T as RoleAdminService>::list_roles(&inner, request).await
                             };
                             Box::pin(fut)
                         }
@@ -656,11 +656,11 @@ pub mod admin_role_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.role.admin.v1.AdminRoleService/CreateRole" => {
+                "/identity.role.admin.v1.RoleAdminService/CreateRole" => {
                     #[allow(non_camel_case_types)]
-                    struct CreateRoleSvc<T: AdminRoleService>(pub Arc<T>);
+                    struct CreateRoleSvc<T: RoleAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminRoleService,
+                        T: RoleAdminService,
                     > tonic::server::UnaryService<super::CreateRoleRequest>
                     for CreateRoleSvc<T> {
                         type Response = super::CreateRoleResponse;
@@ -674,7 +674,7 @@ pub mod admin_role_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminRoleService>::create_role(&inner, request).await
+                                <T as RoleAdminService>::create_role(&inner, request).await
                             };
                             Box::pin(fut)
                         }
@@ -701,11 +701,11 @@ pub mod admin_role_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.role.admin.v1.AdminRoleService/DeleteRole" => {
+                "/identity.role.admin.v1.RoleAdminService/DeleteRole" => {
                     #[allow(non_camel_case_types)]
-                    struct DeleteRoleSvc<T: AdminRoleService>(pub Arc<T>);
+                    struct DeleteRoleSvc<T: RoleAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminRoleService,
+                        T: RoleAdminService,
                     > tonic::server::UnaryService<super::DeleteRoleRequest>
                     for DeleteRoleSvc<T> {
                         type Response = super::DeleteRoleResponse;
@@ -719,7 +719,7 @@ pub mod admin_role_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminRoleService>::delete_role(&inner, request).await
+                                <T as RoleAdminService>::delete_role(&inner, request).await
                             };
                             Box::pin(fut)
                         }
@@ -746,11 +746,11 @@ pub mod admin_role_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.role.admin.v1.AdminRoleService/UpdateRole" => {
+                "/identity.role.admin.v1.RoleAdminService/UpdateRole" => {
                     #[allow(non_camel_case_types)]
-                    struct UpdateRoleSvc<T: AdminRoleService>(pub Arc<T>);
+                    struct UpdateRoleSvc<T: RoleAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminRoleService,
+                        T: RoleAdminService,
                     > tonic::server::UnaryService<super::UpdateRoleRequest>
                     for UpdateRoleSvc<T> {
                         type Response = super::UpdateRoleResponse;
@@ -764,7 +764,7 @@ pub mod admin_role_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminRoleService>::update_role(&inner, request).await
+                                <T as RoleAdminService>::update_role(&inner, request).await
                             };
                             Box::pin(fut)
                         }
@@ -813,7 +813,7 @@ pub mod admin_role_service_server {
             }
         }
     }
-    impl<T> Clone for AdminRoleServiceServer<T> {
+    impl<T> Clone for RoleAdminServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -826,8 +826,8 @@ pub mod admin_role_service_server {
         }
     }
     /// Generated gRPC service name
-    pub const SERVICE_NAME: &str = "identity.role.admin.v1.AdminRoleService";
-    impl<T> tonic::server::NamedService for AdminRoleServiceServer<T> {
+    pub const SERVICE_NAME: &str = "identity.role.admin.v1.RoleAdminService";
+    impl<T> tonic::server::NamedService for RoleAdminServiceServer<T> {
         const NAME: &'static str = SERVICE_NAME;
     }
 }

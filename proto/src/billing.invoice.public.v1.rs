@@ -246,7 +246,7 @@ impl ::prost::Name for SubscribeInvoiceResponse {
     }
 }
 /// Generated client implementations.
-pub mod invoice_service_client {
+pub mod invoice_public_service_client {
     #![allow(
         unused_variables,
         dead_code,
@@ -257,10 +257,10 @@ pub mod invoice_service_client {
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
-    pub struct InvoiceServiceClient<T> {
+    pub struct InvoicePublicServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl InvoiceServiceClient<tonic::transport::Channel> {
+    impl InvoicePublicServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -271,7 +271,7 @@ pub mod invoice_service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> InvoiceServiceClient<T>
+    impl<T> InvoicePublicServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
@@ -289,7 +289,7 @@ pub mod invoice_service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> InvoiceServiceClient<InterceptedService<T, F>>
+        ) -> InvoicePublicServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -303,7 +303,7 @@ pub mod invoice_service_client {
                 http::Request<tonic::body::Body>,
             >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
-            InvoiceServiceClient::new(InterceptedService::new(inner, interceptor))
+            InvoicePublicServiceClient::new(InterceptedService::new(inner, interceptor))
         }
         /// Compress requests with the given encoding.
         ///
@@ -354,13 +354,13 @@ pub mod invoice_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/billing.invoice.public.v1.InvoiceService/GetInvoice",
+                "/billing.invoice.public.v1.InvoicePublicService/GetInvoice",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "billing.invoice.public.v1.InvoiceService",
+                        "billing.invoice.public.v1.InvoicePublicService",
                         "GetInvoice",
                     ),
                 );
@@ -384,13 +384,13 @@ pub mod invoice_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/billing.invoice.public.v1.InvoiceService/CreateInvoice",
+                "/billing.invoice.public.v1.InvoicePublicService/CreateInvoice",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "billing.invoice.public.v1.InvoiceService",
+                        "billing.invoice.public.v1.InvoicePublicService",
                         "CreateInvoice",
                     ),
                 );
@@ -414,13 +414,13 @@ pub mod invoice_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/billing.invoice.public.v1.InvoiceService/CreateInvoiceForPaymentIntent",
+                "/billing.invoice.public.v1.InvoicePublicService/CreateInvoiceForPaymentIntent",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "billing.invoice.public.v1.InvoiceService",
+                        "billing.invoice.public.v1.InvoicePublicService",
                         "CreateInvoiceForPaymentIntent",
                     ),
                 );
@@ -444,13 +444,13 @@ pub mod invoice_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/billing.invoice.public.v1.InvoiceService/SubscribeInvoice",
+                "/billing.invoice.public.v1.InvoicePublicService/SubscribeInvoice",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "billing.invoice.public.v1.InvoiceService",
+                        "billing.invoice.public.v1.InvoicePublicService",
                         "SubscribeInvoice",
                     ),
                 );
@@ -459,7 +459,7 @@ pub mod invoice_service_client {
     }
 }
 /// Generated server implementations.
-pub mod invoice_service_server {
+pub mod invoice_public_service_server {
     #![allow(
         unused_variables,
         dead_code,
@@ -468,9 +468,9 @@ pub mod invoice_service_server {
         clippy::let_unit_value,
     )]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with InvoiceServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with InvoicePublicServiceServer.
     #[async_trait]
-    pub trait InvoiceService: std::marker::Send + std::marker::Sync + 'static {
+    pub trait InvoicePublicService: std::marker::Send + std::marker::Sync + 'static {
         /// / Get a specific invoice by ID
         async fn get_invoice(
             &self,
@@ -514,14 +514,14 @@ pub mod invoice_service_server {
         >;
     }
     #[derive(Debug)]
-    pub struct InvoiceServiceServer<T> {
+    pub struct InvoicePublicServiceServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T> InvoiceServiceServer<T> {
+    impl<T> InvoicePublicServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -572,9 +572,10 @@ pub mod invoice_service_server {
             self
         }
     }
-    impl<T, B> tonic::codegen::Service<http::Request<B>> for InvoiceServiceServer<T>
+    impl<T, B> tonic::codegen::Service<http::Request<B>>
+    for InvoicePublicServiceServer<T>
     where
-        T: InvoiceService,
+        T: InvoicePublicService,
         B: Body + std::marker::Send + 'static,
         B::Error: Into<StdError> + std::marker::Send + 'static,
     {
@@ -589,11 +590,11 @@ pub mod invoice_service_server {
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             match req.uri().path() {
-                "/billing.invoice.public.v1.InvoiceService/GetInvoice" => {
+                "/billing.invoice.public.v1.InvoicePublicService/GetInvoice" => {
                     #[allow(non_camel_case_types)]
-                    struct GetInvoiceSvc<T: InvoiceService>(pub Arc<T>);
+                    struct GetInvoiceSvc<T: InvoicePublicService>(pub Arc<T>);
                     impl<
-                        T: InvoiceService,
+                        T: InvoicePublicService,
                     > tonic::server::UnaryService<super::GetInvoiceRequest>
                     for GetInvoiceSvc<T> {
                         type Response = super::GetInvoiceResponse;
@@ -607,7 +608,8 @@ pub mod invoice_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as InvoiceService>::get_invoice(&inner, request).await
+                                <T as InvoicePublicService>::get_invoice(&inner, request)
+                                    .await
                             };
                             Box::pin(fut)
                         }
@@ -634,11 +636,11 @@ pub mod invoice_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/billing.invoice.public.v1.InvoiceService/CreateInvoice" => {
+                "/billing.invoice.public.v1.InvoicePublicService/CreateInvoice" => {
                     #[allow(non_camel_case_types)]
-                    struct CreateInvoiceSvc<T: InvoiceService>(pub Arc<T>);
+                    struct CreateInvoiceSvc<T: InvoicePublicService>(pub Arc<T>);
                     impl<
-                        T: InvoiceService,
+                        T: InvoicePublicService,
                     > tonic::server::UnaryService<super::CreateInvoiceRequest>
                     for CreateInvoiceSvc<T> {
                         type Response = super::CreateInvoiceResponse;
@@ -652,7 +654,8 @@ pub mod invoice_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as InvoiceService>::create_invoice(&inner, request).await
+                                <T as InvoicePublicService>::create_invoice(&inner, request)
+                                    .await
                             };
                             Box::pin(fut)
                         }
@@ -679,13 +682,13 @@ pub mod invoice_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/billing.invoice.public.v1.InvoiceService/CreateInvoiceForPaymentIntent" => {
+                "/billing.invoice.public.v1.InvoicePublicService/CreateInvoiceForPaymentIntent" => {
                     #[allow(non_camel_case_types)]
-                    struct CreateInvoiceForPaymentIntentSvc<T: InvoiceService>(
+                    struct CreateInvoiceForPaymentIntentSvc<T: InvoicePublicService>(
                         pub Arc<T>,
                     );
                     impl<
-                        T: InvoiceService,
+                        T: InvoicePublicService,
                     > tonic::server::UnaryService<
                         super::CreateInvoiceForPaymentIntentRequest,
                     > for CreateInvoiceForPaymentIntentSvc<T> {
@@ -702,7 +705,7 @@ pub mod invoice_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as InvoiceService>::create_invoice_for_payment_intent(
+                                <T as InvoicePublicService>::create_invoice_for_payment_intent(
                                         &inner,
                                         request,
                                     )
@@ -733,11 +736,11 @@ pub mod invoice_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/billing.invoice.public.v1.InvoiceService/SubscribeInvoice" => {
+                "/billing.invoice.public.v1.InvoicePublicService/SubscribeInvoice" => {
                     #[allow(non_camel_case_types)]
-                    struct SubscribeInvoiceSvc<T: InvoiceService>(pub Arc<T>);
+                    struct SubscribeInvoiceSvc<T: InvoicePublicService>(pub Arc<T>);
                     impl<
-                        T: InvoiceService,
+                        T: InvoicePublicService,
                     > tonic::server::ServerStreamingService<
                         super::SubscribeInvoiceRequest,
                     > for SubscribeInvoiceSvc<T> {
@@ -753,7 +756,10 @@ pub mod invoice_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as InvoiceService>::subscribe_invoice(&inner, request)
+                                <T as InvoicePublicService>::subscribe_invoice(
+                                        &inner,
+                                        request,
+                                    )
                                     .await
                             };
                             Box::pin(fut)
@@ -803,7 +809,7 @@ pub mod invoice_service_server {
             }
         }
     }
-    impl<T> Clone for InvoiceServiceServer<T> {
+    impl<T> Clone for InvoicePublicServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -816,8 +822,8 @@ pub mod invoice_service_server {
         }
     }
     /// Generated gRPC service name
-    pub const SERVICE_NAME: &str = "billing.invoice.public.v1.InvoiceService";
-    impl<T> tonic::server::NamedService for InvoiceServiceServer<T> {
+    pub const SERVICE_NAME: &str = "billing.invoice.public.v1.InvoicePublicService";
+    impl<T> tonic::server::NamedService for InvoicePublicServiceServer<T> {
         const NAME: &'static str = SERVICE_NAME;
     }
 }

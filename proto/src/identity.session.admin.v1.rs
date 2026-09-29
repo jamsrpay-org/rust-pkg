@@ -106,7 +106,7 @@ impl ::prost::Name for ListSessionsResponse {
     }
 }
 /// Generated client implementations.
-pub mod admin_session_service_client {
+pub mod session_admin_service_client {
     #![allow(
         unused_variables,
         dead_code,
@@ -117,10 +117,10 @@ pub mod admin_session_service_client {
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
-    pub struct AdminSessionServiceClient<T> {
+    pub struct SessionAdminServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl AdminSessionServiceClient<tonic::transport::Channel> {
+    impl SessionAdminServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -131,7 +131,7 @@ pub mod admin_session_service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> AdminSessionServiceClient<T>
+    impl<T> SessionAdminServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
@@ -149,7 +149,7 @@ pub mod admin_session_service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> AdminSessionServiceClient<InterceptedService<T, F>>
+        ) -> SessionAdminServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -163,7 +163,7 @@ pub mod admin_session_service_client {
                 http::Request<tonic::body::Body>,
             >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
-            AdminSessionServiceClient::new(InterceptedService::new(inner, interceptor))
+            SessionAdminServiceClient::new(InterceptedService::new(inner, interceptor))
         }
         /// Compress requests with the given encoding.
         ///
@@ -213,13 +213,13 @@ pub mod admin_session_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.session.admin.v1.AdminSessionService/GetSession",
+                "/identity.session.admin.v1.SessionAdminService/GetSession",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.session.admin.v1.AdminSessionService",
+                        "identity.session.admin.v1.SessionAdminService",
                         "GetSession",
                     ),
                 );
@@ -242,13 +242,13 @@ pub mod admin_session_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.session.admin.v1.AdminSessionService/ListSessions",
+                "/identity.session.admin.v1.SessionAdminService/ListSessions",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.session.admin.v1.AdminSessionService",
+                        "identity.session.admin.v1.SessionAdminService",
                         "ListSessions",
                     ),
                 );
@@ -257,7 +257,7 @@ pub mod admin_session_service_client {
     }
 }
 /// Generated server implementations.
-pub mod admin_session_service_server {
+pub mod session_admin_service_server {
     #![allow(
         unused_variables,
         dead_code,
@@ -266,9 +266,9 @@ pub mod admin_session_service_server {
         clippy::let_unit_value,
     )]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with AdminSessionServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with SessionAdminServiceServer.
     #[async_trait]
-    pub trait AdminSessionService: std::marker::Send + std::marker::Sync + 'static {
+    pub trait SessionAdminService: std::marker::Send + std::marker::Sync + 'static {
         async fn get_session(
             &self,
             request: tonic::Request<super::GetSessionRequest>,
@@ -285,14 +285,14 @@ pub mod admin_session_service_server {
         >;
     }
     #[derive(Debug)]
-    pub struct AdminSessionServiceServer<T> {
+    pub struct SessionAdminServiceServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T> AdminSessionServiceServer<T> {
+    impl<T> SessionAdminServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -343,9 +343,9 @@ pub mod admin_session_service_server {
             self
         }
     }
-    impl<T, B> tonic::codegen::Service<http::Request<B>> for AdminSessionServiceServer<T>
+    impl<T, B> tonic::codegen::Service<http::Request<B>> for SessionAdminServiceServer<T>
     where
-        T: AdminSessionService,
+        T: SessionAdminService,
         B: Body + std::marker::Send + 'static,
         B::Error: Into<StdError> + std::marker::Send + 'static,
     {
@@ -360,11 +360,11 @@ pub mod admin_session_service_server {
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             match req.uri().path() {
-                "/identity.session.admin.v1.AdminSessionService/GetSession" => {
+                "/identity.session.admin.v1.SessionAdminService/GetSession" => {
                     #[allow(non_camel_case_types)]
-                    struct GetSessionSvc<T: AdminSessionService>(pub Arc<T>);
+                    struct GetSessionSvc<T: SessionAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminSessionService,
+                        T: SessionAdminService,
                     > tonic::server::UnaryService<super::GetSessionRequest>
                     for GetSessionSvc<T> {
                         type Response = super::GetSessionResponse;
@@ -378,7 +378,7 @@ pub mod admin_session_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminSessionService>::get_session(&inner, request)
+                                <T as SessionAdminService>::get_session(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -406,11 +406,11 @@ pub mod admin_session_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.session.admin.v1.AdminSessionService/ListSessions" => {
+                "/identity.session.admin.v1.SessionAdminService/ListSessions" => {
                     #[allow(non_camel_case_types)]
-                    struct ListSessionsSvc<T: AdminSessionService>(pub Arc<T>);
+                    struct ListSessionsSvc<T: SessionAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminSessionService,
+                        T: SessionAdminService,
                     > tonic::server::UnaryService<super::ListSessionsRequest>
                     for ListSessionsSvc<T> {
                         type Response = super::ListSessionsResponse;
@@ -424,7 +424,7 @@ pub mod admin_session_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminSessionService>::list_sessions(&inner, request)
+                                <T as SessionAdminService>::list_sessions(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -474,7 +474,7 @@ pub mod admin_session_service_server {
             }
         }
     }
-    impl<T> Clone for AdminSessionServiceServer<T> {
+    impl<T> Clone for SessionAdminServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -487,8 +487,8 @@ pub mod admin_session_service_server {
         }
     }
     /// Generated gRPC service name
-    pub const SERVICE_NAME: &str = "identity.session.admin.v1.AdminSessionService";
-    impl<T> tonic::server::NamedService for AdminSessionServiceServer<T> {
+    pub const SERVICE_NAME: &str = "identity.session.admin.v1.SessionAdminService";
+    impl<T> tonic::server::NamedService for SessionAdminServiceServer<T> {
         const NAME: &'static str = SERVICE_NAME;
     }
 }

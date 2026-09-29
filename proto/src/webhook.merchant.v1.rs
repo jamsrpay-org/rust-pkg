@@ -337,7 +337,7 @@ impl WebhookEvent {
     }
 }
 /// Generated client implementations.
-pub mod merchant_webhook_service_client {
+pub mod webhook_merchant_service_client {
     #![allow(
         unused_variables,
         dead_code,
@@ -348,10 +348,10 @@ pub mod merchant_webhook_service_client {
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
-    pub struct MerchantWebhookServiceClient<T> {
+    pub struct WebhookMerchantServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl MerchantWebhookServiceClient<tonic::transport::Channel> {
+    impl WebhookMerchantServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -362,7 +362,7 @@ pub mod merchant_webhook_service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> MerchantWebhookServiceClient<T>
+    impl<T> WebhookMerchantServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
@@ -380,7 +380,7 @@ pub mod merchant_webhook_service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> MerchantWebhookServiceClient<InterceptedService<T, F>>
+        ) -> WebhookMerchantServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -394,7 +394,7 @@ pub mod merchant_webhook_service_client {
                 http::Request<tonic::body::Body>,
             >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
-            MerchantWebhookServiceClient::new(
+            WebhookMerchantServiceClient::new(
                 InterceptedService::new(inner, interceptor),
             )
         }
@@ -446,13 +446,13 @@ pub mod merchant_webhook_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/webhook.merchant.v1.MerchantWebhookService/GetWebhook",
+                "/webhook.merchant.v1.WebhookMerchantService/GetWebhook",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "webhook.merchant.v1.MerchantWebhookService",
+                        "webhook.merchant.v1.WebhookMerchantService",
                         "GetWebhook",
                     ),
                 );
@@ -475,13 +475,13 @@ pub mod merchant_webhook_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/webhook.merchant.v1.MerchantWebhookService/ListWebhooks",
+                "/webhook.merchant.v1.WebhookMerchantService/ListWebhooks",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "webhook.merchant.v1.MerchantWebhookService",
+                        "webhook.merchant.v1.WebhookMerchantService",
                         "ListWebhooks",
                     ),
                 );
@@ -504,13 +504,13 @@ pub mod merchant_webhook_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/webhook.merchant.v1.MerchantWebhookService/ListWebhookEvents",
+                "/webhook.merchant.v1.WebhookMerchantService/ListWebhookEvents",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "webhook.merchant.v1.MerchantWebhookService",
+                        "webhook.merchant.v1.WebhookMerchantService",
                         "ListWebhookEvents",
                     ),
                 );
@@ -533,13 +533,13 @@ pub mod merchant_webhook_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/webhook.merchant.v1.MerchantWebhookService/CreateWebhook",
+                "/webhook.merchant.v1.WebhookMerchantService/CreateWebhook",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "webhook.merchant.v1.MerchantWebhookService",
+                        "webhook.merchant.v1.WebhookMerchantService",
                         "CreateWebhook",
                     ),
                 );
@@ -562,13 +562,13 @@ pub mod merchant_webhook_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/webhook.merchant.v1.MerchantWebhookService/UpdateWebhook",
+                "/webhook.merchant.v1.WebhookMerchantService/UpdateWebhook",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "webhook.merchant.v1.MerchantWebhookService",
+                        "webhook.merchant.v1.WebhookMerchantService",
                         "UpdateWebhook",
                     ),
                 );
@@ -591,13 +591,13 @@ pub mod merchant_webhook_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/webhook.merchant.v1.MerchantWebhookService/DeleteWebhook",
+                "/webhook.merchant.v1.WebhookMerchantService/DeleteWebhook",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "webhook.merchant.v1.MerchantWebhookService",
+                        "webhook.merchant.v1.WebhookMerchantService",
                         "DeleteWebhook",
                     ),
                 );
@@ -620,13 +620,13 @@ pub mod merchant_webhook_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/webhook.merchant.v1.MerchantWebhookService/RotateWebhookSecret",
+                "/webhook.merchant.v1.WebhookMerchantService/RotateWebhookSecret",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "webhook.merchant.v1.MerchantWebhookService",
+                        "webhook.merchant.v1.WebhookMerchantService",
                         "RotateWebhookSecret",
                     ),
                 );
@@ -635,7 +635,7 @@ pub mod merchant_webhook_service_client {
     }
 }
 /// Generated server implementations.
-pub mod merchant_webhook_service_server {
+pub mod webhook_merchant_service_server {
     #![allow(
         unused_variables,
         dead_code,
@@ -644,9 +644,9 @@ pub mod merchant_webhook_service_server {
         clippy::let_unit_value,
     )]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with MerchantWebhookServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with WebhookMerchantServiceServer.
     #[async_trait]
-    pub trait MerchantWebhookService: std::marker::Send + std::marker::Sync + 'static {
+    pub trait WebhookMerchantService: std::marker::Send + std::marker::Sync + 'static {
         async fn get_webhook(
             &self,
             request: tonic::Request<super::GetWebhookRequest>,
@@ -698,14 +698,14 @@ pub mod merchant_webhook_service_server {
         >;
     }
     #[derive(Debug)]
-    pub struct MerchantWebhookServiceServer<T> {
+    pub struct WebhookMerchantServiceServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T> MerchantWebhookServiceServer<T> {
+    impl<T> WebhookMerchantServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -757,9 +757,9 @@ pub mod merchant_webhook_service_server {
         }
     }
     impl<T, B> tonic::codegen::Service<http::Request<B>>
-    for MerchantWebhookServiceServer<T>
+    for WebhookMerchantServiceServer<T>
     where
-        T: MerchantWebhookService,
+        T: WebhookMerchantService,
         B: Body + std::marker::Send + 'static,
         B::Error: Into<StdError> + std::marker::Send + 'static,
     {
@@ -774,11 +774,11 @@ pub mod merchant_webhook_service_server {
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             match req.uri().path() {
-                "/webhook.merchant.v1.MerchantWebhookService/GetWebhook" => {
+                "/webhook.merchant.v1.WebhookMerchantService/GetWebhook" => {
                     #[allow(non_camel_case_types)]
-                    struct GetWebhookSvc<T: MerchantWebhookService>(pub Arc<T>);
+                    struct GetWebhookSvc<T: WebhookMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantWebhookService,
+                        T: WebhookMerchantService,
                     > tonic::server::UnaryService<super::GetWebhookRequest>
                     for GetWebhookSvc<T> {
                         type Response = super::GetWebhookResponse;
@@ -792,7 +792,7 @@ pub mod merchant_webhook_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantWebhookService>::get_webhook(&inner, request)
+                                <T as WebhookMerchantService>::get_webhook(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -820,11 +820,11 @@ pub mod merchant_webhook_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/webhook.merchant.v1.MerchantWebhookService/ListWebhooks" => {
+                "/webhook.merchant.v1.WebhookMerchantService/ListWebhooks" => {
                     #[allow(non_camel_case_types)]
-                    struct ListWebhooksSvc<T: MerchantWebhookService>(pub Arc<T>);
+                    struct ListWebhooksSvc<T: WebhookMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantWebhookService,
+                        T: WebhookMerchantService,
                     > tonic::server::UnaryService<super::ListWebhooksRequest>
                     for ListWebhooksSvc<T> {
                         type Response = super::ListWebhooksResponse;
@@ -838,7 +838,7 @@ pub mod merchant_webhook_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantWebhookService>::list_webhooks(
+                                <T as WebhookMerchantService>::list_webhooks(
                                         &inner,
                                         request,
                                     )
@@ -869,11 +869,11 @@ pub mod merchant_webhook_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/webhook.merchant.v1.MerchantWebhookService/ListWebhookEvents" => {
+                "/webhook.merchant.v1.WebhookMerchantService/ListWebhookEvents" => {
                     #[allow(non_camel_case_types)]
-                    struct ListWebhookEventsSvc<T: MerchantWebhookService>(pub Arc<T>);
+                    struct ListWebhookEventsSvc<T: WebhookMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantWebhookService,
+                        T: WebhookMerchantService,
                     > tonic::server::UnaryService<super::ListWebhookEventsRequest>
                     for ListWebhookEventsSvc<T> {
                         type Response = super::ListWebhookEventsResponse;
@@ -887,7 +887,7 @@ pub mod merchant_webhook_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantWebhookService>::list_webhook_events(
+                                <T as WebhookMerchantService>::list_webhook_events(
                                         &inner,
                                         request,
                                     )
@@ -918,11 +918,11 @@ pub mod merchant_webhook_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/webhook.merchant.v1.MerchantWebhookService/CreateWebhook" => {
+                "/webhook.merchant.v1.WebhookMerchantService/CreateWebhook" => {
                     #[allow(non_camel_case_types)]
-                    struct CreateWebhookSvc<T: MerchantWebhookService>(pub Arc<T>);
+                    struct CreateWebhookSvc<T: WebhookMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantWebhookService,
+                        T: WebhookMerchantService,
                     > tonic::server::UnaryService<super::CreateWebhookRequest>
                     for CreateWebhookSvc<T> {
                         type Response = super::CreateWebhookResponse;
@@ -936,7 +936,7 @@ pub mod merchant_webhook_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantWebhookService>::create_webhook(
+                                <T as WebhookMerchantService>::create_webhook(
                                         &inner,
                                         request,
                                     )
@@ -967,11 +967,11 @@ pub mod merchant_webhook_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/webhook.merchant.v1.MerchantWebhookService/UpdateWebhook" => {
+                "/webhook.merchant.v1.WebhookMerchantService/UpdateWebhook" => {
                     #[allow(non_camel_case_types)]
-                    struct UpdateWebhookSvc<T: MerchantWebhookService>(pub Arc<T>);
+                    struct UpdateWebhookSvc<T: WebhookMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantWebhookService,
+                        T: WebhookMerchantService,
                     > tonic::server::UnaryService<super::UpdateWebhookRequest>
                     for UpdateWebhookSvc<T> {
                         type Response = super::UpdateWebhookResponse;
@@ -985,7 +985,7 @@ pub mod merchant_webhook_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantWebhookService>::update_webhook(
+                                <T as WebhookMerchantService>::update_webhook(
                                         &inner,
                                         request,
                                     )
@@ -1016,11 +1016,11 @@ pub mod merchant_webhook_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/webhook.merchant.v1.MerchantWebhookService/DeleteWebhook" => {
+                "/webhook.merchant.v1.WebhookMerchantService/DeleteWebhook" => {
                     #[allow(non_camel_case_types)]
-                    struct DeleteWebhookSvc<T: MerchantWebhookService>(pub Arc<T>);
+                    struct DeleteWebhookSvc<T: WebhookMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantWebhookService,
+                        T: WebhookMerchantService,
                     > tonic::server::UnaryService<super::DeleteWebhookRequest>
                     for DeleteWebhookSvc<T> {
                         type Response = super::DeleteWebhookResponse;
@@ -1034,7 +1034,7 @@ pub mod merchant_webhook_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantWebhookService>::delete_webhook(
+                                <T as WebhookMerchantService>::delete_webhook(
                                         &inner,
                                         request,
                                     )
@@ -1065,11 +1065,11 @@ pub mod merchant_webhook_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/webhook.merchant.v1.MerchantWebhookService/RotateWebhookSecret" => {
+                "/webhook.merchant.v1.WebhookMerchantService/RotateWebhookSecret" => {
                     #[allow(non_camel_case_types)]
-                    struct RotateWebhookSecretSvc<T: MerchantWebhookService>(pub Arc<T>);
+                    struct RotateWebhookSecretSvc<T: WebhookMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantWebhookService,
+                        T: WebhookMerchantService,
                     > tonic::server::UnaryService<super::RotateWebhookSecretRequest>
                     for RotateWebhookSecretSvc<T> {
                         type Response = super::RotateWebhookSecretResponse;
@@ -1083,7 +1083,7 @@ pub mod merchant_webhook_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantWebhookService>::rotate_webhook_secret(
+                                <T as WebhookMerchantService>::rotate_webhook_secret(
                                         &inner,
                                         request,
                                     )
@@ -1136,7 +1136,7 @@ pub mod merchant_webhook_service_server {
             }
         }
     }
-    impl<T> Clone for MerchantWebhookServiceServer<T> {
+    impl<T> Clone for WebhookMerchantServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -1149,8 +1149,8 @@ pub mod merchant_webhook_service_server {
         }
     }
     /// Generated gRPC service name
-    pub const SERVICE_NAME: &str = "webhook.merchant.v1.MerchantWebhookService";
-    impl<T> tonic::server::NamedService for MerchantWebhookServiceServer<T> {
+    pub const SERVICE_NAME: &str = "webhook.merchant.v1.WebhookMerchantService";
+    impl<T> tonic::server::NamedService for WebhookMerchantServiceServer<T> {
         const NAME: &'static str = SERVICE_NAME;
     }
 }

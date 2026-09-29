@@ -129,7 +129,7 @@ impl ::prost::Name for ListPayoutsResponse {
     }
 }
 /// Generated client implementations.
-pub mod merchant_payout_service_client {
+pub mod payout_merchant_service_client {
     #![allow(
         unused_variables,
         dead_code,
@@ -140,10 +140,10 @@ pub mod merchant_payout_service_client {
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
-    pub struct MerchantPayoutServiceClient<T> {
+    pub struct PayoutMerchantServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl MerchantPayoutServiceClient<tonic::transport::Channel> {
+    impl PayoutMerchantServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -154,7 +154,7 @@ pub mod merchant_payout_service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> MerchantPayoutServiceClient<T>
+    impl<T> PayoutMerchantServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
@@ -172,7 +172,7 @@ pub mod merchant_payout_service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> MerchantPayoutServiceClient<InterceptedService<T, F>>
+        ) -> PayoutMerchantServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -186,7 +186,7 @@ pub mod merchant_payout_service_client {
                 http::Request<tonic::body::Body>,
             >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
-            MerchantPayoutServiceClient::new(InterceptedService::new(inner, interceptor))
+            PayoutMerchantServiceClient::new(InterceptedService::new(inner, interceptor))
         }
         /// Compress requests with the given encoding.
         ///
@@ -236,13 +236,13 @@ pub mod merchant_payout_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/payout.payout.merchant.v1.MerchantPayoutService/GetPayout",
+                "/payout.payout.merchant.v1.PayoutMerchantService/GetPayout",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "payout.payout.merchant.v1.MerchantPayoutService",
+                        "payout.payout.merchant.v1.PayoutMerchantService",
                         "GetPayout",
                     ),
                 );
@@ -265,13 +265,13 @@ pub mod merchant_payout_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/payout.payout.merchant.v1.MerchantPayoutService/ListPayouts",
+                "/payout.payout.merchant.v1.PayoutMerchantService/ListPayouts",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "payout.payout.merchant.v1.MerchantPayoutService",
+                        "payout.payout.merchant.v1.PayoutMerchantService",
                         "ListPayouts",
                     ),
                 );
@@ -280,7 +280,7 @@ pub mod merchant_payout_service_client {
     }
 }
 /// Generated server implementations.
-pub mod merchant_payout_service_server {
+pub mod payout_merchant_service_server {
     #![allow(
         unused_variables,
         dead_code,
@@ -289,9 +289,9 @@ pub mod merchant_payout_service_server {
         clippy::let_unit_value,
     )]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with MerchantPayoutServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with PayoutMerchantServiceServer.
     #[async_trait]
-    pub trait MerchantPayoutService: std::marker::Send + std::marker::Sync + 'static {
+    pub trait PayoutMerchantService: std::marker::Send + std::marker::Sync + 'static {
         async fn get_payout(
             &self,
             request: tonic::Request<super::GetPayoutRequest>,
@@ -308,14 +308,14 @@ pub mod merchant_payout_service_server {
         >;
     }
     #[derive(Debug)]
-    pub struct MerchantPayoutServiceServer<T> {
+    pub struct PayoutMerchantServiceServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T> MerchantPayoutServiceServer<T> {
+    impl<T> PayoutMerchantServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -367,9 +367,9 @@ pub mod merchant_payout_service_server {
         }
     }
     impl<T, B> tonic::codegen::Service<http::Request<B>>
-    for MerchantPayoutServiceServer<T>
+    for PayoutMerchantServiceServer<T>
     where
-        T: MerchantPayoutService,
+        T: PayoutMerchantService,
         B: Body + std::marker::Send + 'static,
         B::Error: Into<StdError> + std::marker::Send + 'static,
     {
@@ -384,11 +384,11 @@ pub mod merchant_payout_service_server {
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             match req.uri().path() {
-                "/payout.payout.merchant.v1.MerchantPayoutService/GetPayout" => {
+                "/payout.payout.merchant.v1.PayoutMerchantService/GetPayout" => {
                     #[allow(non_camel_case_types)]
-                    struct GetPayoutSvc<T: MerchantPayoutService>(pub Arc<T>);
+                    struct GetPayoutSvc<T: PayoutMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantPayoutService,
+                        T: PayoutMerchantService,
                     > tonic::server::UnaryService<super::GetPayoutRequest>
                     for GetPayoutSvc<T> {
                         type Response = super::GetPayoutResponse;
@@ -402,7 +402,7 @@ pub mod merchant_payout_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantPayoutService>::get_payout(&inner, request)
+                                <T as PayoutMerchantService>::get_payout(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -430,11 +430,11 @@ pub mod merchant_payout_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/payout.payout.merchant.v1.MerchantPayoutService/ListPayouts" => {
+                "/payout.payout.merchant.v1.PayoutMerchantService/ListPayouts" => {
                     #[allow(non_camel_case_types)]
-                    struct ListPayoutsSvc<T: MerchantPayoutService>(pub Arc<T>);
+                    struct ListPayoutsSvc<T: PayoutMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantPayoutService,
+                        T: PayoutMerchantService,
                     > tonic::server::UnaryService<super::ListPayoutsRequest>
                     for ListPayoutsSvc<T> {
                         type Response = super::ListPayoutsResponse;
@@ -448,7 +448,7 @@ pub mod merchant_payout_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantPayoutService>::list_payouts(&inner, request)
+                                <T as PayoutMerchantService>::list_payouts(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -498,7 +498,7 @@ pub mod merchant_payout_service_server {
             }
         }
     }
-    impl<T> Clone for MerchantPayoutServiceServer<T> {
+    impl<T> Clone for PayoutMerchantServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -511,8 +511,8 @@ pub mod merchant_payout_service_server {
         }
     }
     /// Generated gRPC service name
-    pub const SERVICE_NAME: &str = "payout.payout.merchant.v1.MerchantPayoutService";
-    impl<T> tonic::server::NamedService for MerchantPayoutServiceServer<T> {
+    pub const SERVICE_NAME: &str = "payout.payout.merchant.v1.PayoutMerchantService";
+    impl<T> tonic::server::NamedService for PayoutMerchantServiceServer<T> {
         const NAME: &'static str = SERVICE_NAME;
     }
 }

@@ -156,7 +156,7 @@ impl ::prost::Name for RevokeSessionsResponse {
     }
 }
 /// Generated client implementations.
-pub mod merchant_session_service_client {
+pub mod session_merchant_service_client {
     #![allow(
         unused_variables,
         dead_code,
@@ -167,10 +167,10 @@ pub mod merchant_session_service_client {
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
-    pub struct MerchantSessionServiceClient<T> {
+    pub struct SessionMerchantServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl MerchantSessionServiceClient<tonic::transport::Channel> {
+    impl SessionMerchantServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -181,7 +181,7 @@ pub mod merchant_session_service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> MerchantSessionServiceClient<T>
+    impl<T> SessionMerchantServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
@@ -199,7 +199,7 @@ pub mod merchant_session_service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> MerchantSessionServiceClient<InterceptedService<T, F>>
+        ) -> SessionMerchantServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -213,7 +213,7 @@ pub mod merchant_session_service_client {
                 http::Request<tonic::body::Body>,
             >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
-            MerchantSessionServiceClient::new(
+            SessionMerchantServiceClient::new(
                 InterceptedService::new(inner, interceptor),
             )
         }
@@ -265,13 +265,13 @@ pub mod merchant_session_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.session.merchant.v1.MerchantSessionService/GetSession",
+                "/identity.session.merchant.v1.SessionMerchantService/GetSession",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.session.merchant.v1.MerchantSessionService",
+                        "identity.session.merchant.v1.SessionMerchantService",
                         "GetSession",
                     ),
                 );
@@ -294,13 +294,13 @@ pub mod merchant_session_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.session.merchant.v1.MerchantSessionService/ListSessions",
+                "/identity.session.merchant.v1.SessionMerchantService/ListSessions",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.session.merchant.v1.MerchantSessionService",
+                        "identity.session.merchant.v1.SessionMerchantService",
                         "ListSessions",
                     ),
                 );
@@ -323,13 +323,13 @@ pub mod merchant_session_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.session.merchant.v1.MerchantSessionService/RevokeSession",
+                "/identity.session.merchant.v1.SessionMerchantService/RevokeSession",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.session.merchant.v1.MerchantSessionService",
+                        "identity.session.merchant.v1.SessionMerchantService",
                         "RevokeSession",
                     ),
                 );
@@ -352,13 +352,13 @@ pub mod merchant_session_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/identity.session.merchant.v1.MerchantSessionService/RevokeSessions",
+                "/identity.session.merchant.v1.SessionMerchantService/RevokeSessions",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "identity.session.merchant.v1.MerchantSessionService",
+                        "identity.session.merchant.v1.SessionMerchantService",
                         "RevokeSessions",
                     ),
                 );
@@ -367,7 +367,7 @@ pub mod merchant_session_service_client {
     }
 }
 /// Generated server implementations.
-pub mod merchant_session_service_server {
+pub mod session_merchant_service_server {
     #![allow(
         unused_variables,
         dead_code,
@@ -376,9 +376,9 @@ pub mod merchant_session_service_server {
         clippy::let_unit_value,
     )]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with MerchantSessionServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with SessionMerchantServiceServer.
     #[async_trait]
-    pub trait MerchantSessionService: std::marker::Send + std::marker::Sync + 'static {
+    pub trait SessionMerchantService: std::marker::Send + std::marker::Sync + 'static {
         async fn get_session(
             &self,
             request: tonic::Request<super::GetSessionRequest>,
@@ -409,14 +409,14 @@ pub mod merchant_session_service_server {
         >;
     }
     #[derive(Debug)]
-    pub struct MerchantSessionServiceServer<T> {
+    pub struct SessionMerchantServiceServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T> MerchantSessionServiceServer<T> {
+    impl<T> SessionMerchantServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -468,9 +468,9 @@ pub mod merchant_session_service_server {
         }
     }
     impl<T, B> tonic::codegen::Service<http::Request<B>>
-    for MerchantSessionServiceServer<T>
+    for SessionMerchantServiceServer<T>
     where
-        T: MerchantSessionService,
+        T: SessionMerchantService,
         B: Body + std::marker::Send + 'static,
         B::Error: Into<StdError> + std::marker::Send + 'static,
     {
@@ -485,11 +485,11 @@ pub mod merchant_session_service_server {
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             match req.uri().path() {
-                "/identity.session.merchant.v1.MerchantSessionService/GetSession" => {
+                "/identity.session.merchant.v1.SessionMerchantService/GetSession" => {
                     #[allow(non_camel_case_types)]
-                    struct GetSessionSvc<T: MerchantSessionService>(pub Arc<T>);
+                    struct GetSessionSvc<T: SessionMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantSessionService,
+                        T: SessionMerchantService,
                     > tonic::server::UnaryService<super::GetSessionRequest>
                     for GetSessionSvc<T> {
                         type Response = super::GetSessionResponse;
@@ -503,7 +503,7 @@ pub mod merchant_session_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantSessionService>::get_session(&inner, request)
+                                <T as SessionMerchantService>::get_session(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -531,11 +531,11 @@ pub mod merchant_session_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.session.merchant.v1.MerchantSessionService/ListSessions" => {
+                "/identity.session.merchant.v1.SessionMerchantService/ListSessions" => {
                     #[allow(non_camel_case_types)]
-                    struct ListSessionsSvc<T: MerchantSessionService>(pub Arc<T>);
+                    struct ListSessionsSvc<T: SessionMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantSessionService,
+                        T: SessionMerchantService,
                     > tonic::server::UnaryService<super::ListSessionsRequest>
                     for ListSessionsSvc<T> {
                         type Response = super::ListSessionsResponse;
@@ -549,7 +549,7 @@ pub mod merchant_session_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantSessionService>::list_sessions(
+                                <T as SessionMerchantService>::list_sessions(
                                         &inner,
                                         request,
                                     )
@@ -580,11 +580,11 @@ pub mod merchant_session_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.session.merchant.v1.MerchantSessionService/RevokeSession" => {
+                "/identity.session.merchant.v1.SessionMerchantService/RevokeSession" => {
                     #[allow(non_camel_case_types)]
-                    struct RevokeSessionSvc<T: MerchantSessionService>(pub Arc<T>);
+                    struct RevokeSessionSvc<T: SessionMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantSessionService,
+                        T: SessionMerchantService,
                     > tonic::server::UnaryService<super::RevokeSessionRequest>
                     for RevokeSessionSvc<T> {
                         type Response = super::RevokeSessionResponse;
@@ -598,7 +598,7 @@ pub mod merchant_session_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantSessionService>::revoke_session(
+                                <T as SessionMerchantService>::revoke_session(
                                         &inner,
                                         request,
                                     )
@@ -629,11 +629,11 @@ pub mod merchant_session_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/identity.session.merchant.v1.MerchantSessionService/RevokeSessions" => {
+                "/identity.session.merchant.v1.SessionMerchantService/RevokeSessions" => {
                     #[allow(non_camel_case_types)]
-                    struct RevokeSessionsSvc<T: MerchantSessionService>(pub Arc<T>);
+                    struct RevokeSessionsSvc<T: SessionMerchantService>(pub Arc<T>);
                     impl<
-                        T: MerchantSessionService,
+                        T: SessionMerchantService,
                     > tonic::server::UnaryService<super::RevokeSessionsRequest>
                     for RevokeSessionsSvc<T> {
                         type Response = super::RevokeSessionsResponse;
@@ -647,7 +647,7 @@ pub mod merchant_session_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as MerchantSessionService>::revoke_sessions(
+                                <T as SessionMerchantService>::revoke_sessions(
                                         &inner,
                                         request,
                                     )
@@ -700,7 +700,7 @@ pub mod merchant_session_service_server {
             }
         }
     }
-    impl<T> Clone for MerchantSessionServiceServer<T> {
+    impl<T> Clone for SessionMerchantServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -713,8 +713,8 @@ pub mod merchant_session_service_server {
         }
     }
     /// Generated gRPC service name
-    pub const SERVICE_NAME: &str = "identity.session.merchant.v1.MerchantSessionService";
-    impl<T> tonic::server::NamedService for MerchantSessionServiceServer<T> {
+    pub const SERVICE_NAME: &str = "identity.session.merchant.v1.SessionMerchantService";
+    impl<T> tonic::server::NamedService for SessionMerchantServiceServer<T> {
         const NAME: &'static str = SERVICE_NAME;
     }
 }

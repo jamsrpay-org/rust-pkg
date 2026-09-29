@@ -356,7 +356,7 @@ impl ::prost::Name for GetTicketMessagesResponse {
     }
 }
 /// Generated client implementations.
-pub mod admin_ticket_service_client {
+pub mod ticket_admin_service_client {
     #![allow(
         unused_variables,
         dead_code,
@@ -367,10 +367,10 @@ pub mod admin_ticket_service_client {
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
-    pub struct AdminTicketServiceClient<T> {
+    pub struct TicketAdminServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl AdminTicketServiceClient<tonic::transport::Channel> {
+    impl TicketAdminServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -381,7 +381,7 @@ pub mod admin_ticket_service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> AdminTicketServiceClient<T>
+    impl<T> TicketAdminServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
@@ -399,7 +399,7 @@ pub mod admin_ticket_service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> AdminTicketServiceClient<InterceptedService<T, F>>
+        ) -> TicketAdminServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -413,7 +413,7 @@ pub mod admin_ticket_service_client {
                 http::Request<tonic::body::Body>,
             >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
-            AdminTicketServiceClient::new(InterceptedService::new(inner, interceptor))
+            TicketAdminServiceClient::new(InterceptedService::new(inner, interceptor))
         }
         /// Compress requests with the given encoding.
         ///
@@ -463,13 +463,13 @@ pub mod admin_ticket_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/support.ticket.admin.v1.AdminTicketService/GetTicket",
+                "/support.ticket.admin.v1.TicketAdminService/GetTicket",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "support.ticket.admin.v1.AdminTicketService",
+                        "support.ticket.admin.v1.TicketAdminService",
                         "GetTicket",
                     ),
                 );
@@ -492,13 +492,13 @@ pub mod admin_ticket_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/support.ticket.admin.v1.AdminTicketService/ListTickets",
+                "/support.ticket.admin.v1.TicketAdminService/ListTickets",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "support.ticket.admin.v1.AdminTicketService",
+                        "support.ticket.admin.v1.TicketAdminService",
                         "ListTickets",
                     ),
                 );
@@ -521,13 +521,13 @@ pub mod admin_ticket_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/support.ticket.admin.v1.AdminTicketService/CreateTicket",
+                "/support.ticket.admin.v1.TicketAdminService/CreateTicket",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "support.ticket.admin.v1.AdminTicketService",
+                        "support.ticket.admin.v1.TicketAdminService",
                         "CreateTicket",
                     ),
                 );
@@ -550,13 +550,13 @@ pub mod admin_ticket_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/support.ticket.admin.v1.AdminTicketService/CloseTicket",
+                "/support.ticket.admin.v1.TicketAdminService/CloseTicket",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "support.ticket.admin.v1.AdminTicketService",
+                        "support.ticket.admin.v1.TicketAdminService",
                         "CloseTicket",
                     ),
                 );
@@ -579,13 +579,13 @@ pub mod admin_ticket_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/support.ticket.admin.v1.AdminTicketService/ReplyTicket",
+                "/support.ticket.admin.v1.TicketAdminService/ReplyTicket",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "support.ticket.admin.v1.AdminTicketService",
+                        "support.ticket.admin.v1.TicketAdminService",
                         "ReplyTicket",
                     ),
                 );
@@ -608,13 +608,13 @@ pub mod admin_ticket_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/support.ticket.admin.v1.AdminTicketService/JoinTicket",
+                "/support.ticket.admin.v1.TicketAdminService/JoinTicket",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "support.ticket.admin.v1.AdminTicketService",
+                        "support.ticket.admin.v1.TicketAdminService",
                         "JoinTicket",
                     ),
                 );
@@ -637,13 +637,13 @@ pub mod admin_ticket_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/support.ticket.admin.v1.AdminTicketService/GetTicketMessages",
+                "/support.ticket.admin.v1.TicketAdminService/GetTicketMessages",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "support.ticket.admin.v1.AdminTicketService",
+                        "support.ticket.admin.v1.TicketAdminService",
                         "GetTicketMessages",
                     ),
                 );
@@ -652,7 +652,7 @@ pub mod admin_ticket_service_client {
     }
 }
 /// Generated server implementations.
-pub mod admin_ticket_service_server {
+pub mod ticket_admin_service_server {
     #![allow(
         unused_variables,
         dead_code,
@@ -661,9 +661,9 @@ pub mod admin_ticket_service_server {
         clippy::let_unit_value,
     )]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with AdminTicketServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with TicketAdminServiceServer.
     #[async_trait]
-    pub trait AdminTicketService: std::marker::Send + std::marker::Sync + 'static {
+    pub trait TicketAdminService: std::marker::Send + std::marker::Sync + 'static {
         async fn get_ticket(
             &self,
             request: tonic::Request<super::GetTicketRequest>,
@@ -718,14 +718,14 @@ pub mod admin_ticket_service_server {
         >;
     }
     #[derive(Debug)]
-    pub struct AdminTicketServiceServer<T> {
+    pub struct TicketAdminServiceServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T> AdminTicketServiceServer<T> {
+    impl<T> TicketAdminServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -776,9 +776,9 @@ pub mod admin_ticket_service_server {
             self
         }
     }
-    impl<T, B> tonic::codegen::Service<http::Request<B>> for AdminTicketServiceServer<T>
+    impl<T, B> tonic::codegen::Service<http::Request<B>> for TicketAdminServiceServer<T>
     where
-        T: AdminTicketService,
+        T: TicketAdminService,
         B: Body + std::marker::Send + 'static,
         B::Error: Into<StdError> + std::marker::Send + 'static,
     {
@@ -793,11 +793,11 @@ pub mod admin_ticket_service_server {
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             match req.uri().path() {
-                "/support.ticket.admin.v1.AdminTicketService/GetTicket" => {
+                "/support.ticket.admin.v1.TicketAdminService/GetTicket" => {
                     #[allow(non_camel_case_types)]
-                    struct GetTicketSvc<T: AdminTicketService>(pub Arc<T>);
+                    struct GetTicketSvc<T: TicketAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminTicketService,
+                        T: TicketAdminService,
                     > tonic::server::UnaryService<super::GetTicketRequest>
                     for GetTicketSvc<T> {
                         type Response = super::GetTicketResponse;
@@ -811,7 +811,7 @@ pub mod admin_ticket_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminTicketService>::get_ticket(&inner, request).await
+                                <T as TicketAdminService>::get_ticket(&inner, request).await
                             };
                             Box::pin(fut)
                         }
@@ -838,11 +838,11 @@ pub mod admin_ticket_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/support.ticket.admin.v1.AdminTicketService/ListTickets" => {
+                "/support.ticket.admin.v1.TicketAdminService/ListTickets" => {
                     #[allow(non_camel_case_types)]
-                    struct ListTicketsSvc<T: AdminTicketService>(pub Arc<T>);
+                    struct ListTicketsSvc<T: TicketAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminTicketService,
+                        T: TicketAdminService,
                     > tonic::server::UnaryService<super::ListTicketsRequest>
                     for ListTicketsSvc<T> {
                         type Response = super::ListTicketsResponse;
@@ -856,7 +856,7 @@ pub mod admin_ticket_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminTicketService>::list_tickets(&inner, request)
+                                <T as TicketAdminService>::list_tickets(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -884,11 +884,11 @@ pub mod admin_ticket_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/support.ticket.admin.v1.AdminTicketService/CreateTicket" => {
+                "/support.ticket.admin.v1.TicketAdminService/CreateTicket" => {
                     #[allow(non_camel_case_types)]
-                    struct CreateTicketSvc<T: AdminTicketService>(pub Arc<T>);
+                    struct CreateTicketSvc<T: TicketAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminTicketService,
+                        T: TicketAdminService,
                     > tonic::server::UnaryService<super::CreateTicketRequest>
                     for CreateTicketSvc<T> {
                         type Response = super::CreateTicketResponse;
@@ -902,7 +902,7 @@ pub mod admin_ticket_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminTicketService>::create_ticket(&inner, request)
+                                <T as TicketAdminService>::create_ticket(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -930,11 +930,11 @@ pub mod admin_ticket_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/support.ticket.admin.v1.AdminTicketService/CloseTicket" => {
+                "/support.ticket.admin.v1.TicketAdminService/CloseTicket" => {
                     #[allow(non_camel_case_types)]
-                    struct CloseTicketSvc<T: AdminTicketService>(pub Arc<T>);
+                    struct CloseTicketSvc<T: TicketAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminTicketService,
+                        T: TicketAdminService,
                     > tonic::server::UnaryService<super::CloseTicketRequest>
                     for CloseTicketSvc<T> {
                         type Response = super::CloseTicketResponse;
@@ -948,7 +948,7 @@ pub mod admin_ticket_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminTicketService>::close_ticket(&inner, request)
+                                <T as TicketAdminService>::close_ticket(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -976,11 +976,11 @@ pub mod admin_ticket_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/support.ticket.admin.v1.AdminTicketService/ReplyTicket" => {
+                "/support.ticket.admin.v1.TicketAdminService/ReplyTicket" => {
                     #[allow(non_camel_case_types)]
-                    struct ReplyTicketSvc<T: AdminTicketService>(pub Arc<T>);
+                    struct ReplyTicketSvc<T: TicketAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminTicketService,
+                        T: TicketAdminService,
                     > tonic::server::UnaryService<super::ReplyTicketRequest>
                     for ReplyTicketSvc<T> {
                         type Response = super::ReplyTicketResponse;
@@ -994,7 +994,7 @@ pub mod admin_ticket_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminTicketService>::reply_ticket(&inner, request)
+                                <T as TicketAdminService>::reply_ticket(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -1022,11 +1022,11 @@ pub mod admin_ticket_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/support.ticket.admin.v1.AdminTicketService/JoinTicket" => {
+                "/support.ticket.admin.v1.TicketAdminService/JoinTicket" => {
                     #[allow(non_camel_case_types)]
-                    struct JoinTicketSvc<T: AdminTicketService>(pub Arc<T>);
+                    struct JoinTicketSvc<T: TicketAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminTicketService,
+                        T: TicketAdminService,
                     > tonic::server::ServerStreamingService<super::JoinTicketRequest>
                     for JoinTicketSvc<T> {
                         type Response = super::JoinTicketResponse;
@@ -1041,7 +1041,7 @@ pub mod admin_ticket_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminTicketService>::join_ticket(&inner, request)
+                                <T as TicketAdminService>::join_ticket(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -1069,11 +1069,11 @@ pub mod admin_ticket_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/support.ticket.admin.v1.AdminTicketService/GetTicketMessages" => {
+                "/support.ticket.admin.v1.TicketAdminService/GetTicketMessages" => {
                     #[allow(non_camel_case_types)]
-                    struct GetTicketMessagesSvc<T: AdminTicketService>(pub Arc<T>);
+                    struct GetTicketMessagesSvc<T: TicketAdminService>(pub Arc<T>);
                     impl<
-                        T: AdminTicketService,
+                        T: TicketAdminService,
                     > tonic::server::UnaryService<super::GetTicketMessagesRequest>
                     for GetTicketMessagesSvc<T> {
                         type Response = super::GetTicketMessagesResponse;
@@ -1087,7 +1087,7 @@ pub mod admin_ticket_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AdminTicketService>::get_ticket_messages(
+                                <T as TicketAdminService>::get_ticket_messages(
                                         &inner,
                                         request,
                                     )
@@ -1140,7 +1140,7 @@ pub mod admin_ticket_service_server {
             }
         }
     }
-    impl<T> Clone for AdminTicketServiceServer<T> {
+    impl<T> Clone for TicketAdminServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -1153,8 +1153,8 @@ pub mod admin_ticket_service_server {
         }
     }
     /// Generated gRPC service name
-    pub const SERVICE_NAME: &str = "support.ticket.admin.v1.AdminTicketService";
-    impl<T> tonic::server::NamedService for AdminTicketServiceServer<T> {
+    pub const SERVICE_NAME: &str = "support.ticket.admin.v1.TicketAdminService";
+    impl<T> tonic::server::NamedService for TicketAdminServiceServer<T> {
         const NAME: &'static str = SERVICE_NAME;
     }
 }
