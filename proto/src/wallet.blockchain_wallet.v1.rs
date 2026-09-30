@@ -2,164 +2,164 @@
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
-pub enum WalletType {
+pub enum BlockchainWalletType {
     Unspecified = 0,
     Invoice = 1,
     Gas = 2,
 }
-impl WalletType {
+impl BlockchainWalletType {
     /// String value of the enum field names used in the ProtoBuf definition.
     ///
     /// The values are not transformed in any way and thus are considered stable
     /// (if the ProtoBuf definition does not change) and safe for programmatic use.
     pub fn as_str_name(&self) -> &'static str {
         match self {
-            Self::Unspecified => "WALLET_TYPE_UNSPECIFIED",
-            Self::Invoice => "WALLET_TYPE_INVOICE",
-            Self::Gas => "WALLET_TYPE_GAS",
+            Self::Unspecified => "BLOCKCHAIN_WALLET_TYPE_UNSPECIFIED",
+            Self::Invoice => "BLOCKCHAIN_WALLET_TYPE_INVOICE",
+            Self::Gas => "BLOCKCHAIN_WALLET_TYPE_GAS",
         }
     }
     /// Creates an enum from field names used in the ProtoBuf definition.
     pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
         match value {
-            "WALLET_TYPE_UNSPECIFIED" => Some(Self::Unspecified),
-            "WALLET_TYPE_INVOICE" => Some(Self::Invoice),
-            "WALLET_TYPE_GAS" => Some(Self::Gas),
+            "BLOCKCHAIN_WALLET_TYPE_UNSPECIFIED" => Some(Self::Unspecified),
+            "BLOCKCHAIN_WALLET_TYPE_INVOICE" => Some(Self::Invoice),
+            "BLOCKCHAIN_WALLET_TYPE_GAS" => Some(Self::Gas),
             _ => None,
         }
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct Wallet {
+pub struct BlockchainWallet {
     #[prost(string, tag = "1")]
     pub id: ::prost::alloc::string::String,
-    #[prost(enumeration = "super::super::shared::enums::v1::Chain", tag = "2")]
+    #[prost(enumeration = "super::super::super::shared::enums::v1::Chain", tag = "2")]
     pub chain: i32,
     #[prost(string, tag = "3")]
     pub address: ::prost::alloc::string::String,
-    #[prost(enumeration = "WalletType", tag = "4")]
+    #[prost(enumeration = "BlockchainWalletType", tag = "4")]
     pub r#type: i32,
     #[prost(string, tag = "5")]
     pub store_id: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "6")]
     pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
 }
-impl ::prost::Name for Wallet {
-    const NAME: &'static str = "Wallet";
-    const PACKAGE: &'static str = "wallet.v1";
+impl ::prost::Name for BlockchainWallet {
+    const NAME: &'static str = "BlockchainWallet";
+    const PACKAGE: &'static str = "wallet.blockchain_wallet.v1";
     fn full_name() -> ::prost::alloc::string::String {
-        "wallet.v1.Wallet".into()
+        "wallet.blockchain_wallet.v1.BlockchainWallet".into()
     }
     fn type_url() -> ::prost::alloc::string::String {
-        "/wallet.v1.Wallet".into()
+        "/wallet.blockchain_wallet.v1.BlockchainWallet".into()
     }
 }
-/// ======= GetWallet ===== //
+/// ======= GetBlockchainWallet ===== //
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct GetWalletRequest {
+pub struct GetBlockchainWalletRequest {
     #[prost(string, tag = "1")]
-    pub wallet_id: ::prost::alloc::string::String,
+    pub blockchain_wallet_id: ::prost::alloc::string::String,
 }
-impl ::prost::Name for GetWalletRequest {
-    const NAME: &'static str = "GetWalletRequest";
-    const PACKAGE: &'static str = "wallet.v1";
+impl ::prost::Name for GetBlockchainWalletRequest {
+    const NAME: &'static str = "GetBlockchainWalletRequest";
+    const PACKAGE: &'static str = "wallet.blockchain_wallet.v1";
     fn full_name() -> ::prost::alloc::string::String {
-        "wallet.v1.GetWalletRequest".into()
+        "wallet.blockchain_wallet.v1.GetBlockchainWalletRequest".into()
     }
     fn type_url() -> ::prost::alloc::string::String {
-        "/wallet.v1.GetWalletRequest".into()
+        "/wallet.blockchain_wallet.v1.GetBlockchainWalletRequest".into()
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct GetWalletResponse {
+pub struct GetBlockchainWalletResponse {
     #[prost(message, optional, tag = "1")]
-    pub wallet: ::core::option::Option<Wallet>,
+    pub blockchain_wallet: ::core::option::Option<BlockchainWallet>,
 }
-impl ::prost::Name for GetWalletResponse {
-    const NAME: &'static str = "GetWalletResponse";
-    const PACKAGE: &'static str = "wallet.v1";
+impl ::prost::Name for GetBlockchainWalletResponse {
+    const NAME: &'static str = "GetBlockchainWalletResponse";
+    const PACKAGE: &'static str = "wallet.blockchain_wallet.v1";
     fn full_name() -> ::prost::alloc::string::String {
-        "wallet.v1.GetWalletResponse".into()
+        "wallet.blockchain_wallet.v1.GetBlockchainWalletResponse".into()
     }
     fn type_url() -> ::prost::alloc::string::String {
-        "/wallet.v1.GetWalletResponse".into()
+        "/wallet.blockchain_wallet.v1.GetBlockchainWalletResponse".into()
     }
 }
-/// ======= ListWallets ===== //
+/// ======= ListBlockchainWallets ===== //
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct ListWalletsRequest {
+pub struct ListBlockchainWalletsRequest {
     #[prost(string, tag = "1")]
     pub store_id: ::prost::alloc::string::String,
-    #[prost(enumeration = "super::super::shared::enums::v1::Chain", tag = "2")]
+    #[prost(enumeration = "super::super::super::shared::enums::v1::Chain", tag = "2")]
     pub chain: i32,
-    #[prost(enumeration = "WalletType", tag = "3")]
+    #[prost(enumeration = "BlockchainWalletType", tag = "3")]
     pub r#type: i32,
 }
-impl ::prost::Name for ListWalletsRequest {
-    const NAME: &'static str = "ListWalletsRequest";
-    const PACKAGE: &'static str = "wallet.v1";
+impl ::prost::Name for ListBlockchainWalletsRequest {
+    const NAME: &'static str = "ListBlockchainWalletsRequest";
+    const PACKAGE: &'static str = "wallet.blockchain_wallet.v1";
     fn full_name() -> ::prost::alloc::string::String {
-        "wallet.v1.ListWalletsRequest".into()
+        "wallet.blockchain_wallet.v1.ListBlockchainWalletsRequest".into()
     }
     fn type_url() -> ::prost::alloc::string::String {
-        "/wallet.v1.ListWalletsRequest".into()
+        "/wallet.blockchain_wallet.v1.ListBlockchainWalletsRequest".into()
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ListWalletsResponse {
+pub struct ListBlockchainWalletsResponse {
     #[prost(message, repeated, tag = "1")]
-    pub wallets: ::prost::alloc::vec::Vec<Wallet>,
+    pub blockchain_wallets: ::prost::alloc::vec::Vec<BlockchainWallet>,
 }
-impl ::prost::Name for ListWalletsResponse {
-    const NAME: &'static str = "ListWalletsResponse";
-    const PACKAGE: &'static str = "wallet.v1";
+impl ::prost::Name for ListBlockchainWalletsResponse {
+    const NAME: &'static str = "ListBlockchainWalletsResponse";
+    const PACKAGE: &'static str = "wallet.blockchain_wallet.v1";
     fn full_name() -> ::prost::alloc::string::String {
-        "wallet.v1.ListWalletsResponse".into()
+        "wallet.blockchain_wallet.v1.ListBlockchainWalletsResponse".into()
     }
     fn type_url() -> ::prost::alloc::string::String {
-        "/wallet.v1.ListWalletsResponse".into()
+        "/wallet.blockchain_wallet.v1.ListBlockchainWalletsResponse".into()
     }
 }
-/// ======= CreateWallet ===== //
+/// ======= CreateBlockchainWallet ===== //
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct CreateWalletRequest {
-    #[prost(enumeration = "super::super::shared::enums::v1::Chain", tag = "1")]
+pub struct CreateBlockchainWalletRequest {
+    #[prost(enumeration = "super::super::super::shared::enums::v1::Chain", tag = "1")]
     pub chain: i32,
-    #[prost(enumeration = "WalletType", tag = "2")]
+    #[prost(enumeration = "BlockchainWalletType", tag = "2")]
     pub r#type: i32,
     #[prost(string, tag = "3")]
     pub store_id: ::prost::alloc::string::String,
 }
-impl ::prost::Name for CreateWalletRequest {
-    const NAME: &'static str = "CreateWalletRequest";
-    const PACKAGE: &'static str = "wallet.v1";
+impl ::prost::Name for CreateBlockchainWalletRequest {
+    const NAME: &'static str = "CreateBlockchainWalletRequest";
+    const PACKAGE: &'static str = "wallet.blockchain_wallet.v1";
     fn full_name() -> ::prost::alloc::string::String {
-        "wallet.v1.CreateWalletRequest".into()
+        "wallet.blockchain_wallet.v1.CreateBlockchainWalletRequest".into()
     }
     fn type_url() -> ::prost::alloc::string::String {
-        "/wallet.v1.CreateWalletRequest".into()
+        "/wallet.blockchain_wallet.v1.CreateBlockchainWalletRequest".into()
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct CreateWalletResponse {
+pub struct CreateBlockchainWalletResponse {
     #[prost(message, optional, tag = "1")]
-    pub wallet: ::core::option::Option<Wallet>,
+    pub blockchain_wallet: ::core::option::Option<BlockchainWallet>,
 }
-impl ::prost::Name for CreateWalletResponse {
-    const NAME: &'static str = "CreateWalletResponse";
-    const PACKAGE: &'static str = "wallet.v1";
+impl ::prost::Name for CreateBlockchainWalletResponse {
+    const NAME: &'static str = "CreateBlockchainWalletResponse";
+    const PACKAGE: &'static str = "wallet.blockchain_wallet.v1";
     fn full_name() -> ::prost::alloc::string::String {
-        "wallet.v1.CreateWalletResponse".into()
+        "wallet.blockchain_wallet.v1.CreateBlockchainWalletResponse".into()
     }
     fn type_url() -> ::prost::alloc::string::String {
-        "/wallet.v1.CreateWalletResponse".into()
+        "/wallet.blockchain_wallet.v1.CreateBlockchainWalletResponse".into()
     }
 }
 /// ======= SignTransaction ===== //
@@ -167,20 +167,20 @@ impl ::prost::Name for CreateWalletResponse {
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SignTransactionRequest {
     #[prost(string, tag = "1")]
-    pub wallet_id: ::prost::alloc::string::String,
+    pub blockchain_wallet_id: ::prost::alloc::string::String,
     #[prost(bytes = "vec", tag = "2")]
     pub raw_tx: ::prost::alloc::vec::Vec<u8>,
-    #[prost(enumeration = "super::super::shared::enums::v1::Chain", tag = "3")]
+    #[prost(enumeration = "super::super::super::shared::enums::v1::Chain", tag = "3")]
     pub chain: i32,
 }
 impl ::prost::Name for SignTransactionRequest {
     const NAME: &'static str = "SignTransactionRequest";
-    const PACKAGE: &'static str = "wallet.v1";
+    const PACKAGE: &'static str = "wallet.blockchain_wallet.v1";
     fn full_name() -> ::prost::alloc::string::String {
-        "wallet.v1.SignTransactionRequest".into()
+        "wallet.blockchain_wallet.v1.SignTransactionRequest".into()
     }
     fn type_url() -> ::prost::alloc::string::String {
-        "/wallet.v1.SignTransactionRequest".into()
+        "/wallet.blockchain_wallet.v1.SignTransactionRequest".into()
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -193,12 +193,12 @@ pub struct SignTransactionResponse {
 }
 impl ::prost::Name for SignTransactionResponse {
     const NAME: &'static str = "SignTransactionResponse";
-    const PACKAGE: &'static str = "wallet.v1";
+    const PACKAGE: &'static str = "wallet.blockchain_wallet.v1";
     fn full_name() -> ::prost::alloc::string::String {
-        "wallet.v1.SignTransactionResponse".into()
+        "wallet.blockchain_wallet.v1.SignTransactionResponse".into()
     }
     fn type_url() -> ::prost::alloc::string::String {
-        "/wallet.v1.SignTransactionResponse".into()
+        "/wallet.blockchain_wallet.v1.SignTransactionResponse".into()
     }
 }
 /// ======= HealthCheck ===== //
@@ -207,12 +207,12 @@ impl ::prost::Name for SignTransactionResponse {
 pub struct HealthCheckRequest {}
 impl ::prost::Name for HealthCheckRequest {
     const NAME: &'static str = "HealthCheckRequest";
-    const PACKAGE: &'static str = "wallet.v1";
+    const PACKAGE: &'static str = "wallet.blockchain_wallet.v1";
     fn full_name() -> ::prost::alloc::string::String {
-        "wallet.v1.HealthCheckRequest".into()
+        "wallet.blockchain_wallet.v1.HealthCheckRequest".into()
     }
     fn type_url() -> ::prost::alloc::string::String {
-        "/wallet.v1.HealthCheckRequest".into()
+        "/wallet.blockchain_wallet.v1.HealthCheckRequest".into()
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -223,16 +223,16 @@ pub struct HealthCheckResponse {
 }
 impl ::prost::Name for HealthCheckResponse {
     const NAME: &'static str = "HealthCheckResponse";
-    const PACKAGE: &'static str = "wallet.v1";
+    const PACKAGE: &'static str = "wallet.blockchain_wallet.v1";
     fn full_name() -> ::prost::alloc::string::String {
-        "wallet.v1.HealthCheckResponse".into()
+        "wallet.blockchain_wallet.v1.HealthCheckResponse".into()
     }
     fn type_url() -> ::prost::alloc::string::String {
-        "/wallet.v1.HealthCheckResponse".into()
+        "/wallet.blockchain_wallet.v1.HealthCheckResponse".into()
     }
 }
 /// Generated client implementations.
-pub mod wallet_service_client {
+pub mod blockchain_wallet_service_client {
     #![allow(
         unused_variables,
         dead_code,
@@ -243,10 +243,10 @@ pub mod wallet_service_client {
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
-    pub struct WalletServiceClient<T> {
+    pub struct BlockchainWalletServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl WalletServiceClient<tonic::transport::Channel> {
+    impl BlockchainWalletServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -257,7 +257,7 @@ pub mod wallet_service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> WalletServiceClient<T>
+    impl<T> BlockchainWalletServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
@@ -275,7 +275,7 @@ pub mod wallet_service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> WalletServiceClient<InterceptedService<T, F>>
+        ) -> BlockchainWalletServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -289,7 +289,9 @@ pub mod wallet_service_client {
                 http::Request<tonic::body::Body>,
             >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
-            WalletServiceClient::new(InterceptedService::new(inner, interceptor))
+            BlockchainWalletServiceClient::new(
+                InterceptedService::new(inner, interceptor),
+            )
         }
         /// Compress requests with the given encoding.
         ///
@@ -322,11 +324,11 @@ pub mod wallet_service_client {
             self.inner = self.inner.max_encoding_message_size(limit);
             self
         }
-        pub async fn get_wallet(
+        pub async fn get_blockchain_wallet(
             &mut self,
-            request: impl tonic::IntoRequest<super::GetWalletRequest>,
+            request: impl tonic::IntoRequest<super::GetBlockchainWalletRequest>,
         ) -> std::result::Result<
-            tonic::Response<super::GetWalletResponse>,
+            tonic::Response<super::GetBlockchainWalletResponse>,
             tonic::Status,
         > {
             self.inner
@@ -339,18 +341,23 @@ pub mod wallet_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/wallet.v1.WalletService/GetWallet",
+                "/wallet.blockchain_wallet.v1.BlockchainWalletService/GetBlockchainWallet",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("wallet.v1.WalletService", "GetWallet"));
+                .insert(
+                    GrpcMethod::new(
+                        "wallet.blockchain_wallet.v1.BlockchainWalletService",
+                        "GetBlockchainWallet",
+                    ),
+                );
             self.inner.unary(req, path, codec).await
         }
-        pub async fn list_wallets(
+        pub async fn list_blockchain_wallets(
             &mut self,
-            request: impl tonic::IntoRequest<super::ListWalletsRequest>,
+            request: impl tonic::IntoRequest<super::ListBlockchainWalletsRequest>,
         ) -> std::result::Result<
-            tonic::Response<super::ListWalletsResponse>,
+            tonic::Response<super::ListBlockchainWalletsResponse>,
             tonic::Status,
         > {
             self.inner
@@ -363,18 +370,23 @@ pub mod wallet_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/wallet.v1.WalletService/ListWallets",
+                "/wallet.blockchain_wallet.v1.BlockchainWalletService/ListBlockchainWallets",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("wallet.v1.WalletService", "ListWallets"));
+                .insert(
+                    GrpcMethod::new(
+                        "wallet.blockchain_wallet.v1.BlockchainWalletService",
+                        "ListBlockchainWallets",
+                    ),
+                );
             self.inner.unary(req, path, codec).await
         }
-        pub async fn create_wallet(
+        pub async fn create_blockchain_wallet(
             &mut self,
-            request: impl tonic::IntoRequest<super::CreateWalletRequest>,
+            request: impl tonic::IntoRequest<super::CreateBlockchainWalletRequest>,
         ) -> std::result::Result<
-            tonic::Response<super::CreateWalletResponse>,
+            tonic::Response<super::CreateBlockchainWalletResponse>,
             tonic::Status,
         > {
             self.inner
@@ -387,11 +399,16 @@ pub mod wallet_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/wallet.v1.WalletService/CreateWallet",
+                "/wallet.blockchain_wallet.v1.BlockchainWalletService/CreateBlockchainWallet",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("wallet.v1.WalletService", "CreateWallet"));
+                .insert(
+                    GrpcMethod::new(
+                        "wallet.blockchain_wallet.v1.BlockchainWalletService",
+                        "CreateBlockchainWallet",
+                    ),
+                );
             self.inner.unary(req, path, codec).await
         }
         pub async fn sign_transaction(
@@ -411,11 +428,16 @@ pub mod wallet_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/wallet.v1.WalletService/SignTransaction",
+                "/wallet.blockchain_wallet.v1.BlockchainWalletService/SignTransaction",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("wallet.v1.WalletService", "SignTransaction"));
+                .insert(
+                    GrpcMethod::new(
+                        "wallet.blockchain_wallet.v1.BlockchainWalletService",
+                        "SignTransaction",
+                    ),
+                );
             self.inner.unary(req, path, codec).await
         }
         pub async fn health_check(
@@ -435,17 +457,22 @@ pub mod wallet_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/wallet.v1.WalletService/HealthCheck",
+                "/wallet.blockchain_wallet.v1.BlockchainWalletService/HealthCheck",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("wallet.v1.WalletService", "HealthCheck"));
+                .insert(
+                    GrpcMethod::new(
+                        "wallet.blockchain_wallet.v1.BlockchainWalletService",
+                        "HealthCheck",
+                    ),
+                );
             self.inner.unary(req, path, codec).await
         }
     }
 }
 /// Generated server implementations.
-pub mod wallet_service_server {
+pub mod blockchain_wallet_service_server {
     #![allow(
         unused_variables,
         dead_code,
@@ -454,28 +481,28 @@ pub mod wallet_service_server {
         clippy::let_unit_value,
     )]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with WalletServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with BlockchainWalletServiceServer.
     #[async_trait]
-    pub trait WalletService: std::marker::Send + std::marker::Sync + 'static {
-        async fn get_wallet(
+    pub trait BlockchainWalletService: std::marker::Send + std::marker::Sync + 'static {
+        async fn get_blockchain_wallet(
             &self,
-            request: tonic::Request<super::GetWalletRequest>,
+            request: tonic::Request<super::GetBlockchainWalletRequest>,
         ) -> std::result::Result<
-            tonic::Response<super::GetWalletResponse>,
+            tonic::Response<super::GetBlockchainWalletResponse>,
             tonic::Status,
         >;
-        async fn list_wallets(
+        async fn list_blockchain_wallets(
             &self,
-            request: tonic::Request<super::ListWalletsRequest>,
+            request: tonic::Request<super::ListBlockchainWalletsRequest>,
         ) -> std::result::Result<
-            tonic::Response<super::ListWalletsResponse>,
+            tonic::Response<super::ListBlockchainWalletsResponse>,
             tonic::Status,
         >;
-        async fn create_wallet(
+        async fn create_blockchain_wallet(
             &self,
-            request: tonic::Request<super::CreateWalletRequest>,
+            request: tonic::Request<super::CreateBlockchainWalletRequest>,
         ) -> std::result::Result<
-            tonic::Response<super::CreateWalletResponse>,
+            tonic::Response<super::CreateBlockchainWalletResponse>,
             tonic::Status,
         >;
         async fn sign_transaction(
@@ -494,14 +521,14 @@ pub mod wallet_service_server {
         >;
     }
     #[derive(Debug)]
-    pub struct WalletServiceServer<T> {
+    pub struct BlockchainWalletServiceServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T> WalletServiceServer<T> {
+    impl<T> BlockchainWalletServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -552,9 +579,10 @@ pub mod wallet_service_server {
             self
         }
     }
-    impl<T, B> tonic::codegen::Service<http::Request<B>> for WalletServiceServer<T>
+    impl<T, B> tonic::codegen::Service<http::Request<B>>
+    for BlockchainWalletServiceServer<T>
     where
-        T: WalletService,
+        T: BlockchainWalletService,
         B: Body + std::marker::Send + 'static,
         B::Error: Into<StdError> + std::marker::Send + 'static,
     {
@@ -569,25 +597,31 @@ pub mod wallet_service_server {
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             match req.uri().path() {
-                "/wallet.v1.WalletService/GetWallet" => {
+                "/wallet.blockchain_wallet.v1.BlockchainWalletService/GetBlockchainWallet" => {
                     #[allow(non_camel_case_types)]
-                    struct GetWalletSvc<T: WalletService>(pub Arc<T>);
+                    struct GetBlockchainWalletSvc<T: BlockchainWalletService>(
+                        pub Arc<T>,
+                    );
                     impl<
-                        T: WalletService,
-                    > tonic::server::UnaryService<super::GetWalletRequest>
-                    for GetWalletSvc<T> {
-                        type Response = super::GetWalletResponse;
+                        T: BlockchainWalletService,
+                    > tonic::server::UnaryService<super::GetBlockchainWalletRequest>
+                    for GetBlockchainWalletSvc<T> {
+                        type Response = super::GetBlockchainWalletResponse;
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
                             tonic::Status,
                         >;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::GetWalletRequest>,
+                            request: tonic::Request<super::GetBlockchainWalletRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as WalletService>::get_wallet(&inner, request).await
+                                <T as BlockchainWalletService>::get_blockchain_wallet(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
                             };
                             Box::pin(fut)
                         }
@@ -598,7 +632,7 @@ pub mod wallet_service_server {
                     let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
-                        let method = GetWalletSvc(inner);
+                        let method = GetBlockchainWalletSvc(inner);
                         let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -614,25 +648,31 @@ pub mod wallet_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/wallet.v1.WalletService/ListWallets" => {
+                "/wallet.blockchain_wallet.v1.BlockchainWalletService/ListBlockchainWallets" => {
                     #[allow(non_camel_case_types)]
-                    struct ListWalletsSvc<T: WalletService>(pub Arc<T>);
+                    struct ListBlockchainWalletsSvc<T: BlockchainWalletService>(
+                        pub Arc<T>,
+                    );
                     impl<
-                        T: WalletService,
-                    > tonic::server::UnaryService<super::ListWalletsRequest>
-                    for ListWalletsSvc<T> {
-                        type Response = super::ListWalletsResponse;
+                        T: BlockchainWalletService,
+                    > tonic::server::UnaryService<super::ListBlockchainWalletsRequest>
+                    for ListBlockchainWalletsSvc<T> {
+                        type Response = super::ListBlockchainWalletsResponse;
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
                             tonic::Status,
                         >;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::ListWalletsRequest>,
+                            request: tonic::Request<super::ListBlockchainWalletsRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as WalletService>::list_wallets(&inner, request).await
+                                <T as BlockchainWalletService>::list_blockchain_wallets(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
                             };
                             Box::pin(fut)
                         }
@@ -643,7 +683,7 @@ pub mod wallet_service_server {
                     let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
-                        let method = ListWalletsSvc(inner);
+                        let method = ListBlockchainWalletsSvc(inner);
                         let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -659,25 +699,31 @@ pub mod wallet_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/wallet.v1.WalletService/CreateWallet" => {
+                "/wallet.blockchain_wallet.v1.BlockchainWalletService/CreateBlockchainWallet" => {
                     #[allow(non_camel_case_types)]
-                    struct CreateWalletSvc<T: WalletService>(pub Arc<T>);
+                    struct CreateBlockchainWalletSvc<T: BlockchainWalletService>(
+                        pub Arc<T>,
+                    );
                     impl<
-                        T: WalletService,
-                    > tonic::server::UnaryService<super::CreateWalletRequest>
-                    for CreateWalletSvc<T> {
-                        type Response = super::CreateWalletResponse;
+                        T: BlockchainWalletService,
+                    > tonic::server::UnaryService<super::CreateBlockchainWalletRequest>
+                    for CreateBlockchainWalletSvc<T> {
+                        type Response = super::CreateBlockchainWalletResponse;
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
                             tonic::Status,
                         >;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::CreateWalletRequest>,
+                            request: tonic::Request<super::CreateBlockchainWalletRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as WalletService>::create_wallet(&inner, request).await
+                                <T as BlockchainWalletService>::create_blockchain_wallet(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
                             };
                             Box::pin(fut)
                         }
@@ -688,7 +734,7 @@ pub mod wallet_service_server {
                     let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
-                        let method = CreateWalletSvc(inner);
+                        let method = CreateBlockchainWalletSvc(inner);
                         let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -704,11 +750,11 @@ pub mod wallet_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/wallet.v1.WalletService/SignTransaction" => {
+                "/wallet.blockchain_wallet.v1.BlockchainWalletService/SignTransaction" => {
                     #[allow(non_camel_case_types)]
-                    struct SignTransactionSvc<T: WalletService>(pub Arc<T>);
+                    struct SignTransactionSvc<T: BlockchainWalletService>(pub Arc<T>);
                     impl<
-                        T: WalletService,
+                        T: BlockchainWalletService,
                     > tonic::server::UnaryService<super::SignTransactionRequest>
                     for SignTransactionSvc<T> {
                         type Response = super::SignTransactionResponse;
@@ -722,7 +768,10 @@ pub mod wallet_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as WalletService>::sign_transaction(&inner, request)
+                                <T as BlockchainWalletService>::sign_transaction(
+                                        &inner,
+                                        request,
+                                    )
                                     .await
                             };
                             Box::pin(fut)
@@ -750,11 +799,11 @@ pub mod wallet_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/wallet.v1.WalletService/HealthCheck" => {
+                "/wallet.blockchain_wallet.v1.BlockchainWalletService/HealthCheck" => {
                     #[allow(non_camel_case_types)]
-                    struct HealthCheckSvc<T: WalletService>(pub Arc<T>);
+                    struct HealthCheckSvc<T: BlockchainWalletService>(pub Arc<T>);
                     impl<
-                        T: WalletService,
+                        T: BlockchainWalletService,
                     > tonic::server::UnaryService<super::HealthCheckRequest>
                     for HealthCheckSvc<T> {
                         type Response = super::HealthCheckResponse;
@@ -768,7 +817,11 @@ pub mod wallet_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as WalletService>::health_check(&inner, request).await
+                                <T as BlockchainWalletService>::health_check(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
                             };
                             Box::pin(fut)
                         }
@@ -817,7 +870,7 @@ pub mod wallet_service_server {
             }
         }
     }
-    impl<T> Clone for WalletServiceServer<T> {
+    impl<T> Clone for BlockchainWalletServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -830,8 +883,8 @@ pub mod wallet_service_server {
         }
     }
     /// Generated gRPC service name
-    pub const SERVICE_NAME: &str = "wallet.v1.WalletService";
-    impl<T> tonic::server::NamedService for WalletServiceServer<T> {
+    pub const SERVICE_NAME: &str = "wallet.blockchain_wallet.v1.BlockchainWalletService";
+    impl<T> tonic::server::NamedService for BlockchainWalletServiceServer<T> {
         const NAME: &'static str = SERVICE_NAME;
     }
 }

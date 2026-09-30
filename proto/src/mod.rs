@@ -56,6 +56,11 @@ pub mod billing {
                 include!("billing.payment_intent.events.v1.rs");
             }
         }
+        pub mod internal {
+            pub mod v1 {
+                include!("billing.payment_intent.internal.v1.rs");
+            }
+        }
         pub mod merchant {
             pub mod v1 {
                 include!("billing.payment_intent.merchant.v1.rs");
@@ -460,8 +465,17 @@ pub mod verification {
 }
 #[cfg(feature = "wallet")]
 pub mod wallet {
-    pub mod v1 {
-        include!("wallet.v1.rs");
+    pub mod account {
+        pub mod merchant {
+            pub mod v1 {
+                include!("wallet.account.merchant.v1.rs");
+            }
+        }
+    }
+    pub mod blockchain_wallet {
+        pub mod v1 {
+            include!("wallet.blockchain_wallet.v1.rs");
+        }
     }
 }
 #[cfg(feature = "webhook")]

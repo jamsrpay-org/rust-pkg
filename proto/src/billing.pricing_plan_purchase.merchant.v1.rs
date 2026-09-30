@@ -35,6 +35,10 @@ pub struct PricingPlanPurchase {
     pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "13")]
     pub updated_at: ::core::option::Option<::pbjson_types::Timestamp>,
+    #[prost(string, optional, tag = "14")]
+    pub payment_intent_id: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(string, optional, tag = "15")]
+    pub checkout_url: ::core::option::Option<::prost::alloc::string::String>,
 }
 impl ::prost::Name for PricingPlanPurchase {
     const NAME: &'static str = "PricingPlanPurchase";
