@@ -2,10 +2,7 @@ use rdkafka::{ClientConfig, consumer::StreamConsumer, error::KafkaError};
 
 pub fn create_consumer(brokers: &str, group_id: &str) -> Result<StreamConsumer, KafkaError> {
     let consumer = ClientConfig::new()
-        .set(
-            "bootstrap.servers",
-            brokers,
-        )
+        .set("bootstrap.servers", brokers)
         .set("group.id", group_id)
         .set("auto.offset.reset", "earliest")
         .set("enable.auto.commit", "false")

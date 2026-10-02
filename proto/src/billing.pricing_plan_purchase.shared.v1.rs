@@ -5,10 +5,8 @@
 pub enum PricingPlanPurchaseStatus {
     Unspecified = 0,
     Pending = 1,
-    Active = 2,
-    Expired = 3,
-    Failed = 4,
-    Superseded = 5,
+    Completed = 2,
+    Failed = 3,
 }
 impl PricingPlanPurchaseStatus {
     /// String value of the enum field names used in the ProtoBuf definition.
@@ -19,10 +17,8 @@ impl PricingPlanPurchaseStatus {
         match self {
             Self::Unspecified => "PRICING_PLAN_PURCHASE_STATUS_UNSPECIFIED",
             Self::Pending => "PRICING_PLAN_PURCHASE_STATUS_PENDING",
-            Self::Active => "PRICING_PLAN_PURCHASE_STATUS_ACTIVE",
-            Self::Expired => "PRICING_PLAN_PURCHASE_STATUS_EXPIRED",
+            Self::Completed => "PRICING_PLAN_PURCHASE_STATUS_COMPLETED",
             Self::Failed => "PRICING_PLAN_PURCHASE_STATUS_FAILED",
-            Self::Superseded => "PRICING_PLAN_PURCHASE_STATUS_SUPERSEDED",
         }
     }
     /// Creates an enum from field names used in the ProtoBuf definition.
@@ -30,10 +26,8 @@ impl PricingPlanPurchaseStatus {
         match value {
             "PRICING_PLAN_PURCHASE_STATUS_UNSPECIFIED" => Some(Self::Unspecified),
             "PRICING_PLAN_PURCHASE_STATUS_PENDING" => Some(Self::Pending),
-            "PRICING_PLAN_PURCHASE_STATUS_ACTIVE" => Some(Self::Active),
-            "PRICING_PLAN_PURCHASE_STATUS_EXPIRED" => Some(Self::Expired),
+            "PRICING_PLAN_PURCHASE_STATUS_COMPLETED" => Some(Self::Completed),
             "PRICING_PLAN_PURCHASE_STATUS_FAILED" => Some(Self::Failed),
-            "PRICING_PLAN_PURCHASE_STATUS_SUPERSEDED" => Some(Self::Superseded),
             _ => None,
         }
     }

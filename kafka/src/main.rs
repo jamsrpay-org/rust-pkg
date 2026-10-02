@@ -1,3 +1,4 @@
+use jamsrpay_infra::kafka_topics;
 use jamsrpay_kafka::create_topics;
 use rdkafka::admin::{NewTopic, TopicReplication};
 
@@ -7,62 +8,66 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let shared_topics: Vec<&str> = vec![
         // Users
-        "user.events.v1",
-        "identity.events.v1",
+        kafka_topics::USER_EVENTS,
+        kafka_topics::IDENTITY_EVENTS,
     ];
     let topics: Vec<&str> = vec![
         // Billing
-        "billing.invoice.events.v1",
-        "billing.payment_intent.events.v1",
-        "billing.deposit_wallet.events.v1",
+        kafka_topics::INVOICE_EVENTS,
+        kafka_topics::PAYMENT_INTENT_EVENTS,
+        kafka_topics::DEPOSIT_WALLET_EVENTS,
+        kafka_topics::PRICING_PLAN_PURCHASE_EVENTS,
         // Payouts
-        "payout.events.v1",
-        "payout.payout_wallet.events.v1",
-        "payout.gas_wallet.events.v1",
-        "payout.funding_wallet.events.v1",
+        kafka_topics::PAYOUT_EVENTS,
+        kafka_topics::PAYOUT_WALLET_EVENTS,
+        kafka_topics::GAS_WALLET_EVENTS,
+        kafka_topics::PAYOUT_FUNDING_WALLET_EVENTS,
         // Stores
-        "store.store.events.v1",
-        "store.api_key.events.v1",
-        "store.store_currency.events.v1",
+        kafka_topics::STORE_EVENTS,
+        kafka_topics::API_KEY_EVENTS,
+        kafka_topics::STORE_CURRENCY_EVENTS,
+        // Wallet
+        kafka_topics::WALLET_ACCOUNT_EVENTS,
+        kafka_topics::BLOCKCHAIN_WALLET_EVENTS,
     ];
 
     let chain_topics: Vec<&str> = vec![
         // Tron
-        "tron.transfers.native.v1",
-        "tron.transfers.token.v1",
-        "tron.blocks.v1",
+        kafka_topics::TRON_NATIVE_TRANSFERS,
+        kafka_topics::TRON_TOKEN_TRANSFERS,
+        kafka_topics::TRON_BLOCKS,
         // BSC
-        "bsc.transfers.native.v1",
-        "bsc.transfers.token.v1",
-        "bsc.blocks.v1",
+        kafka_topics::BSC_NATIVE_TRANSFERS,
+        kafka_topics::BSC_TOKEN_TRANSFERS,
+        kafka_topics::BSC_BLOCKS,
         // ETH
-        "eth.transfers.native.v1",
-        "eth.transfers.token.v1",
-        "eth.blocks.v1",
+        kafka_topics::ETH_NATIVE_TRANSFERS,
+        kafka_topics::ETH_TOKEN_TRANSFERS,
+        kafka_topics::ETH_BLOCKS,
         // Polygon
-        "pol.transfers.native.v1",
-        "pol.transfers.token.v1",
-        "pol.blocks.v1",
+        kafka_topics::POL_NATIVE_TRANSFERS,
+        kafka_topics::POL_TOKEN_TRANSFERS,
+        kafka_topics::POL_BLOCKS,
         // BTC
-        "btc.transfers.native.v1",
-        "btc.transfers.token.v1",
-        "btc.blocks.v1",
+        kafka_topics::BTC_NATIVE_TRANSFERS,
+        kafka_topics::BTC_TOKEN_TRANSFERS,
+        kafka_topics::BTC_BLOCKS,
         // LTC
-        "ltc.transfers.native.v1",
-        "ltc.transfers.token.v1",
-        "ltc.blocks.v1",
+        kafka_topics::LTC_NATIVE_TRANSFERS,
+        kafka_topics::LTC_TOKEN_TRANSFERS,
+        kafka_topics::LTC_BLOCKS,
         // SOL
-        "sol.transfers.native.v1",
-        "sol.transfers.token.v1",
-        "sol.blocks.v1",
+        kafka_topics::SOL_NATIVE_TRANSFERS,
+        kafka_topics::SOL_TOKEN_TRANSFERS,
+        kafka_topics::SOL_BLOCKS,
         // Blockchain events
-        "blockchain.invoice.payment_detected.v1",
-        "blockchain.invoice.payment_confirmed.v1",
-        "blockchain.gas_wallet.transaction_detected.v1",
-        "blockchain.payout.transaction_detected.v1",
-        "blockchain.payout.native_transfer_detected.v1",
-        "blockchain.payout.transaction_status_changed.v1",
-        "blockchain.payout_funding_wallet.transaction_detected.v1",
+        kafka_topics::BLOCKCHAIN_INVOICE_PAYMENT_DETECTED,
+        kafka_topics::BLOCKCHAIN_INVOICE_PAYMENT_CONFIRMED,
+        kafka_topics::BLOCKCHAIN_GAS_WALLET_TRANSACTION_DETECTED,
+        kafka_topics::BLOCKCHAIN_PAYOUT_TRANSACTION_DETECTED,
+        kafka_topics::BLOCKCHAIN_PAYOUT_NATIVE_TRANSFER_DETECTED,
+        kafka_topics::BLOCKCHAIN_PAYOUT_TRANSACTION_STATUS_CHANGED,
+        kafka_topics::BLOCKCHAIN_PAYOUT_FUNDING_WALLET_TRANSACTION_DETECTED,
     ];
 
     let topics = [shared_topics, topics, chain_topics].concat();

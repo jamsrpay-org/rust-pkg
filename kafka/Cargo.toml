@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+jamsrpay-infra = { path = "../infra" }
 prost = "0.14.3"
 rdkafka = "0.39.0"
 thiserror = "2.0.18"

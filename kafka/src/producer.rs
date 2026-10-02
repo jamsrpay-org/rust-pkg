@@ -2,10 +2,7 @@ use rdkafka::{ClientConfig, error::KafkaError, producer::FutureProducer};
 
 pub fn create_producer(brokers: &str) -> Result<FutureProducer, KafkaError> {
     let producer = ClientConfig::new()
-        .set(
-            "bootstrap.servers",
-            brokers,
-        )
+        .set("bootstrap.servers", brokers)
         .set("acks", "all")
         .set("message.timeout.ms", "5000")
         .set("batch.num.messages", "1000")

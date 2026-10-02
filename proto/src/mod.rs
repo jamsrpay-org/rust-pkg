@@ -83,11 +83,21 @@ pub mod billing {
                 include!("billing.pricing_plan.admin.v1.rs");
             }
         }
+        pub mod merchant {
+            pub mod v1 {
+                include!("billing.pricing_plan.merchant.v1.rs");
+            }
+        }
     }
     pub mod pricing_plan_purchase {
         pub mod admin {
             pub mod v1 {
                 include!("billing.pricing_plan_purchase.admin.v1.rs");
+            }
+        }
+        pub mod events {
+            pub mod v1 {
+                include!("billing.pricing_plan_purchase.events.v1.rs");
             }
         }
         pub mod merchant {
@@ -109,6 +119,18 @@ pub mod billing {
     pub mod shared {
         pub mod v1 {
             include!("billing.shared.v1.rs");
+        }
+    }
+    pub mod subscription {
+        pub mod merchant {
+            pub mod v1 {
+                include!("billing.subscription.merchant.v1.rs");
+            }
+        }
+        pub mod shared {
+            pub mod v1 {
+                include!("billing.subscription.shared.v1.rs");
+            }
         }
     }
 }
@@ -466,6 +488,16 @@ pub mod verification {
 #[cfg(feature = "wallet")]
 pub mod wallet {
     pub mod account {
+        pub mod events {
+            pub mod v1 {
+                include!("wallet.account.events.v1.rs");
+            }
+        }
+        pub mod internal {
+            pub mod v1 {
+                include!("wallet.account.internal.v1.rs");
+            }
+        }
         pub mod merchant {
             pub mod v1 {
                 include!("wallet.account.merchant.v1.rs");
@@ -475,6 +507,13 @@ pub mod wallet {
     pub mod blockchain_wallet {
         pub mod v1 {
             include!("wallet.blockchain_wallet.v1.rs");
+        }
+    }
+    pub mod transaction {
+        pub mod merchant {
+            pub mod v1 {
+                include!("wallet.transaction.merchant.v1.rs");
+            }
         }
     }
 }
