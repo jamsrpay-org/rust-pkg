@@ -1,6 +1,7 @@
 use crate::error::RedisClientError;
 use redis::{
-    AsyncCommands as _, Client, FromRedisValue, ToRedisArgs,
+    AsyncCommands as _, Client, ExistenceCheck, FromRedisValue, SetExpiry, SetOptions,
+    ToRedisArgs,
     aio::{ConnectionManager, ConnectionManagerConfig},
 };
 use std::{collections::HashMap, fmt::Display};
@@ -47,6 +48,24 @@ impl RedisClient {
         conn.set_ex::<K, V, ()>(key, value, ttl).await?;
 
         Ok(())
+    }
+
+    pub async fn set_nx_ex<K, V>(
+        &self,
+        key: K,
+        value: V,
+        ttl_secs: u64,
+    ) -> Result<bool, RedisClientError>
+    where
+        K: ToRedisArgs + Send + Sync,
+        V: ToRedisArgs + Send + Sync,
+    {
+        let mut conn = self.manager.clone();
+        let opts = SetOptions::default()
+            .conditional_set(ExistenceCheck::NX)
+            .with_expiration(SetExpiry::EX(ttl_secs));
+        let res: Option<String> = conn.set_options(key, value, opts).await?;
+        Ok(res.is_some())
     }
 
     pub async fn get<K, V>(&self, key: K) -> Result<Option<V>, RedisClientError>
@@ -113,6 +132,35 @@ impl RedisClient {
         let mut conn = self.manager.clone();
         let new_value: i64 = conn.incr(key, delta).await?;
         Ok(new_value)
+    }
+
+    /// Atomically increments key and sets TTL if key is newly created or lacks a TTL
+    pub async fn increment_with_expiry<K>(
+        &self,
+        key: K,
+        delta: i64,
+        expiry_secs: u64,
+    ) -> Result<i64, RedisClientError>
+    where
+        K: ToRedisArgs + Send + Sync,
+    {
+        let mut conn = self.manager.clone();
+        let script = redis::Script::new(
+            r#"
+            local count = redis.call('INCRBY', KEYS[1], ARGV[1])
+            if count == tonumber(ARGV[1]) or redis.call('TTL', KEYS[1]) == -1 then
+                redis.call('EXPIRE', KEYS[1], ARGV[2])
+            end
+            return count
+            "#,
+        );
+        let result: i64 = script
+            .key(key)
+            .arg(delta)
+            .arg(expiry_secs)
+            .invoke_async(&mut conn)
+            .await?;
+        Ok(result)
     }
 
     pub async fn hset_multiple<K, F, V>(

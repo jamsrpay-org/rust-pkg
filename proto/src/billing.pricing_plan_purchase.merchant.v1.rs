@@ -14,13 +14,15 @@ pub struct PricingPlanPurchase {
     )]
     pub status: i32,
     #[prost(message, optional, tag = "5")]
+    pub amount: ::core::option::Option<
+        super::super::super::super::shared::types::v1::Money,
+    >,
+    #[prost(enumeration = "super::super::shared::v1::PaymentMethod", tag = "6")]
+    pub payment_method: i32,
+    #[prost(message, optional, tag = "7")]
     pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
-    #[prost(message, optional, tag = "6")]
+    #[prost(message, optional, tag = "8")]
     pub updated_at: ::core::option::Option<::pbjson_types::Timestamp>,
-    #[prost(string, optional, tag = "7")]
-    pub payment_intent_id: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(string, optional, tag = "8")]
-    pub checkout_url: ::core::option::Option<::prost::alloc::string::String>,
 }
 impl ::prost::Name for PricingPlanPurchase {
     const NAME: &'static str = "PricingPlanPurchase";

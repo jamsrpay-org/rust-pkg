@@ -2,6 +2,8 @@ pub const INVOICE_EVENTS: &str = "billing.invoice.events.v1";
 pub const PAYMENT_INTENT_EVENTS: &str = "billing.payment_intent.events.v1";
 pub const DEPOSIT_WALLET_EVENTS: &str = "billing.deposit_wallet.events.v1";
 pub const PRICING_PLAN_PURCHASE_EVENTS: &str = "billing.pricing_plan_purchase.events.v1";
+pub const PRICING_PLAN_EVENTS: &str = "billing.pricing_plan.events.v1";
+pub const SUBSCRIPTION_EVENTS: &str = "billing.subscription.events.v1";
 pub const WALLET_ACCOUNT_EVENTS: &str = "jamsrpay_wallet.account.events.v1";
 pub const BLOCKCHAIN_WALLET_EVENTS: &str = "blockchain_wallet.events.v1";
 

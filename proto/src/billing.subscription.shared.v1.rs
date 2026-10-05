@@ -8,8 +8,8 @@ pub struct Subscription {
     pub store_id: ::prost::alloc::string::String,
     #[prost(string, tag = "3")]
     pub pricing_plan_id: ::prost::alloc::string::String,
-    #[prost(string, tag = "4")]
-    pub pricing_plan_purchase_id: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "4")]
+    pub pricing_plan_purchase_id: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(int32, tag = "5")]
     pub transaction_fee_bps: i32,
     #[prost(message, optional, tag = "6")]

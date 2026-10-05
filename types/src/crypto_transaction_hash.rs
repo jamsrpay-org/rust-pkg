@@ -24,3 +24,53 @@ impl CryptoTransactionHash {
         self.0
     }
 }
+
+impl std::ops::Deref for CryptoTransactionHash {
+    type Target = str;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl AsRef<str> for CryptoTransactionHash {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
+
+impl From<String> for CryptoTransactionHash {
+    fn from(s: String) -> Self {
+        Self(s)
+    }
+}
+
+impl From<&str> for CryptoTransactionHash {
+    fn from(s: &str) -> Self {
+        Self(s.to_string())
+    }
+}
+
+impl PartialEq<str> for CryptoTransactionHash {
+    fn eq(&self, other: &str) -> bool {
+        self.0 == other
+    }
+}
+
+impl PartialEq<&str> for CryptoTransactionHash {
+    fn eq(&self, other: &&str) -> bool {
+        self.0 == *other
+    }
+}
+
+impl PartialEq<CryptoTransactionHash> for &str {
+    fn eq(&self, other: &CryptoTransactionHash) -> bool {
+        *self == other.0
+    }
+}
+
+impl PartialEq<CryptoTransactionHash> for str {
+    fn eq(&self, other: &CryptoTransactionHash) -> bool {
+        self == other.0
+    }
+}

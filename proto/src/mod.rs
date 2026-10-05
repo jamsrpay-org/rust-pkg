@@ -83,9 +83,19 @@ pub mod billing {
                 include!("billing.pricing_plan.admin.v1.rs");
             }
         }
+        pub mod events {
+            pub mod v1 {
+                include!("billing.pricing_plan.events.v1.rs");
+            }
+        }
         pub mod merchant {
             pub mod v1 {
                 include!("billing.pricing_plan.merchant.v1.rs");
+            }
+        }
+        pub mod shared {
+            pub mod v1 {
+                include!("billing.pricing_plan.shared.v1.rs");
             }
         }
     }
@@ -122,6 +132,11 @@ pub mod billing {
         }
     }
     pub mod subscription {
+        pub mod events {
+            pub mod v1 {
+                include!("billing.subscription.events.v1.rs");
+            }
+        }
         pub mod merchant {
             pub mod v1 {
                 include!("billing.subscription.merchant.v1.rs");
@@ -349,6 +364,13 @@ pub mod store {
         pub mod merchant {
             pub mod v1 {
                 include!("store.api_key.merchant.v1.rs");
+            }
+        }
+    }
+    pub mod dashboard {
+        pub mod merchant {
+            pub mod v1 {
+                include!("store.dashboard.merchant.v1.rs");
             }
         }
     }
