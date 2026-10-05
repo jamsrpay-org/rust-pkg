@@ -141,6 +141,8 @@ pub struct ListInvoicesRequest {
     pub network_id: ::prost::alloc::vec::Vec<i32>,
     #[prost(string, optional, tag = "6")]
     pub payment_intent_id: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(uint32, tag = "7")]
+    pub limit: u32,
 }
 impl ::prost::Name for ListInvoicesRequest {
     const NAME: &'static str = "ListInvoicesRequest";

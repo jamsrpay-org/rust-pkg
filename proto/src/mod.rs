@@ -29,6 +29,11 @@ pub mod billing {
                 include!("billing.invoice.events.v1.rs");
             }
         }
+        pub mod internal {
+            pub mod v1 {
+                include!("billing.invoice.internal.v1.rs");
+            }
+        }
         pub mod merchant {
             pub mod v1 {
                 include!("billing.invoice.merchant.v1.rs");

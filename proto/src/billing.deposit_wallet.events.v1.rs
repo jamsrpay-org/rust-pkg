@@ -10,10 +10,8 @@ pub struct DepositWalletWithdrawalRequested {
     pub address: ::core::option::Option<
         super::super::super::super::shared::types::v1::CryptoAddress,
     >,
-    #[prost(message, optional, tag = "4")]
-    pub balance: ::core::option::Option<
-        super::super::super::super::shared::types::v1::Money,
-    >,
+    #[prost(string, tag = "4")]
+    pub balance: ::prost::alloc::string::String,
     #[prost(string, tag = "5")]
     pub wallet_id: ::prost::alloc::string::String,
     #[prost(

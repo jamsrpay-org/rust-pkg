@@ -8,10 +8,8 @@ pub struct InvoiceCreated {
     pub store_id: ::prost::alloc::string::String,
     #[prost(string, tag = "3")]
     pub address: ::prost::alloc::string::String,
-    #[prost(message, optional, tag = "4")]
-    pub payable_amount: ::core::option::Option<
-        super::super::super::super::shared::types::v1::Money,
-    >,
+    #[prost(string, tag = "4")]
+    pub payable_amount: ::prost::alloc::string::String,
     #[prost(
         enumeration = "super::super::super::super::shared::enums::v1::PaymentCurrency",
         tag = "5"
@@ -42,14 +40,10 @@ pub struct InvoicePaymentDetected {
     pub invoice_id: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
     pub store_id: ::prost::alloc::string::String,
-    #[prost(message, optional, tag = "3")]
-    pub paid_amount: ::core::option::Option<
-        super::super::super::super::shared::types::v1::Money,
-    >,
-    #[prost(message, optional, tag = "4")]
-    pub remaining_amount: ::core::option::Option<
-        super::super::super::super::shared::types::v1::Money,
-    >,
+    #[prost(string, tag = "3")]
+    pub paid_amount: ::prost::alloc::string::String,
+    #[prost(string, tag = "4")]
+    pub remaining_amount: ::prost::alloc::string::String,
     #[prost(enumeration = "super::super::super::shared::v1::InvoiceStatus", tag = "5")]
     pub status: i32,
     #[prost(
@@ -79,10 +73,8 @@ pub struct InvoiceConfirmationStarted {
     pub invoice_id: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
     pub store_id: ::prost::alloc::string::String,
-    #[prost(message, optional, tag = "3")]
-    pub paid_amount: ::core::option::Option<
-        super::super::super::super::shared::types::v1::Money,
-    >,
+    #[prost(string, tag = "3")]
+    pub paid_amount: ::prost::alloc::string::String,
     #[prost(
         enumeration = "super::super::super::shared::v1::InvoiceAdditionalStatus",
         tag = "4"
@@ -125,10 +117,8 @@ pub struct InvoicePaid {
     pub invoice_id: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
     pub store_id: ::prost::alloc::string::String,
-    #[prost(message, optional, tag = "3")]
-    pub paid_amount: ::core::option::Option<
-        super::super::super::super::shared::types::v1::Money,
-    >,
+    #[prost(string, tag = "3")]
+    pub paid_amount: ::prost::alloc::string::String,
     #[prost(
         enumeration = "super::super::super::shared::v1::InvoiceAdditionalStatus",
         tag = "4"

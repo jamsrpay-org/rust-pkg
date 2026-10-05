@@ -4,8 +4,8 @@
 pub struct PayoutTransfer {
     #[prost(string, tag = "1")]
     pub transfer_id: ::prost::alloc::string::String,
-    #[prost(message, optional, tag = "2")]
-    pub amount: ::core::option::Option<super::super::super::shared::types::v1::Money>,
+    #[prost(string, tag = "2")]
+    pub amount: ::prost::alloc::string::String,
     #[prost(
         enumeration = "super::super::super::shared::enums::v1::PaymentCurrency",
         tag = "3"
@@ -105,10 +105,8 @@ pub mod payout_settled {
     #[derive(serde::Serialize, serde::Deserialize)]
     #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
     pub struct PayoutTransaction {
-        #[prost(message, optional, tag = "1")]
-        pub amount: ::core::option::Option<
-            super::super::super::super::shared::types::v1::Money,
-        >,
+        #[prost(string, tag = "1")]
+        pub amount: ::prost::alloc::string::String,
         #[prost(
             enumeration = "super::super::super::super::shared::enums::v1::PaymentCurrency",
             tag = "2"
