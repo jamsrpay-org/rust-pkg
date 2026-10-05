@@ -8,8 +8,10 @@ pub struct WalletDepositCreated {
     pub account_id: ::prost::alloc::string::String,
     #[prost(string, tag = "3")]
     pub store_id: ::prost::alloc::string::String,
-    #[prost(string, tag = "4")]
-    pub amount: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "4")]
+    pub amount: ::core::option::Option<
+        super::super::super::super::shared::types::v1::EventMoney,
+    >,
     #[prost(string, tag = "5")]
     pub payment_intent_id: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "6")]
@@ -34,8 +36,10 @@ pub struct WalletDepositCredited {
     pub account_id: ::prost::alloc::string::String,
     #[prost(string, tag = "3")]
     pub store_id: ::prost::alloc::string::String,
-    #[prost(string, tag = "4")]
-    pub amount: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "4")]
+    pub amount: ::core::option::Option<
+        super::super::super::super::shared::types::v1::EventMoney,
+    >,
     #[prost(string, tag = "5")]
     pub payment_intent_id: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "6")]
@@ -60,8 +64,10 @@ pub struct WalletDepositFailed {
     pub account_id: ::prost::alloc::string::String,
     #[prost(string, tag = "3")]
     pub store_id: ::prost::alloc::string::String,
-    #[prost(string, tag = "4")]
-    pub amount: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "4")]
+    pub amount: ::core::option::Option<
+        super::super::super::super::shared::types::v1::EventMoney,
+    >,
     #[prost(string, tag = "5")]
     pub payment_intent_id: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "6")]

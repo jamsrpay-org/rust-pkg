@@ -49,6 +49,26 @@ impl ::prost::Name for Money {
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct EventMoney {
+    #[prost(string, tag = "1")]
+    pub currency: ::prost::alloc::string::String,
+    #[prost(uint32, tag = "2")]
+    pub decimals: u32,
+    #[prost(string, tag = "3")]
+    pub atomic: ::prost::alloc::string::String,
+}
+impl ::prost::Name for EventMoney {
+    const NAME: &'static str = "EventMoney";
+    const PACKAGE: &'static str = "shared.types.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "shared.types.v1.EventMoney".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/shared.types.v1.EventMoney".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct PricingAmount {
     #[prost(string, tag = "1")]
     pub amount: ::prost::alloc::string::String,

@@ -11,8 +11,10 @@ pub struct PayoutTransactionDetected {
     pub tx_hash: ::prost::alloc::string::String,
     #[prost(uint64, tag = "4")]
     pub block_number: u64,
-    #[prost(string, tag = "5")]
-    pub amount: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "5")]
+    pub amount: ::core::option::Option<
+        super::super::super::super::shared::types::v1::EventMoney,
+    >,
     #[prost(
         enumeration = "super::super::super::super::shared::enums::v1::Chain",
         tag = "6"
@@ -52,8 +54,10 @@ pub struct PayoutNativeTransferDetected {
     pub from_address: ::prost::alloc::string::String,
     #[prost(string, tag = "6")]
     pub to_address: ::prost::alloc::string::String,
-    #[prost(string, tag = "7")]
-    pub amount: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "7")]
+    pub amount: ::core::option::Option<
+        super::super::super::super::shared::types::v1::EventMoney,
+    >,
     #[prost(
         enumeration = "super::super::super::super::shared::enums::v1::Chain",
         tag = "8"
