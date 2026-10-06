@@ -1,10 +1,18 @@
-use crate::{Audience, Issuer, JwtDecoder, JwtEncoder, Role, Scope, TokenParams, error::JwtError};
+use crate::{
+    Audience, AuthorizationContext, Claims, Issuer, JwtDecoder, JwtEncoder, Role, Scope, StoreId,
+    StoreMemberRole, TokenParams, UserId, error::JwtError,
+};
 use chrono::{Duration, Utc};
-use std::{thread, time::Duration as StdDuration};
+use jamsrpay_authorization::Permission;
+use std::{collections::HashMap, thread, time::Duration as StdDuration};
 
 fn get_encoder() -> JwtEncoder {
-    let private_key = std::fs::read_to_string("jwt_private.pem")
-        .expect("missing private key file: jwt_private.pem");
+    let private_key = std::fs::read_to_string(concat!(
+        env!("CARGO_MANIFEST_DIR"),
+        "/jwt_private.pem"
+    ))
+    .or_else(|_| std::fs::read_to_string("jwt_private.pem"))
+    .expect("missing private key file: jwt_private.pem");
     JwtEncoder::new(
         &private_key,
         Issuer::AuthService,
@@ -15,19 +23,17 @@ fn get_encoder() -> JwtEncoder {
 }
 
 fn get_decoder() -> JwtDecoder {
-    let public_key =
-        std::fs::read_to_string("jwt_public.pem").expect("missing public key file: jwt_public.pem");
+    let public_key = std::fs::read_to_string(concat!(
+        env!("CARGO_MANIFEST_DIR"),
+        "/jwt_public.pem"
+    ))
+    .or_else(|_| std::fs::read_to_string("jwt_public.pem"))
+    .expect("missing public key file: jwt_public.pem");
     JwtDecoder::new(&public_key, Issuer::AuthService, Audience::ApiGateway).unwrap()
 }
 
 fn access_token_params(sub: &str) -> TokenParams {
-    TokenParams {
-        sub: sub.to_string(),
-        scope: Scope::AccessToken,
-        role: Role::Staff,
-        session_id: "session-uuid-001".to_string(),
-        expires_in: None,
-    }
+    TokenParams::new(sub, Scope::AccessToken, Role::Staff, "session-uuid-001")
 }
 
 // ─── Basic encode / decode ───────────────────────────────────────────
@@ -46,6 +52,7 @@ fn test_encode_and_decode_success() {
     assert_eq!(claims.scope, Scope::AccessToken);
     assert_eq!(claims.role, Role::Staff);
     assert_eq!(claims.session_id, "session-uuid-001");
+    assert!(claims.stores.is_empty());
     assert!(claims.exp > claims.iat);
     assert!(!claims.jti.is_empty());
 }
@@ -81,13 +88,8 @@ fn test_refresh_token_scope() {
     let encoder = get_encoder();
     let decoder = get_decoder();
 
-    let params = TokenParams {
-        sub: "user-1".to_string(),
-        scope: Scope::RefreshToken,
-        role: Role::Staff,
-        session_id: "session-uuid-001".to_string(),
-        expires_in: Some(Duration::days(30)),
-    };
+    let params = TokenParams::new("user-1", Scope::RefreshToken, Role::Staff, "session-uuid-001")
+        .with_expires_in(Duration::days(30));
 
     let token = encoder.encode(params).unwrap();
     let claims = decoder
@@ -179,18 +181,19 @@ fn test_token_without_tenant_id() {
     let encoder = get_encoder();
     let decoder = get_decoder();
 
-    let params = TokenParams {
-        sub: "admin-uuid".to_string(),
-        scope: Scope::AccessToken,
-        role: Role::Staff,
-        session_id: "session-uuid-002".to_string(),
-        expires_in: None,
-    };
+    let params = TokenParams::new(
+        "admin-uuid",
+        Scope::AccessToken,
+        Role::Staff,
+        "session-uuid-002",
+    );
 
     let token = encoder.encode(params).unwrap();
     let claims = decoder.decode(&token).unwrap();
 
     assert_eq!(claims.role, Role::Staff);
+    assert!(claims.is_staff());
+    assert!(!claims.is_merchant());
 }
 
 // ─── JTI uniqueness ─────────────────────────────────────────────────
@@ -247,3 +250,171 @@ fn test_decoder_rejects_invalid_pem() {
     let result = JwtDecoder::new("not-a-pem", Issuer::AuthService, Audience::ApiGateway);
     assert!(result.is_err());
 }
+
+// ─── Store memberships & Authorization Context ──────────────────────
+
+#[test]
+fn test_encode_and_decode_with_stores() {
+    let encoder = get_encoder();
+    let decoder = get_decoder();
+
+    let store_1 = StoreId::generate();
+    let store_2 = StoreId::generate();
+    let store_3 = StoreId::generate();
+    let unknown_store = StoreId::generate();
+
+    let mut stores = HashMap::new();
+    stores.insert(store_1, StoreMemberRole::Owner);
+    stores.insert(store_2, StoreMemberRole::Developer);
+    stores.insert(store_3, StoreMemberRole::Viewer);
+
+    let merchant_id = UserId::generate();
+    let params = TokenParams::new(
+        merchant_id.to_string(),
+        Scope::AccessToken,
+        Role::Merchant,
+        "session-uuid-001",
+    )
+    .with_stores(stores);
+
+    let token = encoder.encode(params).unwrap();
+    let claims = decoder.decode(&token).unwrap();
+
+    assert!(claims.is_merchant());
+    assert!(!claims.is_staff());
+    assert_eq!(claims.stores.len(), 3);
+    assert_eq!(claims.role_for_store(&store_1), Some(StoreMemberRole::Owner));
+    assert_eq!(
+        claims.role_for_store(&store_2),
+        Some(StoreMemberRole::Developer)
+    );
+    assert_eq!(
+        claims.role_for_store(&store_3),
+        Some(StoreMemberRole::Viewer)
+    );
+    assert_eq!(claims.role_for_store(&unknown_store), None);
+
+    assert!(claims.has_store_access(&store_1));
+    assert!(claims.has_store_access(&store_2));
+    assert!(!claims.has_store_access(&unknown_store));
+}
+
+#[test]
+fn test_claims_to_authorization_context() {
+    let merchant_id = UserId::generate();
+    let store_1 = StoreId::generate();
+    let store_2 = StoreId::generate();
+
+    let mut stores = HashMap::new();
+    stores.insert(store_1, StoreMemberRole::Owner);
+    stores.insert(store_2, StoreMemberRole::Developer);
+
+    let claims = Claims {
+        iss: Issuer::AuthService,
+        sub: merchant_id.to_string(),
+        aud: Audience::ApiGateway,
+        scope: Scope::AccessToken,
+        role: Role::Merchant,
+        session_id: "session-123".to_string(),
+        iat: 1000,
+        exp: 2000,
+        jti: "jti-123".to_string(),
+        stores: stores.clone(),
+    };
+
+    // Test explicit to_authorization_context()
+    let auth_ctx = claims.to_authorization_context().unwrap();
+    assert_eq!(auth_ctx.merchant_id, merchant_id);
+    assert_eq!(
+        auth_ctx.role_for_store(&store_1).unwrap(),
+        StoreMemberRole::Owner
+    );
+
+    // Verify seamless integration with jamsrpay_authorization::authorize
+    let authed = jamsrpay_authorization::authorize(&auth_ctx, &store_1, Permission::StoreUpdate)
+        .unwrap();
+    assert_eq!(authed.role, StoreMemberRole::Owner);
+
+    // Developer cannot update store
+    let err = jamsrpay_authorization::authorize(&auth_ctx, &store_2, Permission::StoreUpdate)
+        .unwrap_err();
+    assert_eq!(err, jamsrpay_authorization::AuthorizationError::PermissionDenied);
+
+    // Test TryFrom<&Claims>
+    let auth_ctx_ref: AuthorizationContext = (&claims).try_into().unwrap();
+    assert_eq!(auth_ctx_ref.merchant_id, merchant_id);
+
+    // Test TryFrom<Claims>
+    let auth_ctx_owned: AuthorizationContext = claims.try_into().unwrap();
+    assert_eq!(auth_ctx_owned.merchant_id, merchant_id);
+}
+
+#[test]
+fn test_claims_to_authorization_context_invalid_uuid() {
+    let claims = Claims {
+        iss: Issuer::AuthService,
+        sub: "not-a-valid-uuid".to_string(),
+        aud: Audience::ApiGateway,
+        scope: Scope::AccessToken,
+        role: Role::Merchant,
+        session_id: "session-123".to_string(),
+        iat: 1000,
+        exp: 2000,
+        jti: "jti-123".to_string(),
+        stores: HashMap::new(),
+    };
+
+    assert!(claims.to_authorization_context().is_err());
+}
+
+#[test]
+fn test_serde_backwards_compatibility_without_stores() {
+    let json = r#"{
+        "iss": "auth-service",
+        "sub": "user-123",
+        "aud": "api-gateway",
+        "scope": "access_token",
+        "role": "staff",
+        "session_id": "session-456",
+        "iat": 1700000000,
+        "exp": 1700000900,
+        "jti": "jti-789"
+    }"#;
+
+    let claims: Claims = serde_json::from_str(json).unwrap();
+    assert_eq!(claims.sub, "user-123");
+    assert_eq!(claims.role, Role::Staff);
+    assert!(claims.stores.is_empty());
+}
+
+#[test]
+fn test_token_params_builder() {
+    let store_id = StoreId::generate();
+    let params = TokenParams::new("sub-1", Scope::AccessToken, Role::Merchant, "session-1")
+        .with_store(store_id, StoreMemberRole::Admin)
+        .with_expires_in(Duration::minutes(10));
+
+    assert_eq!(params.sub, "sub-1");
+    assert_eq!(params.scope, Scope::AccessToken);
+    assert_eq!(params.role, Role::Merchant);
+    assert_eq!(params.session_id, "session-1");
+    assert_eq!(params.stores.get(&store_id), Some(&StoreMemberRole::Admin));
+    assert_eq!(params.expires_in, Some(Duration::minutes(10)));
+}
+
+#[test]
+fn test_jwt_json_example_file() {
+    let json = include_str!("../jwt.json");
+    let claims: Claims = serde_json::from_str(json).expect("failed to deserialize jwt.json");
+
+    assert_eq!(claims.iss, Issuer::AuthService);
+    assert_eq!(claims.aud, Audience::ApiGateway);
+    assert_eq!(claims.scope, Scope::AccessToken);
+    assert_eq!(claims.role, Role::Merchant);
+    assert_eq!(claims.stores.len(), 3);
+
+    // Verify it converts to AuthorizationContext
+    let auth_ctx = claims.to_authorization_context().unwrap();
+    assert_eq!(auth_ctx.stores.len(), 3);
+}
+

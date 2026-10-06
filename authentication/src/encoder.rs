@@ -4,24 +4,67 @@ use crate::{
     error::JwtError,
 };
 use chrono::{TimeDelta, Utc};
+use jamsrpay_authorization::StoreMemberRole;
+use jamsrpay_types::store_id::StoreId;
 use jsonwebtoken::{Algorithm, EncodingKey, Header, encode};
+use std::collections::HashMap;
 use uuid::Uuid;
 
 /// Parameters for creating a new JWT token.
 ///
 /// The caller provides the subject-specific fields; the encoder
 /// fills in `iss`, `aud`, `iat`, `exp`, and `jti` automatically.
+#[derive(Debug, Clone, PartialEq)]
 pub struct TokenParams {
     /// Subject — the user or entity UUID.
     pub sub: String,
-    /// Token scope — use constants from [`scope`](crate::scope).
+    /// Token scope — use variants from [`Scope`].
     pub scope: Scope,
-    /// Role — "merchant_admin", "admin", etc.
+    /// Role — "merchant", "staff", etc.
     pub role: Role,
     /// Session ID — login session UUID.
     pub session_id: String,
+    /// Store memberships available to this merchant in this session.
+    pub stores: HashMap<StoreId, StoreMemberRole>,
     /// Custom expiration override. Falls back to the encoder's default if `None`.
     pub expires_in: Option<TimeDelta>,
+}
+
+impl TokenParams {
+    /// Creates a new [`TokenParams`] with empty `stores` and default expiration.
+    pub fn new(
+        sub: impl Into<String>,
+        scope: Scope,
+        role: Role,
+        session_id: impl Into<String>,
+    ) -> Self {
+        Self {
+            sub: sub.into(),
+            scope,
+            role,
+            session_id: session_id.into(),
+            stores: HashMap::new(),
+            expires_in: None,
+        }
+    }
+
+    /// Sets the store memberships map.
+    pub fn with_stores(mut self, stores: HashMap<StoreId, StoreMemberRole>) -> Self {
+        self.stores = stores;
+        self
+    }
+
+    /// Adds a single store membership to the map.
+    pub fn with_store(mut self, store_id: StoreId, role: StoreMemberRole) -> Self {
+        self.stores.insert(store_id, role);
+        self
+    }
+
+    /// Sets a custom expiration duration.
+    pub fn with_expires_in(mut self, expires_in: TimeDelta) -> Self {
+        self.expires_in = Some(expires_in);
+        self
+    }
 }
 
 /// JWT token encoder. Requires the RSA private key.
@@ -80,7 +123,9 @@ impl JwtEncoder {
             iat,
             exp,
             jti: Uuid::new_v4().to_string(),
+            stores: params.stores,
         };
+
 
         let header = Header::new(Algorithm::RS256);
         Ok(encode(&header, &claims, &self.encoding_key)?)

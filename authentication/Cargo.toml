@@ -1,0 +1,21 @@
+[package]
+name = "jamsrpay-authentication"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+jsonwebtoken = { version = "11.0.0", default-features = false, features = [
+  "rust_crypto",
+  "use_pem",
+] }
+serde = { version = "1.0.228", features = ["derive"] }
+chrono = "0.4.44"
+thiserror = "2.0.18"
+uuid = { version = "1.23.1", features = ["v4"] }
+strum = { version = "0.28.0", features = ["derive"] }
+jamsrpay-types = { path = "../types" }
+jamsrpay-authorization = { path = "../authorization" }
+
+[dev-dependencies]
+serde_json = "1.0"
+

@@ -4,3 +4,9 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+jamsrpay-types = { path = "../types" }
+serde = { version = "1.0.227", features = ["derive"] }
+thiserror = "2.0.18"
+
+[dev-dependencies]
+serde_json = "1.0"

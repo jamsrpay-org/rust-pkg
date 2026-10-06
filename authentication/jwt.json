@@ -1,0 +1,16 @@
+{
+  "iss": "auth-service",
+  "sub": "01925b6a-7460-7a0e-94cf-630bb3d07740",
+  "aud": "api-gateway",
+  "scope": "access_token",
+  "role": "merchant",
+  "session_id": "01925b6a-7460-7a0e-94cf-630bb3d07741",
+  "stores": {
+    "01925b6a-7460-7a0e-94cf-630bb3d0774a": "owner",
+    "01925b6a-7460-7a0e-94cf-630bb3d0774b": "developer",
+    "01925b6a-7460-7a0e-94cf-630bb3d0774c": "viewer"
+  },
+  "iat": 1791270000,
+  "exp": 1791270900,
+  "jti": "01925b6a-7460-7a0e-94cf-630bb3d07742"
+}

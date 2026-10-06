@@ -10,3 +10,7 @@ pub use claims::{Audience, Claims, Issuer, Role, Scope};
 pub use decoder::JwtDecoder;
 pub use encoder::{JwtEncoder, TokenParams};
 pub use error::JwtError;
+
+pub use jamsrpay_authorization::{AuthorizationContext, StoreMemberRole};
+pub use jamsrpay_types::{store_id::StoreId, user_id::UserId};
+
