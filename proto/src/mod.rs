@@ -379,6 +379,40 @@ pub mod store {
             }
         }
     }
+    pub mod invitation {
+        pub mod events {
+            pub mod v1 {
+                include!("store.invitation.events.v1.rs");
+            }
+        }
+        pub mod merchant {
+            pub mod v1 {
+                include!("store.invitation.merchant.v1.rs");
+            }
+        }
+        pub mod shared {
+            pub mod v1 {
+                include!("store.invitation.shared.v1.rs");
+            }
+        }
+    }
+    pub mod member {
+        pub mod events {
+            pub mod v1 {
+                include!("store.member.events.v1.rs");
+            }
+        }
+        pub mod merchant {
+            pub mod v1 {
+                include!("store.member.merchant.v1.rs");
+            }
+        }
+        pub mod shared {
+            pub mod v1 {
+                include!("store.member.shared.v1.rs");
+            }
+        }
+    }
     pub mod metadata {
         pub mod v1 {
             include!("store.metadata.v1.rs");

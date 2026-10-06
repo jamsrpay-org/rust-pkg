@@ -43,6 +43,46 @@ impl ::prost::Name for StoreUpdated {
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct StorePositionChanged {
+    #[prost(string, tag = "1")]
+    pub store_id: ::prost::alloc::string::String,
+    #[prost(uint32, tag = "2")]
+    pub position: u32,
+}
+impl ::prost::Name for StorePositionChanged {
+    const NAME: &'static str = "StorePositionChanged";
+    const PACKAGE: &'static str = "store.store.events.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "store.store.events.v1.StorePositionChanged".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/store.store.events.v1.StorePositionChanged".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct StorePaymentSettingsUpdated {
+    #[prost(string, tag = "1")]
+    pub store_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub payment_markup: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub payment_tolerance: ::prost::alloc::string::String,
+    #[prost(enumeration = "super::super::common::v1::DisplayCurrency", tag = "4")]
+    pub display_currency: i32,
+}
+impl ::prost::Name for StorePaymentSettingsUpdated {
+    const NAME: &'static str = "StorePaymentSettingsUpdated";
+    const PACKAGE: &'static str = "store.store.events.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "store.store.events.v1.StorePaymentSettingsUpdated".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/store.store.events.v1.StorePaymentSettingsUpdated".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct StoreDeleted {
     #[prost(string, tag = "1")]
     pub store_id: ::prost::alloc::string::String,
@@ -64,7 +104,7 @@ pub struct StoreEventEnvelope {
     pub meta: ::core::option::Option<
         super::super::super::super::shared::events::v1::EventMetadata,
     >,
-    #[prost(oneof = "store_event_envelope::Event", tags = "2, 3, 4")]
+    #[prost(oneof = "store_event_envelope::Event", tags = "2, 3, 4, 5, 6")]
     pub event: ::core::option::Option<store_event_envelope::Event>,
 }
 /// Nested message and enum types in `StoreEventEnvelope`.
@@ -78,6 +118,10 @@ pub mod store_event_envelope {
         Updated(super::StoreUpdated),
         #[prost(message, tag = "4")]
         Deleted(super::StoreDeleted),
+        #[prost(message, tag = "5")]
+        PositionChanged(super::StorePositionChanged),
+        #[prost(message, tag = "6")]
+        PaymentSettingsUpdated(super::StorePaymentSettingsUpdated),
     }
 }
 impl ::prost::Name for StoreEventEnvelope {
