@@ -8,7 +8,10 @@ pub mod exchange_rate;
 pub mod http_url;
 pub mod identifier;
 pub mod image_url;
+pub mod merchant_id;
 pub mod money;
 pub mod session_id;
 pub mod store_id;
 pub mod user_id;
+
+pub use merchant_id::MerchantId;

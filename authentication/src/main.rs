@@ -31,10 +31,11 @@ fn main() {
     let store_id = StoreId::generate();
     stores.insert(store_id, StoreMemberRole::Owner);
 
+    let merchant_id = jamsrpay_authentication::MerchantId::generate();
     let token = encoder
         .encode(
             TokenParams::new(
-                "user-uuid-001",
+                merchant_id,
                 Scope::AccessToken,
                 Role::Merchant,
                 "session-uuid-001",

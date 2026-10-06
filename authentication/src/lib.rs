@@ -11,6 +11,6 @@ pub use decoder::JwtDecoder;
 pub use encoder::{JwtEncoder, TokenParams};
 pub use error::JwtError;
 
-pub use jamsrpay_authorization::{AuthorizationContext, StoreMemberRole};
-pub use jamsrpay_types::{store_id::StoreId, user_id::UserId};
+pub use jamsrpay_authorization::{AuthorizationContext, Permission, StoreMemberRole};
+pub use jamsrpay_types::{merchant_id::MerchantId, store_id::StoreId, user_id::UserId};
 

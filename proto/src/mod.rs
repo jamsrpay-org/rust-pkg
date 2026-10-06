@@ -439,6 +439,11 @@ pub mod store {
                 include!("store.store.events.v1.rs");
             }
         }
+        pub mod internal {
+            pub mod v1 {
+                include!("store.store.internal.v1.rs");
+            }
+        }
         pub mod merchant {
             pub mod v1 {
                 include!("store.store.merchant.v1.rs");

@@ -1,6 +1,8 @@
-use crate::{Audience, Claims, Issuer, claims::Scope, error::JwtError};
-use jsonwebtoken::{Algorithm, DecodingKey, Validation, decode};
 use std::collections::HashSet;
+
+use jsonwebtoken::{Algorithm, DecodingKey, Validation, decode};
+
+use crate::{Audience, Claims, Issuer, claims::Scope, error::JwtError};
 
 /// JWT token decoder. Requires only the RSA public key.
 ///
@@ -22,9 +24,10 @@ impl JwtDecoder {
     /// - `audience` — expected `aud` claim value.
     ///
     /// # Errors
-    /// Returns [`JwtError`] if the PEM key cannot be parsed.
+    /// Returns [`JwtError::DecodingError`] if the PEM key cannot be parsed.
     pub fn new(public_key_pem: &str, issuer: Issuer, audience: Audience) -> Result<Self, JwtError> {
-        let decoding_key = DecodingKey::from_rsa_pem(public_key_pem.as_bytes())?;
+        let decoding_key = DecodingKey::from_rsa_pem(public_key_pem.as_bytes())
+            .map_err(|_| JwtError::DecodingError)?;
 
         let mut validation = Validation::new(Algorithm::RS256);
 
@@ -54,12 +57,18 @@ impl JwtDecoder {
     /// if you need scope enforcement.
     pub fn decode(&self, token: &str) -> Result<Claims, JwtError> {
         let token_data = decode::<Claims>(token, &self.decoding_key, &self.validation)?;
+        if token_data.claims.iss == Issuer::Unknown {
+            return Err(JwtError::InvalidIssuer);
+        }
+        if token_data.claims.aud == Audience::Unknown {
+            return Err(JwtError::InvalidAudience);
+        }
         Ok(token_data.claims)
     }
 
     /// Decode and validate a JWT token, also verifying the scope.
     ///
-    /// Returns [`JwtError::ScopeMismatch`] if the token's `scope` does not
+    /// Returns [`JwtError::InvalidScope`] if the token's `scope` does not
     /// match `expected_scope`.
     pub fn decode_with_scope(
         &self,
@@ -68,10 +77,7 @@ impl JwtDecoder {
     ) -> Result<Claims, JwtError> {
         let claims = self.decode(token)?;
         if claims.scope != expected_scope {
-            return Err(JwtError::ScopeMismatch {
-                expected: expected_scope,
-                actual: claims.scope,
-            });
+            return Err(JwtError::InvalidScope);
         }
         Ok(claims)
     }

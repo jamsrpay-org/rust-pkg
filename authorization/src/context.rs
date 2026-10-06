@@ -2,16 +2,11 @@ use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
 
+pub use jamsrpay_types::merchant_id::MerchantId;
 pub use jamsrpay_types::store_id::StoreId;
 pub use jamsrpay_types::user_id::UserId;
 
 use crate::{AuthorizationError, Permission, StoreMemberRole, policy::allows};
-
-/// Strongly-typed identifier for a merchant.
-///
-/// Aliased to [`UserId`] to remain fully compatible with JamsrPay's identity
-/// and user models where merchants are authenticated users.
-pub type MerchantId = UserId;
 
 /// Trusted session context representing an authenticated merchant and their
 /// accessible stores along with their respective roles.

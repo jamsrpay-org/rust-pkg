@@ -312,8 +312,7 @@ impl AuthInterceptor {
             ));
         }
 
-        let id = Uuid::parse_str(&claims.sub)
-            .map_err(|_| Status::unauthenticated(self.error_codes.invalid_token))?;
+        let id = claims.sub.into_inner();
         let session_id = SessionId::parse(&claims.session_id)
             .map_err(|_| Status::unauthenticated(self.error_codes.invalid_token))?;
 
@@ -468,12 +467,12 @@ impl AuthInterceptorBuilder {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use authentication::{Audience, Issuer, JwtEncoder, TokenParams};
     use chrono::Duration;
-    use jwt::{Audience, Issuer, JwtEncoder, TokenParams};
     use tonic::metadata::MetadataValue;
 
-    const TEST_PUB_KEY: &str = include_str!("../../jwt/jwt_public.pem");
-    const TEST_PRIV_KEY: &str = include_str!("../../jwt/jwt_private.pem");
+    const TEST_PUB_KEY: &str = include_str!("../../authentication/jwt_public.pem");
+    const TEST_PRIV_KEY: &str = include_str!("../../authentication/jwt_private.pem");
 
     const ERR_MISSING: &str = "shared.header.missing_authorization";
     const ERR_INVALID: &str = "shared.header.invalid_authorization";
@@ -493,15 +492,14 @@ mod tests {
         .unwrap()
     }
 
-    fn generate_token(sub: &str, role: Role, scope: Scope) -> String {
+    fn generate_token(sub: Uuid, role: Role, scope: Scope) -> String {
         let encoder = create_test_encoder();
-        let params = TokenParams {
-            sub: sub.to_string(),
+        let params = TokenParams::new(
+            UserId::from(sub),
             scope,
             role,
-            session_id: Uuid::new_v4().to_string(),
-            expires_in: None,
-        };
+            Uuid::new_v4().to_string(),
+        );
         encoder.encode(params).unwrap()
     }
 
@@ -511,7 +509,7 @@ mod tests {
         let interceptor = AuthInterceptor::any(decoder, (ERR_MISSING, ERR_INVALID, ERR_FORBIDDEN));
 
         let user_id = Uuid::new_v4();
-        let token = generate_token(&user_id.to_string(), Role::Merchant, Scope::AccessToken);
+        let token = generate_token(user_id, Role::Merchant, Scope::AccessToken);
 
         // 1. With "Bearer " prefix
         let mut meta = MetadataMap::new();
@@ -522,7 +520,7 @@ mod tests {
         let (ctx, claims) = interceptor.authenticate(&meta).unwrap();
         assert_eq!(ctx.id, user_id);
         assert_eq!(ctx.role, Role::Merchant);
-        assert_eq!(claims.sub, user_id.to_string());
+        assert_eq!(claims.sub, UserId::from(user_id));
 
         // 2. With lowercase "bearer " prefix
         let mut meta = MetadataMap::new();
@@ -548,7 +546,7 @@ mod tests {
             .build();
 
         let user_id = Uuid::new_v4();
-        let token = generate_token(&user_id.to_string(), Role::Merchant, Scope::AccessToken);
+        let token = generate_token(user_id, Role::Merchant, Scope::AccessToken);
 
         let mut meta = MetadataMap::new();
         meta.insert(
@@ -568,7 +566,7 @@ mod tests {
             .build();
 
         let user_id = Uuid::new_v4();
-        let token = generate_token(&user_id.to_string(), Role::Merchant, Scope::AccessToken);
+        let token = generate_token(user_id, Role::Merchant, Scope::AccessToken);
 
         let mut meta = MetadataMap::new();
         meta.insert(
@@ -593,7 +591,7 @@ mod tests {
             .build();
 
         let user_id = Uuid::new_v4();
-        let token = generate_token(&user_id.to_string(), Role::Merchant, Scope::AccessToken);
+        let token = generate_token(user_id, Role::Merchant, Scope::AccessToken);
 
         // Header missing, present in cookie
         let mut meta = MetadataMap::new();
@@ -608,7 +606,7 @@ mod tests {
         // Header present -> takes precedence
         let other_id = Uuid::new_v4();
         let header_token =
-            generate_token(&other_id.to_string(), Role::Merchant, Scope::AccessToken);
+            generate_token(other_id, Role::Merchant, Scope::AccessToken);
         meta.insert(
             "authorization",
             MetadataValue::try_from(format!("Bearer {}", header_token)).unwrap(),
@@ -652,7 +650,7 @@ mod tests {
 
         let merchant_id = Uuid::new_v4();
         let merchant_token =
-            generate_token(&merchant_id.to_string(), Role::Merchant, Scope::AccessToken);
+            generate_token(merchant_id, Role::Merchant, Scope::AccessToken);
 
         let mut meta = MetadataMap::new();
         meta.insert(
@@ -668,7 +666,7 @@ mod tests {
 
         // Staff token rejected with PermissionDenied
         let staff_id = Uuid::new_v4();
-        let staff_token = generate_token(&staff_id.to_string(), Role::Staff, Scope::AccessToken);
+        let staff_token = generate_token(staff_id, Role::Staff, Scope::AccessToken);
 
         let mut staff_meta = MetadataMap::new();
         staff_meta.insert(
@@ -688,7 +686,7 @@ mod tests {
             AuthInterceptor::staff(decoder, (ERR_MISSING, ERR_INVALID, ERR_FORBIDDEN));
 
         let staff_id = Uuid::new_v4();
-        let staff_token = generate_token(&staff_id.to_string(), Role::Staff, Scope::AccessToken);
+        let staff_token = generate_token(staff_id, Role::Staff, Scope::AccessToken);
 
         let mut meta = MetadataMap::new();
         meta.insert(
@@ -705,7 +703,7 @@ mod tests {
         // Merchant token rejected with PermissionDenied
         let merchant_id = Uuid::new_v4();
         let merchant_token =
-            generate_token(&merchant_id.to_string(), Role::Merchant, Scope::AccessToken);
+            generate_token(merchant_id, Role::Merchant, Scope::AccessToken);
 
         let mut merchant_meta = MetadataMap::new();
         merchant_meta.insert(
@@ -727,7 +725,7 @@ mod tests {
 
         let user_id = Uuid::new_v4();
         // Generate token with RefreshToken scope instead of AccessToken
-        let token = generate_token(&user_id.to_string(), Role::Merchant, Scope::RefreshToken);
+        let token = generate_token(user_id, Role::Merchant, Scope::RefreshToken);
 
         let mut meta = MetadataMap::new();
         meta.insert(
@@ -747,7 +745,7 @@ mod tests {
             AuthInterceptor::merchant(decoder, (ERR_MISSING, ERR_INVALID, ERR_FORBIDDEN));
 
         let user_id = Uuid::new_v4();
-        let token = generate_token(&user_id.to_string(), Role::Merchant, Scope::AccessToken);
+        let token = generate_token(user_id, Role::Merchant, Scope::AccessToken);
 
         let mut req = Request::new(());
         req.metadata_mut().insert(
@@ -765,6 +763,6 @@ mod tests {
         assert_eq!(ctx.role, Role::Merchant);
 
         let claims = ext.get::<Claims>().expect("missing Claims");
-        assert_eq!(claims.sub, user_id.to_string());
+        assert_eq!(claims.sub, UserId::from(user_id));
     }
 }

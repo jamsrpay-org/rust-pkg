@@ -1,14 +1,16 @@
+use std::collections::HashMap;
+
+use chrono::{TimeDelta, Utc};
+use jamsrpay_authorization::StoreMemberRole;
+use jamsrpay_types::{merchant_id::MerchantId, store_id::StoreId};
+use jsonwebtoken::{Algorithm, EncodingKey, Header, encode};
+use uuid::Uuid;
+
 use crate::{
     Claims,
     claims::{Audience, Issuer, Role, Scope},
     error::JwtError,
 };
-use chrono::{TimeDelta, Utc};
-use jamsrpay_authorization::StoreMemberRole;
-use jamsrpay_types::store_id::StoreId;
-use jsonwebtoken::{Algorithm, EncodingKey, Header, encode};
-use std::collections::HashMap;
-use uuid::Uuid;
 
 /// Parameters for creating a new JWT token.
 ///
@@ -16,8 +18,8 @@ use uuid::Uuid;
 /// fills in `iss`, `aud`, `iat`, `exp`, and `jti` automatically.
 #[derive(Debug, Clone, PartialEq)]
 pub struct TokenParams {
-    /// Subject — the user or entity UUID.
-    pub sub: String,
+    /// Subject — the merchant or staff user ID.
+    pub sub: MerchantId,
     /// Token scope — use variants from [`Scope`].
     pub scope: Scope,
     /// Role — "merchant", "staff", etc.
@@ -33,7 +35,7 @@ pub struct TokenParams {
 impl TokenParams {
     /// Creates a new [`TokenParams`] with empty `stores` and default expiration.
     pub fn new(
-        sub: impl Into<String>,
+        sub: impl Into<MerchantId>,
         scope: Scope,
         role: Role,
         session_id: impl Into<String>,
@@ -88,14 +90,15 @@ impl JwtEncoder {
     /// - `default_expiration` — used when [`TokenParams::expires_in`] is `None`.
     ///
     /// # Errors
-    /// Returns [`JwtError`] if the PEM key cannot be parsed.
+    /// Returns [`JwtError::EncodingError`] if the PEM key cannot be parsed.
     pub fn new(
         private_key_pem: &str,
         issuer: Issuer,
         audience: Audience,
         default_expiration: TimeDelta,
     ) -> Result<Self, JwtError> {
-        let encoding_key = EncodingKey::from_rsa_pem(private_key_pem.as_bytes())?;
+        let encoding_key = EncodingKey::from_rsa_pem(private_key_pem.as_bytes())
+            .map_err(|_| JwtError::EncodingError)?;
         Ok(Self {
             encoding_key,
             issuer,
@@ -126,8 +129,7 @@ impl JwtEncoder {
             stores: params.stores,
         };
 
-
         let header = Header::new(Algorithm::RS256);
-        Ok(encode(&header, &claims, &self.encoding_key)?)
+        encode(&header, &claims, &self.encoding_key).map_err(|_| JwtError::EncodingError)
     }
 }
