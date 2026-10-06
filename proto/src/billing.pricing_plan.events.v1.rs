@@ -12,12 +12,16 @@ pub struct PricingPlanCreated {
     pub description: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(int32, tag = "5")]
     pub transaction_fee_bps: i32,
-    #[prost(string, tag = "6")]
-    pub transaction_fixed_fee: ::prost::alloc::string::String,
-    #[prost(string, optional, tag = "7")]
-    pub monthly_price: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(string, optional, tag = "8")]
-    pub monthly_volume_threshold: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(message, optional, tag = "6")]
+    pub transaction_fixed_fee: ::core::option::Option<
+        super::super::super::super::shared::types::v1::EventMoney,
+    >,
+    #[prost(message, optional, tag = "7")]
+    pub monthly_price: ::core::option::Option<
+        super::super::super::super::shared::types::v1::EventMoney,
+    >,
+    #[prost(string, tag = "8")]
+    pub monthly_volume_threshold: ::prost::alloc::string::String,
     #[prost(uint32, tag = "9")]
     pub free_trial_days: u32,
     #[prost(string, optional, tag = "10")]

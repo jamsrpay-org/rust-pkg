@@ -43,6 +43,12 @@ macro_rules! define_id {
                 self.0
             }
 
+            /// Returns true if the inner UUID is nil (all zeros).
+            #[inline]
+            pub fn is_nil(&self) -> bool {
+                self.0.is_nil()
+            }
+
             /// Parse from a UUID string, returning a `Result`.
             #[inline]
             pub fn parse(s: &str) -> Result<Self, uuid::Error> {
