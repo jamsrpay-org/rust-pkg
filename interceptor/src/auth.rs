@@ -1,5 +1,5 @@
+use authentication::{Claims, JwtDecoder, Role, Scope};
 use jamsrpay_types::{session_id::SessionId, user_id::UserId};
-use jwt::{Claims, JwtDecoder, Role, Scope};
 use tonic::{Extensions, Request, Status, metadata::MetadataMap, service::Interceptor};
 use uuid::Uuid;
 

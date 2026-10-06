@@ -883,6 +883,29 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4a5f13b858c8d314ee3e8f639011f7ccefe71f97f96e50151fb991f267928e2c"
 
 [[package]]
+name = "jamsrpay-authentication"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "jamsrpay-authorization",
+ "jamsrpay-types",
+ "jsonwebtoken",
+ "serde",
+ "strum",
+ "thiserror",
+ "uuid",
+]
+
+[[package]]
+name = "jamsrpay-authorization"
+version = "0.1.0"
+dependencies = [
+ "jamsrpay-types",
+ "serde",
+ "thiserror",
+]
+
+[[package]]
 name = "jamsrpay-grpc"
 version = "0.1.0"
 dependencies = [
@@ -895,23 +918,11 @@ name = "jamsrpay-interceptor"
 version = "0.1.0"
 dependencies = [
  "chrono",
+ "jamsrpay-authentication",
  "jamsrpay-grpc",
- "jamsrpay-jwt",
  "jamsrpay-types",
  "tonic",
  "tonic-types",
- "uuid",
-]
-
-[[package]]
-name = "jamsrpay-jwt"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "jsonwebtoken",
- "serde",
- "strum",
- "thiserror",
  "uuid",
 ]
 
