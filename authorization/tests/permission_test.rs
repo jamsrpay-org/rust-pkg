@@ -7,6 +7,7 @@ fn test_permission_canonical_strings() {
     let expected = [
         (Permission::StoreRead, "store.read"),
         (Permission::StoreUpdate, "store.update"),
+        (Permission::StoreDelete, "store.delete"),
         (Permission::StoreMemberRead, "store.member.read"),
         (Permission::StoreMemberInvite, "store.member.invite"),
         (Permission::StoreMemberUpdate, "store.member.update"),
@@ -24,9 +25,14 @@ fn test_permission_canonical_strings() {
         (Permission::WebhookCreate, "webhook.create"),
         (Permission::WebhookUpdate, "webhook.update"),
         (Permission::WebhookDelete, "webhook.delete"),
+        (Permission::ApiKeyRead, "api_key.read"),
+        (Permission::ApiKeyCreate, "api_key.create"),
+        (Permission::ApiKeyUpdate, "api_key.update"),
+        (Permission::ApiKeyRevoke, "api_key.revoke"),
+        (Permission::ApiKeyRotate, "api_key.rotate"),
     ];
 
-    assert_eq!(expected.len(), 19);
+    assert_eq!(expected.len(), 25);
 
     for (perm, canonical) in expected {
         assert_eq!(perm.as_str(), canonical);
@@ -56,6 +62,10 @@ fn test_permission_parse_case_and_whitespace() {
         Permission::parse("Webhook.Delete").unwrap(),
         Permission::WebhookDelete
     );
+    assert_eq!(
+        Permission::parse(" API_KEY.ROTATE ").unwrap(),
+        Permission::ApiKeyRotate
+    );
 }
 
 #[test]
@@ -65,7 +75,7 @@ fn test_permission_parse_invalid() {
         " ",
         "store",
         "store.",
-        "store.delete",
+        "store.destroy",
         "store.create",
         "invoice.destroy",
         "payout.update",
@@ -86,7 +96,7 @@ fn test_permission_parse_invalid() {
 
 #[test]
 fn test_permission_all_constant() {
-    assert_eq!(Permission::ALL.len(), 19);
+    assert_eq!(Permission::ALL.len(), 25);
     for perm in Permission::ALL {
         assert_eq!(Permission::parse(perm.as_str()).unwrap(), perm);
     }

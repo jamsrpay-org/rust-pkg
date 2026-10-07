@@ -7,6 +7,7 @@ edition = "2024"
 tonic = "0.14.5"
 tonic-types = "0.14.5"
 authentication = { path = "../authentication", package = "jamsrpay-authentication" }
+authorization = { path = "../authorization", package = "jamsrpay-authorization" }
 grpc = { path = "../grpc", package = "jamsrpay-grpc" }
 uuid = { version = "1.23.1", features = ["v7"] }
 jamsrpay-types = { path = "../types" }

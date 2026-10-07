@@ -15,6 +15,8 @@ pub enum Permission {
     StoreRead,
     #[serde(rename = "store.update")]
     StoreUpdate,
+    #[serde(rename = "store.delete")]
+    StoreDelete,
 
     // ── Store Members ───────────────────────────────────────────────────────────
     #[serde(rename = "store.member.read")]
@@ -57,11 +59,24 @@ pub enum Permission {
     WebhookUpdate,
     #[serde(rename = "webhook.delete")]
     WebhookDelete,
+
+    // ── API Keys ────────────────────────────────────────────────────────────────
+    #[serde(rename = "api_key.read")]
+    ApiKeyRead,
+    #[serde(rename = "api_key.create")]
+    ApiKeyCreate,
+    #[serde(rename = "api_key.update")]
+    ApiKeyUpdate,
+    #[serde(rename = "api_key.revoke")]
+    ApiKeyRevoke,
+    #[serde(rename = "api_key.rotate")]
+    ApiKeyRotate,
 }
 
 impl Permission {
     pub const STORE_READ: &'static str = "store.read";
     pub const STORE_UPDATE: &'static str = "store.update";
+    pub const STORE_DELETE: &'static str = "store.delete";
 
     pub const STORE_MEMBER_READ: &'static str = "store.member.read";
     pub const STORE_MEMBER_INVITE: &'static str = "store.member.invite";
@@ -84,10 +99,17 @@ impl Permission {
     pub const WEBHOOK_UPDATE: &'static str = "webhook.update";
     pub const WEBHOOK_DELETE: &'static str = "webhook.delete";
 
-    /// Complete list of all 19 defined permissions.
-    pub const ALL: [Self; 19] = [
+    pub const API_KEY_READ: &'static str = "api_key.read";
+    pub const API_KEY_CREATE: &'static str = "api_key.create";
+    pub const API_KEY_UPDATE: &'static str = "api_key.update";
+    pub const API_KEY_REVOKE: &'static str = "api_key.revoke";
+    pub const API_KEY_ROTATE: &'static str = "api_key.rotate";
+
+    /// Complete list of all 25 defined permissions.
+    pub const ALL: [Self; 25] = [
         Self::StoreRead,
         Self::StoreUpdate,
+        Self::StoreDelete,
         Self::StoreMemberRead,
         Self::StoreMemberInvite,
         Self::StoreMemberUpdate,
@@ -105,6 +127,11 @@ impl Permission {
         Self::WebhookCreate,
         Self::WebhookUpdate,
         Self::WebhookDelete,
+        Self::ApiKeyRead,
+        Self::ApiKeyCreate,
+        Self::ApiKeyUpdate,
+        Self::ApiKeyRevoke,
+        Self::ApiKeyRotate,
     ];
 
     /// Returns the canonical resource/action string representation of the permission.
@@ -113,6 +140,7 @@ impl Permission {
         match self {
             Self::StoreRead => Self::STORE_READ,
             Self::StoreUpdate => Self::STORE_UPDATE,
+            Self::StoreDelete => Self::STORE_DELETE,
             Self::StoreMemberRead => Self::STORE_MEMBER_READ,
             Self::StoreMemberInvite => Self::STORE_MEMBER_INVITE,
             Self::StoreMemberUpdate => Self::STORE_MEMBER_UPDATE,
@@ -130,6 +158,11 @@ impl Permission {
             Self::WebhookCreate => Self::WEBHOOK_CREATE,
             Self::WebhookUpdate => Self::WEBHOOK_UPDATE,
             Self::WebhookDelete => Self::WEBHOOK_DELETE,
+            Self::ApiKeyRead => Self::API_KEY_READ,
+            Self::ApiKeyCreate => Self::API_KEY_CREATE,
+            Self::ApiKeyUpdate => Self::API_KEY_UPDATE,
+            Self::ApiKeyRevoke => Self::API_KEY_REVOKE,
+            Self::ApiKeyRotate => Self::API_KEY_ROTATE,
         }
     }
 
@@ -140,6 +173,7 @@ impl Permission {
         match s.trim().to_ascii_lowercase().as_str() {
             Self::STORE_READ => Ok(Self::StoreRead),
             Self::STORE_UPDATE => Ok(Self::StoreUpdate),
+            Self::STORE_DELETE => Ok(Self::StoreDelete),
             Self::STORE_MEMBER_READ => Ok(Self::StoreMemberRead),
             Self::STORE_MEMBER_INVITE => Ok(Self::StoreMemberInvite),
             Self::STORE_MEMBER_UPDATE => Ok(Self::StoreMemberUpdate),
@@ -157,6 +191,11 @@ impl Permission {
             Self::WEBHOOK_CREATE => Ok(Self::WebhookCreate),
             Self::WEBHOOK_UPDATE => Ok(Self::WebhookUpdate),
             Self::WEBHOOK_DELETE => Ok(Self::WebhookDelete),
+            Self::API_KEY_READ => Ok(Self::ApiKeyRead),
+            Self::API_KEY_CREATE => Ok(Self::ApiKeyCreate),
+            Self::API_KEY_UPDATE => Ok(Self::ApiKeyUpdate),
+            Self::API_KEY_REVOKE => Ok(Self::ApiKeyRevoke),
+            Self::API_KEY_ROTATE => Ok(Self::ApiKeyRotate),
             other => Err(ParsePermissionError(other.to_string())),
         }
     }

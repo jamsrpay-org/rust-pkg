@@ -11,6 +11,7 @@ use crate::{Permission, StoreMemberRole};
 /// |:-----------------------|:-----:|:-----:|:---------:|:----------:|:------:|
 /// | store.read             |   ✓   |   ✓   |     ✓     |     ✓      |   ✓    |
 /// | store.update           |   ✓   |   ✓   |     ✗     |     ✗      |   ✗    |
+/// | store.delete           |   ✓   |   ✗   |     ✗     |     ✗      |   ✗    |
 /// | store.member.read      |   ✓   |   ✓   |     ✗     |     ✗      |   ✗    |
 /// | store.member.invite    |   ✓   |   ✓   |     ✗     |     ✗      |   ✗    |
 /// | store.member.update    |   ✓   |   ✓   |     ✗     |     ✗      |   ✗    |
@@ -28,19 +29,26 @@ use crate::{Permission, StoreMemberRole};
 /// | webhook.create         |   ✓   |   ✓   |     ✓     |     ✗      |   ✗    |
 /// | webhook.update         |   ✓   |   ✓   |     ✓     |     ✗      |   ✗    |
 /// | webhook.delete         |   ✓   |   ✓   |     ✓     |     ✗      |   ✗    |
+/// | api_key.read           |   ✓   |   ✓   |     ✓     |     ✗      |   ✗    |
+/// | api_key.create         |   ✓   |   ✓   |     ✓     |     ✗      |   ✗    |
+/// | api_key.update         |   ✓   |   ✓   |     ✓     |     ✗      |   ✗    |
+/// | api_key.revoke         |   ✓   |   ✓   |     ✓     |     ✗      |   ✗    |
+/// | api_key.rotate         |   ✓   |   ✓   |     ✓     |     ✗      |   ✗    |
 #[inline]
 pub fn allows(role: StoreMemberRole, permission: Permission) -> bool {
     match role {
         // Owner has every permission in the Permission vocabulary.
         StoreMemberRole::Owner => true,
 
-        // Admin has operational management authority over all defined resources.
-        // Ownership-sensitive actions (like ownership transfer or deletion) are not
-        // part of the Permission enum.
-        StoreMemberRole::Admin => true,
+        // Admin has operational management authority over all resources, except
+        // store deletion which is restricted to store owners.
+        StoreMemberRole::Admin => match permission {
+            Permission::StoreDelete => false,
+            _ => true,
+        },
 
-        // Developer has technical access (invoices, payouts, webhooks, store.read).
-        // Does not have member management or store configuration updates.
+        // Developer has technical access (invoices, payouts, webhooks, api_keys, store.read).
+        // Does not have member management or store configuration updates/deletion.
         StoreMemberRole::Developer => match permission {
             Permission::StoreRead
             | Permission::InvoiceRead
@@ -53,9 +61,15 @@ pub fn allows(role: StoreMemberRole, permission: Permission) -> bool {
             | Permission::WebhookRead
             | Permission::WebhookCreate
             | Permission::WebhookUpdate
-            | Permission::WebhookDelete => true,
+            | Permission::WebhookDelete
+            | Permission::ApiKeyRead
+            | Permission::ApiKeyCreate
+            | Permission::ApiKeyUpdate
+            | Permission::ApiKeyRevoke
+            | Permission::ApiKeyRotate => true,
 
             Permission::StoreUpdate
+            | Permission::StoreDelete
             | Permission::StoreMemberRead
             | Permission::StoreMemberInvite
             | Permission::StoreMemberUpdate
@@ -65,11 +79,12 @@ pub fn allows(role: StoreMemberRole, permission: Permission) -> bool {
         },
 
         // Accountant has financial read access (store.read, invoice.read, payout.read).
-        // Does not have mutation permissions or webhook access.
+        // Does not have mutation permissions, webhook access, or API key access.
         StoreMemberRole::Accountant => match permission {
             Permission::StoreRead | Permission::InvoiceRead | Permission::PayoutRead => true,
 
             Permission::StoreUpdate
+            | Permission::StoreDelete
             | Permission::StoreMemberRead
             | Permission::StoreMemberInvite
             | Permission::StoreMemberUpdate
@@ -84,11 +99,16 @@ pub fn allows(role: StoreMemberRole, permission: Permission) -> bool {
             | Permission::WebhookRead
             | Permission::WebhookCreate
             | Permission::WebhookUpdate
-            | Permission::WebhookDelete => false,
+            | Permission::WebhookDelete
+            | Permission::ApiKeyRead
+            | Permission::ApiKeyCreate
+            | Permission::ApiKeyUpdate
+            | Permission::ApiKeyRevoke
+            | Permission::ApiKeyRotate => false,
         },
 
         // Viewer has operational read-only visibility (store.read, invoice.read, payout.read, webhook.read).
-        // Does not have mutation permissions or member visibility.
+        // Does not have mutation permissions, member visibility, or API key access.
         StoreMemberRole::Viewer => match permission {
             Permission::StoreRead
             | Permission::InvoiceRead
@@ -96,6 +116,7 @@ pub fn allows(role: StoreMemberRole, permission: Permission) -> bool {
             | Permission::WebhookRead => true,
 
             Permission::StoreUpdate
+            | Permission::StoreDelete
             | Permission::StoreMemberRead
             | Permission::StoreMemberInvite
             | Permission::StoreMemberUpdate
@@ -109,7 +130,12 @@ pub fn allows(role: StoreMemberRole, permission: Permission) -> bool {
             | Permission::PayoutCancel
             | Permission::WebhookCreate
             | Permission::WebhookUpdate
-            | Permission::WebhookDelete => false,
+            | Permission::WebhookDelete
+            | Permission::ApiKeyRead
+            | Permission::ApiKeyCreate
+            | Permission::ApiKeyUpdate
+            | Permission::ApiKeyRevoke
+            | Permission::ApiKeyRotate => false,
         },
     }
 }

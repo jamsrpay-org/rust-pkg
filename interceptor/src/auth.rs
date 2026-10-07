@@ -1,4 +1,5 @@
 use authentication::{Claims, JwtDecoder, Role, Scope};
+pub use authorization::AuthorizationContext;
 use jamsrpay_types::{session_id::SessionId, user_id::UserId};
 use tonic::{Extensions, Request, Status, metadata::MetadataMap, service::Interceptor};
 use uuid::Uuid;
@@ -218,6 +219,18 @@ impl AuthedUserContext {
     }
 }
 
+/// Extracts [`AuthorizationContext`] from tonic request extensions.
+pub fn extract_auth_context<T>(
+    request: &Request<T>,
+    error_code: &'static str,
+) -> Result<AuthorizationContext, Status> {
+    request
+        .extensions()
+        .get::<AuthorizationContext>()
+        .cloned()
+        .ok_or_else(|| Status::unauthenticated(error_code))
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // AuthInterceptor & Builder
 // ─────────────────────────────────────────────────────────────────────────────
@@ -339,7 +352,9 @@ impl AuthInterceptor {
 impl Interceptor for AuthInterceptor {
     fn call(&mut self, mut request: Request<()>) -> Result<Request<()>, Status> {
         let (authed_user, claims) = self.authenticate(request.metadata())?;
+        let auth_ctx = claims.authorization_context();
         request.extensions_mut().insert(authed_user);
+        request.extensions_mut().insert(auth_ctx);
         request.extensions_mut().insert(claims);
         Ok(request)
     }
@@ -764,5 +779,10 @@ mod tests {
 
         let claims = ext.get::<Claims>().expect("missing Claims");
         assert_eq!(claims.sub, UserId::from(user_id));
+
+        let auth_ctx = ext
+            .get::<AuthorizationContext>()
+            .expect("missing AuthorizationContext");
+        assert_eq!(auth_ctx.merchant_id.into_inner(), user_id);
     }
 }

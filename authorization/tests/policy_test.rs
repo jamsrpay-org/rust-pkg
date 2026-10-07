@@ -28,7 +28,8 @@ fn expected_policy(role: StoreMemberRole, permission: Permission) -> bool {
         // Owner has all permissions
         (StoreMemberRole::Owner, _) => true,
 
-        // Admin has all permissions in the initial vocabulary
+        // Admin has all permissions except StoreDelete
+        (StoreMemberRole::Admin, Permission::StoreDelete) => false,
         (StoreMemberRole::Admin, _) => true,
 
         // Developer
@@ -44,6 +45,11 @@ fn expected_policy(role: StoreMemberRole, permission: Permission) -> bool {
         (StoreMemberRole::Developer, Permission::WebhookCreate) => true,
         (StoreMemberRole::Developer, Permission::WebhookUpdate) => true,
         (StoreMemberRole::Developer, Permission::WebhookDelete) => true,
+        (StoreMemberRole::Developer, Permission::ApiKeyRead) => true,
+        (StoreMemberRole::Developer, Permission::ApiKeyCreate) => true,
+        (StoreMemberRole::Developer, Permission::ApiKeyUpdate) => true,
+        (StoreMemberRole::Developer, Permission::ApiKeyRevoke) => true,
+        (StoreMemberRole::Developer, Permission::ApiKeyRotate) => true,
         (StoreMemberRole::Developer, _) => false,
 
         // Accountant
@@ -62,7 +68,7 @@ fn expected_policy(role: StoreMemberRole, permission: Permission) -> bool {
 }
 
 #[test]
-fn test_complete_policy_matrix_95_cases() {
+fn test_complete_policy_matrix_125_cases() {
     let mut tested_count = 0;
 
     for role in StoreMemberRole::ALL {
@@ -86,7 +92,7 @@ fn test_complete_policy_matrix_95_cases() {
         }
     }
 
-    assert_eq!(tested_count, 95);
+    assert_eq!(tested_count, 125);
 }
 
 #[test]
@@ -98,10 +104,15 @@ fn test_owner_has_all_permissions() {
 }
 
 #[test]
-fn test_admin_has_all_permissions() {
+fn test_admin_permissions() {
     for perm in Permission::ALL {
-        assert!(allows(StoreMemberRole::Admin, perm));
-        assert!(StoreMemberRole::Admin.allows(perm));
+        if perm == Permission::StoreDelete {
+            assert!(!allows(StoreMemberRole::Admin, perm));
+            assert!(!StoreMemberRole::Admin.allows(perm));
+        } else {
+            assert!(allows(StoreMemberRole::Admin, perm));
+            assert!(StoreMemberRole::Admin.allows(perm));
+        }
     }
 }
 
