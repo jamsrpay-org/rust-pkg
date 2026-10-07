@@ -1,3 +1,3 @@
 mod telemetry;
 
-pub use telemetry::Telemetry;
+pub use telemetry::{Telemetry, TelemetryBuilder, TelemetryConfig};
