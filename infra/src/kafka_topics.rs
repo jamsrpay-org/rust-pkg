@@ -9,6 +9,8 @@ pub const BLOCKCHAIN_WALLET_EVENTS: &str = "blockchain_wallet.events.v1";
 
 pub const USER_EVENTS: &str = "user.events.v1";
 
+pub const ASSET_EVENTS: &str = "asset.events.v1";
+
 pub const IDENTITY_EVENTS: &str = "identity.events.v1";
 
 pub const STORE_EVENTS: &str = "store.store.events.v1";
