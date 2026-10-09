@@ -29,11 +29,6 @@ pub mod asset {
 }
 #[cfg(feature = "billing")]
 pub mod billing {
-    pub mod currency {
-        pub mod v1 {
-            include!("billing.currency.v1.rs");
-        }
-    }
     pub mod deposit_wallet {
         pub mod events {
             pub mod v1 {

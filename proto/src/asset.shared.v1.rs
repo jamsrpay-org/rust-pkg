@@ -12,6 +12,8 @@ pub struct Asset {
     pub r#type: i32,
     #[prost(enumeration = "AssetStatus", tag = "5")]
     pub status: i32,
+    #[prost(string, tag = "6")]
+    pub logo: ::prost::alloc::string::String,
 }
 impl ::prost::Name for Asset {
     const NAME: &'static str = "Asset";
@@ -38,6 +40,8 @@ pub struct BlockchainNetwork {
     pub native_asset_id: i32,
     #[prost(enumeration = "BlockchainNetworkStatus", tag = "6")]
     pub status: i32,
+    #[prost(string, tag = "7")]
+    pub logo: ::prost::alloc::string::String,
 }
 impl ::prost::Name for BlockchainNetwork {
     const NAME: &'static str = "BlockchainNetwork";
@@ -64,6 +68,10 @@ pub struct AssetNetwork {
     pub decimals: u32,
     #[prost(enumeration = "AssetNetworkStatus", tag = "6")]
     pub status: i32,
+    #[prost(string, tag = "7")]
+    pub logo: ::prost::alloc::string::String,
+    #[prost(enumeration = "TokenStandard", optional, tag = "8")]
+    pub token_standard: ::core::option::Option<i32>,
 }
 impl ::prost::Name for AssetNetwork {
     const NAME: &'static str = "AssetNetwork";
@@ -114,6 +122,8 @@ pub struct FiatCurrency {
     pub minor_unit_digits: u32,
     #[prost(enumeration = "FiatCurrencyStatus", tag = "5")]
     pub status: i32,
+    #[prost(string, tag = "6")]
+    pub logo: ::prost::alloc::string::String,
 }
 impl ::prost::Name for FiatCurrency {
     const NAME: &'static str = "FiatCurrency";
@@ -349,6 +359,42 @@ impl BlockchainNetworkStatus {
             "BLOCKCHAIN_NETWORK_STATUS_ENABLED" => Some(Self::Enabled),
             "BLOCKCHAIN_NETWORK_STATUS_DISABLED" => Some(Self::Disabled),
             "BLOCKCHAIN_NETWORK_STATUS_DEPRECATED" => Some(Self::Deprecated),
+            _ => None,
+        }
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[repr(i32)]
+pub enum TokenStandard {
+    Unspecified = 0,
+    Trc20 = 1,
+    Bep20 = 2,
+    Erc20 = 3,
+    Spl = 4,
+}
+impl TokenStandard {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            Self::Unspecified => "TOKEN_STANDARD_UNSPECIFIED",
+            Self::Trc20 => "TOKEN_STANDARD_TRC20",
+            Self::Bep20 => "TOKEN_STANDARD_BEP20",
+            Self::Erc20 => "TOKEN_STANDARD_ERC20",
+            Self::Spl => "TOKEN_STANDARD_SPL",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "TOKEN_STANDARD_UNSPECIFIED" => Some(Self::Unspecified),
+            "TOKEN_STANDARD_TRC20" => Some(Self::Trc20),
+            "TOKEN_STANDARD_BEP20" => Some(Self::Bep20),
+            "TOKEN_STANDARD_ERC20" => Some(Self::Erc20),
+            "TOKEN_STANDARD_SPL" => Some(Self::Spl),
             _ => None,
         }
     }
