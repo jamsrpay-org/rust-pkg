@@ -7,12 +7,12 @@ pub struct GetAssetRequest {
 }
 impl ::prost::Name for GetAssetRequest {
     const NAME: &'static str = "GetAssetRequest";
-    const PACKAGE: &'static str = "asset.internal.v1";
+    const PACKAGE: &'static str = "asset.public.v1";
     fn full_name() -> ::prost::alloc::string::String {
-        "asset.internal.v1.GetAssetRequest".into()
+        "asset.public.v1.GetAssetRequest".into()
     }
     fn type_url() -> ::prost::alloc::string::String {
-        "/asset.internal.v1.GetAssetRequest".into()
+        "/asset.public.v1.GetAssetRequest".into()
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -23,46 +23,12 @@ pub struct GetAssetResponse {
 }
 impl ::prost::Name for GetAssetResponse {
     const NAME: &'static str = "GetAssetResponse";
-    const PACKAGE: &'static str = "asset.internal.v1";
+    const PACKAGE: &'static str = "asset.public.v1";
     fn full_name() -> ::prost::alloc::string::String {
-        "asset.internal.v1.GetAssetResponse".into()
+        "asset.public.v1.GetAssetResponse".into()
     }
     fn type_url() -> ::prost::alloc::string::String {
-        "/asset.internal.v1.GetAssetResponse".into()
-    }
-}
-#[derive(serde::Serialize, serde::Deserialize)]
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct GetBlockchainNetworkRequest {
-    #[prost(enumeration = "super::super::shared::v1::BlockchainNetworkId", tag = "1")]
-    pub blockchain_network_id: i32,
-}
-impl ::prost::Name for GetBlockchainNetworkRequest {
-    const NAME: &'static str = "GetBlockchainNetworkRequest";
-    const PACKAGE: &'static str = "asset.internal.v1";
-    fn full_name() -> ::prost::alloc::string::String {
-        "asset.internal.v1.GetBlockchainNetworkRequest".into()
-    }
-    fn type_url() -> ::prost::alloc::string::String {
-        "/asset.internal.v1.GetBlockchainNetworkRequest".into()
-    }
-}
-#[derive(serde::Serialize, serde::Deserialize)]
-#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct GetBlockchainNetworkResponse {
-    #[prost(message, optional, tag = "1")]
-    pub blockchain_network: ::core::option::Option<
-        super::super::shared::v1::BlockchainNetwork,
-    >,
-}
-impl ::prost::Name for GetBlockchainNetworkResponse {
-    const NAME: &'static str = "GetBlockchainNetworkResponse";
-    const PACKAGE: &'static str = "asset.internal.v1";
-    fn full_name() -> ::prost::alloc::string::String {
-        "asset.internal.v1.GetBlockchainNetworkResponse".into()
-    }
-    fn type_url() -> ::prost::alloc::string::String {
-        "/asset.internal.v1.GetBlockchainNetworkResponse".into()
+        "/asset.public.v1.GetAssetResponse".into()
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -73,12 +39,12 @@ pub struct GetAssetNetworkRequest {
 }
 impl ::prost::Name for GetAssetNetworkRequest {
     const NAME: &'static str = "GetAssetNetworkRequest";
-    const PACKAGE: &'static str = "asset.internal.v1";
+    const PACKAGE: &'static str = "asset.public.v1";
     fn full_name() -> ::prost::alloc::string::String {
-        "asset.internal.v1.GetAssetNetworkRequest".into()
+        "asset.public.v1.GetAssetNetworkRequest".into()
     }
     fn type_url() -> ::prost::alloc::string::String {
-        "/asset.internal.v1.GetAssetNetworkRequest".into()
+        "/asset.public.v1.GetAssetNetworkRequest".into()
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -93,12 +59,41 @@ pub struct GetAssetNetworkResponse {
 }
 impl ::prost::Name for GetAssetNetworkResponse {
     const NAME: &'static str = "GetAssetNetworkResponse";
-    const PACKAGE: &'static str = "asset.internal.v1";
+    const PACKAGE: &'static str = "asset.public.v1";
     fn full_name() -> ::prost::alloc::string::String {
-        "asset.internal.v1.GetAssetNetworkResponse".into()
+        "asset.public.v1.GetAssetNetworkResponse".into()
     }
     fn type_url() -> ::prost::alloc::string::String {
-        "/asset.internal.v1.GetAssetNetworkResponse".into()
+        "/asset.public.v1.GetAssetNetworkResponse".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct ListAssetsRequest {}
+impl ::prost::Name for ListAssetsRequest {
+    const NAME: &'static str = "ListAssetsRequest";
+    const PACKAGE: &'static str = "asset.public.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "asset.public.v1.ListAssetsRequest".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/asset.public.v1.ListAssetsRequest".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListAssetsResponse {
+    #[prost(message, repeated, tag = "1")]
+    pub assets: ::prost::alloc::vec::Vec<super::super::shared::v1::Asset>,
+}
+impl ::prost::Name for ListAssetsResponse {
+    const NAME: &'static str = "ListAssetsResponse";
+    const PACKAGE: &'static str = "asset.public.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "asset.public.v1.ListAssetsResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/asset.public.v1.ListAssetsResponse".into()
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -115,12 +110,12 @@ pub struct ListAssetNetworksRequest {
 }
 impl ::prost::Name for ListAssetNetworksRequest {
     const NAME: &'static str = "ListAssetNetworksRequest";
-    const PACKAGE: &'static str = "asset.internal.v1";
+    const PACKAGE: &'static str = "asset.public.v1";
     fn full_name() -> ::prost::alloc::string::String {
-        "asset.internal.v1.ListAssetNetworksRequest".into()
+        "asset.public.v1.ListAssetNetworksRequest".into()
     }
     fn type_url() -> ::prost::alloc::string::String {
-        "/asset.internal.v1.ListAssetNetworksRequest".into()
+        "/asset.public.v1.ListAssetNetworksRequest".into()
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -131,54 +126,86 @@ pub struct ListAssetNetworksResponse {
 }
 impl ::prost::Name for ListAssetNetworksResponse {
     const NAME: &'static str = "ListAssetNetworksResponse";
-    const PACKAGE: &'static str = "asset.internal.v1";
+    const PACKAGE: &'static str = "asset.public.v1";
     fn full_name() -> ::prost::alloc::string::String {
-        "asset.internal.v1.ListAssetNetworksResponse".into()
+        "asset.public.v1.ListAssetNetworksResponse".into()
     }
     fn type_url() -> ::prost::alloc::string::String {
-        "/asset.internal.v1.ListAssetNetworksResponse".into()
+        "/asset.public.v1.ListAssetNetworksResponse".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct GetFiatCurrencyRequest {
+    #[prost(enumeration = "super::super::shared::v1::FiatCurrencyId", tag = "1")]
+    pub id: i32,
+}
+impl ::prost::Name for GetFiatCurrencyRequest {
+    const NAME: &'static str = "GetFiatCurrencyRequest";
+    const PACKAGE: &'static str = "asset.public.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "asset.public.v1.GetFiatCurrencyRequest".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/asset.public.v1.GetFiatCurrencyRequest".into()
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct ResolveAssetNetworkRequest {
-    #[prost(enumeration = "super::super::shared::v1::BlockchainNetworkId", tag = "1")]
-    pub blockchain_network_id: i32,
-    #[prost(string, tag = "2")]
-    pub contract_address: ::prost::alloc::string::String,
-}
-impl ::prost::Name for ResolveAssetNetworkRequest {
-    const NAME: &'static str = "ResolveAssetNetworkRequest";
-    const PACKAGE: &'static str = "asset.internal.v1";
-    fn full_name() -> ::prost::alloc::string::String {
-        "asset.internal.v1.ResolveAssetNetworkRequest".into()
-    }
-    fn type_url() -> ::prost::alloc::string::String {
-        "/asset.internal.v1.ResolveAssetNetworkRequest".into()
-    }
-}
-#[derive(serde::Serialize, serde::Deserialize)]
-#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct ResolveAssetNetworkResponse {
+pub struct GetFiatCurrencyResponse {
     #[prost(message, optional, tag = "1")]
-    pub asset_network: ::core::option::Option<super::super::shared::v1::AssetNetwork>,
-    #[prost(message, optional, tag = "2")]
-    pub configuration: ::core::option::Option<
-        super::super::shared::v1::AssetNetworkConfiguration,
+    pub fiat_currency: ::core::option::Option<super::super::shared::v1::FiatCurrency>,
+}
+impl ::prost::Name for GetFiatCurrencyResponse {
+    const NAME: &'static str = "GetFiatCurrencyResponse";
+    const PACKAGE: &'static str = "asset.public.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "asset.public.v1.GetFiatCurrencyResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/asset.public.v1.GetFiatCurrencyResponse".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct ListFiatCurrenciesRequest {
+    #[prost(
+        enumeration = "super::super::shared::v1::FiatCurrencyStatus",
+        optional,
+        tag = "1"
+    )]
+    pub status: ::core::option::Option<i32>,
+}
+impl ::prost::Name for ListFiatCurrenciesRequest {
+    const NAME: &'static str = "ListFiatCurrenciesRequest";
+    const PACKAGE: &'static str = "asset.public.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "asset.public.v1.ListFiatCurrenciesRequest".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/asset.public.v1.ListFiatCurrenciesRequest".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListFiatCurrenciesResponse {
+    #[prost(message, repeated, tag = "1")]
+    pub fiat_currencies: ::prost::alloc::vec::Vec<
+        super::super::shared::v1::FiatCurrency,
     >,
 }
-impl ::prost::Name for ResolveAssetNetworkResponse {
-    const NAME: &'static str = "ResolveAssetNetworkResponse";
-    const PACKAGE: &'static str = "asset.internal.v1";
+impl ::prost::Name for ListFiatCurrenciesResponse {
+    const NAME: &'static str = "ListFiatCurrenciesResponse";
+    const PACKAGE: &'static str = "asset.public.v1";
     fn full_name() -> ::prost::alloc::string::String {
-        "asset.internal.v1.ResolveAssetNetworkResponse".into()
+        "asset.public.v1.ListFiatCurrenciesResponse".into()
     }
     fn type_url() -> ::prost::alloc::string::String {
-        "/asset.internal.v1.ResolveAssetNetworkResponse".into()
+        "/asset.public.v1.ListFiatCurrenciesResponse".into()
     }
 }
 /// Generated client implementations.
-pub mod asset_internal_service_client {
+pub mod asset_public_service_client {
     #![allow(
         unused_variables,
         dead_code,
@@ -189,10 +216,10 @@ pub mod asset_internal_service_client {
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
-    pub struct AssetInternalServiceClient<T> {
+    pub struct AssetPublicServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl AssetInternalServiceClient<tonic::transport::Channel> {
+    impl AssetPublicServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -203,7 +230,7 @@ pub mod asset_internal_service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> AssetInternalServiceClient<T>
+    impl<T> AssetPublicServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
@@ -221,7 +248,7 @@ pub mod asset_internal_service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> AssetInternalServiceClient<InterceptedService<T, F>>
+        ) -> AssetPublicServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -235,7 +262,7 @@ pub mod asset_internal_service_client {
                 http::Request<tonic::body::Body>,
             >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
-            AssetInternalServiceClient::new(InterceptedService::new(inner, interceptor))
+            AssetPublicServiceClient::new(InterceptedService::new(inner, interceptor))
         }
         /// Compress requests with the given encoding.
         ///
@@ -285,41 +312,12 @@ pub mod asset_internal_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/asset.internal.v1.AssetInternalService/GetAsset",
+                "/asset.public.v1.AssetPublicService/GetAsset",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
-                    GrpcMethod::new("asset.internal.v1.AssetInternalService", "GetAsset"),
-                );
-            self.inner.unary(req, path, codec).await
-        }
-        pub async fn get_blockchain_network(
-            &mut self,
-            request: impl tonic::IntoRequest<super::GetBlockchainNetworkRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::GetBlockchainNetworkResponse>,
-            tonic::Status,
-        > {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::unknown(
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
-            let codec = tonic_prost::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/asset.internal.v1.AssetInternalService/GetBlockchainNetwork",
-            );
-            let mut req = request.into_request();
-            req.extensions_mut()
-                .insert(
-                    GrpcMethod::new(
-                        "asset.internal.v1.AssetInternalService",
-                        "GetBlockchainNetwork",
-                    ),
+                    GrpcMethod::new("asset.public.v1.AssetPublicService", "GetAsset"),
                 );
             self.inner.unary(req, path, codec).await
         }
@@ -340,15 +338,41 @@ pub mod asset_internal_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/asset.internal.v1.AssetInternalService/GetAssetNetwork",
+                "/asset.public.v1.AssetPublicService/GetAssetNetwork",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "asset.internal.v1.AssetInternalService",
+                        "asset.public.v1.AssetPublicService",
                         "GetAssetNetwork",
                     ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn list_assets(
+            &mut self,
+            request: impl tonic::IntoRequest<super::ListAssetsRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::ListAssetsResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/asset.public.v1.AssetPublicService/ListAssets",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new("asset.public.v1.AssetPublicService", "ListAssets"),
                 );
             self.inner.unary(req, path, codec).await
         }
@@ -369,23 +393,23 @@ pub mod asset_internal_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/asset.internal.v1.AssetInternalService/ListAssetNetworks",
+                "/asset.public.v1.AssetPublicService/ListAssetNetworks",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "asset.internal.v1.AssetInternalService",
+                        "asset.public.v1.AssetPublicService",
                         "ListAssetNetworks",
                     ),
                 );
             self.inner.unary(req, path, codec).await
         }
-        pub async fn resolve_asset_network(
+        pub async fn get_fiat_currency(
             &mut self,
-            request: impl tonic::IntoRequest<super::ResolveAssetNetworkRequest>,
+            request: impl tonic::IntoRequest<super::GetFiatCurrencyRequest>,
         ) -> std::result::Result<
-            tonic::Response<super::ResolveAssetNetworkResponse>,
+            tonic::Response<super::GetFiatCurrencyResponse>,
             tonic::Status,
         > {
             self.inner
@@ -398,14 +422,43 @@ pub mod asset_internal_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/asset.internal.v1.AssetInternalService/ResolveAssetNetwork",
+                "/asset.public.v1.AssetPublicService/GetFiatCurrency",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "asset.internal.v1.AssetInternalService",
-                        "ResolveAssetNetwork",
+                        "asset.public.v1.AssetPublicService",
+                        "GetFiatCurrency",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn list_fiat_currencies(
+            &mut self,
+            request: impl tonic::IntoRequest<super::ListFiatCurrenciesRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::ListFiatCurrenciesResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/asset.public.v1.AssetPublicService/ListFiatCurrencies",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "asset.public.v1.AssetPublicService",
+                        "ListFiatCurrencies",
                     ),
                 );
             self.inner.unary(req, path, codec).await
@@ -413,7 +466,7 @@ pub mod asset_internal_service_client {
     }
 }
 /// Generated server implementations.
-pub mod asset_internal_service_server {
+pub mod asset_public_service_server {
     #![allow(
         unused_variables,
         dead_code,
@@ -422,21 +475,14 @@ pub mod asset_internal_service_server {
         clippy::let_unit_value,
     )]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with AssetInternalServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with AssetPublicServiceServer.
     #[async_trait]
-    pub trait AssetInternalService: std::marker::Send + std::marker::Sync + 'static {
+    pub trait AssetPublicService: std::marker::Send + std::marker::Sync + 'static {
         async fn get_asset(
             &self,
             request: tonic::Request<super::GetAssetRequest>,
         ) -> std::result::Result<
             tonic::Response<super::GetAssetResponse>,
-            tonic::Status,
-        >;
-        async fn get_blockchain_network(
-            &self,
-            request: tonic::Request<super::GetBlockchainNetworkRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::GetBlockchainNetworkResponse>,
             tonic::Status,
         >;
         async fn get_asset_network(
@@ -446,6 +492,13 @@ pub mod asset_internal_service_server {
             tonic::Response<super::GetAssetNetworkResponse>,
             tonic::Status,
         >;
+        async fn list_assets(
+            &self,
+            request: tonic::Request<super::ListAssetsRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::ListAssetsResponse>,
+            tonic::Status,
+        >;
         async fn list_asset_networks(
             &self,
             request: tonic::Request<super::ListAssetNetworksRequest>,
@@ -453,23 +506,30 @@ pub mod asset_internal_service_server {
             tonic::Response<super::ListAssetNetworksResponse>,
             tonic::Status,
         >;
-        async fn resolve_asset_network(
+        async fn get_fiat_currency(
             &self,
-            request: tonic::Request<super::ResolveAssetNetworkRequest>,
+            request: tonic::Request<super::GetFiatCurrencyRequest>,
         ) -> std::result::Result<
-            tonic::Response<super::ResolveAssetNetworkResponse>,
+            tonic::Response<super::GetFiatCurrencyResponse>,
+            tonic::Status,
+        >;
+        async fn list_fiat_currencies(
+            &self,
+            request: tonic::Request<super::ListFiatCurrenciesRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::ListFiatCurrenciesResponse>,
             tonic::Status,
         >;
     }
     #[derive(Debug)]
-    pub struct AssetInternalServiceServer<T> {
+    pub struct AssetPublicServiceServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T> AssetInternalServiceServer<T> {
+    impl<T> AssetPublicServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -520,10 +580,9 @@ pub mod asset_internal_service_server {
             self
         }
     }
-    impl<T, B> tonic::codegen::Service<http::Request<B>>
-    for AssetInternalServiceServer<T>
+    impl<T, B> tonic::codegen::Service<http::Request<B>> for AssetPublicServiceServer<T>
     where
-        T: AssetInternalService,
+        T: AssetPublicService,
         B: Body + std::marker::Send + 'static,
         B::Error: Into<StdError> + std::marker::Send + 'static,
     {
@@ -538,11 +597,11 @@ pub mod asset_internal_service_server {
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             match req.uri().path() {
-                "/asset.internal.v1.AssetInternalService/GetAsset" => {
+                "/asset.public.v1.AssetPublicService/GetAsset" => {
                     #[allow(non_camel_case_types)]
-                    struct GetAssetSvc<T: AssetInternalService>(pub Arc<T>);
+                    struct GetAssetSvc<T: AssetPublicService>(pub Arc<T>);
                     impl<
-                        T: AssetInternalService,
+                        T: AssetPublicService,
                     > tonic::server::UnaryService<super::GetAssetRequest>
                     for GetAssetSvc<T> {
                         type Response = super::GetAssetResponse;
@@ -556,8 +615,7 @@ pub mod asset_internal_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AssetInternalService>::get_asset(&inner, request)
-                                    .await
+                                <T as AssetPublicService>::get_asset(&inner, request).await
                             };
                             Box::pin(fut)
                         }
@@ -584,60 +642,11 @@ pub mod asset_internal_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/asset.internal.v1.AssetInternalService/GetBlockchainNetwork" => {
+                "/asset.public.v1.AssetPublicService/GetAssetNetwork" => {
                     #[allow(non_camel_case_types)]
-                    struct GetBlockchainNetworkSvc<T: AssetInternalService>(pub Arc<T>);
+                    struct GetAssetNetworkSvc<T: AssetPublicService>(pub Arc<T>);
                     impl<
-                        T: AssetInternalService,
-                    > tonic::server::UnaryService<super::GetBlockchainNetworkRequest>
-                    for GetBlockchainNetworkSvc<T> {
-                        type Response = super::GetBlockchainNetworkResponse;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
-                        fn call(
-                            &mut self,
-                            request: tonic::Request<super::GetBlockchainNetworkRequest>,
-                        ) -> Self::Future {
-                            let inner = Arc::clone(&self.0);
-                            let fut = async move {
-                                <T as AssetInternalService>::get_blockchain_network(
-                                        &inner,
-                                        request,
-                                    )
-                                    .await
-                            };
-                            Box::pin(fut)
-                        }
-                    }
-                    let accept_compression_encodings = self.accept_compression_encodings;
-                    let send_compression_encodings = self.send_compression_encodings;
-                    let max_decoding_message_size = self.max_decoding_message_size;
-                    let max_encoding_message_size = self.max_encoding_message_size;
-                    let inner = self.inner.clone();
-                    let fut = async move {
-                        let method = GetBlockchainNetworkSvc(inner);
-                        let codec = tonic_prost::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            )
-                            .apply_max_message_size_config(
-                                max_decoding_message_size,
-                                max_encoding_message_size,
-                            );
-                        let res = grpc.unary(method, req).await;
-                        Ok(res)
-                    };
-                    Box::pin(fut)
-                }
-                "/asset.internal.v1.AssetInternalService/GetAssetNetwork" => {
-                    #[allow(non_camel_case_types)]
-                    struct GetAssetNetworkSvc<T: AssetInternalService>(pub Arc<T>);
-                    impl<
-                        T: AssetInternalService,
+                        T: AssetPublicService,
                     > tonic::server::UnaryService<super::GetAssetNetworkRequest>
                     for GetAssetNetworkSvc<T> {
                         type Response = super::GetAssetNetworkResponse;
@@ -651,7 +660,7 @@ pub mod asset_internal_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AssetInternalService>::get_asset_network(
+                                <T as AssetPublicService>::get_asset_network(
                                         &inner,
                                         request,
                                     )
@@ -682,11 +691,57 @@ pub mod asset_internal_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/asset.internal.v1.AssetInternalService/ListAssetNetworks" => {
+                "/asset.public.v1.AssetPublicService/ListAssets" => {
                     #[allow(non_camel_case_types)]
-                    struct ListAssetNetworksSvc<T: AssetInternalService>(pub Arc<T>);
+                    struct ListAssetsSvc<T: AssetPublicService>(pub Arc<T>);
                     impl<
-                        T: AssetInternalService,
+                        T: AssetPublicService,
+                    > tonic::server::UnaryService<super::ListAssetsRequest>
+                    for ListAssetsSvc<T> {
+                        type Response = super::ListAssetsResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::ListAssetsRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as AssetPublicService>::list_assets(&inner, request)
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = ListAssetsSvc(inner);
+                        let codec = tonic_prost::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/asset.public.v1.AssetPublicService/ListAssetNetworks" => {
+                    #[allow(non_camel_case_types)]
+                    struct ListAssetNetworksSvc<T: AssetPublicService>(pub Arc<T>);
+                    impl<
+                        T: AssetPublicService,
                     > tonic::server::UnaryService<super::ListAssetNetworksRequest>
                     for ListAssetNetworksSvc<T> {
                         type Response = super::ListAssetNetworksResponse;
@@ -700,7 +755,7 @@ pub mod asset_internal_service_server {
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AssetInternalService>::list_asset_networks(
+                                <T as AssetPublicService>::list_asset_networks(
                                         &inner,
                                         request,
                                     )
@@ -731,25 +786,25 @@ pub mod asset_internal_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/asset.internal.v1.AssetInternalService/ResolveAssetNetwork" => {
+                "/asset.public.v1.AssetPublicService/GetFiatCurrency" => {
                     #[allow(non_camel_case_types)]
-                    struct ResolveAssetNetworkSvc<T: AssetInternalService>(pub Arc<T>);
+                    struct GetFiatCurrencySvc<T: AssetPublicService>(pub Arc<T>);
                     impl<
-                        T: AssetInternalService,
-                    > tonic::server::UnaryService<super::ResolveAssetNetworkRequest>
-                    for ResolveAssetNetworkSvc<T> {
-                        type Response = super::ResolveAssetNetworkResponse;
+                        T: AssetPublicService,
+                    > tonic::server::UnaryService<super::GetFiatCurrencyRequest>
+                    for GetFiatCurrencySvc<T> {
+                        type Response = super::GetFiatCurrencyResponse;
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
                             tonic::Status,
                         >;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::ResolveAssetNetworkRequest>,
+                            request: tonic::Request<super::GetFiatCurrencyRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as AssetInternalService>::resolve_asset_network(
+                                <T as AssetPublicService>::get_fiat_currency(
                                         &inner,
                                         request,
                                     )
@@ -764,7 +819,56 @@ pub mod asset_internal_service_server {
                     let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
-                        let method = ResolveAssetNetworkSvc(inner);
+                        let method = GetFiatCurrencySvc(inner);
+                        let codec = tonic_prost::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/asset.public.v1.AssetPublicService/ListFiatCurrencies" => {
+                    #[allow(non_camel_case_types)]
+                    struct ListFiatCurrenciesSvc<T: AssetPublicService>(pub Arc<T>);
+                    impl<
+                        T: AssetPublicService,
+                    > tonic::server::UnaryService<super::ListFiatCurrenciesRequest>
+                    for ListFiatCurrenciesSvc<T> {
+                        type Response = super::ListFiatCurrenciesResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::ListFiatCurrenciesRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as AssetPublicService>::list_fiat_currencies(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = ListFiatCurrenciesSvc(inner);
                         let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -802,7 +906,7 @@ pub mod asset_internal_service_server {
             }
         }
     }
-    impl<T> Clone for AssetInternalServiceServer<T> {
+    impl<T> Clone for AssetPublicServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -815,8 +919,8 @@ pub mod asset_internal_service_server {
         }
     }
     /// Generated gRPC service name
-    pub const SERVICE_NAME: &str = "asset.internal.v1.AssetInternalService";
-    impl<T> tonic::server::NamedService for AssetInternalServiceServer<T> {
+    pub const SERVICE_NAME: &str = "asset.public.v1.AssetPublicService";
+    impl<T> tonic::server::NamedService for AssetPublicServiceServer<T> {
         const NAME: &'static str = SERVICE_NAME;
     }
 }

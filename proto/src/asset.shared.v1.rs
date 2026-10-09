@@ -2,8 +2,8 @@
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Asset {
-    #[prost(string, tag = "1")]
-    pub id: ::prost::alloc::string::String,
+    #[prost(enumeration = "AssetId", tag = "1")]
+    pub id: i32,
     #[prost(string, tag = "2")]
     pub symbol: ::prost::alloc::string::String,
     #[prost(string, tag = "3")]
@@ -12,10 +12,6 @@ pub struct Asset {
     pub r#type: i32,
     #[prost(enumeration = "AssetStatus", tag = "5")]
     pub status: i32,
-    #[prost(message, optional, tag = "6")]
-    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
-    #[prost(message, optional, tag = "7")]
-    pub updated_at: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for Asset {
     const NAME: &'static str = "Asset";
@@ -30,22 +26,18 @@ impl ::prost::Name for Asset {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct BlockchainNetwork {
-    #[prost(string, tag = "1")]
-    pub id: ::prost::alloc::string::String,
+    #[prost(enumeration = "BlockchainNetworkId", tag = "1")]
+    pub id: i32,
     #[prost(string, tag = "2")]
     pub name: ::prost::alloc::string::String,
     #[prost(string, tag = "3")]
     pub slug: ::prost::alloc::string::String,
     #[prost(uint64, optional, tag = "4")]
     pub chain_id: ::core::option::Option<u64>,
-    #[prost(string, tag = "5")]
-    pub native_asset_id: ::prost::alloc::string::String,
+    #[prost(enumeration = "AssetId", tag = "5")]
+    pub native_asset_id: i32,
     #[prost(enumeration = "BlockchainNetworkStatus", tag = "6")]
     pub status: i32,
-    #[prost(message, optional, tag = "7")]
-    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
-    #[prost(message, optional, tag = "8")]
-    pub updated_at: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for BlockchainNetwork {
     const NAME: &'static str = "BlockchainNetwork";
@@ -62,20 +54,16 @@ impl ::prost::Name for BlockchainNetwork {
 pub struct AssetNetwork {
     #[prost(string, tag = "1")]
     pub id: ::prost::alloc::string::String,
-    #[prost(string, tag = "2")]
-    pub asset_id: ::prost::alloc::string::String,
-    #[prost(string, tag = "3")]
-    pub blockchain_network_id: ::prost::alloc::string::String,
+    #[prost(enumeration = "AssetId", tag = "2")]
+    pub asset_id: i32,
+    #[prost(enumeration = "BlockchainNetworkId", tag = "3")]
+    pub blockchain_network_id: i32,
     #[prost(string, optional, tag = "4")]
     pub contract_address: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(uint32, tag = "5")]
     pub decimals: u32,
     #[prost(enumeration = "AssetNetworkStatus", tag = "6")]
     pub status: i32,
-    #[prost(message, optional, tag = "7")]
-    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
-    #[prost(message, optional, tag = "8")]
-    pub updated_at: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for AssetNetwork {
     const NAME: &'static str = "AssetNetwork";
@@ -91,23 +79,17 @@ impl ::prost::Name for AssetNetwork {
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct AssetNetworkConfiguration {
     #[prost(string, tag = "1")]
-    pub id: ::prost::alloc::string::String,
-    #[prost(string, tag = "2")]
     pub asset_network_id: ::prost::alloc::string::String,
-    #[prost(string, optional, tag = "3")]
+    #[prost(string, optional, tag = "2")]
     pub energy_required: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(string, optional, tag = "4")]
+    #[prost(string, optional, tag = "3")]
     pub gas_limit: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(string, optional, tag = "5")]
+    #[prost(string, optional, tag = "4")]
     pub minimum_deposit: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(string, optional, tag = "6")]
+    #[prost(string, optional, tag = "5")]
     pub minimum_withdrawal: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(int64, optional, tag = "7")]
+    #[prost(int64, optional, tag = "6")]
     pub confirmation_count: ::core::option::Option<i64>,
-    #[prost(message, optional, tag = "8")]
-    pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
-    #[prost(message, optional, tag = "9")]
-    pub updated_at: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for AssetNetworkConfiguration {
     const NAME: &'static str = "AssetNetworkConfiguration";
@@ -117,6 +99,89 @@ impl ::prost::Name for AssetNetworkConfiguration {
     }
     fn type_url() -> ::prost::alloc::string::String {
         "/asset.shared.v1.AssetNetworkConfiguration".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct FiatCurrency {
+    #[prost(enumeration = "FiatCurrencyId", tag = "1")]
+    pub id: i32,
+    #[prost(string, tag = "2")]
+    pub code: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub name: ::prost::alloc::string::String,
+    #[prost(uint32, tag = "4")]
+    pub minor_unit_digits: u32,
+    #[prost(enumeration = "FiatCurrencyStatus", tag = "5")]
+    pub status: i32,
+}
+impl ::prost::Name for FiatCurrency {
+    const NAME: &'static str = "FiatCurrency";
+    const PACKAGE: &'static str = "asset.shared.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "asset.shared.v1.FiatCurrency".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/asset.shared.v1.FiatCurrency".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[repr(i32)]
+pub enum AssetId {
+    Unspecified = 0,
+    /// Native assets
+    Trx = 1,
+    Bnb = 2,
+    Eth = 3,
+    Pol = 4,
+    Btc = 5,
+    Ltc = 6,
+    Sol = 7,
+    /// Tokens
+    Usdt = 8,
+    Usdc = 9,
+    Dai = 10,
+    Eurc = 11,
+}
+impl AssetId {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            Self::Unspecified => "ASSET_ID_UNSPECIFIED",
+            Self::Trx => "ASSET_ID_TRX",
+            Self::Bnb => "ASSET_ID_BNB",
+            Self::Eth => "ASSET_ID_ETH",
+            Self::Pol => "ASSET_ID_POL",
+            Self::Btc => "ASSET_ID_BTC",
+            Self::Ltc => "ASSET_ID_LTC",
+            Self::Sol => "ASSET_ID_SOL",
+            Self::Usdt => "ASSET_ID_USDT",
+            Self::Usdc => "ASSET_ID_USDC",
+            Self::Dai => "ASSET_ID_DAI",
+            Self::Eurc => "ASSET_ID_EURC",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "ASSET_ID_UNSPECIFIED" => Some(Self::Unspecified),
+            "ASSET_ID_TRX" => Some(Self::Trx),
+            "ASSET_ID_BNB" => Some(Self::Bnb),
+            "ASSET_ID_ETH" => Some(Self::Eth),
+            "ASSET_ID_POL" => Some(Self::Pol),
+            "ASSET_ID_BTC" => Some(Self::Btc),
+            "ASSET_ID_LTC" => Some(Self::Ltc),
+            "ASSET_ID_SOL" => Some(Self::Sol),
+            "ASSET_ID_USDT" => Some(Self::Usdt),
+            "ASSET_ID_USDC" => Some(Self::Usdc),
+            "ASSET_ID_DAI" => Some(Self::Dai),
+            "ASSET_ID_EURC" => Some(Self::Eurc),
+            _ => None,
+        }
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -154,7 +219,7 @@ impl AssetType {
 #[repr(i32)]
 pub enum AssetStatus {
     Unspecified = 0,
-    Active = 1,
+    Enabled = 1,
     Disabled = 2,
     Deprecated = 3,
 }
@@ -166,7 +231,7 @@ impl AssetStatus {
     pub fn as_str_name(&self) -> &'static str {
         match self {
             Self::Unspecified => "ASSET_STATUS_UNSPECIFIED",
-            Self::Active => "ASSET_STATUS_ACTIVE",
+            Self::Enabled => "ASSET_STATUS_ENABLED",
             Self::Disabled => "ASSET_STATUS_DISABLED",
             Self::Deprecated => "ASSET_STATUS_DEPRECATED",
         }
@@ -175,7 +240,7 @@ impl AssetStatus {
     pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
         match value {
             "ASSET_STATUS_UNSPECIFIED" => Some(Self::Unspecified),
-            "ASSET_STATUS_ACTIVE" => Some(Self::Active),
+            "ASSET_STATUS_ENABLED" => Some(Self::Enabled),
             "ASSET_STATUS_DISABLED" => Some(Self::Disabled),
             "ASSET_STATUS_DEPRECATED" => Some(Self::Deprecated),
             _ => None,
@@ -185,9 +250,82 @@ impl AssetStatus {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
+pub enum BlockchainNetworkId {
+    Unspecified = 0,
+    /// TRON
+    Tron = 1,
+    TronNile = 2,
+    /// BNB Smart Chain
+    Bsc = 3,
+    BscTestnet = 4,
+    /// Ethereum
+    Ethereum = 5,
+    EthereumSepolia = 6,
+    /// Polygon
+    Polygon = 7,
+    PolygonAmoy = 8,
+    /// Bitcoin
+    Bitcoin = 9,
+    BitcoinTestnet = 10,
+    /// Litecoin
+    Litecoin = 11,
+    LitecoinTestnet = 12,
+    /// Solana
+    Solana = 13,
+    SolanaDevnet = 14,
+}
+impl BlockchainNetworkId {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            Self::Unspecified => "BLOCKCHAIN_NETWORK_ID_UNSPECIFIED",
+            Self::Tron => "BLOCKCHAIN_NETWORK_ID_TRON",
+            Self::TronNile => "BLOCKCHAIN_NETWORK_ID_TRON_NILE",
+            Self::Bsc => "BLOCKCHAIN_NETWORK_ID_BSC",
+            Self::BscTestnet => "BLOCKCHAIN_NETWORK_ID_BSC_TESTNET",
+            Self::Ethereum => "BLOCKCHAIN_NETWORK_ID_ETHEREUM",
+            Self::EthereumSepolia => "BLOCKCHAIN_NETWORK_ID_ETHEREUM_SEPOLIA",
+            Self::Polygon => "BLOCKCHAIN_NETWORK_ID_POLYGON",
+            Self::PolygonAmoy => "BLOCKCHAIN_NETWORK_ID_POLYGON_AMOY",
+            Self::Bitcoin => "BLOCKCHAIN_NETWORK_ID_BITCOIN",
+            Self::BitcoinTestnet => "BLOCKCHAIN_NETWORK_ID_BITCOIN_TESTNET",
+            Self::Litecoin => "BLOCKCHAIN_NETWORK_ID_LITECOIN",
+            Self::LitecoinTestnet => "BLOCKCHAIN_NETWORK_ID_LITECOIN_TESTNET",
+            Self::Solana => "BLOCKCHAIN_NETWORK_ID_SOLANA",
+            Self::SolanaDevnet => "BLOCKCHAIN_NETWORK_ID_SOLANA_DEVNET",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "BLOCKCHAIN_NETWORK_ID_UNSPECIFIED" => Some(Self::Unspecified),
+            "BLOCKCHAIN_NETWORK_ID_TRON" => Some(Self::Tron),
+            "BLOCKCHAIN_NETWORK_ID_TRON_NILE" => Some(Self::TronNile),
+            "BLOCKCHAIN_NETWORK_ID_BSC" => Some(Self::Bsc),
+            "BLOCKCHAIN_NETWORK_ID_BSC_TESTNET" => Some(Self::BscTestnet),
+            "BLOCKCHAIN_NETWORK_ID_ETHEREUM" => Some(Self::Ethereum),
+            "BLOCKCHAIN_NETWORK_ID_ETHEREUM_SEPOLIA" => Some(Self::EthereumSepolia),
+            "BLOCKCHAIN_NETWORK_ID_POLYGON" => Some(Self::Polygon),
+            "BLOCKCHAIN_NETWORK_ID_POLYGON_AMOY" => Some(Self::PolygonAmoy),
+            "BLOCKCHAIN_NETWORK_ID_BITCOIN" => Some(Self::Bitcoin),
+            "BLOCKCHAIN_NETWORK_ID_BITCOIN_TESTNET" => Some(Self::BitcoinTestnet),
+            "BLOCKCHAIN_NETWORK_ID_LITECOIN" => Some(Self::Litecoin),
+            "BLOCKCHAIN_NETWORK_ID_LITECOIN_TESTNET" => Some(Self::LitecoinTestnet),
+            "BLOCKCHAIN_NETWORK_ID_SOLANA" => Some(Self::Solana),
+            "BLOCKCHAIN_NETWORK_ID_SOLANA_DEVNET" => Some(Self::SolanaDevnet),
+            _ => None,
+        }
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[repr(i32)]
 pub enum BlockchainNetworkStatus {
     Unspecified = 0,
-    Active = 1,
+    Enabled = 1,
     Disabled = 2,
     Deprecated = 3,
 }
@@ -199,7 +337,7 @@ impl BlockchainNetworkStatus {
     pub fn as_str_name(&self) -> &'static str {
         match self {
             Self::Unspecified => "BLOCKCHAIN_NETWORK_STATUS_UNSPECIFIED",
-            Self::Active => "BLOCKCHAIN_NETWORK_STATUS_ACTIVE",
+            Self::Enabled => "BLOCKCHAIN_NETWORK_STATUS_ENABLED",
             Self::Disabled => "BLOCKCHAIN_NETWORK_STATUS_DISABLED",
             Self::Deprecated => "BLOCKCHAIN_NETWORK_STATUS_DEPRECATED",
         }
@@ -208,7 +346,7 @@ impl BlockchainNetworkStatus {
     pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
         match value {
             "BLOCKCHAIN_NETWORK_STATUS_UNSPECIFIED" => Some(Self::Unspecified),
-            "BLOCKCHAIN_NETWORK_STATUS_ACTIVE" => Some(Self::Active),
+            "BLOCKCHAIN_NETWORK_STATUS_ENABLED" => Some(Self::Enabled),
             "BLOCKCHAIN_NETWORK_STATUS_DISABLED" => Some(Self::Disabled),
             "BLOCKCHAIN_NETWORK_STATUS_DEPRECATED" => Some(Self::Deprecated),
             _ => None,
@@ -220,7 +358,7 @@ impl BlockchainNetworkStatus {
 #[repr(i32)]
 pub enum AssetNetworkStatus {
     Unspecified = 0,
-    Active = 1,
+    Enabled = 1,
     Disabled = 2,
     Deprecated = 3,
 }
@@ -232,7 +370,7 @@ impl AssetNetworkStatus {
     pub fn as_str_name(&self) -> &'static str {
         match self {
             Self::Unspecified => "ASSET_NETWORK_STATUS_UNSPECIFIED",
-            Self::Active => "ASSET_NETWORK_STATUS_ACTIVE",
+            Self::Enabled => "ASSET_NETWORK_STATUS_ENABLED",
             Self::Disabled => "ASSET_NETWORK_STATUS_DISABLED",
             Self::Deprecated => "ASSET_NETWORK_STATUS_DEPRECATED",
         }
@@ -241,9 +379,96 @@ impl AssetNetworkStatus {
     pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
         match value {
             "ASSET_NETWORK_STATUS_UNSPECIFIED" => Some(Self::Unspecified),
-            "ASSET_NETWORK_STATUS_ACTIVE" => Some(Self::Active),
+            "ASSET_NETWORK_STATUS_ENABLED" => Some(Self::Enabled),
             "ASSET_NETWORK_STATUS_DISABLED" => Some(Self::Disabled),
             "ASSET_NETWORK_STATUS_DEPRECATED" => Some(Self::Deprecated),
+            _ => None,
+        }
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[repr(i32)]
+pub enum FiatCurrencyId {
+    Unspecified = 0,
+    Gbp = 1,
+    Hkd = 2,
+    Ils = 3,
+    Inr = 4,
+    Jpy = 5,
+    Cad = 6,
+    Chf = 7,
+    Eur = 8,
+    Php = 9,
+    Usd = 10,
+}
+impl FiatCurrencyId {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            Self::Unspecified => "FIAT_CURRENCY_ID_UNSPECIFIED",
+            Self::Gbp => "FIAT_CURRENCY_ID_GBP",
+            Self::Hkd => "FIAT_CURRENCY_ID_HKD",
+            Self::Ils => "FIAT_CURRENCY_ID_ILS",
+            Self::Inr => "FIAT_CURRENCY_ID_INR",
+            Self::Jpy => "FIAT_CURRENCY_ID_JPY",
+            Self::Cad => "FIAT_CURRENCY_ID_CAD",
+            Self::Chf => "FIAT_CURRENCY_ID_CHF",
+            Self::Eur => "FIAT_CURRENCY_ID_EUR",
+            Self::Php => "FIAT_CURRENCY_ID_PHP",
+            Self::Usd => "FIAT_CURRENCY_ID_USD",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "FIAT_CURRENCY_ID_UNSPECIFIED" => Some(Self::Unspecified),
+            "FIAT_CURRENCY_ID_GBP" => Some(Self::Gbp),
+            "FIAT_CURRENCY_ID_HKD" => Some(Self::Hkd),
+            "FIAT_CURRENCY_ID_ILS" => Some(Self::Ils),
+            "FIAT_CURRENCY_ID_INR" => Some(Self::Inr),
+            "FIAT_CURRENCY_ID_JPY" => Some(Self::Jpy),
+            "FIAT_CURRENCY_ID_CAD" => Some(Self::Cad),
+            "FIAT_CURRENCY_ID_CHF" => Some(Self::Chf),
+            "FIAT_CURRENCY_ID_EUR" => Some(Self::Eur),
+            "FIAT_CURRENCY_ID_PHP" => Some(Self::Php),
+            "FIAT_CURRENCY_ID_USD" => Some(Self::Usd),
+            _ => None,
+        }
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[repr(i32)]
+pub enum FiatCurrencyStatus {
+    Unspecified = 0,
+    Enabled = 1,
+    Disabled = 2,
+    Deprecated = 3,
+}
+impl FiatCurrencyStatus {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            Self::Unspecified => "FIAT_CURRENCY_STATUS_UNSPECIFIED",
+            Self::Enabled => "FIAT_CURRENCY_STATUS_ENABLED",
+            Self::Disabled => "FIAT_CURRENCY_STATUS_DISABLED",
+            Self::Deprecated => "FIAT_CURRENCY_STATUS_DEPRECATED",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "FIAT_CURRENCY_STATUS_UNSPECIFIED" => Some(Self::Unspecified),
+            "FIAT_CURRENCY_STATUS_ENABLED" => Some(Self::Enabled),
+            "FIAT_CURRENCY_STATUS_DISABLED" => Some(Self::Disabled),
+            "FIAT_CURRENCY_STATUS_DEPRECATED" => Some(Self::Deprecated),
             _ => None,
         }
     }

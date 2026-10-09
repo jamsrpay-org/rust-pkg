@@ -16,9 +16,9 @@ pub mod asset {
             include!("asset.internal.v1.rs");
         }
     }
-    pub mod merchant {
+    pub mod public {
         pub mod v1 {
-            include!("asset.merchant.v1.rs");
+            include!("asset.public.v1.rs");
         }
     }
     pub mod shared {
