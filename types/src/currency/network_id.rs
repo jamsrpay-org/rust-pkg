@@ -1,3 +1,4 @@
+use crate::currency::Chain;
 use strum::{AsRefStr, Display, EnumString};
 
 #[derive(
@@ -16,6 +17,7 @@ use strum::{AsRefStr, Display, EnumString};
     serde::Deserialize,
 )]
 #[strum(serialize_all = "snake_case")]
+#[serde(rename_all = "snake_case")]
 pub enum NetworkId {
     Tron,
     TronNile,
@@ -70,6 +72,18 @@ impl NetworkId {
                 | Self::LitecoinTestnet
                 | Self::SolanaDevnet
         )
+    }
+
+    pub const fn chain(self) -> Chain {
+        match self {
+            Self::Tron | Self::TronNile => Chain::Tron,
+            Self::Ethereum | Self::EthereumSepolia => Chain::Ethereum,
+            Self::Bsc | Self::BscTestnet => Chain::BinanceSmartChain,
+            Self::Polygon | Self::PolygonAmoy => Chain::Polygon,
+            Self::Bitcoin | Self::BitcoinTestnet => Chain::Bitcoin,
+            Self::Litecoin | Self::LitecoinTestnet => Chain::Litecoin,
+            Self::Solana | Self::SolanaDevnet => Chain::Solana,
+        }
     }
 
     pub fn get_base_url(&self) -> &'static str {

@@ -24,7 +24,7 @@ pub enum MoneyError {
 /// - ETH: wei (1 ETH = 10^18 wei, decimals = 18)
 /// - USDT: micro-dollars (1 USDT = 1_000_000, decimals = 6)
 /// - USD: cents (1 USD = 100 cents, decimals = 2)
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Money {
     /// The amount in the smallest indivisible unit (always an integer).
     atomic: i128,
@@ -223,6 +223,22 @@ impl SubAssign for Money {
             "Cannot subtract Money with different decimals"
         );
         self.atomic -= rhs.atomic;
+    }
+}
+
+impl PartialOrd for Money {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        Some(self.cmp(other))
+    }
+}
+
+impl Ord for Money {
+    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
+        if self.decimals == other.decimals {
+            self.atomic.cmp(&other.atomic)
+        } else {
+            self.to_formatted_decimal().cmp(&other.to_formatted_decimal())
+        }
     }
 }
 
