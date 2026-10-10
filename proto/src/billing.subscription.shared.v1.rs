@@ -14,11 +14,11 @@ pub struct Subscription {
     pub transaction_fee_bps: i32,
     #[prost(message, optional, tag = "6")]
     pub transaction_fixed_fee: ::core::option::Option<
-        super::super::super::super::shared::types::v1::PricingAmount,
+        super::super::super::shared::v1::PricingAmount,
     >,
     #[prost(message, optional, tag = "7")]
     pub monthly_price: ::core::option::Option<
-        super::super::super::super::shared::types::v1::PricingAmount,
+        super::super::super::shared::v1::PricingAmount,
     >,
     #[prost(enumeration = "SubscriptionStatus", tag = "8")]
     pub status: i32,

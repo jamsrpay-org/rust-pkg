@@ -13,14 +13,14 @@ pub struct InvoiceCreated {
         super::super::super::super::shared::types::v1::EventMoney,
     >,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::PaymentCurrency",
+        enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "5"
     )]
-    pub payment_currency: i32,
+    pub payment_asset: i32,
     #[prost(message, optional, tag = "6")]
     pub expires_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "7"
     )]
     pub network_id: i32,
@@ -89,16 +89,16 @@ pub struct InvoiceConfirmationStarted {
     )]
     pub additional_status: i32,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::PaymentCurrency",
+        enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "5"
     )]
-    pub payment_currency: i32,
+    pub payment_asset: i32,
     #[prost(string, tag = "6")]
     pub wallet_id: ::prost::alloc::string::String,
     #[prost(string, tag = "7")]
     pub address: ::prost::alloc::string::String,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "8"
     )]
     pub network_id: i32,
@@ -135,16 +135,16 @@ pub struct InvoicePaid {
     )]
     pub additional_status: i32,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::PaymentCurrency",
+        enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "5"
     )]
-    pub payment_currency: i32,
+    pub payment_asset: i32,
     #[prost(string, tag = "6")]
     pub wallet_id: ::prost::alloc::string::String,
     #[prost(string, tag = "7")]
     pub address: ::prost::alloc::string::String,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "8"
     )]
     pub network_id: i32,
@@ -169,7 +169,7 @@ pub struct InvoiceExpired {
     #[prost(string, tag = "3")]
     pub address: ::prost::alloc::string::String,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "4"
     )]
     pub network_id: i32,

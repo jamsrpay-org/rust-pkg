@@ -101,12 +101,8 @@ impl ::prost::Name for ListAssetsResponse {
 pub struct ListAssetNetworksRequest {
     #[prost(enumeration = "super::super::shared::v1::AssetId", optional, tag = "1")]
     pub asset_id: ::core::option::Option<i32>,
-    #[prost(
-        enumeration = "super::super::shared::v1::BlockchainNetworkId",
-        optional,
-        tag = "2"
-    )]
-    pub blockchain_network_id: ::core::option::Option<i32>,
+    #[prost(enumeration = "super::super::shared::v1::NetworkId", optional, tag = "2")]
+    pub network_id: ::core::option::Option<i32>,
 }
 impl ::prost::Name for ListAssetNetworksRequest {
     const NAME: &'static str = "ListAssetNetworksRequest";

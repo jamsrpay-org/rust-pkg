@@ -8,15 +8,12 @@ pub struct PayoutTransfer {
     pub amount: ::core::option::Option<
         super::super::super::shared::types::v1::EventMoney,
     >,
-    #[prost(
-        enumeration = "super::super::super::shared::enums::v1::PaymentCurrency",
-        tag = "3"
-    )]
-    pub payment_currency: i32,
+    #[prost(enumeration = "super::super::super::asset::shared::v1::AssetId", tag = "3")]
+    pub payment_asset: i32,
     #[prost(string, tag = "4")]
     pub address: ::prost::alloc::string::String,
     #[prost(
-        enumeration = "super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::asset::shared::v1::NetworkId",
         tag = "5"
     )]
     pub network_id: i32,
@@ -39,14 +36,11 @@ pub struct PayoutGasWatch {
     #[prost(string, tag = "1")]
     pub address: ::prost::alloc::string::String,
     #[prost(
-        enumeration = "super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::asset::shared::v1::NetworkId",
         tag = "2"
     )]
     pub network_id: i32,
-    #[prost(
-        enumeration = "super::super::super::shared::enums::v1::PaymentCurrency",
-        tag = "3"
-    )]
+    #[prost(enumeration = "super::super::super::asset::shared::v1::AssetId", tag = "3")]
     pub native_currency: i32,
     #[prost(string, tag = "4")]
     pub payout_id: ::prost::alloc::string::String,
@@ -112,10 +106,10 @@ pub mod payout_settled {
             super::super::super::super::shared::types::v1::EventMoney,
         >,
         #[prost(
-            enumeration = "super::super::super::super::shared::enums::v1::PaymentCurrency",
+            enumeration = "super::super::super::super::asset::shared::v1::AssetId",
             tag = "2"
         )]
-        pub payment_currency: i32,
+        pub payment_asset: i32,
         #[prost(
             enumeration = "super::super::super::shared::v1::PayoutTransferType",
             tag = "3"

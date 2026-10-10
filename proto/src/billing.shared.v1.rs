@@ -128,6 +128,57 @@ impl ::prost::Name for InvoicePaymentIntent {
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct PricingCurrency {
+    #[prost(oneof = "pricing_currency::Currency", tags = "1, 2")]
+    pub currency: ::core::option::Option<pricing_currency::Currency>,
+}
+/// Nested message and enum types in `PricingCurrency`.
+pub mod pricing_currency {
+    #[derive(serde::Serialize, serde::Deserialize)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
+    pub enum Currency {
+        #[prost(
+            enumeration = "super::super::super::super::asset::shared::v1::FiatCurrencyId",
+            tag = "1"
+        )]
+        Fiat(i32),
+        #[prost(
+            enumeration = "super::super::super::super::asset::shared::v1::AssetId",
+            tag = "2"
+        )]
+        Asset(i32),
+    }
+}
+impl ::prost::Name for PricingCurrency {
+    const NAME: &'static str = "PricingCurrency";
+    const PACKAGE: &'static str = "billing.shared.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "billing.shared.v1.PricingCurrency".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/billing.shared.v1.PricingCurrency".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct PricingAmount {
+    #[prost(string, tag = "1")]
+    pub amount: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "2")]
+    pub currency: ::core::option::Option<PricingCurrency>,
+}
+impl ::prost::Name for PricingAmount {
+    const NAME: &'static str = "PricingAmount";
+    const PACKAGE: &'static str = "billing.shared.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "billing.shared.v1.PricingAmount".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/billing.shared.v1.PricingAmount".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum InvoiceStatus {

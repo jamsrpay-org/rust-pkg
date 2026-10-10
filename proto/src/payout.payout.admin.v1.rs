@@ -9,10 +9,10 @@ pub struct Payout {
     #[prost(string, tag = "3")]
     pub invoice_id: ::prost::alloc::string::String,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::PaymentCurrency",
+        enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "4"
     )]
-    pub payment_currency: i32,
+    pub payment_asset: i32,
     #[prost(message, optional, tag = "5")]
     pub amount: ::core::option::Option<
         super::super::super::super::shared::types::v1::Money,

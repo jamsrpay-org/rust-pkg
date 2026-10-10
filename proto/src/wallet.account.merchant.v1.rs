@@ -148,7 +148,7 @@ impl ::prost::Name for WalletDeposit {
 pub struct CreateWalletDepositRequest {
     #[prost(message, optional, tag = "1")]
     pub amount: ::core::option::Option<
-        super::super::super::super::shared::types::v1::PricingAmount,
+        super::super::super::super::billing::shared::v1::PricingAmount,
     >,
 }
 impl ::prost::Name for CreateWalletDepositRequest {

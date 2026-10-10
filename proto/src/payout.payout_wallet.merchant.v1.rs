@@ -33,7 +33,7 @@ pub struct PayoutWallet {
     #[prost(string, tag = "2")]
     pub store_id: ::prost::alloc::string::String,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "3"
     )]
     pub network_id: i32,
@@ -46,7 +46,7 @@ pub struct PayoutWallet {
     #[prost(message, optional, tag = "6")]
     pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::PaymentCurrency",
+        enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         repeated,
         tag = "7"
     )]
@@ -132,7 +132,7 @@ impl ::prost::Name for ListPayoutWalletsResponse {
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct CreatePayoutWalletRequest {
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "1"
     )]
     pub network_id: i32,
@@ -141,7 +141,7 @@ pub struct CreatePayoutWalletRequest {
     #[prost(string, tag = "3")]
     pub address: ::prost::alloc::string::String,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::PaymentCurrency",
+        enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         repeated,
         tag = "4"
     )]
@@ -180,7 +180,7 @@ pub struct UpdatePayoutWalletRequest {
     #[prost(string, tag = "1")]
     pub id: ::prost::alloc::string::String,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::PaymentCurrency",
+        enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         repeated,
         tag = "2"
     )]

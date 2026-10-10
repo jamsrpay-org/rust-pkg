@@ -5,12 +5,12 @@ pub struct GetEffectivePaymentTermsRequest {
     #[prost(string, tag = "1")]
     pub store_id: ::prost::alloc::string::String,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::PaymentCurrency",
+        enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "2"
     )]
     pub currency: i32,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "3"
     )]
     pub network_id: i32,

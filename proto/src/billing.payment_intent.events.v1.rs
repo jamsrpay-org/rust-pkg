@@ -4,11 +4,10 @@
 pub struct PaymentIntentCreated {
     #[prost(string, tag = "1")]
     pub payment_intent_id: ::prost::alloc::string::String,
-    #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::PricingCurrency",
-        tag = "2"
-    )]
-    pub pricing_currency: i32,
+    #[prost(message, optional, tag = "2")]
+    pub pricing_currency: ::core::option::Option<
+        super::super::super::shared::v1::PricingCurrency,
+    >,
     #[prost(string, tag = "3")]
     pub pricing_amount: ::prost::alloc::string::String,
 }

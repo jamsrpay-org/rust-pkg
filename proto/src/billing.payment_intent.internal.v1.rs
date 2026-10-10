@@ -37,9 +37,7 @@ pub struct CreatePaymentIntentRequest {
     #[prost(string, tag = "1")]
     pub store_id: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "2")]
-    pub amount: ::core::option::Option<
-        super::super::super::super::shared::types::v1::PricingAmount,
-    >,
+    pub amount: ::core::option::Option<super::super::super::shared::v1::PricingAmount>,
     #[prost(enumeration = "PaymentIntentPurpose", tag = "3")]
     pub purpose: i32,
     #[prost(string, tag = "4")]

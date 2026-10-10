@@ -3,12 +3,12 @@
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct StoreCurrency {
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::PaymentCurrency",
+        enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "1"
     )]
     pub currency: i32,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "2"
     )]
     pub network_id: i32,
@@ -38,12 +38,12 @@ pub struct GetStoreCurrencyRequest {
     #[prost(string, tag = "1")]
     pub store_id: ::prost::alloc::string::String,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::PaymentCurrency",
+        enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "2"
     )]
     pub currency: i32,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "3"
     )]
     pub network_id: i32,
@@ -114,12 +114,12 @@ pub struct CreateStoreCurrencyRequest {
     #[prost(string, tag = "1")]
     pub store_id: ::prost::alloc::string::String,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::PaymentCurrency",
+        enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "2"
     )]
     pub currency: i32,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "3"
     )]
     pub network_id: i32,
@@ -161,12 +161,12 @@ pub struct UpdateStoreCurrencyRequest {
     #[prost(string, tag = "1")]
     pub store_id: ::prost::alloc::string::String,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::PaymentCurrency",
+        enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "2"
     )]
     pub currency: i32,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "3"
     )]
     pub network_id: i32,
@@ -208,12 +208,12 @@ pub struct DeleteStoreCurrencyRequest {
     #[prost(string, tag = "1")]
     pub store_id: ::prost::alloc::string::String,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::PaymentCurrency",
+        enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "2"
     )]
     pub currency: i32,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "3"
     )]
     pub network_id: i32,

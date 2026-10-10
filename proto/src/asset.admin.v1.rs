@@ -703,12 +703,8 @@ impl ::prost::Name for GetAssetNetworkResponse {
 pub struct ListAssetNetworksRequest {
     #[prost(enumeration = "super::super::shared::v1::AssetId", optional, tag = "1")]
     pub asset_id: ::core::option::Option<i32>,
-    #[prost(
-        enumeration = "super::super::shared::v1::BlockchainNetworkId",
-        optional,
-        tag = "2"
-    )]
-    pub blockchain_network_id: ::core::option::Option<i32>,
+    #[prost(enumeration = "super::super::shared::v1::NetworkId", optional, tag = "2")]
+    pub network_id: ::core::option::Option<i32>,
     #[prost(
         enumeration = "super::super::shared::v1::AssetNetworkStatus",
         optional,
@@ -1379,8 +1375,8 @@ pub mod asset_network_admin_service_server {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct GetBlockchainNetworkRequest {
-    #[prost(enumeration = "super::super::shared::v1::BlockchainNetworkId", tag = "1")]
-    pub blockchain_network_id: i32,
+    #[prost(enumeration = "super::super::shared::v1::NetworkId", tag = "1")]
+    pub network_id: i32,
 }
 impl ::prost::Name for GetBlockchainNetworkRequest {
     const NAME: &'static str = "GetBlockchainNetworkRequest";
@@ -1451,8 +1447,8 @@ impl ::prost::Name for ListBlockchainNetworksResponse {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct EnableBlockchainNetworkRequest {
-    #[prost(enumeration = "super::super::shared::v1::BlockchainNetworkId", tag = "1")]
-    pub blockchain_network_id: i32,
+    #[prost(enumeration = "super::super::shared::v1::NetworkId", tag = "1")]
+    pub network_id: i32,
 }
 impl ::prost::Name for EnableBlockchainNetworkRequest {
     const NAME: &'static str = "EnableBlockchainNetworkRequest";
@@ -1485,8 +1481,8 @@ impl ::prost::Name for EnableBlockchainNetworkResponse {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DisableBlockchainNetworkRequest {
-    #[prost(enumeration = "super::super::shared::v1::BlockchainNetworkId", tag = "1")]
-    pub blockchain_network_id: i32,
+    #[prost(enumeration = "super::super::shared::v1::NetworkId", tag = "1")]
+    pub network_id: i32,
 }
 impl ::prost::Name for DisableBlockchainNetworkRequest {
     const NAME: &'static str = "DisableBlockchainNetworkRequest";

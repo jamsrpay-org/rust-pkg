@@ -38,7 +38,7 @@ pub struct Invoice {
     #[prost(string, tag = "12")]
     pub checkout_url: ::prost::alloc::string::String,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "13"
     )]
     pub network_id: i32,
@@ -116,11 +116,11 @@ pub struct ListInvoicesRequest {
     #[prost(string, optional, tag = "1")]
     pub address: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::PaymentCurrency",
+        enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         repeated,
         tag = "2"
     )]
-    pub payment_currency: ::prost::alloc::vec::Vec<i32>,
+    pub payment_asset: ::prost::alloc::vec::Vec<i32>,
     #[prost(
         enumeration = "super::super::super::shared::v1::InvoiceStatus",
         repeated,
@@ -134,7 +134,7 @@ pub struct ListInvoicesRequest {
     )]
     pub additional_status: ::prost::alloc::vec::Vec<i32>,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         repeated,
         tag = "5"
     )]

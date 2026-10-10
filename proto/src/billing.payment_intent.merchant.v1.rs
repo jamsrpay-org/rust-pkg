@@ -10,11 +10,10 @@ pub struct PaymentIntent {
     pub pricing_amount: ::core::option::Option<
         super::super::super::super::shared::types::v1::Money,
     >,
-    #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::PricingCurrency",
-        tag = "4"
-    )]
-    pub pricing_currency: i32,
+    #[prost(message, optional, tag = "4")]
+    pub pricing_currency: ::core::option::Option<
+        super::super::super::shared::v1::PricingCurrency,
+    >,
     #[prost(string, optional, tag = "5")]
     pub redirect_url: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(message, optional, tag = "6")]
@@ -122,11 +121,10 @@ impl ::prost::Name for ListPaymentIntentsResponse {
 pub struct CreatePaymentIntentRequest {
     #[prost(string, tag = "1")]
     pub payment_title: ::prost::alloc::string::String,
-    #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::PricingCurrency",
-        tag = "2"
-    )]
-    pub pricing_currency: i32,
+    #[prost(message, optional, tag = "2")]
+    pub pricing_currency: ::core::option::Option<
+        super::super::super::shared::v1::PricingCurrency,
+    >,
     #[prost(string, tag = "3")]
     pub pricing_amount: ::prost::alloc::string::String,
     #[prost(string, optional, tag = "4")]

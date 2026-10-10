@@ -28,7 +28,7 @@ impl ::prost::Name for Asset {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct BlockchainNetwork {
-    #[prost(enumeration = "BlockchainNetworkId", tag = "1")]
+    #[prost(enumeration = "NetworkId", tag = "1")]
     pub id: i32,
     #[prost(string, tag = "2")]
     pub name: ::prost::alloc::string::String,
@@ -60,8 +60,8 @@ pub struct AssetNetwork {
     pub id: ::prost::alloc::string::String,
     #[prost(enumeration = "AssetId", tag = "2")]
     pub asset_id: i32,
-    #[prost(enumeration = "BlockchainNetworkId", tag = "3")]
-    pub blockchain_network_id: i32,
+    #[prost(enumeration = "NetworkId", tag = "3")]
+    pub network_id: i32,
     #[prost(string, optional, tag = "4")]
     pub contract_address: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(uint32, tag = "5")]
@@ -260,7 +260,7 @@ impl AssetStatus {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
-pub enum BlockchainNetworkId {
+pub enum NetworkId {
     Unspecified = 0,
     /// TRON
     Tron = 1,
@@ -284,48 +284,48 @@ pub enum BlockchainNetworkId {
     Solana = 13,
     SolanaDevnet = 14,
 }
-impl BlockchainNetworkId {
+impl NetworkId {
     /// String value of the enum field names used in the ProtoBuf definition.
     ///
     /// The values are not transformed in any way and thus are considered stable
     /// (if the ProtoBuf definition does not change) and safe for programmatic use.
     pub fn as_str_name(&self) -> &'static str {
         match self {
-            Self::Unspecified => "BLOCKCHAIN_NETWORK_ID_UNSPECIFIED",
-            Self::Tron => "BLOCKCHAIN_NETWORK_ID_TRON",
-            Self::TronNile => "BLOCKCHAIN_NETWORK_ID_TRON_NILE",
-            Self::Bsc => "BLOCKCHAIN_NETWORK_ID_BSC",
-            Self::BscTestnet => "BLOCKCHAIN_NETWORK_ID_BSC_TESTNET",
-            Self::Ethereum => "BLOCKCHAIN_NETWORK_ID_ETHEREUM",
-            Self::EthereumSepolia => "BLOCKCHAIN_NETWORK_ID_ETHEREUM_SEPOLIA",
-            Self::Polygon => "BLOCKCHAIN_NETWORK_ID_POLYGON",
-            Self::PolygonAmoy => "BLOCKCHAIN_NETWORK_ID_POLYGON_AMOY",
-            Self::Bitcoin => "BLOCKCHAIN_NETWORK_ID_BITCOIN",
-            Self::BitcoinTestnet => "BLOCKCHAIN_NETWORK_ID_BITCOIN_TESTNET",
-            Self::Litecoin => "BLOCKCHAIN_NETWORK_ID_LITECOIN",
-            Self::LitecoinTestnet => "BLOCKCHAIN_NETWORK_ID_LITECOIN_TESTNET",
-            Self::Solana => "BLOCKCHAIN_NETWORK_ID_SOLANA",
-            Self::SolanaDevnet => "BLOCKCHAIN_NETWORK_ID_SOLANA_DEVNET",
+            Self::Unspecified => "NETWORK_ID_UNSPECIFIED",
+            Self::Tron => "NETWORK_ID_TRON",
+            Self::TronNile => "NETWORK_ID_TRON_NILE",
+            Self::Bsc => "NETWORK_ID_BSC",
+            Self::BscTestnet => "NETWORK_ID_BSC_TESTNET",
+            Self::Ethereum => "NETWORK_ID_ETHEREUM",
+            Self::EthereumSepolia => "NETWORK_ID_ETHEREUM_SEPOLIA",
+            Self::Polygon => "NETWORK_ID_POLYGON",
+            Self::PolygonAmoy => "NETWORK_ID_POLYGON_AMOY",
+            Self::Bitcoin => "NETWORK_ID_BITCOIN",
+            Self::BitcoinTestnet => "NETWORK_ID_BITCOIN_TESTNET",
+            Self::Litecoin => "NETWORK_ID_LITECOIN",
+            Self::LitecoinTestnet => "NETWORK_ID_LITECOIN_TESTNET",
+            Self::Solana => "NETWORK_ID_SOLANA",
+            Self::SolanaDevnet => "NETWORK_ID_SOLANA_DEVNET",
         }
     }
     /// Creates an enum from field names used in the ProtoBuf definition.
     pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
         match value {
-            "BLOCKCHAIN_NETWORK_ID_UNSPECIFIED" => Some(Self::Unspecified),
-            "BLOCKCHAIN_NETWORK_ID_TRON" => Some(Self::Tron),
-            "BLOCKCHAIN_NETWORK_ID_TRON_NILE" => Some(Self::TronNile),
-            "BLOCKCHAIN_NETWORK_ID_BSC" => Some(Self::Bsc),
-            "BLOCKCHAIN_NETWORK_ID_BSC_TESTNET" => Some(Self::BscTestnet),
-            "BLOCKCHAIN_NETWORK_ID_ETHEREUM" => Some(Self::Ethereum),
-            "BLOCKCHAIN_NETWORK_ID_ETHEREUM_SEPOLIA" => Some(Self::EthereumSepolia),
-            "BLOCKCHAIN_NETWORK_ID_POLYGON" => Some(Self::Polygon),
-            "BLOCKCHAIN_NETWORK_ID_POLYGON_AMOY" => Some(Self::PolygonAmoy),
-            "BLOCKCHAIN_NETWORK_ID_BITCOIN" => Some(Self::Bitcoin),
-            "BLOCKCHAIN_NETWORK_ID_BITCOIN_TESTNET" => Some(Self::BitcoinTestnet),
-            "BLOCKCHAIN_NETWORK_ID_LITECOIN" => Some(Self::Litecoin),
-            "BLOCKCHAIN_NETWORK_ID_LITECOIN_TESTNET" => Some(Self::LitecoinTestnet),
-            "BLOCKCHAIN_NETWORK_ID_SOLANA" => Some(Self::Solana),
-            "BLOCKCHAIN_NETWORK_ID_SOLANA_DEVNET" => Some(Self::SolanaDevnet),
+            "NETWORK_ID_UNSPECIFIED" => Some(Self::Unspecified),
+            "NETWORK_ID_TRON" => Some(Self::Tron),
+            "NETWORK_ID_TRON_NILE" => Some(Self::TronNile),
+            "NETWORK_ID_BSC" => Some(Self::Bsc),
+            "NETWORK_ID_BSC_TESTNET" => Some(Self::BscTestnet),
+            "NETWORK_ID_ETHEREUM" => Some(Self::Ethereum),
+            "NETWORK_ID_ETHEREUM_SEPOLIA" => Some(Self::EthereumSepolia),
+            "NETWORK_ID_POLYGON" => Some(Self::Polygon),
+            "NETWORK_ID_POLYGON_AMOY" => Some(Self::PolygonAmoy),
+            "NETWORK_ID_BITCOIN" => Some(Self::Bitcoin),
+            "NETWORK_ID_BITCOIN_TESTNET" => Some(Self::BitcoinTestnet),
+            "NETWORK_ID_LITECOIN" => Some(Self::Litecoin),
+            "NETWORK_ID_LITECOIN_TESTNET" => Some(Self::LitecoinTestnet),
+            "NETWORK_ID_SOLANA" => Some(Self::Solana),
+            "NETWORK_ID_SOLANA_DEVNET" => Some(Self::SolanaDevnet),
             _ => None,
         }
     }

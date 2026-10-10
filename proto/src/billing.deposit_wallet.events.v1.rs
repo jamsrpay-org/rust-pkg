@@ -17,7 +17,7 @@ pub struct DepositWalletWithdrawalRequested {
     #[prost(string, tag = "5")]
     pub wallet_id: ::prost::alloc::string::String,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "6"
     )]
     pub network_id: i32,

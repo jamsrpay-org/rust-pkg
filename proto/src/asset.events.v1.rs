@@ -34,8 +34,8 @@ impl ::prost::Name for AssetDisabled {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct BlockchainNetworkEnabled {
-    #[prost(enumeration = "super::super::shared::v1::BlockchainNetworkId", tag = "1")]
-    pub blockchain_network_id: i32,
+    #[prost(enumeration = "super::super::shared::v1::NetworkId", tag = "1")]
+    pub network_id: i32,
 }
 impl ::prost::Name for BlockchainNetworkEnabled {
     const NAME: &'static str = "BlockchainNetworkEnabled";
@@ -50,8 +50,8 @@ impl ::prost::Name for BlockchainNetworkEnabled {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct BlockchainNetworkDisabled {
-    #[prost(enumeration = "super::super::shared::v1::BlockchainNetworkId", tag = "1")]
-    pub blockchain_network_id: i32,
+    #[prost(enumeration = "super::super::shared::v1::NetworkId", tag = "1")]
+    pub network_id: i32,
 }
 impl ::prost::Name for BlockchainNetworkDisabled {
     const NAME: &'static str = "BlockchainNetworkDisabled";

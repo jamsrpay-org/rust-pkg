@@ -30,15 +30,15 @@ pub struct PricingPlan {
     pub transaction_fee_bps: i32,
     #[prost(message, optional, tag = "6")]
     pub transaction_fixed_fee: ::core::option::Option<
-        super::super::super::super::shared::types::v1::PricingAmount,
+        super::super::super::shared::v1::PricingAmount,
     >,
     #[prost(message, optional, tag = "7")]
     pub monthly_price: ::core::option::Option<
-        super::super::super::super::shared::types::v1::PricingAmount,
+        super::super::super::shared::v1::PricingAmount,
     >,
     #[prost(message, optional, tag = "8")]
     pub monthly_volume_threshold: ::core::option::Option<
-        super::super::super::super::shared::types::v1::PricingAmount,
+        super::super::super::shared::v1::PricingAmount,
     >,
     #[prost(uint32, tag = "9")]
     pub free_trial_days: u32,
@@ -85,15 +85,15 @@ pub struct CreatePricingPlanRequest {
     pub transaction_fee_bps: i32,
     #[prost(message, optional, tag = "5")]
     pub transaction_fixed_fee: ::core::option::Option<
-        super::super::super::super::shared::types::v1::PricingAmount,
+        super::super::super::shared::v1::PricingAmount,
     >,
     #[prost(message, optional, tag = "6")]
     pub monthly_price: ::core::option::Option<
-        super::super::super::super::shared::types::v1::PricingAmount,
+        super::super::super::shared::v1::PricingAmount,
     >,
     #[prost(message, optional, tag = "7")]
     pub monthly_volume_threshold: ::core::option::Option<
-        super::super::super::super::shared::types::v1::PricingAmount,
+        super::super::super::shared::v1::PricingAmount,
     >,
     #[prost(uint32, tag = "8")]
     pub free_trial_days: u32,
@@ -158,17 +158,17 @@ pub struct UpdatePricingPlanRequest {
     pub features: ::prost::alloc::vec::Vec<CreatePricingPlanFeature>,
     #[prost(message, optional, tag = "8")]
     pub monthly_volume_threshold: ::core::option::Option<
-        super::super::super::super::shared::types::v1::PricingAmount,
+        super::super::super::shared::v1::PricingAmount,
     >,
     #[prost(int32, optional, tag = "9")]
     pub transaction_fee_bps: ::core::option::Option<i32>,
     #[prost(message, optional, tag = "10")]
     pub transaction_fixed_fee: ::core::option::Option<
-        super::super::super::super::shared::types::v1::PricingAmount,
+        super::super::super::shared::v1::PricingAmount,
     >,
     #[prost(message, optional, tag = "11")]
     pub monthly_price: ::core::option::Option<
-        super::super::super::super::shared::types::v1::PricingAmount,
+        super::super::super::shared::v1::PricingAmount,
     >,
     #[prost(
         enumeration = "super::super::shared::v1::PricingPlanPurchaseMode",

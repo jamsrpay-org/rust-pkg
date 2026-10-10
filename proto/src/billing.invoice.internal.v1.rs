@@ -30,7 +30,7 @@ pub struct Invoice {
     #[prost(string, tag = "12")]
     pub checkout_url: ::prost::alloc::string::String,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "13"
     )]
     pub network_id: i32,

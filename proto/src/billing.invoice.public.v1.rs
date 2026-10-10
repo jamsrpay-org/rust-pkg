@@ -42,17 +42,17 @@ pub struct Invoice {
     #[prost(string, tag = "13")]
     pub checkout_url: ::prost::alloc::string::String,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "14"
     )]
     pub network_id: i32,
     #[prost(message, optional, tag = "15")]
     pub store: ::core::option::Option<super::super::super::shared::v1::StoreBranding>,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::PaymentCurrency",
+        enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "16"
     )]
-    pub payment_currency: i32,
+    pub payment_asset: i32,
 }
 impl ::prost::Name for Invoice {
     const NAME: &'static str = "Invoice";
@@ -103,22 +103,21 @@ impl ::prost::Name for GetInvoiceResponse {
 pub struct CreateInvoiceRequest {
     #[prost(string, tag = "1")]
     pub pricing_amount: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "2")]
+    pub pricing_currency: ::core::option::Option<
+        super::super::super::shared::v1::PricingCurrency,
+    >,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::PricingCurrency",
-        tag = "2"
-    )]
-    pub pricing_currency: i32,
-    #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::PaymentCurrency",
+        enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "3"
     )]
-    pub payment_currency: i32,
+    pub payment_asset: i32,
     #[prost(string, optional, tag = "4")]
     pub redirect_url: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(string, optional, tag = "5")]
     pub external_id: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "6"
     )]
     pub network_id: i32,
@@ -160,12 +159,12 @@ pub struct CreateInvoiceForPaymentIntentRequest {
     #[prost(string, tag = "1")]
     pub payment_intent_id: ::prost::alloc::string::String,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::PaymentCurrency",
+        enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "2"
     )]
-    pub payment_currency: i32,
+    pub payment_asset: i32,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "3"
     )]
     pub network_id: i32,

@@ -34,8 +34,8 @@ impl ::prost::Name for GetAssetResponse {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct GetBlockchainNetworkRequest {
-    #[prost(enumeration = "super::super::shared::v1::BlockchainNetworkId", tag = "1")]
-    pub blockchain_network_id: i32,
+    #[prost(enumeration = "super::super::shared::v1::NetworkId", tag = "1")]
+    pub network_id: i32,
 }
 impl ::prost::Name for GetBlockchainNetworkRequest {
     const NAME: &'static str = "GetBlockchainNetworkRequest";
@@ -106,12 +106,8 @@ impl ::prost::Name for GetAssetNetworkResponse {
 pub struct ListAssetNetworksRequest {
     #[prost(enumeration = "super::super::shared::v1::AssetId", optional, tag = "1")]
     pub asset_id: ::core::option::Option<i32>,
-    #[prost(
-        enumeration = "super::super::shared::v1::BlockchainNetworkId",
-        optional,
-        tag = "2"
-    )]
-    pub blockchain_network_id: ::core::option::Option<i32>,
+    #[prost(enumeration = "super::super::shared::v1::NetworkId", optional, tag = "2")]
+    pub network_id: ::core::option::Option<i32>,
 }
 impl ::prost::Name for ListAssetNetworksRequest {
     const NAME: &'static str = "ListAssetNetworksRequest";
@@ -142,8 +138,8 @@ impl ::prost::Name for ListAssetNetworksResponse {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ResolveAssetNetworkRequest {
-    #[prost(enumeration = "super::super::shared::v1::BlockchainNetworkId", tag = "1")]
-    pub blockchain_network_id: i32,
+    #[prost(enumeration = "super::super::shared::v1::NetworkId", tag = "1")]
+    pub network_id: i32,
     #[prost(string, tag = "2")]
     pub contract_address: ::prost::alloc::string::String,
 }

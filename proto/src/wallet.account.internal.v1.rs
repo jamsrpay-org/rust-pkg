@@ -38,7 +38,7 @@ pub struct ReserveBalanceRequest {
     pub store_id: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "2")]
     pub amount: ::core::option::Option<
-        super::super::super::super::shared::types::v1::PricingAmount,
+        super::super::super::super::billing::shared::v1::PricingAmount,
     >,
     #[prost(enumeration = "BalanceReservationPurpose", tag = "3")]
     pub purpose: i32,

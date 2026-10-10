@@ -17,11 +17,10 @@ pub struct PaymentIntent {
         super::super::super::super::shared::types::v1::Money,
     >,
     /// / Pricing currency
-    #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::PricingCurrency",
-        tag = "5"
-    )]
-    pub pricing_currency: i32,
+    #[prost(message, optional, tag = "5")]
+    pub pricing_currency: ::core::option::Option<
+        super::super::super::shared::v1::PricingCurrency,
+    >,
     #[prost(string, optional, tag = "6")]
     pub payment_title: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(string, optional, tag = "7")]
@@ -99,11 +98,10 @@ pub struct CreatePaymentIntentRequest {
     #[prost(string, optional, tag = "3")]
     pub redirect_url: ::core::option::Option<::prost::alloc::string::String>,
     /// / Pricing currency
-    #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::PricingCurrency",
-        tag = "4"
-    )]
-    pub pricing_currency: i32,
+    #[prost(message, optional, tag = "4")]
+    pub pricing_currency: ::core::option::Option<
+        super::super::super::shared::v1::PricingCurrency,
+    >,
 }
 impl ::prost::Name for CreatePaymentIntentRequest {
     const NAME: &'static str = "CreatePaymentIntentRequest";

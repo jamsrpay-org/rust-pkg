@@ -10,18 +10,17 @@ pub struct PayoutBatch {
     pub name: ::prost::alloc::string::String,
     #[prost(string, optional, tag = "4")]
     pub description: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(message, optional, tag = "5")]
+    pub pricing_currency: ::core::option::Option<
+        super::super::super::super::billing::shared::v1::PricingCurrency,
+    >,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::PricingCurrency",
-        tag = "5"
-    )]
-    pub pricing_currency: i32,
-    #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "6"
     )]
     pub network_id: i32,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::PaymentCurrency",
+        enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "7"
     )]
     pub currency: i32,

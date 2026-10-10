@@ -21,7 +21,7 @@ pub struct PayoutTransactionDetected {
     )]
     pub chain: i32,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "7"
     )]
     pub network_id: i32,
@@ -64,7 +64,7 @@ pub struct PayoutNativeTransferDetected {
     )]
     pub chain: i32,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "9"
     )]
     pub network_id: i32,

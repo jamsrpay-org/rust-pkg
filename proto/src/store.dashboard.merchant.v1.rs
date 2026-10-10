@@ -101,12 +101,12 @@ impl ::prost::Name for PaymentVolumeChartPoint {
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct PaymentDistributionItem {
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::PaymentCurrency",
+        enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "1"
     )]
     pub currency: i32,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "2"
     )]
     pub network: i32,

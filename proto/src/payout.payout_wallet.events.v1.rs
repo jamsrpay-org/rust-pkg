@@ -11,13 +11,13 @@ pub struct PayoutWalletCreated {
     #[prost(string, tag = "4")]
     pub address: ::prost::alloc::string::String,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::PaymentCurrency",
+        enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         repeated,
         tag = "5"
     )]
     pub currencies: ::prost::alloc::vec::Vec<i32>,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "6"
     )]
     pub network_id: i32,
@@ -44,7 +44,7 @@ pub struct PayoutWalletUpdated {
     #[prost(string, tag = "4")]
     pub address: ::prost::alloc::string::String,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::PaymentCurrency",
+        enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         repeated,
         tag = "5"
     )]
@@ -70,7 +70,7 @@ pub struct PayoutWalletDeleted {
     #[prost(string, tag = "3")]
     pub address: ::prost::alloc::string::String,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "4"
     )]
     pub network_id: i32,
@@ -97,7 +97,7 @@ pub struct PayoutWalletAddressAdded {
     #[prost(string, tag = "4")]
     pub address: ::prost::alloc::string::String,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "5"
     )]
     pub network_id: i32,
@@ -124,7 +124,7 @@ pub struct PayoutWalletAddressDeleted {
     #[prost(string, tag = "4")]
     pub address: ::prost::alloc::string::String,
     #[prost(
-        enumeration = "super::super::super::super::shared::enums::v1::NetworkId",
+        enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "5"
     )]
     pub network_id: i32,
