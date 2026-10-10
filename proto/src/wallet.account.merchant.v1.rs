@@ -147,9 +147,7 @@ impl ::prost::Name for WalletDeposit {
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct CreateWalletDepositRequest {
     #[prost(message, optional, tag = "1")]
-    pub amount: ::core::option::Option<
-        super::super::super::super::billing::shared::v1::PricingAmount,
-    >,
+    pub amount: ::core::option::Option<super::super::super::shared::v1::PricingAmount>,
 }
 impl ::prost::Name for CreateWalletDepositRequest {
     const NAME: &'static str = "CreateWalletDepositRequest";

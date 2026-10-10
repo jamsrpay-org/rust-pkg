@@ -598,6 +598,11 @@ pub mod wallet {
             include!("wallet.blockchain_wallet.v1.rs");
         }
     }
+    pub mod shared {
+        pub mod v1 {
+            include!("wallet.shared.v1.rs");
+        }
+    }
     pub mod transaction {
         pub mod merchant {
             pub mod v1 {
