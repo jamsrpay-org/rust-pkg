@@ -150,4 +150,34 @@ impl NetworkId {
             NetworkId::SolanaDevnet => format!("{}/tx/{}?cluster=devnet", base_url, tx_id),
         }
     }
+
+    /// Default number of block confirmations required for a transaction to be
+    /// considered final on this network.
+    ///
+    /// These are sensible production defaults. Services may override via
+    /// configuration where appropriate.
+    pub const fn required_confirmations(self) -> u32 {
+        match self {
+            // TRON: ~3s blocks, 6 confirmations ≈ 18 seconds
+            Self::Tron | Self::TronNile => 1,
+
+            // Ethereum: ~12s blocks, 12 confirmations ≈ 2.5 minutes
+            Self::Ethereum | Self::EthereumSepolia => 1,
+
+            // BSC: ~3s blocks, 15 confirmations ≈ 45 seconds
+            Self::Bsc | Self::BscTestnet => 1,
+
+            // Polygon: ~2s blocks, 30 confirmations ≈ 1 minute
+            Self::Polygon | Self::PolygonAmoy => 1,
+
+            // Bitcoin: ~10min blocks, 3 confirmations ≈ 30 minutes
+            Self::Bitcoin | Self::BitcoinTestnet => 1,
+
+            // Litecoin: ~2.5min blocks, 6 confirmations ≈ 15 minutes
+            Self::Litecoin | Self::LitecoinTestnet => 1,
+
+            // Solana: uses slot-based finality, 1 = finalized slot
+            Self::Solana | Self::SolanaDevnet => 1,
+        }
+    }
 }
