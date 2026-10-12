@@ -45,7 +45,7 @@ impl ::prost::Name for ApiKeySchema {
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
-pub struct StoreCurrencySchema {
+pub struct StoreAssetSchema {
     #[prost(message, optional, tag = "1")]
     pub payment_markup: ::core::option::Option<
         super::super::super::shared::schema::v1::NumberConstraint,
@@ -55,14 +55,14 @@ pub struct StoreCurrencySchema {
         super::super::super::shared::schema::v1::NumberConstraint,
     >,
 }
-impl ::prost::Name for StoreCurrencySchema {
-    const NAME: &'static str = "StoreCurrencySchema";
+impl ::prost::Name for StoreAssetSchema {
+    const NAME: &'static str = "StoreAssetSchema";
     const PACKAGE: &'static str = "store.schema.v1";
     fn full_name() -> ::prost::alloc::string::String {
-        "store.schema.v1.StoreCurrencySchema".into()
+        "store.schema.v1.StoreAssetSchema".into()
     }
     fn type_url() -> ::prost::alloc::string::String {
-        "/store.schema.v1.StoreCurrencySchema".into()
+        "/store.schema.v1.StoreAssetSchema".into()
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -86,7 +86,7 @@ pub struct GetStoreSchemaResponse {
     #[prost(message, optional, tag = "2")]
     pub api_key: ::core::option::Option<ApiKeySchema>,
     #[prost(message, optional, tag = "3")]
-    pub store_currency: ::core::option::Option<StoreCurrencySchema>,
+    pub store_asset: ::core::option::Option<StoreAssetSchema>,
 }
 impl ::prost::Name for GetStoreSchemaResponse {
     const NAME: &'static str = "GetStoreSchemaResponse";

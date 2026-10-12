@@ -473,20 +473,20 @@ pub mod store {
             }
         }
     }
-    pub mod store_currency {
+    pub mod store_asset {
         pub mod events {
             pub mod v1 {
-                include!("store.store_currency.events.v1.rs");
+                include!("store.store_asset.events.v1.rs");
             }
         }
         pub mod internal {
             pub mod v1 {
-                include!("store.store_currency.internal.v1.rs");
+                include!("store.store_asset.internal.v1.rs");
             }
         }
         pub mod merchant {
             pub mod v1 {
-                include!("store.store_currency.merchant.v1.rs");
+                include!("store.store_asset.merchant.v1.rs");
             }
         }
     }

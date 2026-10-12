@@ -292,7 +292,7 @@ pub enum Channel {
     Payout = 5,
     PayoutWallet = 6,
     ApiKey = 7,
-    StoreCurrency = 8,
+    StoreAsset = 8,
     User = 9,
 }
 impl Channel {
@@ -310,7 +310,7 @@ impl Channel {
             Self::Payout => "CHANNEL_PAYOUT",
             Self::PayoutWallet => "CHANNEL_PAYOUT_WALLET",
             Self::ApiKey => "CHANNEL_API_KEY",
-            Self::StoreCurrency => "CHANNEL_STORE_CURRENCY",
+            Self::StoreAsset => "CHANNEL_STORE_ASSET",
             Self::User => "CHANNEL_USER",
         }
     }
@@ -325,7 +325,7 @@ impl Channel {
             "CHANNEL_PAYOUT" => Some(Self::Payout),
             "CHANNEL_PAYOUT_WALLET" => Some(Self::PayoutWallet),
             "CHANNEL_API_KEY" => Some(Self::ApiKey),
-            "CHANNEL_STORE_CURRENCY" => Some(Self::StoreCurrency),
+            "CHANNEL_STORE_ASSET" => Some(Self::StoreAsset),
             "CHANNEL_USER" => Some(Self::User),
             _ => None,
         }
