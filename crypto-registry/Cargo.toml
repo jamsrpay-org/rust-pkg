@@ -1,0 +1,8 @@
+[package]
+name = "jamsrpay-crypto-registry"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+jamsrpay-types = { path = "../types" }
+thiserror = "2.0.18"

@@ -70,4 +70,8 @@ impl AssetNetworkDefinition {
     pub const fn is_native(&self) -> bool {
         matches!(self.representation, AssetNetworkRepresentation::Native)
     }
+
+    pub const fn is_token(&self) -> bool {
+        !self.is_native()
+    }
 }

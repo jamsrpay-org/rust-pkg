@@ -65,6 +65,20 @@ impl AssetNetworkRegistry {
         Self::resolve(asset_id, network_id).is_ok()
     }
 
+    /// Check whether a combination is a token representation.
+    pub fn is_token(asset_id: AssetId, network_id: NetworkId) -> bool {
+        Self::resolve(asset_id, network_id)
+            .map(|definition| definition.is_token())
+            .unwrap_or(false)
+    }
+
+    /// Check whether a combination is a native asset representation.
+    pub fn is_native(asset_id: AssetId, network_id: NetworkId) -> bool {
+        Self::resolve(asset_id, network_id)
+            .map(|definition| definition.is_native())
+            .unwrap_or(false)
+    }
+
     /// Resolve precision (`Decimals`) for an asset/network combination.
     pub fn decimals(
         asset_id: AssetId,

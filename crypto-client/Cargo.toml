@@ -11,7 +11,7 @@ members = [".", "crates/*"]
 chain-core = { path = "crates/chain-core" }
 evm-core = { path = "crates/evm-core" }
 utxo-core = { path = "crates/utxo-core" }
-registry = { path = "crates/registry" }
+registry = { package = "jamsrpay-crypto-registry", path = "../crypto-registry" }
 jamsrpay-types = { path = "../types" }
 thiserror = "2.0.18"
 hex = "0.4.3"

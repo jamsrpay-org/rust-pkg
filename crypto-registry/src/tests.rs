@@ -137,3 +137,30 @@ fn resolves_decimals_helper() {
         Decimals::NINE
     );
 }
+
+#[test]
+fn resolves_token_and_native_helpers() {
+    // Native assets
+    assert!(AssetNetworkRegistry::is_native(AssetId::Eth, NetworkId::Ethereum));
+    assert!(!AssetNetworkRegistry::is_token(AssetId::Eth, NetworkId::Ethereum));
+
+    assert!(AssetNetworkRegistry::is_native(AssetId::Trx, NetworkId::Tron));
+    assert!(!AssetNetworkRegistry::is_token(AssetId::Trx, NetworkId::Tron));
+
+    assert!(AssetNetworkRegistry::is_native(AssetId::Btc, NetworkId::Bitcoin));
+    assert!(!AssetNetworkRegistry::is_token(AssetId::Btc, NetworkId::Bitcoin));
+
+    // Token assets
+    assert!(AssetNetworkRegistry::is_token(AssetId::Usdt, NetworkId::Tron));
+    assert!(!AssetNetworkRegistry::is_native(AssetId::Usdt, NetworkId::Tron));
+
+    assert!(AssetNetworkRegistry::is_token(AssetId::Usdt, NetworkId::Ethereum));
+    assert!(!AssetNetworkRegistry::is_native(AssetId::Usdt, NetworkId::Ethereum));
+
+    assert!(AssetNetworkRegistry::is_token(AssetId::Usdt, NetworkId::Bsc));
+    assert!(!AssetNetworkRegistry::is_native(AssetId::Usdt, NetworkId::Bsc));
+
+    // Unsupported asset network returns false for both
+    assert!(!AssetNetworkRegistry::is_token(AssetId::Usdt, NetworkId::TronNile));
+    assert!(!AssetNetworkRegistry::is_native(AssetId::Usdt, NetworkId::TronNile));
+}

@@ -984,8 +984,8 @@ version = "0.1.0"
 dependencies = [
  "chain-core",
  "evm-core",
+ "jamsrpay-crypto-registry",
  "jamsrpay-types",
- "registry",
 ]
 
 [[package]]
@@ -1025,8 +1025,8 @@ version = "0.1.0"
 dependencies = [
  "chain-core",
  "hex",
+ "jamsrpay-crypto-registry",
  "jamsrpay-types",
- "registry",
  "utxo-core",
 ]
 
@@ -1264,8 +1264,8 @@ dependencies = [
 name = "chain-core"
 version = "0.1.0"
 dependencies = [
+ "jamsrpay-crypto-registry",
  "jamsrpay-types",
- "registry",
  "thiserror 2.0.18",
 ]
 
@@ -1764,8 +1764,8 @@ version = "0.1.0"
 dependencies = [
  "chain-core",
  "evm-core",
+ "jamsrpay-crypto-registry",
  "jamsrpay-types",
- "registry",
 ]
 
 [[package]]
@@ -2509,13 +2509,21 @@ dependencies = [
  "chain-core",
  "ethereum",
  "evm-core",
+ "jamsrpay-crypto-registry",
  "jamsrpay-types",
  "litecoin",
  "polygon",
- "registry",
  "solana",
  "tron",
  "utxo-core",
+]
+
+[[package]]
+name = "jamsrpay-crypto-registry"
+version = "0.1.0"
+dependencies = [
+ "jamsrpay-types",
+ "thiserror 2.0.18",
 ]
 
 [[package]]
@@ -2661,8 +2669,8 @@ version = "0.1.0"
 dependencies = [
  "chain-core",
  "hex",
+ "jamsrpay-crypto-registry",
  "jamsrpay-types",
- "registry",
  "utxo-core",
 ]
 
@@ -2967,8 +2975,8 @@ version = "0.1.0"
 dependencies = [
  "chain-core",
  "evm-core",
+ "jamsrpay-crypto-registry",
  "jamsrpay-types",
- "registry",
 ]
 
 [[package]]
@@ -3315,14 +3323,6 @@ name = "regex-syntax"
 version = "0.8.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d6f6ff9a378485b298a5286656da665ba74413d36db0979633275d2e708145d4"
-
-[[package]]
-name = "registry"
-version = "0.1.0"
-dependencies = [
- "jamsrpay-types",
- "thiserror 2.0.18",
-]
 
 [[package]]
 name = "rend"
@@ -4000,9 +4000,9 @@ dependencies = [
  "curve25519-dalek",
  "ed25519-dalek",
  "hex",
+ "jamsrpay-crypto-registry",
  "jamsrpay-types",
  "rand 0.10.0",
- "registry",
  "reqwest",
  "serde",
  "serde_json",
@@ -4440,9 +4440,9 @@ dependencies = [
  "bs58",
  "chain-core",
  "hex",
+ "jamsrpay-crypto-registry",
  "jamsrpay-types",
  "rand 0.10.0",
- "registry",
  "reqwest",
  "secp256k1 0.31.1",
  "serde",
