@@ -15,7 +15,7 @@ pub struct PayoutWalletCreated {
         repeated,
         tag = "5"
     )]
-    pub currencies: ::prost::alloc::vec::Vec<i32>,
+    pub asset_ids: ::prost::alloc::vec::Vec<i32>,
     #[prost(
         enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "6"
@@ -48,7 +48,7 @@ pub struct PayoutWalletUpdated {
         repeated,
         tag = "5"
     )]
-    pub currencies: ::prost::alloc::vec::Vec<i32>,
+    pub asset_ids: ::prost::alloc::vec::Vec<i32>,
 }
 impl ::prost::Name for PayoutWalletUpdated {
     const NAME: &'static str = "PayoutWalletUpdated";

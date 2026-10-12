@@ -21,7 +21,7 @@ pub struct PayoutBatch {
         enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "6"
     )]
-    pub currency: i32,
+    pub asset_id: i32,
     #[prost(message, repeated, tag = "7")]
     pub items: ::prost::alloc::vec::Vec<super::super::shared::v1::PayoutBatchItem>,
     #[prost(enumeration = "super::super::shared::v1::PayoutBatchStatus", tag = "8")]
@@ -122,7 +122,7 @@ pub struct CreatePayoutBatchRequest {
         enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "5"
     )]
-    pub currency: i32,
+    pub asset_id: i32,
     #[prost(message, repeated, tag = "6")]
     pub items: ::prost::alloc::vec::Vec<super::super::shared::v1::CreatePayoutBatchItem>,
 }

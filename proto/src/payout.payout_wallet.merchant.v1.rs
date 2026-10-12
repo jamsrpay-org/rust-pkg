@@ -50,7 +50,7 @@ pub struct PayoutWallet {
         repeated,
         tag = "7"
     )]
-    pub currencies: ::prost::alloc::vec::Vec<i32>,
+    pub asset_ids: ::prost::alloc::vec::Vec<i32>,
     #[prost(message, repeated, tag = "8")]
     pub addresses: ::prost::alloc::vec::Vec<PayoutWalletAddress>,
 }
@@ -145,7 +145,7 @@ pub struct CreatePayoutWalletRequest {
         repeated,
         tag = "4"
     )]
-    pub currencies: ::prost::alloc::vec::Vec<i32>,
+    pub asset_ids: ::prost::alloc::vec::Vec<i32>,
 }
 impl ::prost::Name for CreatePayoutWalletRequest {
     const NAME: &'static str = "CreatePayoutWalletRequest";
@@ -184,7 +184,7 @@ pub struct UpdatePayoutWalletRequest {
         repeated,
         tag = "2"
     )]
-    pub currencies: ::prost::alloc::vec::Vec<i32>,
+    pub asset_ids: ::prost::alloc::vec::Vec<i32>,
 }
 impl ::prost::Name for UpdatePayoutWalletRequest {
     const NAME: &'static str = "UpdatePayoutWalletRequest";

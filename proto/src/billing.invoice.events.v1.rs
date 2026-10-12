@@ -16,7 +16,7 @@ pub struct InvoiceCreated {
         enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "5"
     )]
-    pub payment_asset: i32,
+    pub payment_asset_id: i32,
     #[prost(message, optional, tag = "6")]
     pub expires_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(
@@ -92,7 +92,7 @@ pub struct InvoiceConfirmationStarted {
         enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "5"
     )]
-    pub payment_asset: i32,
+    pub payment_asset_id: i32,
     #[prost(string, tag = "6")]
     pub wallet_id: ::prost::alloc::string::String,
     #[prost(string, tag = "7")]
@@ -138,7 +138,7 @@ pub struct InvoicePaid {
         enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "5"
     )]
-    pub payment_asset: i32,
+    pub payment_asset_id: i32,
     #[prost(string, tag = "6")]
     pub wallet_id: ::prost::alloc::string::String,
     #[prost(string, tag = "7")]

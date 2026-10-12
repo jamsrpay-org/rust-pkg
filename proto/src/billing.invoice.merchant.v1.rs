@@ -120,7 +120,7 @@ pub struct ListInvoicesRequest {
         repeated,
         tag = "2"
     )]
-    pub payment_asset: ::prost::alloc::vec::Vec<i32>,
+    pub payment_asset_id: ::prost::alloc::vec::Vec<i32>,
     #[prost(
         enumeration = "super::super::super::shared::v1::InvoiceStatus",
         repeated,

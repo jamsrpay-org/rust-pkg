@@ -9,7 +9,7 @@ pub struct PayoutTransfer {
         super::super::super::shared::types::v1::EventMoney,
     >,
     #[prost(enumeration = "super::super::super::asset::shared::v1::AssetId", tag = "3")]
-    pub payment_asset: i32,
+    pub asset_id: i32,
     #[prost(string, tag = "4")]
     pub address: ::prost::alloc::string::String,
     #[prost(
@@ -109,7 +109,7 @@ pub mod payout_settled {
             enumeration = "super::super::super::super::asset::shared::v1::AssetId",
             tag = "2"
         )]
-        pub payment_asset: i32,
+        pub asset_id: i32,
         #[prost(
             enumeration = "super::super::super::shared::v1::PayoutTransferType",
             tag = "3"

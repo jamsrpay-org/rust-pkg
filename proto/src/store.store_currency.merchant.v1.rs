@@ -6,7 +6,7 @@ pub struct StoreCurrency {
         enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "1"
     )]
-    pub currency: i32,
+    pub asset_id: i32,
     #[prost(
         enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "2"
@@ -41,7 +41,7 @@ pub struct GetStoreCurrencyRequest {
         enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "2"
     )]
-    pub currency: i32,
+    pub asset_id: i32,
     #[prost(
         enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "3"
@@ -117,7 +117,7 @@ pub struct CreateStoreCurrencyRequest {
         enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "2"
     )]
-    pub currency: i32,
+    pub asset_id: i32,
     #[prost(
         enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "3"
@@ -164,7 +164,7 @@ pub struct UpdateStoreCurrencyRequest {
         enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "2"
     )]
-    pub currency: i32,
+    pub asset_id: i32,
     #[prost(
         enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "3"
@@ -211,7 +211,7 @@ pub struct DeleteStoreCurrencyRequest {
         enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "2"
     )]
-    pub currency: i32,
+    pub asset_id: i32,
     #[prost(
         enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "3"

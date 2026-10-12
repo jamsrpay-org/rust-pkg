@@ -19,7 +19,7 @@ pub struct PayoutFundingWallet {
         enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "5"
     )]
-    pub currency: i32,
+    pub asset_id: i32,
     #[prost(message, optional, tag = "6")]
     pub balance: ::core::option::Option<
         super::super::super::super::shared::types::v1::Money,
@@ -118,7 +118,7 @@ pub struct EnablePayoutFundingAssetRequest {
         enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "3"
     )]
-    pub currency: i32,
+    pub asset_id: i32,
 }
 impl ::prost::Name for EnablePayoutFundingAssetRequest {
     const NAME: &'static str = "EnablePayoutFundingAssetRequest";
@@ -160,7 +160,7 @@ pub struct DisablePayoutFundingAssetRequest {
         enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "3"
     )]
-    pub currency: i32,
+    pub asset_id: i32,
 }
 impl ::prost::Name for DisablePayoutFundingAssetRequest {
     const NAME: &'static str = "DisablePayoutFundingAssetRequest";

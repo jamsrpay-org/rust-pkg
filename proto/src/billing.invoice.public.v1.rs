@@ -52,7 +52,7 @@ pub struct Invoice {
         enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "16"
     )]
-    pub payment_asset: i32,
+    pub payment_asset_id: i32,
 }
 impl ::prost::Name for Invoice {
     const NAME: &'static str = "Invoice";
@@ -111,7 +111,7 @@ pub struct CreateInvoiceRequest {
         enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "3"
     )]
-    pub payment_asset: i32,
+    pub payment_asset_id: i32,
     #[prost(string, optional, tag = "4")]
     pub redirect_url: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(string, optional, tag = "5")]
@@ -162,7 +162,7 @@ pub struct CreateInvoiceForPaymentIntentRequest {
         enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "2"
     )]
-    pub payment_asset: i32,
+    pub payment_asset_id: i32,
     #[prost(
         enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "3"

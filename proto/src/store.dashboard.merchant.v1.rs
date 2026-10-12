@@ -104,7 +104,7 @@ pub struct PaymentDistributionItem {
         enumeration = "super::super::super::super::asset::shared::v1::AssetId",
         tag = "1"
     )]
-    pub currency: i32,
+    pub asset_id: i32,
     #[prost(
         enumeration = "super::super::super::super::asset::shared::v1::NetworkId",
         tag = "2"
