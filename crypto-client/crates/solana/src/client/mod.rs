@@ -204,7 +204,7 @@ impl BlockchainClient for SolanaClient {
                 &to,
                 &mint,
                 amount,
-                decimals,
+                *decimals,
                 &recent_blockhash,
                 &token_program,
             )?
@@ -237,11 +237,11 @@ impl BlockchainClient for SolanaClient {
         let decimals = definition.decimals();
         if Self::is_native(currency) {
             let lamports = self.get_balance(address.as_str()).await?;
-            Ok(Money::from_atomic(lamports as i128, decimals))
+            Ok(Money::from_atomic(lamports as i128, *decimals))
         } else {
             let mint = self.mint_address(currency)?;
             let raw = self.get_spl_token_balance(address.as_str(), mint).await?;
-            Ok(Money::from_atomic(raw as i128, decimals))
+            Ok(Money::from_atomic(raw as i128, *decimals))
         }
     }
 
@@ -254,7 +254,7 @@ impl BlockchainClient for SolanaClient {
         if Self::is_native(request.currency) {
             let lamports = self.get_balance(request.from.as_str()).await?;
             let withdrawable = lamports.saturating_sub(Self::TX_FEE_LAMPORTS);
-            Ok(Money::from_atomic(withdrawable as i128, decimals))
+            Ok(Money::from_atomic(withdrawable as i128, *decimals))
         } else {
             // For SPL tokens, the full token balance is withdrawable.
             // Transaction fees are paid in SOL, not in the token.
@@ -262,7 +262,7 @@ impl BlockchainClient for SolanaClient {
             let raw = self
                 .get_spl_token_balance(request.from.as_str(), mint)
                 .await?;
-            Ok(Money::from_atomic(raw as i128, decimals))
+            Ok(Money::from_atomic(raw as i128, *decimals))
         }
     }
 

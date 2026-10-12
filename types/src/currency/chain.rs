@@ -13,3 +13,16 @@ pub enum Chain {
     Litecoin,
     Solana,
 }
+
+impl Chain {
+    pub fn is_evm(&self) -> bool {
+        matches!(
+            self,
+            Chain::Ethereum | Chain::Polygon | Chain::BinanceSmartChain
+        )
+    }
+
+    pub fn is_utxo(&self) -> bool {
+        matches!(self, Chain::Bitcoin | Chain::Litecoin)
+    }
+}

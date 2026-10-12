@@ -139,11 +139,11 @@ impl BlockchainClient for PolygonClient {
         let decimals = definition.decimals();
         if Self::is_native(currency) {
             let raw = self.evm.native_balance(address.as_str()).await?;
-            Ok(Money::from_atomic(raw as i128, decimals))
+            Ok(Money::from_atomic(raw as i128, *decimals))
         } else {
             let contract = self.contract_address(currency)?;
             let raw = self.evm.erc20_balance(address.as_str(), contract).await?;
-            Ok(Money::from_atomic(raw as i128, decimals))
+            Ok(Money::from_atomic(raw as i128, *decimals))
         }
     }
 
@@ -158,7 +158,7 @@ impl BlockchainClient for PolygonClient {
                 .evm
                 .estimate_native_withdrawable(request.from.as_str())
                 .await?;
-            Ok(Money::from_atomic(raw as i128, decimals))
+            Ok(Money::from_atomic(raw as i128, *decimals))
         } else {
             // For ERC20 tokens, the full balance is withdrawable.
             // Gas fees are paid in POL/MATIC, not the token.
@@ -167,7 +167,7 @@ impl BlockchainClient for PolygonClient {
                 .evm
                 .erc20_balance(request.from.as_str(), contract)
                 .await?;
-            Ok(Money::from_atomic(raw as i128, decimals))
+            Ok(Money::from_atomic(raw as i128, *decimals))
         }
     }
 

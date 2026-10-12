@@ -112,7 +112,7 @@ impl BlockchainClient for BtcClient {
         let definition = AssetNetworkRegistry::resolve(currency, self.network_id())?;
         let decimals = definition.decimals();
         let raw = self.utxo.balance(address.as_str()).await?;
-        Ok(Money::from_atomic(raw as i128, decimals))
+        Ok(Money::from_atomic(raw as i128, *decimals))
     }
 
     async fn estimate_withdrawable(
@@ -125,7 +125,7 @@ impl BlockchainClient for BtcClient {
             .utxo
             .estimate_withdrawable(request.from.as_str())
             .await?;
-        Ok(Money::from_atomic(raw as i128, decimals))
+        Ok(Money::from_atomic(raw as i128, *decimals))
     }
 
     fn generate_wallet(&self) -> Result<CryptoWallet, BlockchainClientError> {

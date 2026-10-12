@@ -185,12 +185,12 @@ impl BlockchainClient for TronClient {
         match currency {
             AssetId::TRX => {
                 let raw = self.get_balance(address.as_str()).await?;
-                Ok(Money::from_atomic(raw as i128, decimals))
+                Ok(Money::from_atomic(raw as i128, *decimals))
             }
             AssetId::USDT => {
                 let contract = self.contract_address(currency)?;
                 let raw = self.get_trc20_balance(address.as_str(), contract).await?;
-                Ok(Money::from_atomic(raw as i128, decimals))
+                Ok(Money::from_atomic(raw as i128, *decimals))
             }
             _ => unreachable!(),
         }
@@ -203,7 +203,7 @@ impl BlockchainClient for TronClient {
         let definition = AssetNetworkRegistry::resolve(request.currency, self.network_id())?;
         let decimals = definition.decimals();
         match request.currency {
-            AssetId::TRX => self.estimate_trx_withdrawable(&request, decimals).await,
+            AssetId::TRX => self.estimate_trx_withdrawable(&request, *decimals).await,
             AssetId::USDT => {
                 // For TRC20 tokens, the full balance is withdrawable.
                 // Energy fees are paid in TRX, not in the token itself.
@@ -211,7 +211,7 @@ impl BlockchainClient for TronClient {
                 let raw = self
                     .get_trc20_balance(request.from.as_str(), contract)
                     .await?;
-                Ok(Money::from_atomic(raw as i128, decimals))
+                Ok(Money::from_atomic(raw as i128, *decimals))
             }
             _ => unreachable!(),
         }

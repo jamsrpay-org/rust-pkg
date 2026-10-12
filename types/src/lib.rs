@@ -14,4 +14,5 @@ pub mod session_id;
 pub mod store_id;
 pub mod user_id;
 
+pub use currency::{Decimals, DecimalsError};
 pub use merchant_id::MerchantId;
