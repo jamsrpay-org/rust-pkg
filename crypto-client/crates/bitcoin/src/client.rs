@@ -5,7 +5,11 @@ use chain_core::{
         TransactionId, TransferRequest,
     },
 };
-use jamsrpay_types::{currency::PaymentCurrency, money::Money};
+use jamsrpay_types::{
+    currency::{AssetId, NetworkId},
+    money::Money,
+};
+use registry::AssetNetworkRegistry;
 use utxo_core::{
     client::UtxoClient,
     types::{UtxoNetwork, UtxoPreparedTransfer, UtxoSignedTransfer},
@@ -15,7 +19,7 @@ use utxo_core::{
 ///
 /// Adds:
 /// - Bitcoin network defaults (mainnet / testnet)
-/// - `PaymentCurrency::BTC` routing in `BlockchainClient`
+/// - `AssetId::BTC` routing in `BlockchainClient`
 ///
 /// ```no_run
 /// use bitcoin_chain::client::BtcClient;
@@ -46,8 +50,15 @@ impl BtcClient {
         &self.utxo
     }
 
-    fn is_native(currency: PaymentCurrency) -> bool {
-        matches!(currency, PaymentCurrency::BTC)
+    pub fn network_id(&self) -> NetworkId {
+        match self.utxo.network() {
+            UtxoNetwork::BitcoinTestnet => NetworkId::BitcoinTestnet,
+            _ => NetworkId::Bitcoin,
+        }
+    }
+
+    fn is_native(currency: AssetId) -> bool {
+        matches!(currency, AssetId::BTC)
     }
 }
 
@@ -90,7 +101,7 @@ impl BlockchainClient for BtcClient {
     async fn balance(
         &self,
         address: Address,
-        currency: PaymentCurrency,
+        currency: AssetId,
     ) -> Result<Money, BlockchainClientError> {
         if !Self::is_native(currency) {
             return Err(BlockchainClientError::Unknown(format!(
@@ -98,7 +109,8 @@ impl BlockchainClient for BtcClient {
                 currency
             )));
         }
-        let decimals = currency.decimals();
+        let definition = AssetNetworkRegistry::resolve(currency, self.network_id())?;
+        let decimals = definition.decimals();
         let raw = self.utxo.balance(address.as_str()).await?;
         Ok(Money::from_atomic(raw as i128, decimals))
     }
@@ -107,7 +119,8 @@ impl BlockchainClient for BtcClient {
         &self,
         request: EstimateWithdrawableRequest,
     ) -> Result<Money, BlockchainClientError> {
-        let decimals = request.currency.decimals();
+        let definition = AssetNetworkRegistry::resolve(request.currency, self.network_id())?;
+        let decimals = definition.decimals();
         let raw = self
             .utxo
             .estimate_withdrawable(request.from.as_str())

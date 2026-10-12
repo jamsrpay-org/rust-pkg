@@ -7,3 +7,4 @@ edition = "2024"
 chain-core = { workspace = true }
 evm-core = { workspace = true }
 jamsrpay-types = { workspace = true }
+registry = { workspace = true }

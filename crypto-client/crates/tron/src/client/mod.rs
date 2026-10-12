@@ -8,7 +8,11 @@ use chain_core::{
         TransferRequest,
     },
 };
-use jamsrpay_types::{currency::PaymentCurrency, money::Money};
+use jamsrpay_types::{
+    currency::{AssetId, NetworkId},
+    money::Money,
+};
+use registry::AssetNetworkRegistry;
 use reqwest::ClientBuilder;
 use std::collections::HashMap;
 use std::time::Duration;
@@ -23,7 +27,7 @@ mod trc20;
 pub struct TronClient {
     http_base_url: String,
     client: reqwest::Client,
-    trc20_contracts: HashMap<PaymentCurrency, String>,
+    trc20_contracts: HashMap<AssetId, String>,
 }
 
 impl TronClient {
@@ -44,14 +48,14 @@ impl TronClient {
     /// ```no_run
     /// use tron::client::TronClient;
     /// use tron::contracts;
-    /// use jamsrpay_types::currency::PaymentCurrency;
+    /// use jamsrpay_types::currency::AssetId;
     ///
     /// let client = TronClient::new("https://api.trongrid.io/wallet")
-    ///     .register_trc20(PaymentCurrency::USDT_TRC20, contracts::mainnet::USDT_TRC20);
+    ///     .register_trc20(AssetId::USDT, contracts::mainnet::USDT_TRC20);
     /// ```
     pub fn register_trc20(
         mut self,
-        currency: PaymentCurrency,
+        currency: AssetId,
         contract_address: impl Into<String>,
     ) -> Self {
         self.trc20_contracts
@@ -59,19 +63,31 @@ impl TronClient {
         self
     }
 
+    pub fn network_id(&self) -> NetworkId {
+        if self.http_base_url.contains("nile") {
+            NetworkId::TronNile
+        } else {
+            NetworkId::Tron
+        }
+    }
+
     pub(crate) fn contract_address(
         &self,
-        currency: PaymentCurrency,
+        currency: AssetId,
     ) -> Result<&str, BlockchainClientError> {
-        self.trc20_contracts
-            .get(&currency)
-            .map(|s| s.as_str())
-            .ok_or_else(|| {
-                BlockchainClientError::Unknown(format!(
-                    "no TRC20 contract registered for {}",
-                    currency
-                ))
-            })
+        if let Some(addr) = self.trc20_contracts.get(&currency) {
+            return Ok(addr.as_str());
+        }
+        if let Some(addr) = AssetNetworkRegistry::resolve(currency, self.network_id())
+            .ok()
+            .and_then(|def| def.token_address())
+        {
+            return Ok(addr);
+        }
+        Err(BlockchainClientError::Unknown(format!(
+            "no TRC20 contract registered for {}",
+            currency
+        )))
     }
 
     pub fn base_url(&self) -> &str {
@@ -111,7 +127,7 @@ impl BlockchainClient for TronClient {
         request: TransferRequest,
     ) -> Result<TronPreparedTransfer, BlockchainClientError> {
         let tx = match request.currency {
-            PaymentCurrency::TRX => {
+            AssetId::TRX => {
                 self.create_transaction(
                     request.from.as_str(),
                     request.to.as_str(),
@@ -119,7 +135,7 @@ impl BlockchainClient for TronClient {
                 )
                 .await?
             }
-            PaymentCurrency::USDT => {
+            AssetId::USDT => {
                 let contract = self.contract_address(request.currency)?;
                 self.create_trc20_transfer(
                     request.from.as_str(),
@@ -162,15 +178,16 @@ impl BlockchainClient for TronClient {
     async fn balance(
         &self,
         address: Address,
-        currency: PaymentCurrency,
+        currency: AssetId,
     ) -> Result<Money, BlockchainClientError> {
-        let decimals = currency.decimals();
+        let definition = AssetNetworkRegistry::resolve(currency, self.network_id())?;
+        let decimals = definition.decimals();
         match currency {
-            PaymentCurrency::TRX => {
+            AssetId::TRX => {
                 let raw = self.get_balance(address.as_str()).await?;
                 Ok(Money::from_atomic(raw as i128, decimals))
             }
-            PaymentCurrency::USDT => {
+            AssetId::USDT => {
                 let contract = self.contract_address(currency)?;
                 let raw = self.get_trc20_balance(address.as_str(), contract).await?;
                 Ok(Money::from_atomic(raw as i128, decimals))
@@ -183,10 +200,11 @@ impl BlockchainClient for TronClient {
         &self,
         request: EstimateWithdrawableRequest,
     ) -> Result<Money, BlockchainClientError> {
-        let decimals = request.currency.decimals();
+        let definition = AssetNetworkRegistry::resolve(request.currency, self.network_id())?;
+        let decimals = definition.decimals();
         match request.currency {
-            PaymentCurrency::TRX => self.estimate_trx_withdrawable(&request, decimals).await,
-            PaymentCurrency::USDT => {
+            AssetId::TRX => self.estimate_trx_withdrawable(&request, decimals).await,
+            AssetId::USDT => {
                 // For TRC20 tokens, the full balance is withdrawable.
                 // Energy fees are paid in TRX, not in the token itself.
                 let contract = self.contract_address(request.currency)?;

@@ -1,7 +1,7 @@
 use crate::error::BlockchainClientError;
 use jamsrpay_types::{
     crypto_address::CryptoAddress, crypto_transaction_hash::CryptoTransactionHash,
-    currency::PaymentCurrency, money::Money,
+    currency::AssetId, money::Money,
 };
 
 /// Re-export as `Address` for a cleaner blockchain-oriented API.
@@ -13,14 +13,14 @@ pub type TransactionId = CryptoTransactionHash;
 // ── Request / Result types ──────────────────────────────────────────────────
 
 pub struct TransferRequest {
-    pub currency: PaymentCurrency,
+    pub currency: AssetId,
     pub from: Address,
     pub to: Address,
     pub amount: Money,
 }
 
 pub struct EstimateWithdrawableRequest {
-    pub currency: PaymentCurrency,
+    pub currency: AssetId,
     pub from: Address,
     pub to: Address,
 }
@@ -55,7 +55,7 @@ pub trait BlockchainClient {
     fn balance(
         &self,
         address: Address,
-        currency: PaymentCurrency,
+        currency: AssetId,
     ) -> impl Future<Output = Result<Money, BlockchainClientError>>;
 
     fn estimate_withdrawable(

@@ -9,7 +9,11 @@ use evm_core::{
     client::EvmClient,
     types::{EvmPreparedTransfer, EvmSignedTransfer},
 };
-use jamsrpay_types::{currency::PaymentCurrency, money::Money};
+use jamsrpay_types::{
+    currency::{AssetId, NetworkId},
+    money::Money,
+};
+use registry::AssetNetworkRegistry;
 use std::collections::HashMap;
 
 /// Thin Ethereum wrapper around `EvmClient`.
@@ -17,7 +21,7 @@ use std::collections::HashMap;
 /// Adds:
 /// - Ethereum chain defaults (chain_id = 1 mainnet, 11155111 sepolia)
 /// - ERC20 contract address registry
-/// - `PaymentCurrency` → native/token routing in `BlockchainClient`
+/// - `AssetId` → native/token routing in `BlockchainClient`
 ///
 /// ```no_run
 /// use ethereum::client::EthClient;
@@ -27,7 +31,7 @@ use std::collections::HashMap;
 /// ```
 pub struct EthClient {
     evm: EvmClient,
-    token_contracts: HashMap<PaymentCurrency, String>,
+    token_contracts: HashMap<AssetId, String>,
 }
 
 impl EthClient {
@@ -42,7 +46,7 @@ impl EthClient {
     /// Register an ERC20 token contract address for a given currency.
     pub fn register_token(
         mut self,
-        currency: PaymentCurrency,
+        currency: AssetId,
         contract_address: impl Into<String>,
     ) -> Self {
         self.token_contracts
@@ -54,28 +58,35 @@ impl EthClient {
         &self.evm
     }
 
+    pub fn network_id(&self) -> NetworkId {
+        match self.evm.chain_id() {
+            11155111 => NetworkId::EthereumSepolia,
+            _ => NetworkId::Ethereum,
+        }
+    }
+
     fn contract_address(
         &self,
-        currency: PaymentCurrency,
+        currency: AssetId,
     ) -> Result<&str, BlockchainClientError> {
-        self.token_contracts
-            .get(&currency)
-            .map(|s| s.as_str())
-            .ok_or_else(|| {
-                BlockchainClientError::Unknown(format!(
-                    "no ERC20 contract registered for {}",
-                    currency
-                ))
-            })
+        if let Some(addr) = self.token_contracts.get(&currency) {
+            return Ok(addr.as_str());
+        }
+        if let Some(addr) = AssetNetworkRegistry::resolve(currency, self.network_id())
+            .ok()
+            .and_then(|def| def.token_address())
+        {
+            return Ok(addr);
+        }
+        Err(BlockchainClientError::Unknown(format!(
+            "no ERC20 contract registered for {}",
+            currency
+        )))
     }
 
     /// Returns true if the currency is the native gas token (ETH).
-    ///
-    /// NOTE: Update this when `PaymentCurrency::ETH` is added to jamsrpay-types.
-    fn is_native(_currency: PaymentCurrency) -> bool {
-        // No ETH variant exists yet in PaymentCurrency.
-        // When added, this becomes: matches!(currency, PaymentCurrency::ETH)
-        false
+    fn is_native(currency: AssetId) -> bool {
+        matches!(currency, AssetId::ETH)
     }
 }
 
@@ -125,9 +136,10 @@ impl BlockchainClient for EthClient {
     async fn balance(
         &self,
         address: Address,
-        currency: PaymentCurrency,
+        currency: AssetId,
     ) -> Result<Money, BlockchainClientError> {
-        let decimals = currency.decimals();
+        let definition = AssetNetworkRegistry::resolve(currency, self.network_id())?;
+        let decimals = definition.decimals();
         if Self::is_native(currency) {
             let raw = self.evm.native_balance(address.as_str()).await?;
             Ok(Money::from_atomic(raw as i128, decimals))
@@ -145,7 +157,8 @@ impl BlockchainClient for EthClient {
         &self,
         request: EstimateWithdrawableRequest,
     ) -> Result<Money, BlockchainClientError> {
-        let decimals = request.currency.decimals();
+        let definition = AssetNetworkRegistry::resolve(request.currency, self.network_id())?;
+        let decimals = definition.decimals();
         if Self::is_native(request.currency) {
             let raw = self
                 .evm

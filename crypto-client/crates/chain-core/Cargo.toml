@@ -6,3 +6,4 @@ edition = "2024"
 [dependencies]
 jamsrpay-types = { workspace = true }
 thiserror = { workspace = true }
+registry = { workspace = true }

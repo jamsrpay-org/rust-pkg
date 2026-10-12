@@ -11,6 +11,7 @@ members = [".", "crates/*"]
 chain-core = { path = "crates/chain-core" }
 evm-core = { path = "crates/evm-core" }
 utxo-core = { path = "crates/utxo-core" }
+registry = { path = "crates/registry" }
 jamsrpay-types = { path = "../types" }
 thiserror = "2.0.18"
 hex = "0.4.3"
@@ -58,6 +59,8 @@ tron = { path = "crates/tron" }
 utxo-core = { workspace = true }
 chain-core = { workspace = true }
 jamsrpay-types = { workspace = true }
+
+registry = { workspace = true }
 
 # [patch."https://github.com/jamsrpay-org/rust-pkg"]
 # jamsrpay-types = { path = "../types" }

@@ -8,3 +8,4 @@ chain-core = { workspace = true }
 utxo-core = { workspace = true }
 jamsrpay-types = { workspace = true }
 hex = { workspace = true }
+registry = { workspace = true }

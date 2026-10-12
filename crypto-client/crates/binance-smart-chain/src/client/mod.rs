@@ -9,7 +9,11 @@ use evm_core::{
     client::EvmClient,
     types::{EvmPreparedTransfer, EvmSignedTransfer},
 };
-use jamsrpay_types::{currency::PaymentCurrency, money::Money};
+use jamsrpay_types::{
+    currency::{AssetId, NetworkId},
+    money::Money,
+};
+use registry::AssetNetworkRegistry;
 use std::collections::HashMap;
 
 /// Thin BSC wrapper around `EvmClient`.
@@ -17,20 +21,20 @@ use std::collections::HashMap;
 /// Adds:
 /// - BSC chain defaults (chain_id)
 /// - BEP20 contract address registry
-/// - `PaymentCurrency` → native/token routing in `BlockchainClient`
+/// - `AssetId` → native/token routing in `BlockchainClient`
 ///
 /// ```no_run
 /// use binance_smart_chain::client::BscClient;
 /// use binance_smart_chain::contracts;
-/// use jamsrpay_types::currency::PaymentCurrency;
+/// use jamsrpay_types::currency::AssetId;
 ///
 /// let client = BscClient::new("https://bsc-dataseed.binance.org", 56)
 ///     .unwrap()
-///     .register_token(PaymentCurrency::USDT_BEP20, contracts::mainnet::USDT_BEP20);
+///     .register_token(AssetId::USDT, contracts::mainnet::USDT_BEP20);
 /// ```
 pub struct BscClient {
     evm: EvmClient,
-    token_contracts: HashMap<PaymentCurrency, String>,
+    token_contracts: HashMap<AssetId, String>,
 }
 
 impl BscClient {
@@ -45,7 +49,7 @@ impl BscClient {
     /// Register a BEP20 token contract address for a given currency.
     pub fn register_token(
         mut self,
-        currency: PaymentCurrency,
+        currency: AssetId,
         contract_address: impl Into<String>,
     ) -> Self {
         self.token_contracts
@@ -57,23 +61,31 @@ impl BscClient {
         &self.evm
     }
 
-    fn contract_address(
-        &self,
-        currency: PaymentCurrency,
-    ) -> Result<&str, BlockchainClientError> {
-        self.token_contracts
-            .get(&currency)
-            .map(|s| s.as_str())
-            .ok_or_else(|| {
-                BlockchainClientError::Unknown(format!(
-                    "no BEP20 contract registered for {}",
-                    currency
-                ))
-            })
+    pub fn network_id(&self) -> NetworkId {
+        match self.evm.chain_id() {
+            97 => NetworkId::BscTestnet,
+            _ => NetworkId::Bsc,
+        }
     }
 
-    fn is_native(currency: PaymentCurrency) -> bool {
-        matches!(currency, PaymentCurrency::BNB)
+    fn contract_address(&self, currency: AssetId) -> Result<&str, BlockchainClientError> {
+        if let Some(addr) = self.token_contracts.get(&currency) {
+            return Ok(addr.as_str());
+        }
+        if let Some(addr) = AssetNetworkRegistry::resolve(currency, self.network_id())
+            .ok()
+            .and_then(|def| def.token_address())
+        {
+            return Ok(addr);
+        }
+        Err(BlockchainClientError::Unknown(format!(
+            "no BEP20 contract registered for {}",
+            currency
+        )))
+    }
+
+    fn is_native(currency: AssetId) -> bool {
+        matches!(currency, AssetId::BNB)
     }
 }
 
@@ -123,18 +135,16 @@ impl BlockchainClient for BscClient {
     async fn balance(
         &self,
         address: Address,
-        currency: PaymentCurrency,
+        currency: AssetId,
     ) -> Result<Money, BlockchainClientError> {
-        let decimals = currency.decimals();
+        let definition = AssetNetworkRegistry::resolve(currency, self.network_id())?;
+        let decimals = definition.decimals();
         if Self::is_native(currency) {
             let raw = self.evm.native_balance(address.as_str()).await?;
             Ok(Money::from_atomic(raw as i128, decimals))
         } else {
             let contract = self.contract_address(currency)?;
-            let raw = self
-                .evm
-                .erc20_balance(address.as_str(), contract)
-                .await?;
+            let raw = self.evm.erc20_balance(address.as_str(), contract).await?;
             Ok(Money::from_atomic(raw as i128, decimals))
         }
     }
@@ -143,7 +153,8 @@ impl BlockchainClient for BscClient {
         &self,
         request: EstimateWithdrawableRequest,
     ) -> Result<Money, BlockchainClientError> {
-        let decimals = request.currency.decimals();
+        let definition = AssetNetworkRegistry::resolve(request.currency, self.network_id())?;
+        let decimals = definition.decimals();
         if Self::is_native(request.currency) {
             let raw = self
                 .evm

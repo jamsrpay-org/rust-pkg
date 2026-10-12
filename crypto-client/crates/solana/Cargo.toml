@@ -6,6 +6,7 @@ edition = "2024"
 [dependencies]
 chain-core = { workspace = true }
 jamsrpay-types = { workspace = true }
+registry = { workspace = true }
 bs58 = { workspace = true }
 curve25519-dalek = { version = "4", default-features = false }
 ed25519-dalek = "2"

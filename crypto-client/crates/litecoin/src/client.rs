@@ -5,17 +5,21 @@ use chain_core::{
         TransactionId, TransferRequest,
     },
 };
-use jamsrpay_types::{currency::PaymentCurrency, money::Money};
+use jamsrpay_types::{
+    currency::{AssetId, NetworkId},
+    money::Money,
+};
 use utxo_core::{
     client::UtxoClient,
     types::{UtxoNetwork, UtxoPreparedTransfer, UtxoSignedTransfer},
 };
+use registry::AssetNetworkRegistry;
 
 /// Thin Litecoin wrapper around `UtxoClient`.
 ///
 /// Adds:
 /// - Litecoin network defaults (mainnet / testnet)
-/// - `PaymentCurrency::LTC` routing in `BlockchainClient`
+/// - `AssetId::LTC` routing in `BlockchainClient`
 ///
 /// ```no_run
 /// use litecoin::client::LtcClient;
@@ -46,8 +50,15 @@ impl LtcClient {
         &self.utxo
     }
 
-    fn is_native(currency: PaymentCurrency) -> bool {
-        matches!(currency, PaymentCurrency::LTC)
+    pub fn network_id(&self) -> NetworkId {
+        match self.utxo.network() {
+            UtxoNetwork::LitecoinTestnet => NetworkId::LitecoinTestnet,
+            _ => NetworkId::Litecoin,
+        }
+    }
+
+    fn is_native(currency: AssetId) -> bool {
+        matches!(currency, AssetId::LTC)
     }
 }
 
@@ -90,7 +101,7 @@ impl BlockchainClient for LtcClient {
     async fn balance(
         &self,
         address: Address,
-        currency: PaymentCurrency,
+        currency: AssetId,
     ) -> Result<Money, BlockchainClientError> {
         if !Self::is_native(currency) {
             return Err(BlockchainClientError::Unknown(format!(
@@ -98,7 +109,9 @@ impl BlockchainClient for LtcClient {
                 currency
             )));
         }
-        let decimals = currency.decimals();
+        let definition = AssetNetworkRegistry::resolve(currency, self.network_id())?;
+
+        let decimals = definition.decimals();
         let raw = self.utxo.balance(address.as_str()).await?;
         Ok(Money::from_atomic(raw as i128, decimals))
     }
@@ -107,7 +120,8 @@ impl BlockchainClient for LtcClient {
         &self,
         request: EstimateWithdrawableRequest,
     ) -> Result<Money, BlockchainClientError> {
-        let decimals = request.currency.decimals();
+        let definition = AssetNetworkRegistry::resolve(request.currency, self.network_id())?;
+        let decimals = definition.decimals();
         let raw = self
             .utxo
             .estimate_withdrawable(request.from.as_str())

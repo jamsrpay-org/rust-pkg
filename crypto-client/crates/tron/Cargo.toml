@@ -8,6 +8,7 @@ bs58 = { workspace = true }
 chain-core = { workspace = true }
 hex = { workspace = true }
 jamsrpay-types = { workspace = true }
+registry = { workspace = true }
 rand = { workspace = true }
 reqwest = { workspace = true }
 secp256k1 = { workspace = true }

@@ -6,8 +6,9 @@ use chain_core::types::{
     Address, BlockchainClient, BroadcastResult, CryptoWallet, EstimateWithdrawableRequest,
     TransactionId, TransferRequest,
 };
-use jamsrpay_types::currency::PaymentCurrency;
+use jamsrpay_types::currency::{AssetId, NetworkId};
 use jamsrpay_types::money::Money;
+use registry::AssetNetworkRegistry;
 use reqwest::ClientBuilder;
 
 use crate::types::{SolanaPreparedTransfer, SolanaSignedTransfer, SolanaWallet};
@@ -33,7 +34,7 @@ pub(crate) mod transaction;
 pub struct SolanaClient {
     rpc_url: String,
     client: reqwest::Client,
-    spl_mints: HashMap<PaymentCurrency, String>,
+    spl_mints: HashMap<AssetId, String>,
 }
 
 impl SolanaClient {
@@ -57,33 +58,45 @@ impl SolanaClient {
     /// ```no_run
     /// use solana::client::SolanaClient;
     /// use solana::contracts;
-    /// use jamsrpay_types::currency::PaymentCurrency;
+    /// use jamsrpay_types::currency::AssetId;
     ///
     /// let client = SolanaClient::new("https://api.mainnet-beta.solana.com")
-    ///     .register_spl(PaymentCurrency::USDT, contracts::mainnet::USDT_SPL);
+    ///     .register_spl(AssetId::USDT, contracts::mainnet::USDT_SPL);
     /// ```
     pub fn register_spl(
         mut self,
-        currency: PaymentCurrency,
+        currency: AssetId,
         mint_address: impl Into<String>,
     ) -> Self {
         self.spl_mints.insert(currency, mint_address.into());
         self
     }
 
+    pub fn network_id(&self) -> NetworkId {
+        if self.rpc_url.contains("devnet") {
+            NetworkId::SolanaDevnet
+        } else {
+            NetworkId::Solana
+        }
+    }
+
     pub(crate) fn mint_address(
         &self,
-        currency: PaymentCurrency,
+        currency: AssetId,
     ) -> Result<&str, BlockchainClientError> {
-        self.spl_mints
-            .get(&currency)
-            .map(|s| s.as_str())
-            .ok_or_else(|| {
-                BlockchainClientError::Unknown(format!(
-                    "no SPL mint registered for {}",
-                    currency
-                ))
-            })
+        if let Some(addr) = self.spl_mints.get(&currency) {
+            return Ok(addr.as_str());
+        }
+        if let Some(addr) = AssetNetworkRegistry::resolve(currency, self.network_id())
+            .ok()
+            .and_then(|def| def.token_address())
+        {
+            return Ok(addr);
+        }
+        Err(BlockchainClientError::Unknown(format!(
+            "no SPL mint registered for {}",
+            currency
+        )))
     }
 
     pub fn rpc_url(&self) -> &str {
@@ -95,8 +108,8 @@ impl SolanaClient {
     }
 
     /// Returns `true` for native SOL transfers, `false` for SPL token transfers.
-    fn is_native(currency: PaymentCurrency) -> bool {
-        matches!(currency, PaymentCurrency::SOL)
+    fn is_native(currency: AssetId) -> bool {
+        matches!(currency, AssetId::SOL)
     }
 
     /// Standard Solana transaction fee in lamports (5000 per signature).
@@ -183,7 +196,8 @@ impl BlockchainClient for SolanaClient {
             // this mint by querying the on-chain account owner.
             let token_program = self.get_mint_token_program(mint_str).await?;
 
-            let decimals = request.currency.decimals();
+            let definition = AssetNetworkRegistry::resolve(request.currency, self.network_id())?;
+            let decimals = definition.decimals();
 
             spl::build_spl_transfer_message(
                 &from,
@@ -217,9 +231,10 @@ impl BlockchainClient for SolanaClient {
     async fn balance(
         &self,
         address: Address,
-        currency: PaymentCurrency,
+        currency: AssetId,
     ) -> Result<Money, BlockchainClientError> {
-        let decimals = currency.decimals();
+        let definition = AssetNetworkRegistry::resolve(currency, self.network_id())?;
+        let decimals = definition.decimals();
         if Self::is_native(currency) {
             let lamports = self.get_balance(address.as_str()).await?;
             Ok(Money::from_atomic(lamports as i128, decimals))
@@ -234,7 +249,8 @@ impl BlockchainClient for SolanaClient {
         &self,
         request: EstimateWithdrawableRequest,
     ) -> Result<Money, BlockchainClientError> {
-        let decimals = request.currency.decimals();
+        let definition = AssetNetworkRegistry::resolve(request.currency, self.network_id())?;
+        let decimals = definition.decimals();
         if Self::is_native(request.currency) {
             let lamports = self.get_balance(request.from.as_str()).await?;
             let withdrawable = lamports.saturating_sub(Self::TX_FEE_LAMPORTS);

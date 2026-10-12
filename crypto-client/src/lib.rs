@@ -40,3 +40,7 @@ pub use bitcoin_chain::client::BtcClient;
 
 // ── litecoin re-exports ─────────────────────────────────────────────────────
 pub use litecoin::client::LtcClient;
+
+// ── registry re-exports ─────────────────────────────────────────────────────
+pub use registry::*;
+

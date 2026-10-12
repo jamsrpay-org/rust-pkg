@@ -14,7 +14,17 @@ pub enum BlockchainClientError {
 
     #[error("invalid transaction: {0}")]
     InvalidTransaction(String),
+
+    #[error("unsupported asset: {0}")]
+    UnsupportedAsset(String),
+}
+
+impl From<registry::AssetNetworkRegistryError> for BlockchainClientError {
+    fn from(value: registry::AssetNetworkRegistryError) -> Self {
+        BlockchainClientError::UnsupportedAsset(value.to_string())
+    }
 }
 
 #[derive(Debug, thiserror::Error)]
 pub enum ChainClientError {}
+
