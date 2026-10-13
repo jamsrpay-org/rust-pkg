@@ -13,7 +13,7 @@ pub type TransactionId = CryptoTransactionHash;
 // ── Request / Result types ──────────────────────────────────────────────────
 
 pub struct TransferRequest {
-    pub currency: AssetId,
+    pub asset_id: AssetId,
     pub from: Address,
     pub to: Address,
     pub amount: Money,

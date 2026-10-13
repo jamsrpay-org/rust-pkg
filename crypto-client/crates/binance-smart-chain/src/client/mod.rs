@@ -99,7 +99,7 @@ impl BlockchainClient for BscClient {
         &self,
         request: TransferRequest,
     ) -> Result<EvmPreparedTransfer, BlockchainClientError> {
-        if Self::is_native(request.currency) {
+        if Self::is_native(request.asset_id) {
             Ok(self
                 .evm
                 .build_native_transfer(
@@ -109,7 +109,7 @@ impl BlockchainClient for BscClient {
                 )
                 .await?)
         } else {
-            let contract = self.contract_address(request.currency)?;
+            let contract = self.contract_address(request.asset_id)?;
             Ok(self
                 .evm
                 .build_erc20_transfer(

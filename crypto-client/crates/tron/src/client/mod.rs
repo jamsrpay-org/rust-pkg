@@ -126,7 +126,7 @@ impl BlockchainClient for TronClient {
         &self,
         request: TransferRequest,
     ) -> Result<TronPreparedTransfer, BlockchainClientError> {
-        let tx = match request.currency {
+        let tx = match request.asset_id {
             AssetId::TRX => {
                 self.create_transaction(
                     request.from.as_str(),
@@ -136,7 +136,7 @@ impl BlockchainClient for TronClient {
                 .await?
             }
             AssetId::USDT => {
-                let contract = self.contract_address(request.currency)?;
+                let contract = self.contract_address(request.asset_id)?;
                 self.create_trc20_transfer(
                     request.from.as_str(),
                     request.to.as_str(),

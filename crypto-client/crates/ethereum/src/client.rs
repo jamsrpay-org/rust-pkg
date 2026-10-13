@@ -65,10 +65,7 @@ impl EthClient {
         }
     }
 
-    fn contract_address(
-        &self,
-        currency: AssetId,
-    ) -> Result<&str, BlockchainClientError> {
+    fn contract_address(&self, currency: AssetId) -> Result<&str, BlockchainClientError> {
         if let Some(addr) = self.token_contracts.get(&currency) {
             return Ok(addr.as_str());
         }
@@ -100,7 +97,7 @@ impl BlockchainClient for EthClient {
         &self,
         request: TransferRequest,
     ) -> Result<EvmPreparedTransfer, BlockchainClientError> {
-        if Self::is_native(request.currency) {
+        if Self::is_native(request.asset_id) {
             Ok(self
                 .evm
                 .build_native_transfer(
@@ -110,7 +107,7 @@ impl BlockchainClient for EthClient {
                 )
                 .await?)
         } else {
-            let contract = self.contract_address(request.currency)?;
+            let contract = self.contract_address(request.asset_id)?;
             Ok(self
                 .evm
                 .build_erc20_transfer(
@@ -145,10 +142,7 @@ impl BlockchainClient for EthClient {
             Ok(Money::from_atomic(raw as i128, *decimals))
         } else {
             let contract = self.contract_address(currency)?;
-            let raw = self
-                .evm
-                .erc20_balance(address.as_str(), contract)
-                .await?;
+            let raw = self.evm.erc20_balance(address.as_str(), contract).await?;
             Ok(Money::from_atomic(raw as i128, *decimals))
         }
     }

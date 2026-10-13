@@ -72,10 +72,10 @@ impl BlockchainClient for LtcClient {
         &self,
         request: TransferRequest,
     ) -> Result<UtxoPreparedTransfer, BlockchainClientError> {
-        if !Self::is_native(request.currency) {
+        if !Self::is_native(request.asset_id) {
             return Err(BlockchainClientError::Unknown(format!(
                 "unsupported currency for Litecoin: {}",
-                request.currency
+                request.asset_id
             )));
         }
         Ok(self

@@ -184,11 +184,11 @@ impl BlockchainClient for SolanaClient {
         let (blockhash_str, _) = self.get_latest_blockhash().await?;
         let recent_blockhash = transaction::pubkey_from_base58(&blockhash_str)?;
 
-        let message_bytes = if Self::is_native(request.currency) {
+        let message_bytes = if Self::is_native(request.asset_id) {
             let lamports = request.amount.atomic() as u64;
             transaction::build_sol_transfer_message(&from, &to, lamports, &recent_blockhash)
         } else {
-            let mint_str = self.mint_address(request.currency)?;
+            let mint_str = self.mint_address(request.asset_id)?;
             let mint = transaction::pubkey_from_base58(mint_str)?;
             let amount = request.amount.atomic() as u64;
 
@@ -196,7 +196,7 @@ impl BlockchainClient for SolanaClient {
             // this mint by querying the on-chain account owner.
             let token_program = self.get_mint_token_program(mint_str).await?;
 
-            let definition = AssetNetworkRegistry::resolve(request.currency, self.network_id())?;
+            let definition = AssetNetworkRegistry::resolve(request.asset_id, self.network_id())?;
             let decimals = definition.decimals();
 
             spl::build_spl_transfer_message(

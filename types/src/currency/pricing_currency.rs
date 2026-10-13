@@ -4,16 +4,7 @@ use std::str::FromStr;
 use crate::currency::{AssetId, FiatCurrencyId};
 
 #[derive(
-    Debug,
-    Clone,
-    Copy,
-    PartialEq,
-    Eq,
-    Hash,
-    PartialOrd,
-    Ord,
-    serde::Serialize,
-    serde::Deserialize,
+    Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord, serde::Serialize, serde::Deserialize,
 )]
 #[serde(untagged)]
 pub enum PricingCurrency {
