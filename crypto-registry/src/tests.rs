@@ -79,12 +79,12 @@ fn resolves_usdc_on_sepolia() {
 
 #[test]
 fn rejects_unsupported_combinations() {
-    let result = AssetNetworkRegistry::resolve(AssetId::Usdt, NetworkId::TronNile);
+    let result = AssetNetworkRegistry::resolve(AssetId::Btc, NetworkId::TronNile);
 
     assert!(matches!(
         result,
         Err(AssetNetworkRegistryError::UnsupportedAssetNetwork {
-            asset_id: AssetId::Usdt,
+            asset_id: AssetId::Btc,
             network_id: NetworkId::TronNile,
         })
     ));
@@ -160,7 +160,23 @@ fn resolves_token_and_native_helpers() {
     assert!(AssetNetworkRegistry::is_token(AssetId::Usdt, NetworkId::Bsc));
     assert!(!AssetNetworkRegistry::is_native(AssetId::Usdt, NetworkId::Bsc));
 
-    // Unsupported asset network returns false for both
-    assert!(!AssetNetworkRegistry::is_token(AssetId::Usdt, NetworkId::TronNile));
+    assert!(AssetNetworkRegistry::is_token(AssetId::Usdt, NetworkId::TronNile));
     assert!(!AssetNetworkRegistry::is_native(AssetId::Usdt, NetworkId::TronNile));
+
+    // Unsupported asset network returns false for both
+    assert!(!AssetNetworkRegistry::is_token(AssetId::Btc, NetworkId::TronNile));
+    assert!(!AssetNetworkRegistry::is_native(AssetId::Btc, NetworkId::TronNile));
+}
+
+#[test]
+fn resolves_usdt_on_tron_nile() {
+    let definition = AssetNetworkRegistry::resolve(AssetId::Usdt, NetworkId::TronNile).unwrap();
+
+    assert_eq!(definition.decimals(), Decimals::SIX);
+    assert_eq!(definition.decimals(), 6);
+    assert_eq!(definition.token_standard(), Some(Standard::Trc20));
+    assert_eq!(
+        definition.token_address(),
+        Some("TXLAQ63Xg1NAzckPwKHvzw7CSEmLMEqcdj")
+    );
 }

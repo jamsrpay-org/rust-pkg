@@ -29,6 +29,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         // Wallet
         kafka_topics::WALLET_ACCOUNT_EVENTS,
         kafka_topics::BLOCKCHAIN_WALLET_EVENTS,
+        // Asset
+        kafka_topics::ASSET_EVENTS,
     ];
 
     let chain_topics: Vec<&str> = vec![

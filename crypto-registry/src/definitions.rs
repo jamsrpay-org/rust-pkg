@@ -67,6 +67,13 @@ pub(crate) static DEFINITIONS: &[Definition] = &[
     // --------------------------------------------------------
     Definition::token(
         AssetId::Usdt,
+        NetworkId::TronNile,
+        Decimals::SIX,
+        Standard::Trc20,
+        "TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf",
+    ),
+    Definition::token(
+        AssetId::Usdt,
         NetworkId::EthereumSepolia,
         Decimals::SIX,
         Standard::Erc20,

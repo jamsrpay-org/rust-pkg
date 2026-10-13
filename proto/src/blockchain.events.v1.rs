@@ -28,10 +28,7 @@ impl ::prost::Name for Asset {
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct NativeAsset {
-    #[prost(enumeration = "super::super::super::shared::enums::v1::Chain", tag = "1")]
-    pub chain: i32,
-}
+pub struct NativeAsset {}
 impl ::prost::Name for NativeAsset {
     const NAME: &'static str = "NativeAsset";
     const PACKAGE: &'static str = "blockchain.events.v1";
@@ -45,17 +42,8 @@ impl ::prost::Name for NativeAsset {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct TokenAsset {
-    /// Token contract/mint address.
-    ///
-    /// EVM/TRON: contract address
-    /// Solana: mint address
-    /// BTC/LTC: normally unused
     #[prost(string, tag = "1")]
-    pub address: ::prost::alloc::string::String,
-    #[prost(string, tag = "2")]
-    pub symbol: ::prost::alloc::string::String,
-    #[prost(uint32, tag = "3")]
-    pub decimals: u32,
+    pub contract_address: ::prost::alloc::string::String,
 }
 impl ::prost::Name for TokenAsset {
     const NAME: &'static str = "TokenAsset";
@@ -110,7 +98,6 @@ impl ::prost::Name for BlockchainTransfer {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct InvoicePaymentDetected {
-    /// Jamsrpay invoice ID.
     #[prost(string, tag = "1")]
     pub invoice_id: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "2")]
@@ -131,7 +118,6 @@ impl ::prost::Name for InvoicePaymentDetected {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct InvoicePaymentConfirmed {
-    /// Jamsrpay invoice ID.
     #[prost(string, tag = "1")]
     pub invoice_id: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
@@ -160,7 +146,6 @@ impl ::prost::Name for InvoicePaymentConfirmed {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct GasWalletTransactionDetected {
-    /// Jamsrpay gas wallet ID.
     #[prost(string, tag = "1")]
     pub gas_wallet_id: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "2")]
@@ -181,7 +166,6 @@ impl ::prost::Name for GasWalletTransactionDetected {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct PayoutTransactionDetected {
-    /// Jamsrpay payout ID.
     #[prost(string, tag = "1")]
     pub payout_id: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "2")]
