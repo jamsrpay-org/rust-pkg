@@ -141,31 +141,79 @@ fn resolves_decimals_helper() {
 #[test]
 fn resolves_token_and_native_helpers() {
     // Native assets
-    assert!(AssetNetworkRegistry::is_native(AssetId::Eth, NetworkId::Ethereum));
-    assert!(!AssetNetworkRegistry::is_token(AssetId::Eth, NetworkId::Ethereum));
+    assert!(AssetNetworkRegistry::is_native(
+        AssetId::Eth,
+        NetworkId::Ethereum
+    ));
+    assert!(!AssetNetworkRegistry::is_token(
+        AssetId::Eth,
+        NetworkId::Ethereum
+    ));
 
-    assert!(AssetNetworkRegistry::is_native(AssetId::Trx, NetworkId::Tron));
-    assert!(!AssetNetworkRegistry::is_token(AssetId::Trx, NetworkId::Tron));
+    assert!(AssetNetworkRegistry::is_native(
+        AssetId::Trx,
+        NetworkId::Tron
+    ));
+    assert!(!AssetNetworkRegistry::is_token(
+        AssetId::Trx,
+        NetworkId::Tron
+    ));
 
-    assert!(AssetNetworkRegistry::is_native(AssetId::Btc, NetworkId::Bitcoin));
-    assert!(!AssetNetworkRegistry::is_token(AssetId::Btc, NetworkId::Bitcoin));
+    assert!(AssetNetworkRegistry::is_native(
+        AssetId::Btc,
+        NetworkId::Bitcoin
+    ));
+    assert!(!AssetNetworkRegistry::is_token(
+        AssetId::Btc,
+        NetworkId::Bitcoin
+    ));
 
     // Token assets
-    assert!(AssetNetworkRegistry::is_token(AssetId::Usdt, NetworkId::Tron));
-    assert!(!AssetNetworkRegistry::is_native(AssetId::Usdt, NetworkId::Tron));
+    assert!(AssetNetworkRegistry::is_token(
+        AssetId::Usdt,
+        NetworkId::Tron
+    ));
+    assert!(!AssetNetworkRegistry::is_native(
+        AssetId::Usdt,
+        NetworkId::Tron
+    ));
 
-    assert!(AssetNetworkRegistry::is_token(AssetId::Usdt, NetworkId::Ethereum));
-    assert!(!AssetNetworkRegistry::is_native(AssetId::Usdt, NetworkId::Ethereum));
+    assert!(AssetNetworkRegistry::is_token(
+        AssetId::Usdt,
+        NetworkId::Ethereum
+    ));
+    assert!(!AssetNetworkRegistry::is_native(
+        AssetId::Usdt,
+        NetworkId::Ethereum
+    ));
 
-    assert!(AssetNetworkRegistry::is_token(AssetId::Usdt, NetworkId::Bsc));
-    assert!(!AssetNetworkRegistry::is_native(AssetId::Usdt, NetworkId::Bsc));
+    assert!(AssetNetworkRegistry::is_token(
+        AssetId::Usdt,
+        NetworkId::Bsc
+    ));
+    assert!(!AssetNetworkRegistry::is_native(
+        AssetId::Usdt,
+        NetworkId::Bsc
+    ));
 
-    assert!(AssetNetworkRegistry::is_token(AssetId::Usdt, NetworkId::TronNile));
-    assert!(!AssetNetworkRegistry::is_native(AssetId::Usdt, NetworkId::TronNile));
+    assert!(AssetNetworkRegistry::is_token(
+        AssetId::Usdt,
+        NetworkId::TronNile
+    ));
+    assert!(!AssetNetworkRegistry::is_native(
+        AssetId::Usdt,
+        NetworkId::TronNile
+    ));
 
     // Unsupported asset network returns false for both
-    assert!(!AssetNetworkRegistry::is_token(AssetId::Btc, NetworkId::TronNile));
-    assert!(!AssetNetworkRegistry::is_native(AssetId::Btc, NetworkId::TronNile));
+    assert!(!AssetNetworkRegistry::is_token(
+        AssetId::Btc,
+        NetworkId::TronNile
+    ));
+    assert!(!AssetNetworkRegistry::is_native(
+        AssetId::Btc,
+        NetworkId::TronNile
+    ));
 }
 
 #[test]
@@ -177,6 +225,98 @@ fn resolves_usdt_on_tron_nile() {
     assert_eq!(definition.token_standard(), Some(Standard::Trc20));
     assert_eq!(
         definition.token_address(),
-        Some("TXLAQ63Xg1NAzckPwKHvzw7CSEmLMEqcdj")
+        Some("TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf")
+    );
+}
+
+#[test]
+fn finds_by_contract_address_and_network() {
+    // USDT on Tron mainnet
+    let def = AssetNetworkRegistry::find_by_contract_address(
+        NetworkId::Tron,
+        "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+    )
+    .unwrap();
+    assert_eq!(def.asset_id(), AssetId::Usdt);
+    assert_eq!(def.decimals(), Decimals::SIX);
+    assert_eq!(def.decimals().as_u8(), 6);
+
+    // Case-insensitive matching for EVM
+    let def_evm = AssetNetworkRegistry::find_by_contract_address(
+        NetworkId::Bsc,
+        "0x55d398326f99059ff775485246999027b3197955",
+    )
+    .unwrap();
+    assert_eq!(def_evm.asset_id(), AssetId::Usdt);
+    assert_eq!(def_evm.decimals(), Decimals::EIGHTEEN);
+    assert_eq!(def_evm.decimals().as_u8(), 18);
+
+    // Helper for AssetId
+    assert_eq!(
+        AssetNetworkRegistry::find_asset_id_by_contract_address(
+            NetworkId::Bsc,
+            "0x55d398326f99059ff775485246999027b3197955",
+        ),
+        Some(AssetId::Usdt)
+    );
+}
+
+#[test]
+fn resolves_native_for_network() {
+    assert_eq!(
+        AssetNetworkRegistry::native_asset_for_network(NetworkId::Tron),
+        Some(AssetId::Trx)
+    );
+    assert_eq!(
+        AssetNetworkRegistry::native_asset_for_network(NetworkId::TronNile),
+        Some(AssetId::Trx)
+    );
+    assert_eq!(
+        AssetNetworkRegistry::native_asset_for_network(NetworkId::Ethereum),
+        Some(AssetId::Eth)
+    );
+    assert_eq!(
+        AssetNetworkRegistry::native_asset_for_network(NetworkId::EthereumSepolia),
+        Some(AssetId::Eth)
+    );
+    assert_eq!(
+        AssetNetworkRegistry::native_asset_for_network(NetworkId::Bsc),
+        Some(AssetId::Bnb)
+    );
+    assert_eq!(
+        AssetNetworkRegistry::native_asset_for_network(NetworkId::BscTestnet),
+        Some(AssetId::Bnb)
+    );
+    assert_eq!(
+        AssetNetworkRegistry::native_asset_for_network(NetworkId::Polygon),
+        Some(AssetId::Pol)
+    );
+    assert_eq!(
+        AssetNetworkRegistry::native_asset_for_network(NetworkId::PolygonAmoy),
+        Some(AssetId::Pol)
+    );
+    assert_eq!(
+        AssetNetworkRegistry::native_asset_for_network(NetworkId::Bitcoin),
+        Some(AssetId::Btc)
+    );
+    assert_eq!(
+        AssetNetworkRegistry::native_asset_for_network(NetworkId::BitcoinTestnet),
+        Some(AssetId::Btc)
+    );
+    assert_eq!(
+        AssetNetworkRegistry::native_asset_for_network(NetworkId::Litecoin),
+        Some(AssetId::Ltc)
+    );
+    assert_eq!(
+        AssetNetworkRegistry::native_asset_for_network(NetworkId::LitecoinTestnet),
+        Some(AssetId::Ltc)
+    );
+    assert_eq!(
+        AssetNetworkRegistry::native_asset_for_network(NetworkId::Solana),
+        Some(AssetId::Sol)
+    );
+    assert_eq!(
+        AssetNetworkRegistry::native_asset_for_network(NetworkId::SolanaDevnet),
+        Some(AssetId::Sol)
     );
 }

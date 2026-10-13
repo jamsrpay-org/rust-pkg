@@ -84,6 +84,11 @@ pub struct BlockchainTransfer {
     pub confirmations: u32,
     #[prost(message, optional, tag = "10")]
     pub block_time: ::core::option::Option<::pbjson_types::Timestamp>,
+    #[prost(
+        enumeration = "super::super::super::asset::shared::v1::NetworkId",
+        tag = "11"
+    )]
+    pub network_id: i32,
 }
 impl ::prost::Name for BlockchainTransfer {
     const NAME: &'static str = "BlockchainTransfer";
@@ -132,6 +137,11 @@ pub struct InvoicePaymentConfirmed {
     pub required_confirmations: u32,
     #[prost(message, optional, tag = "7")]
     pub confirmed_at: ::core::option::Option<::pbjson_types::Timestamp>,
+    #[prost(
+        enumeration = "super::super::super::asset::shared::v1::NetworkId",
+        tag = "8"
+    )]
+    pub network_id: i32,
 }
 impl ::prost::Name for InvoicePaymentConfirmed {
     const NAME: &'static str = "InvoicePaymentConfirmed";
@@ -249,6 +259,11 @@ pub struct PayoutTransactionStatusChanged {
     pub confirmations: u32,
     #[prost(message, optional, tag = "7")]
     pub changed_at: ::core::option::Option<::pbjson_types::Timestamp>,
+    #[prost(
+        enumeration = "super::super::super::asset::shared::v1::NetworkId",
+        tag = "8"
+    )]
+    pub network_id: i32,
 }
 impl ::prost::Name for PayoutTransactionStatusChanged {
     const NAME: &'static str = "PayoutTransactionStatusChanged";

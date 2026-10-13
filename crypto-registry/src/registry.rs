@@ -86,4 +86,40 @@ impl AssetNetworkRegistry {
     ) -> Result<Decimals, AssetNetworkRegistryError> {
         Self::resolve(asset_id, network_id).map(|definition| definition.decimals())
     }
+
+    /// Find an asset definition by token contract address on a specific network.
+    ///
+    /// The contract address comparison is case-insensitive.
+    pub fn find_by_contract_address(
+        network_id: NetworkId,
+        contract_address: &str,
+    ) -> Option<&'static AssetNetworkDefinition> {
+        let trimmed = contract_address.trim();
+        DEFINITIONS.iter().find(|definition| {
+            definition.network_id() == network_id
+                && definition
+                    .token_address()
+                    .is_some_and(|addr| addr.eq_ignore_ascii_case(trimmed))
+        })
+    }
+
+    /// Resolve `AssetId` by token contract address on a specific network.
+    pub fn find_asset_id_by_contract_address(
+        network_id: NetworkId,
+        contract_address: &str,
+    ) -> Option<AssetId> {
+        Self::find_by_contract_address(network_id, contract_address).map(|d| d.asset_id())
+    }
+
+    /// Find the native asset definition for a network.
+    pub fn native_for_network(network_id: NetworkId) -> Option<&'static AssetNetworkDefinition> {
+        DEFINITIONS
+            .iter()
+            .find(|d| d.is_native() && d.network_id() == network_id)
+    }
+
+    /// Resolve the native `AssetId` for a network.
+    pub fn native_asset_for_network(network_id: NetworkId) -> Option<AssetId> {
+        Self::native_for_network(network_id).map(|d| d.asset_id())
+    }
 }

@@ -31,7 +31,7 @@ full = [
 ]
 asset = ["shared"]
 billing = ["shared", "asset"]
-blockchain = ["shared"]
+blockchain = ["shared", "asset"]
 identity = ["shared"]
 indexer = ["shared"]
 payout = ["shared", "asset", "billing"]
