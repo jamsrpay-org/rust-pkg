@@ -317,33 +317,3 @@ impl InvoicePayoutStatus {
         }
     }
 }
-#[derive(serde::Serialize, serde::Deserialize)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
-#[repr(i32)]
-pub enum InvoiceAddressStatus {
-    Unspecified = 0,
-    Active = 1,
-    Consumed = 2,
-}
-impl InvoiceAddressStatus {
-    /// String value of the enum field names used in the ProtoBuf definition.
-    ///
-    /// The values are not transformed in any way and thus are considered stable
-    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
-    pub fn as_str_name(&self) -> &'static str {
-        match self {
-            Self::Unspecified => "INVOICE_ADDRESS_STATUS_UNSPECIFIED",
-            Self::Active => "INVOICE_ADDRESS_STATUS_ACTIVE",
-            Self::Consumed => "INVOICE_ADDRESS_STATUS_CONSUMED",
-        }
-    }
-    /// Creates an enum from field names used in the ProtoBuf definition.
-    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
-        match value {
-            "INVOICE_ADDRESS_STATUS_UNSPECIFIED" => Some(Self::Unspecified),
-            "INVOICE_ADDRESS_STATUS_ACTIVE" => Some(Self::Active),
-            "INVOICE_ADDRESS_STATUS_CONSUMED" => Some(Self::Consumed),
-            _ => None,
-        }
-    }
-}

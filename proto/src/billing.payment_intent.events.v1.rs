@@ -39,12 +39,32 @@ impl ::prost::Name for PaymentIntentPaid {
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct PaymentIntentExpired {
+    #[prost(string, tag = "1")]
+    pub payment_intent_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub store_id: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "3")]
+    pub expired_at: ::core::option::Option<::pbjson_types::Timestamp>,
+}
+impl ::prost::Name for PaymentIntentExpired {
+    const NAME: &'static str = "PaymentIntentExpired";
+    const PACKAGE: &'static str = "billing.payment_intent.events.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "billing.payment_intent.events.v1.PaymentIntentExpired".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/billing.payment_intent.events.v1.PaymentIntentExpired".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct PaymentIntentEventEnvelope {
     #[prost(message, optional, tag = "1")]
     pub meta: ::core::option::Option<
         super::super::super::super::shared::events::v1::EventMetadata,
     >,
-    #[prost(oneof = "payment_intent_event_envelope::Event", tags = "2, 3")]
+    #[prost(oneof = "payment_intent_event_envelope::Event", tags = "2, 3, 4")]
     pub event: ::core::option::Option<payment_intent_event_envelope::Event>,
 }
 /// Nested message and enum types in `PaymentIntentEventEnvelope`.
@@ -56,6 +76,8 @@ pub mod payment_intent_event_envelope {
         Created(super::PaymentIntentCreated),
         #[prost(message, tag = "3")]
         Paid(super::PaymentIntentPaid),
+        #[prost(message, tag = "4")]
+        Expired(super::PaymentIntentExpired),
     }
 }
 impl ::prost::Name for PaymentIntentEventEnvelope {

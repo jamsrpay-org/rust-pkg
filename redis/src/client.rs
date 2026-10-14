@@ -98,6 +98,29 @@ impl RedisClient {
         Ok(deleted)
     }
 
+    pub async fn keys<P>(&self, pattern: P) -> Result<Vec<String>, RedisClientError>
+    where
+        P: ToRedisArgs + Send + Sync,
+    {
+        let mut conn = self.manager.clone();
+        let keys: Vec<String> = conn.keys(pattern).await?;
+        Ok(keys)
+    }
+
+    pub async fn delete_by_pattern<P>(&self, pattern: P) -> Result<u64, RedisClientError>
+    where
+        P: ToRedisArgs + Send + Sync,
+    {
+        let mut conn = self.manager.clone();
+        let keys: Vec<String> = conn.keys(pattern).await?;
+        if !keys.is_empty() {
+            let deleted: u64 = conn.del(&keys).await?;
+            Ok(deleted)
+        } else {
+            Ok(0)
+        }
+    }
+
     pub async fn exists<K>(&self, key: K) -> Result<bool, RedisClientError>
     where
         K: ToRedisArgs + Send + Sync,
