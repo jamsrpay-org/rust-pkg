@@ -154,6 +154,7 @@ pub enum DepositWalletStatus {
     WithdrawalProcessing = 4,
     Withdrawn = 5,
     WithdrawalFailed = 6,
+    Quarantined = 7,
 }
 impl DepositWalletStatus {
     /// String value of the enum field names used in the ProtoBuf definition.
@@ -169,6 +170,7 @@ impl DepositWalletStatus {
             Self::WithdrawalProcessing => "DEPOSIT_WALLET_STATUS_WITHDRAWAL_PROCESSING",
             Self::Withdrawn => "DEPOSIT_WALLET_STATUS_WITHDRAWN",
             Self::WithdrawalFailed => "DEPOSIT_WALLET_STATUS_WITHDRAWAL_FAILED",
+            Self::Quarantined => "DEPOSIT_WALLET_STATUS_QUARANTINED",
         }
     }
     /// Creates an enum from field names used in the ProtoBuf definition.
@@ -183,6 +185,7 @@ impl DepositWalletStatus {
             }
             "DEPOSIT_WALLET_STATUS_WITHDRAWN" => Some(Self::Withdrawn),
             "DEPOSIT_WALLET_STATUS_WITHDRAWAL_FAILED" => Some(Self::WithdrawalFailed),
+            "DEPOSIT_WALLET_STATUS_QUARANTINED" => Some(Self::Quarantined),
             _ => None,
         }
     }

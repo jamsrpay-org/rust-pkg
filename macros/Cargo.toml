@@ -1,0 +1,7 @@
+[package]
+name = "jamsrpay-macros"
+version = "0.1.0"
+edition = "2024"
+description = "Declarative mapping macros and boundary conversion traits for JamsrPay microservices"
+
+[dependencies]
