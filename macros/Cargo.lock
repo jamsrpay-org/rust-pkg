@@ -5,3 +5,39 @@ version = 4
 [[package]]
 name = "jamsrpay-macros"
 version = "0.1.0"
+
+[[patch.unused]]
+name = "jamsrpay-authentication"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "jamsrpay-authorization"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "jamsrpay-crypto-registry"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "jamsrpay-infra"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "jamsrpay-interceptor"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "jamsrpay-proto"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "jamsrpay-redis"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "jamsrpay-telemetry"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "jamsrpay-types"
+version = "0.1.0"

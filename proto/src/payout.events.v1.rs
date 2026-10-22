@@ -66,6 +66,10 @@ pub struct PayoutCreated {
     pub transfers: ::prost::alloc::vec::Vec<PayoutTransfer>,
     #[prost(message, repeated, tag = "3")]
     pub gas_watches: ::prost::alloc::vec::Vec<PayoutGasWatch>,
+    #[prost(message, optional, tag = "4")]
+    pub amount: ::core::option::Option<
+        super::super::super::shared::types::v1::EventMoney,
+    >,
 }
 impl ::prost::Name for PayoutCreated {
     const NAME: &'static str = "PayoutCreated";
@@ -78,8 +82,15 @@ impl ::prost::Name for PayoutCreated {
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct PayoutProcessing {}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PayoutProcessing {
+    #[prost(message, optional, tag = "1")]
+    pub amount: ::core::option::Option<
+        super::super::super::shared::types::v1::EventMoney,
+    >,
+    #[prost(message, repeated, tag = "2")]
+    pub transfers: ::prost::alloc::vec::Vec<PayoutTransfer>,
+}
 impl ::prost::Name for PayoutProcessing {
     const NAME: &'static str = "PayoutProcessing";
     const PACKAGE: &'static str = "payout.events.v1";
@@ -95,6 +106,10 @@ impl ::prost::Name for PayoutProcessing {
 pub struct PayoutSettled {
     #[prost(message, repeated, tag = "1")]
     pub transactions: ::prost::alloc::vec::Vec<payout_settled::PayoutTransaction>,
+    #[prost(message, optional, tag = "2")]
+    pub amount: ::core::option::Option<
+        super::super::super::shared::types::v1::EventMoney,
+    >,
 }
 /// Nested message and enum types in `PayoutSettled`.
 pub mod payout_settled {
@@ -138,12 +153,18 @@ impl ::prost::Name for PayoutSettled {
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
-#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PayoutFailed {
     #[prost(string, tag = "1")]
     pub failure_code: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
     pub failure_reason: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "3")]
+    pub amount: ::core::option::Option<
+        super::super::super::shared::types::v1::EventMoney,
+    >,
+    #[prost(message, repeated, tag = "4")]
+    pub transfers: ::prost::alloc::vec::Vec<PayoutTransfer>,
 }
 impl ::prost::Name for PayoutFailed {
     const NAME: &'static str = "PayoutFailed";

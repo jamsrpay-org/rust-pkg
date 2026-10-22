@@ -3,7 +3,8 @@
 //! Declarative mapping macros and boundary conversion traits for JamsrPay microservices.
 //!
 //! Provides zero-dependency, type-safe bidirectional enum mapping between Domain models
-//! and boundary DTOs (REST / Protobuf) while strictly adhering to Domain-Driven Design (DDD).
+//! and boundary DTOs (REST / Protobuf) and database persistence representations
+//! while strictly adhering to Domain-Driven Design (DDD).
 
 // ============================================================================
 // Boundary Conversion Traits & Generator Macro
@@ -30,6 +31,23 @@ pub trait TryIntoDomain<T>: Sized {
     fn try_into_domain(self) -> Result<T, Self::Error>;
 }
 
+/// Infallible conversion from a Domain type to a static database string representation.
+pub trait IntoPersistence {
+    fn into_persistence(self) -> &'static str;
+}
+
+impl<T: IntoPersistence + Copy> IntoPersistence for &T {
+    fn into_persistence(self) -> &'static str {
+        (*self).into_persistence()
+    }
+}
+
+/// Fallible conversion from a database string representation to a Domain type.
+pub trait FromPersistence: Sized {
+    type Error;
+    fn from_persistence(value: &str) -> Result<Self, Self::Error>;
+}
+
 /// Defines local boundary conversion traits (`IntoProto`, `TryIntoDomain`, `IntoDto`, and `FromDto`)
 /// inside the calling crate's Anti-Corruption Layer, fully satisfying Rust's orphan rules when
 /// mapping between external domain types (e.g. `jamsrpay-types`) and external protobuf types (e.g. `jamsrpay-proto`).
@@ -51,6 +69,28 @@ macro_rules! define_boundary_traits {
 
         pub trait FromDto<T>: Sized {
             fn from_dto(dto: T) -> Self;
+        }
+    };
+}
+
+/// Defines local persistence conversion traits (`IntoPersistence` and `FromPersistence`)
+/// inside the calling crate's Anti-Corruption Layer, fully satisfying Rust's orphan rules.
+#[macro_export]
+macro_rules! define_persistence_traits {
+    () => {
+        pub trait IntoPersistence {
+            fn into_persistence(self) -> &'static str;
+        }
+
+        impl<T: IntoPersistence + Copy> IntoPersistence for &T {
+            fn into_persistence(self) -> &'static str {
+                (*self).into_persistence()
+            }
+        }
+
+        pub trait FromPersistence: Sized {
+            type Error;
+            fn from_persistence(value: &str) -> Result<Self, Self::Error>;
         }
     };
 }
@@ -274,5 +314,83 @@ macro_rules! proto_enum_map {
                 $($d_var <=> $p_var),+
             }
         );
+    };
+}
+
+/// Generates `IntoPersistence` and `FromPersistence` implementations for an enum.
+///
+/// - The `into_persistence` match arm is strictly exhaustive (no wildcard `_`), ensuring
+///   a compile-time error if any new variant is added to the enum without updating
+///   the persistence mapper.
+/// - The `from_persistence` implementation parses the value using zero-allocation
+///   case-insensitive comparison (`eq_ignore_ascii_case`) on trimmed strings.
+/// - Supports optional alias lists for backwards-compatible or alternative DB representations.
+#[macro_export]
+macro_rules! define_persistence_enum {
+    // 1. Shorthand with error variant (e.g. InvalidInvoiceStatus) using InfraError in scope
+    (
+        $enum_ty:ty, $err_variant:ident {
+            $(
+                $variant:ident => $db_str:expr $(, [ $($alias:expr),* $(,)? ])?
+            ),+ $(,)?
+        }
+    ) => {
+        impl IntoPersistence for $enum_ty {
+            fn into_persistence(self) -> &'static str {
+                match self {
+                    $( <$enum_ty>::$variant => $db_str, )+
+                }
+            }
+        }
+
+        impl FromPersistence for $enum_ty {
+            type Error = InfraError;
+
+            fn from_persistence(value: &str) -> Result<Self, Self::Error> {
+                let trimmed = value.trim();
+                $(
+                    if trimmed.eq_ignore_ascii_case($db_str)
+                        $( $( || trimmed.eq_ignore_ascii_case($alias) )* )?
+                    {
+                        return Ok(<$enum_ty>::$variant);
+                    }
+                )+
+                Err(InfraError::$err_variant(value.to_string()))
+            }
+        }
+    };
+
+    // 2. Custom error type and closure: error: ErrType = |val| ErrExpr
+    (
+        $enum_ty:ty, error: $err_type:ty = |$err_arg:ident| $err_expr:expr, {
+            $(
+                $variant:ident => $db_str:expr $(, [ $($alias:expr),* $(,)? ])?
+            ),+ $(,)?
+        }
+    ) => {
+        impl IntoPersistence for $enum_ty {
+            fn into_persistence(self) -> &'static str {
+                match self {
+                    $( <$enum_ty>::$variant => $db_str, )+
+                }
+            }
+        }
+
+        impl FromPersistence for $enum_ty {
+            type Error = $err_type;
+
+            fn from_persistence(value: &str) -> Result<Self, Self::Error> {
+                let trimmed = value.trim();
+                $(
+                    if trimmed.eq_ignore_ascii_case($db_str)
+                        $( $( || trimmed.eq_ignore_ascii_case($alias) )* )?
+                    {
+                        return Ok(<$enum_ty>::$variant);
+                    }
+                )+
+                let $err_arg = value;
+                Err($err_expr)
+            }
+        }
     };
 }
