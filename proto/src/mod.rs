@@ -489,6 +489,11 @@ pub mod store {
                 include!("store.store_asset.merchant.v1.rs");
             }
         }
+        pub mod public {
+            pub mod v1 {
+                include!("store.store_asset.public.v1.rs");
+            }
+        }
     }
 }
 #[cfg(feature = "support")]
@@ -620,9 +625,11 @@ pub mod webhook {
             }
         }
     }
-    pub mod merchant {
-        pub mod v1 {
-            include!("webhook.merchant.v1.rs");
+    pub mod endpoint {
+        pub mod merchant {
+            pub mod v1 {
+                include!("webhook.endpoint.merchant.v1.rs");
+            }
         }
     }
     pub mod metadata {

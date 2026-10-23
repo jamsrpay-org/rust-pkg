@@ -74,37 +74,37 @@ impl ::prost::Name for GetStoreAssetResponse {
         "/store.store_asset.merchant.v1.GetStoreAssetResponse".into()
     }
 }
-/// ====== ListStoreCurrencies ======
+/// ====== ListStoreAssets ======
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct ListStoreCurrenciesRequest {
+pub struct ListStoreAssetsRequest {
     #[prost(string, tag = "1")]
     pub store_id: ::prost::alloc::string::String,
 }
-impl ::prost::Name for ListStoreCurrenciesRequest {
-    const NAME: &'static str = "ListStoreCurrenciesRequest";
+impl ::prost::Name for ListStoreAssetsRequest {
+    const NAME: &'static str = "ListStoreAssetsRequest";
     const PACKAGE: &'static str = "store.store_asset.merchant.v1";
     fn full_name() -> ::prost::alloc::string::String {
-        "store.store_asset.merchant.v1.ListStoreCurrenciesRequest".into()
+        "store.store_asset.merchant.v1.ListStoreAssetsRequest".into()
     }
     fn type_url() -> ::prost::alloc::string::String {
-        "/store.store_asset.merchant.v1.ListStoreCurrenciesRequest".into()
+        "/store.store_asset.merchant.v1.ListStoreAssetsRequest".into()
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ListStoreCurrenciesResponse {
+pub struct ListStoreAssetsResponse {
     #[prost(message, repeated, tag = "1")]
-    pub store_currencies: ::prost::alloc::vec::Vec<StoreAsset>,
+    pub store_assets: ::prost::alloc::vec::Vec<StoreAsset>,
 }
-impl ::prost::Name for ListStoreCurrenciesResponse {
-    const NAME: &'static str = "ListStoreCurrenciesResponse";
+impl ::prost::Name for ListStoreAssetsResponse {
+    const NAME: &'static str = "ListStoreAssetsResponse";
     const PACKAGE: &'static str = "store.store_asset.merchant.v1";
     fn full_name() -> ::prost::alloc::string::String {
-        "store.store_asset.merchant.v1.ListStoreCurrenciesResponse".into()
+        "store.store_asset.merchant.v1.ListStoreAssetsResponse".into()
     }
     fn type_url() -> ::prost::alloc::string::String {
-        "/store.store_asset.merchant.v1.ListStoreCurrenciesResponse".into()
+        "/store.store_asset.merchant.v1.ListStoreAssetsResponse".into()
     }
 }
 /// ====== CreateStoreAsset ======
@@ -363,11 +363,11 @@ pub mod store_asset_merchant_service_client {
                 );
             self.inner.unary(req, path, codec).await
         }
-        pub async fn list_store_currencies(
+        pub async fn list_store_assets(
             &mut self,
-            request: impl tonic::IntoRequest<super::ListStoreCurrenciesRequest>,
+            request: impl tonic::IntoRequest<super::ListStoreAssetsRequest>,
         ) -> std::result::Result<
-            tonic::Response<super::ListStoreCurrenciesResponse>,
+            tonic::Response<super::ListStoreAssetsResponse>,
             tonic::Status,
         > {
             self.inner
@@ -380,14 +380,14 @@ pub mod store_asset_merchant_service_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/store.store_asset.merchant.v1.StoreAssetMerchantService/ListStoreCurrencies",
+                "/store.store_asset.merchant.v1.StoreAssetMerchantService/ListStoreAssets",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
                         "store.store_asset.merchant.v1.StoreAssetMerchantService",
-                        "ListStoreCurrencies",
+                        "ListStoreAssets",
                     ),
                 );
             self.inner.unary(req, path, codec).await
@@ -501,11 +501,11 @@ pub mod store_asset_merchant_service_server {
             tonic::Response<super::GetStoreAssetResponse>,
             tonic::Status,
         >;
-        async fn list_store_currencies(
+        async fn list_store_assets(
             &self,
-            request: tonic::Request<super::ListStoreCurrenciesRequest>,
+            request: tonic::Request<super::ListStoreAssetsRequest>,
         ) -> std::result::Result<
-            tonic::Response<super::ListStoreCurrenciesResponse>,
+            tonic::Response<super::ListStoreAssetsResponse>,
             tonic::Status,
         >;
         async fn create_store_asset(
@@ -656,27 +656,25 @@ pub mod store_asset_merchant_service_server {
                     };
                     Box::pin(fut)
                 }
-                "/store.store_asset.merchant.v1.StoreAssetMerchantService/ListStoreCurrencies" => {
+                "/store.store_asset.merchant.v1.StoreAssetMerchantService/ListStoreAssets" => {
                     #[allow(non_camel_case_types)]
-                    struct ListStoreCurrenciesSvc<T: StoreAssetMerchantService>(
-                        pub Arc<T>,
-                    );
+                    struct ListStoreAssetsSvc<T: StoreAssetMerchantService>(pub Arc<T>);
                     impl<
                         T: StoreAssetMerchantService,
-                    > tonic::server::UnaryService<super::ListStoreCurrenciesRequest>
-                    for ListStoreCurrenciesSvc<T> {
-                        type Response = super::ListStoreCurrenciesResponse;
+                    > tonic::server::UnaryService<super::ListStoreAssetsRequest>
+                    for ListStoreAssetsSvc<T> {
+                        type Response = super::ListStoreAssetsResponse;
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
                             tonic::Status,
                         >;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::ListStoreCurrenciesRequest>,
+                            request: tonic::Request<super::ListStoreAssetsRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as StoreAssetMerchantService>::list_store_currencies(
+                                <T as StoreAssetMerchantService>::list_store_assets(
                                         &inner,
                                         request,
                                     )
@@ -691,7 +689,7 @@ pub mod store_asset_merchant_service_server {
                     let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
-                        let method = ListStoreCurrenciesSvc(inner);
+                        let method = ListStoreAssetsSvc(inner);
                         let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
