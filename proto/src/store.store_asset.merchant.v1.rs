@@ -20,6 +20,8 @@ pub struct StoreAsset {
     pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(message, optional, tag = "6")]
     pub updated_at: ::core::option::Option<::pbjson_types::Timestamp>,
+    #[prost(bool, tag = "7")]
+    pub is_enabled: bool,
 }
 impl ::prost::Name for StoreAsset {
     const NAME: &'static str = "StoreAsset";

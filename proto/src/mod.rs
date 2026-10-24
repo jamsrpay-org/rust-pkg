@@ -216,6 +216,11 @@ pub mod identity {
             }
         }
     }
+    pub mod screen_lock {
+        pub mod v1 {
+            include!("identity.screen_lock.v1.rs");
+        }
+    }
     pub mod security {
         pub mod v1 {
             include!("identity.security.v1.rs");

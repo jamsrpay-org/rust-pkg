@@ -14,7 +14,9 @@ pub struct PricingPlanPurchaseCreated {
     >,
     #[prost(string, optional, tag = "5")]
     pub payment_intent_id: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(message, optional, tag = "6")]
+    #[prost(enumeration = "super::super::shared::v1::PaymentMethod", tag = "6")]
+    pub payment_method: i32,
+    #[prost(message, optional, tag = "7")]
     pub created_at: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for PricingPlanPurchaseCreated {
@@ -42,7 +44,9 @@ pub struct PricingPlanPurchaseCompleted {
     >,
     #[prost(string, optional, tag = "5")]
     pub payment_intent_id: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(message, optional, tag = "6")]
+    #[prost(enumeration = "super::super::shared::v1::PaymentMethod", tag = "6")]
+    pub payment_method: i32,
+    #[prost(message, optional, tag = "7")]
     pub completed_at: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for PricingPlanPurchaseCompleted {
@@ -70,7 +74,9 @@ pub struct PricingPlanPurchaseFailed {
     >,
     #[prost(string, optional, tag = "5")]
     pub payment_intent_id: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(message, optional, tag = "6")]
+    #[prost(enumeration = "super::super::shared::v1::PaymentMethod", tag = "6")]
+    pub payment_method: i32,
+    #[prost(message, optional, tag = "7")]
     pub failed_at: ::core::option::Option<::pbjson_types::Timestamp>,
 }
 impl ::prost::Name for PricingPlanPurchaseFailed {

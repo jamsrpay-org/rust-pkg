@@ -54,9 +54,27 @@ impl ::prost::Name for PurchasePricingPlanRequest {
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct PaymentIntent {
+    #[prost(string, tag = "1")]
+    pub payment_intent_id: ::prost::alloc::string::String,
+}
+impl ::prost::Name for PaymentIntent {
+    const NAME: &'static str = "PaymentIntent";
+    const PACKAGE: &'static str = "billing.pricing_plan_purchase.merchant.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "billing.pricing_plan_purchase.merchant.v1.PaymentIntent".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/billing.pricing_plan_purchase.merchant.v1.PaymentIntent".into()
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct PurchasePricingPlanResponse {
     #[prost(message, optional, tag = "1")]
     pub pricing_plan_purchase: ::core::option::Option<PricingPlanPurchase>,
+    #[prost(message, optional, tag = "2")]
+    pub payment: ::core::option::Option<PaymentIntent>,
 }
 impl ::prost::Name for PurchasePricingPlanResponse {
     const NAME: &'static str = "PurchasePricingPlanResponse";
